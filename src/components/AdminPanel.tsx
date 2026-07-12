@@ -1,0 +1,2168 @@
+import { useState, useEffect, FormEvent } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { getStoredArticles, saveArticles, BlogArticle, BLOG_CATEGORIES } from '../blogData';
+import { getStoredSiteContent, saveSiteContent, SiteContent, DEFAULT_SITE_CONTENT } from '../siteContent';
+import { getConsultations, updateConsultationStatus, deleteConsultation } from '../firebase';
+import { 
+  Lock, KeyRound, ShieldAlert, FileText, Plus, Trash2, Edit3, Save, 
+  ArrowLeft, RotateCcw, Copy, Check, Eye, HelpCircle, MoveUp, MoveDown, 
+  Grid, LogOut, CheckCircle2, Sparkles, BookOpen, AlertCircle, Settings,
+  Download, Archive, User, Inbox, Heart
+} from 'lucide-react';
+
+interface AdminPanelProps {
+  onClose: () => void;
+  onRefreshBlog: () => void;
+  onRefreshSite: () => void;
+}
+
+type EditorBlock = BlogArticle['content'][number] & { id: string };
+
+const isImageUrl = (str: string) => {
+  if (!str) return false;
+  return str.startsWith('http://') || str.startsWith('https://') || str.startsWith('/') || str.includes('unsplash.com') || /\.(jpg|jpeg|png|webp|gif|svg)/i.test(str);
+};
+
+export default function AdminPanel({ onClose, onRefreshBlog, onRefreshSite }: AdminPanelProps) {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  
+  // Download states
+  const [isDownloadingWeb, setIsDownloadingWeb] = useState(false);
+  const [isDownloadingSource, setIsDownloadingSource] = useState(false);
+
+  const handleDownloadFile = async (url: string, filename: string, setStatus: (s: boolean) => void) => {
+    setStatus(true);
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Network response was not ok');
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode?.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+      showAlert(`「${filename}」を正常にダウンロードしました！`);
+    } catch (error) {
+      console.error('Download error:', error);
+      showAlert('ダウンロード中にエラーが発生しました。時間を置いて再度お試しください。', 'error');
+    } finally {
+      setStatus(false);
+    }
+  };
+  
+  const [articles, setArticles] = useState<BlogArticle[]>([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingArticleId, setEditingArticleId] = useState<string | null>(null);
+
+  // Tabs within Admin panel
+  const [activeAdminTab, setActiveAdminTab] = useState<'blog' | 'site' | 'consultation'>('blog');
+  const [activeSiteSection, setActiveSiteSection] = useState<'hero' | 'concerns' | 'reasons' | 'jobs' | 'flow' | 'faq' | 'consultation'>('hero');
+  const [siteText, setSiteText] = useState<SiteContent>(getStoredSiteContent());
+
+  // Firebase consultation submissions states
+  const [consultationsList, setConsultationsList] = useState<any[]>([]);
+  const [isLoadingConsultations, setIsLoadingConsultations] = useState(false);
+
+  // Editor states
+  const [title, setTitle] = useState('');
+  const [slug, setSlug] = useState('');
+  const [category, setCategory] = useState<BlogArticle['category']>('beginner');
+  const [summary, setSummary] = useState('');
+  const [eyeCatch, setEyeCatch] = useState('🌸');
+  const [authorName, setAuthorName] = useState('さくら');
+  const [authorRole, setAuthorRole] = useState('女性サポートスタッフ');
+  const [authorAvatar, setAuthorAvatar] = useState('👩‍💼');
+  const [tagsInput, setTagsInput] = useState('');
+  const [blocks, setBlocks] = useState<EditorBlock[]>([]);
+  
+  // Notice & Copy states
+  const [alertMessage, setAlertMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [isCopied, setIsCopied] = useState(false);
+  const [showCodeExport, setShowCodeExport] = useState(false);
+
+  // Deep nested updaters for SiteContent State
+  const updateHeroField = (field: keyof SiteContent['hero'], val: string) => {
+    setSiteText(prev => ({
+      ...prev,
+      hero: {
+        ...prev.hero,
+        [field]: val
+      }
+    }));
+  };
+
+  const updateConcernsField = (field: 'title' | 'subtitle', val: string) => {
+    setSiteText(prev => ({
+      ...prev,
+      concerns: {
+        ...prev.concerns,
+        [field]: val
+      }
+    }));
+  };
+
+  const updateConcernItem = (index: number, field: 'title' | 'question' | 'answer', val: string) => {
+    setSiteText(prev => {
+      const nextItems = [...prev.concerns.items];
+      nextItems[index] = { ...nextItems[index], [field]: val };
+      return {
+        ...prev,
+        concerns: {
+          ...prev.concerns,
+          items: nextItems
+        }
+      };
+    });
+  };
+
+  const updateReasonsField = (field: 'title' | 'subtitle', val: string) => {
+    setSiteText(prev => ({
+      ...prev,
+      reasons: {
+        ...prev.reasons,
+        [field]: val
+      }
+    }));
+  };
+
+  const updateReasonItem = (index: number, field: 'title' | 'description', val: string) => {
+    setSiteText(prev => {
+      const nextItems = [...prev.reasons.items];
+      nextItems[index] = { ...nextItems[index], [field]: val };
+      return {
+        ...prev,
+        reasons: {
+          ...prev.reasons,
+          items: nextItems
+        }
+      };
+    });
+  };
+
+  const updateJobsField = (field: keyof SiteContent['jobs'], val: string) => {
+    setSiteText(prev => ({
+      ...prev,
+      jobs: {
+        ...prev.jobs,
+        [field]: val
+      }
+    }));
+  };
+
+  const updateFlowField = (field: 'title' | 'subtitle', val: string) => {
+    setSiteText(prev => ({
+      ...prev,
+      flow: {
+        ...prev.flow,
+        [field]: val
+      }
+    }));
+  };
+
+  const updateFlowItem = (index: number, val: string) => {
+    setSiteText(prev => {
+      const nextItems = [...prev.flow.items];
+      nextItems[index] = { ...nextItems[index], title: val };
+      return {
+        ...prev,
+        flow: {
+          ...prev.flow,
+          items: nextItems
+        }
+      };
+    });
+  };
+
+  const updateFaqField = (field: 'title' | 'sidebarRole' | 'sidebarMessage', val: string) => {
+    setSiteText(prev => ({
+      ...prev,
+      faq: {
+        ...prev.faq,
+        [field]: val
+      }
+    }));
+  };
+
+  const updateFaqItem = (index: number, field: 'question' | 'answer', val: string) => {
+    setSiteText(prev => {
+      const nextItems = [...prev.faq.items];
+      nextItems[index] = { ...nextItems[index], [field]: val };
+      return {
+        ...prev,
+        faq: {
+          ...prev.faq,
+          items: nextItems
+        }
+      };
+    });
+  };
+
+  const updateConsultationField = (field: keyof SiteContent['consultation'], val: string) => {
+    setSiteText(prev => ({
+      ...prev,
+      consultation: {
+        ...prev.consultation,
+        [field]: val
+      }
+    }));
+  };
+
+  const handleSaveSiteContent = async () => {
+    saveSiteContent(siteText);
+    onRefreshSite();
+    
+    try {
+      const res = await fetch('/api/cms/site', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-Admin-Password': getAdminPassword()
+        },
+        body: JSON.stringify(siteText)
+      });
+      if (res.ok) {
+        showAlert('サーバーにサイト文章を永久保存しました！ (Hyonix等のサーバーでも同期されます)');
+      } else {
+        showAlert('ブラウザには一時保存されましたが、サーバーへの同期に失敗しました。', 'error');
+      }
+    } catch (e) {
+      console.error('Error saving to server:', e);
+      showAlert('ブラウザには一時保存されましたが、サーバーへの同期に失敗しました。', 'error');
+    }
+  };
+
+  const handleResetSiteContent = async () => {
+    if (window.confirm('サイト内の文章をすべて初期状態にリセットしますか？')) {
+      try {
+        localStorage.removeItem('custom_site_content');
+      } catch (err) {
+        console.warn('localStorage.removeItem failed', err);
+      }
+      setSiteText(DEFAULT_SITE_CONTENT);
+      onRefreshSite();
+
+      try {
+        const res = await fetch('/api/cms/site', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'X-Admin-Password': getAdminPassword()
+          },
+          body: JSON.stringify(DEFAULT_SITE_CONTENT)
+        });
+        if (res.ok) {
+          showAlert('サイト内の文章を初期設定にリセット（サーバー保存完了）しました！');
+        } else {
+          showAlert('ブラウザ側はリセットされましたが、サーバー同期に失敗しました。', 'error');
+        }
+      } catch (e) {
+        showAlert('ブラウザ側はリセットされましたが、サーバー同期に失敗しました。', 'error');
+      }
+    }
+  };
+
+  // Load articles
+  useEffect(() => {
+    setArticles(getStoredArticles());
+    
+    const loadServerData = async () => {
+      try {
+        const blogRes = await fetch('/api/cms/articles');
+        if (blogRes.ok) {
+          const data = await blogRes.json();
+          setArticles(data);
+        }
+      } catch (e) {
+        console.warn('Could not sync articles from server in CMS panel', e);
+      }
+
+      try {
+        const siteRes = await fetch('/api/cms/site');
+        if (siteRes.ok) {
+          const data = await siteRes.json();
+          setSiteText(data);
+        }
+      } catch (e) {
+        console.warn('Could not sync site text from server in CMS panel', e);
+      }
+    };
+    loadServerData();
+  }, []);
+
+  const getAdminPassword = () => {
+    return password || '';
+  };
+
+  const handleLogin = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsLoggingIn(true);
+    setLoginError('');
+
+    const localCheck = () => {
+      const isPassCorrect = password === 'admin' || password === 'tobita' || password === 'tobita2026';
+      const isUserCorrect = username === 'admin' || !username;
+      if (isUserCorrect && isPassCorrect) {
+        setIsAuthenticated(true);
+        setLoginError('');
+        return true;
+      }
+      return false;
+    };
+
+    try {
+      const res = await fetch('/api/cms/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password })
+      });
+
+      if (res.ok) {
+        const data = await res.json().catch(() => null);
+        if (data && data.success) {
+          setIsAuthenticated(true);
+          setLoginError('');
+        } else {
+          // Fallback to local check if API response JSON parsing fails or isn't successful
+          if (!localCheck()) {
+            setLoginError('IDまたはパスワードが正しくありません。');
+          }
+        }
+      } else {
+        // If API returns non-200 code (404, 405 Method Not Allowed, 403, 500 etc),
+        // fallback to local verification immediately to guarantee usability in static hosts like Cloudflare Pages
+        if (!localCheck()) {
+          const data = await res.json().catch(() => ({}));
+          setLoginError(data.error || 'IDまたはパスワードが正しくありません。');
+        }
+      }
+    } catch (err) {
+      console.warn('Login connection failed, fallback to local verification', err);
+      if (!localCheck()) {
+        setLoginError('IDまたはパスワードが正しくありません。');
+      }
+    } finally {
+      setIsLoggingIn(false);
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setUsername('');
+    setPassword('');
+  };
+
+  // Firebase Consultation CRM Handlers
+  const fetchConsultationsData = async () => {
+    setIsLoadingConsultations(true);
+    try {
+      const data = await getConsultations();
+      setConsultationsList(data);
+    } catch (err) {
+      console.error(err);
+      showAlert('お問合せデータの読み込みに失敗しました。', 'error');
+    } finally {
+      setIsLoadingConsultations(false);
+    }
+  };
+
+  const handleUpdateStatus = async (id: string, newStatus: 'unread' | 'read' | 'contacted') => {
+    try {
+      const success = await updateConsultationStatus(id, newStatus);
+      if (success) {
+        setConsultationsList(prev => prev.map(item => item.id === id ? { ...item, status: newStatus } : item));
+        showAlert('お問合せステータスを更新しました！');
+      } else {
+        showAlert('ステータス更新に失敗しました。', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showAlert('ステータス更新中にエラーが発生しました。', 'error');
+    }
+  };
+
+  const handleDeleteConsultationData = async (id: string) => {
+    if (window.confirm('このお問合せデータを完全に削除しますか？')) {
+      try {
+        const success = await deleteConsultation(id);
+        if (success) {
+          setConsultationsList(prev => prev.filter(item => item.id !== id));
+          showAlert('お問合せを削除しました。');
+        } else {
+          showAlert('削除に失敗しました。', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showAlert('削除中にエラーが発生しました。', 'error');
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated && activeAdminTab === 'consultation') {
+      fetchConsultationsData();
+    }
+  }, [isAuthenticated, activeAdminTab]);
+
+  const showAlert = (text: string, type: 'success' | 'error' = 'success') => {
+    setAlertMessage({ text, type });
+    setTimeout(() => setAlertMessage(null), 4000);
+  };
+
+  // Reset to default preset
+  const handleResetToDefault = async () => {
+    if (window.confirm('すべての変更を破棄して、初期登録のコラムデータにリセットしますか？ (追加したカスタムコラムは消去されます)')) {
+      try {
+        localStorage.removeItem('custom_blog_articles');
+      } catch (err) {
+        console.warn('localStorage.removeItem failed', err);
+      }
+      const defaults = getStoredArticles();
+      setArticles(defaults);
+      onRefreshBlog();
+      
+      try {
+        const res = await fetch('/api/cms/articles', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'X-Admin-Password': getAdminPassword()
+          },
+          body: JSON.stringify(defaults)
+        });
+        if (res.ok) {
+          showAlert('コラムを初期状態にリセット（サーバー保存完了）しました！');
+        } else {
+          showAlert('ブラウザ側はリセットされましたが、サーバー同期に失敗しました。', 'error');
+        }
+      } catch (e) {
+        showAlert('ブラウザ側はリセットされましたが、サーバー同期に失敗しました。', 'error');
+      }
+    }
+  };
+
+  // Delete article
+  const handleDeleteArticle = async (id: string, articleTitle: string) => {
+    if (window.confirm(`「${articleTitle}」を本当に削除しますか？`)) {
+      const updated = articles.filter(a => a.id !== id);
+      setArticles(updated);
+      saveArticles(updated);
+      onRefreshBlog();
+      
+      try {
+        const res = await fetch('/api/cms/articles', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'X-Admin-Password': getAdminPassword()
+          },
+          body: JSON.stringify(updated)
+        });
+        if (res.ok) {
+          showAlert('コラムを削除し、サーバーに保存しました');
+        } else {
+          showAlert('コラムをブラウザから削除しましたが、サーバー同期に失敗しました。', 'error');
+        }
+      } catch (e) {
+        showAlert('コラムをブラウザから削除しましたが、サーバー同期に失敗しました。', 'error');
+      }
+    }
+  };
+
+  // Start creating new
+  const handleStartCreate = () => {
+    setEditingArticleId(null);
+    setTitle('');
+    setSlug(`custom-column-${Date.now()}`);
+    setCategory('beginner');
+    setSummary('');
+    setEyeCatch('📝');
+    setAuthorName('さくら');
+    setAuthorRole('女性サポートスタッフ');
+    setAuthorAvatar('👩‍💼');
+    setTagsInput('未経験歓迎, 飛田新地');
+    setBlocks([
+      { id: '1', type: 'p', text: 'ここに本文の最初の段落を入力してください。' },
+      { id: '2', type: 'h2', text: '魅力的な見出し' },
+      { id: '3', type: 'p', text: '見出しに続く詳細な説明文を入力します。' },
+      { id: '4', type: 'cta' }
+    ]);
+    setIsEditing(true);
+  };
+
+  // Start editing existing
+  const handleStartEdit = (article: BlogArticle) => {
+    setEditingArticleId(article.id);
+    setTitle(article.title);
+    setSlug(article.slug);
+    setCategory(article.category);
+    setSummary(article.summary);
+    setEyeCatch(article.eyeCatch);
+    setAuthorName(article.author.name);
+    setAuthorRole(article.author.role);
+    setAuthorAvatar(article.author.avatar);
+    setTagsInput(article.tags.join(', '));
+    setBlocks(
+      article.content.map((b, idx) => ({
+        ...b,
+        id: `${idx}-${Date.now()}`
+      }))
+    );
+    setIsEditing(true);
+  };
+
+  // Save changes
+  const handleSaveArticle = () => {
+    if (!title.trim()) {
+      showAlert('タイトルを入力してください', 'error');
+      return;
+    }
+    if (!slug.trim()) {
+      showAlert('スラッグ（URLパーツ）を入力してください', 'error');
+      return;
+    }
+
+    const cleanTags = tagsInput
+      .split(',')
+      .map(t => t.trim())
+      .filter(t => t.length > 0);
+
+    const categoryObj = BLOG_CATEGORIES.find(c => c.id === category);
+    const categoryLabel = categoryObj ? categoryObj.label : '未経験者向け';
+
+    // Format content block by stripping the temporary visual editor IDs
+    const formattedContent = blocks.map(({ id, ...rest }) => rest);
+
+    const newArticle: BlogArticle = {
+      id: editingArticleId || `custom-${Date.now()}`,
+      title,
+      slug,
+      category,
+      categoryLabel,
+      publishedAt: editingArticleId 
+        ? (articles.find(a => a.id === editingArticleId)?.publishedAt || new Date().toISOString().split('T')[0])
+        : new Date().toISOString().split('T')[0],
+      readTime: `${Math.max(2, Math.ceil(blocks.filter(b => b.text).reduce((acc, b) => acc + (b.text?.length || 0), 0) / 400))}分`,
+      summary,
+      eyeCatch,
+      author: {
+        name: authorName,
+        role: authorRole,
+        avatar: authorAvatar
+      },
+      content: formattedContent,
+      tags: cleanTags
+    };
+
+    let updatedArticles: BlogArticle[];
+    if (editingArticleId) {
+      updatedArticles = articles.map(a => a.id === editingArticleId ? newArticle : a);
+    } else {
+      updatedArticles = [newArticle, ...articles];
+    }
+
+    setArticles(updatedArticles);
+    saveArticles(updatedArticles);
+    setIsEditing(false);
+    onRefreshBlog();
+
+    // Send to server
+    const isEdit = !!editingArticleId;
+    (async () => {
+      try {
+        const res = await fetch('/api/cms/articles', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'X-Admin-Password': getAdminPassword()
+          },
+          body: JSON.stringify(updatedArticles)
+        });
+        if (res.ok) {
+          showAlert(isEdit ? 'コラムを更新し、サーバーに保存しました！' : '新しいコラムを公開し、サーバーに保存しました！');
+        } else {
+          showAlert('コラムはローカルに保存されましたが、サーバーへの同期に失敗しました。', 'error');
+        }
+      } catch (e) {
+        showAlert('コラムはローカルに保存されましたが、サーバーへの同期に失敗しました。', 'error');
+      }
+    })();
+  };
+
+  // Block handlers
+  const addBlock = (type: BlogArticle['content'][number]['type']) => {
+    const newBlock: EditorBlock = {
+      id: `${Date.now()}-${Math.random()}`,
+      type,
+      text: type === 'p' ? '新しい段落文を入力してください。' : type === 'h2' ? '新しい中見出し' : type === 'h3' ? '新しい小見出し' : '',
+      items: type === 'list' ? ['箇条書きリスト項目 1', '箇条書きリスト項目 2'] : undefined,
+      question: type === 'qna' ? '質問を入力してください' : undefined,
+      answer: type === 'qna' ? '回答をここに入力してください。安心できる丁寧なトーンがおすすめです。' : undefined
+    };
+    setBlocks([...blocks, newBlock]);
+  };
+
+  const updateBlockText = (id: string, text: string) => {
+    setBlocks(blocks.map(b => b.id === id ? { ...b, text } : b));
+  };
+
+  const updateBlockQna = (id: string, field: 'question' | 'answer', val: string) => {
+    setBlocks(blocks.map(b => b.id === id ? { ...b, [field]: val } : b));
+  };
+
+  const updateBlockListItems = (id: string, idx: number, val: string) => {
+    setBlocks(blocks.map(b => {
+      if (b.id === id && b.items) {
+        const nextItems = [...b.items];
+        nextItems[idx] = val;
+        return { ...b, items: nextItems };
+      }
+      return b;
+    }));
+  };
+
+  const addListItem = (id: string) => {
+    setBlocks(blocks.map(b => {
+      if (b.id === id && b.items) {
+        return { ...b, items: [...b.items, '新しいリスト項目'] };
+      }
+      return b;
+    }));
+  };
+
+  const removeListItem = (id: string, itemIdx: number) => {
+    setBlocks(blocks.map(b => {
+      if (b.id === id && b.items) {
+        return { ...b, items: b.items.filter((_, idx) => idx !== itemIdx) };
+      }
+      return b;
+    }));
+  };
+
+  const removeBlock = (id: string) => {
+    setBlocks(blocks.filter(b => b.id !== id));
+  };
+
+  const moveBlock = (idx: number, direction: 'up' | 'down') => {
+    const nextIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (nextIdx < 0 || nextIdx >= blocks.length) return;
+    
+    const nextBlocks = [...blocks];
+    const temp = nextBlocks[idx];
+    nextBlocks[idx] = nextBlocks[nextIdx];
+    nextBlocks[nextIdx] = temp;
+    setBlocks(nextBlocks);
+  };
+
+  // Export full blogData as clean TypeScript
+  const getExportCode = () => {
+    const formatted = articles.map(({ id, ...rest }) => rest);
+    return `// ==========================================
+// 💡 このファイルを丸ごとダウンロードしたコードの 
+//    「/src/blogData.ts」 に上書きコピーして貼り付けるだけで、
+//    あなたのサーバーでもコラムが追加・保存されます！
+// ==========================================
+
+export interface BlogArticle {
+  id: string;
+  title: string;
+  slug: string;
+  category: 'beginner' | 'salary' | 'security' | 'lifestyle' | 'onboarding';
+  categoryLabel: string;
+  publishedAt: string;
+  readTime: string;
+  summary: string;
+  eyeCatch: string;
+  author: {
+    name: string;
+    role: string;
+    avatar: string;
+  };
+  content: {
+    type: 'p' | 'h2' | 'h3' | 'list' | 'cta' | 'qna';
+    text?: string;
+    items?: string[];
+    question?: string;
+    answer?: string;
+  }[];
+  tags: string[];
+}
+
+export const BLOG_CATEGORIES = [
+  { id: 'all', label: 'すべて' },
+  { id: 'beginner', label: '未経験者向け' },
+  { id: 'salary', label: '給与・待遇' },
+  { id: 'security', label: '安心・身バレ対策' },
+  { id: 'lifestyle', label: '生活・働き方' },
+  { id: 'onboarding', label: '面接・お仕事の流れ' }
+];
+
+export const BLOG_ARTICLES: BlogArticle[] = ${JSON.stringify(articles, null, 2)};
+
+export function getStoredArticles(): BlogArticle[] {
+  if (typeof window === 'undefined') return BLOG_ARTICLES;
+  const stored = localStorage.getItem('custom_blog_articles');
+  if (!stored) {
+    return BLOG_ARTICLES;
+  }
+  try {
+    const customArticles = JSON.parse(stored) as BlogArticle[];
+    if (customArticles.length === 0) return BLOG_ARTICLES;
+    return customArticles;
+  } catch (e) {
+    console.error('Error parsing custom blog articles:', e);
+    return BLOG_ARTICLES;
+  }
+}
+
+export function saveArticles(articles: BlogArticle[]) {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem('custom_blog_articles', JSON.stringify(articles));
+}
+`;
+  };
+
+  const handleCopyCode = () => {
+    navigator.clipboard.writeText(getExportCode());
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  };
+
+  return (
+    <div className="bg-surface border-t border-rose-100 py-12 px-4 sm:px-6 lg:px-8 min-h-[600px]">
+      
+      {/* Alert Banner */}
+      <AnimatePresence>
+        {alertMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className={`fixed top-20 right-4 z-50 px-5 py-3 rounded-2xl shadow-lg flex items-center gap-2 font-semibold text-sm ${
+              alertMessage.type === 'success' 
+                ? 'bg-emerald-50 border border-emerald-200 text-emerald-800' 
+                : 'bg-rose-50 border border-rose-200 text-rose-800'
+            }`}
+          >
+            <CheckCircle2 size={18} className={alertMessage.type === 'success' ? 'text-emerald-600' : 'text-rose-600'} />
+            {alertMessage.text}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {!isAuthenticated ? (
+        <>
+          {/* ==========================================
+             A. LOGIN FORM SCREEN
+             ========================================== */}
+          <div className="max-w-md mx-auto bg-white border border-outline-variant rounded-4xl p-8 shadow-sm">
+          <div className="text-center mb-6">
+            <div className="w-12 h-12 bg-rose-50 border border-rose-100 rounded-2xl flex items-center justify-center mx-auto text-secondary mb-3">
+              <KeyRound size={22} />
+            </div>
+            <h2 className="text-xl font-bold text-[#2c1a1e]">管理者用ログイン</h2>
+            <p className="text-xs text-on-surface-variant mt-1.5 leading-relaxed">
+              コラムを新規追加・編集・削除するためのシステム管理画面です。ログインしてください。
+            </p>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label className="block text-xs font-bold text-on-surface-variant mb-1.5">管理者ログインID</label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-[#5e474c]/50">
+                  <User size={16} />
+                </span>
+                <input
+                  type="text"
+                  required
+                  placeholder="IDを入力してください"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="block w-full pl-9 pr-4 py-2.5 bg-surface border border-outline-variant rounded-2xl focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary text-sm transition-all"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-on-surface-variant mb-1.5">セキュリティパスワード</label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-[#5e474c]/50">
+                  <Lock size={16} />
+                </span>
+                <input
+                  type="password"
+                  required
+                  placeholder="パスワードを入力してください"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="block w-full pl-9 pr-4 py-2.5 bg-surface border border-outline-variant rounded-2xl focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary text-sm transition-all"
+                />
+              </div>
+              {loginError && (
+                <p className="mt-1.5 text-xs text-rose-600 flex items-center gap-1">
+                  <AlertCircle size={12} />
+                  {loginError}
+                </p>
+              )}
+            </div>
+
+
+
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                onClick={onClose}
+                className="w-1/2 py-2.5 bg-white border border-outline-variant rounded-2xl text-xs font-bold text-on-surface hover:bg-rose-50 transition-all cursor-pointer"
+              >
+                キャンセル
+              </button>
+              <button
+                type="submit"
+                className="w-1/2 py-2.5 bg-secondary hover:bg-opacity-95 text-white font-bold rounded-2xl text-sm shadow-md shadow-secondary/10 transition-all cursor-pointer"
+              >
+                ログイン
+              </button>
+            </div>
+          </form>
+        </div>
+      </>
+      ) : isEditing ? (
+        /* ==========================================
+           B. CMS ARTICLE EDITOR SCREEN
+           ========================================== */
+        <div className="max-w-4xl mx-auto bg-white border border-outline-variant rounded-4xl p-6 md:p-8 shadow-sm">
+          {/* Editor Header */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-rose-50 mb-6">
+            <div>
+              <span className="text-xs text-secondary font-semibold uppercase tracking-wider">ARTICLE BUILDER</span>
+              <h2 className="text-xl md:text-2xl font-bold text-[#2c1a1e] flex items-center gap-1.5">
+                <FileText size={20} className="text-secondary" />
+                {editingArticleId ? 'コラムの編集' : '新しいコラムの追加'}
+              </h2>
+            </div>
+            <div className="flex gap-2 w-full sm:w-auto">
+              <button
+                onClick={() => setIsEditing(false)}
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1 px-4 py-2 bg-white border border-outline-variant rounded-2xl text-xs font-bold text-on-surface hover:bg-rose-50 transition-all cursor-pointer"
+              >
+                <ArrowLeft size={14} />
+                キャンセル
+              </button>
+              <button
+                onClick={handleSaveArticle}
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1 px-5 py-2 bg-secondary hover:bg-opacity-95 text-white font-bold rounded-2xl text-xs shadow-md shadow-secondary/15 transition-all cursor-pointer"
+              >
+                <Save size={14} />
+                保存して公開
+              </button>
+            </div>
+          </div>
+
+          {/* Form Meta Fields */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            {/* Title & Slug */}
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-on-surface-variant mb-1">コラムタイトル <span className="text-rose-500">*</span></label>
+                <input
+                  type="text"
+                  placeholder="例: 【初心者必読】飛田新地の1日の流れを徹底解説！"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary text-sm"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-on-surface-variant mb-1">スラッグ（URLパーツ / 半角英数字） <span className="text-rose-500">*</span></label>
+                <input
+                  type="text"
+                  placeholder="例: tobitashinchi-flow-guide"
+                  value={slug}
+                  onChange={(e) => setSlug(e.target.value.replace(/[^a-zA-Z0-9-]/g, ''))}
+                  className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary text-sm font-mono"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-on-surface-variant mb-1">コラムカテゴリー</label>
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value as any)}
+                  className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary text-sm"
+                >
+                  <option value="beginner">未経験者向け</option>
+                  <option value="salary">給与・待遇</option>
+                  <option value="security">安心・身バレ対策</option>
+                  <option value="lifestyle">生活・働き方</option>
+                  <option value="onboarding">面接・お仕事の流れ</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-on-surface-variant mb-1">タグ（カンマ区切り）</label>
+                <input
+                  type="text"
+                  placeholder="未経験歓迎, 飛田新地, 日給10万"
+                  value={tagsInput}
+                  onChange={(e) => setTagsInput(e.target.value)}
+                  className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary text-sm"
+                />
+              </div>
+            </div>
+
+            {/* Eyecatch, Author, Summary */}
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-on-surface-variant mb-1">アイキャッチ (絵文字か画像URL)</label>
+                  <div className="flex gap-2">
+                    <div className="w-10 h-10 bg-surface-container rounded-xl border border-outline-variant flex items-center justify-center shrink-0 text-xl overflow-hidden select-none">
+                      {isImageUrl(eyeCatch) ? (
+                        <img 
+                          src={eyeCatch} 
+                          className="w-full h-full object-cover" 
+                          alt="preview" 
+                          referrerPolicy="no-referrer"
+                        />
+                      ) : (
+                        eyeCatch
+                      )}
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="例: 🌸 や 画像のURL"
+                      value={eyeCatch}
+                      onChange={(e) => setEyeCatch(e.target.value)}
+                      className="flex-grow px-3 py-2 bg-surface border border-outline-variant rounded-2xl focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary text-xs"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-on-surface-variant mb-1">監修者アバター</label>
+                  <input
+                    type="text"
+                    placeholder="👩‍💼 や 👨‍💻"
+                    value={authorAvatar}
+                    onChange={(e) => setAuthorAvatar(e.target.value)}
+                    className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary text-sm text-center font-display"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-on-surface-variant mb-1">監修スタッフ名</label>
+                  <input
+                    type="text"
+                    placeholder="さくら"
+                    value={authorName}
+                    onChange={(e) => setAuthorName(e.target.value)}
+                    className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-on-surface-variant mb-1">監修者の役職</label>
+                  <input
+                    type="text"
+                    placeholder="女性サポートスタッフ"
+                    value={authorRole}
+                    onChange={(e) => setAuthorRole(e.target.value)}
+                    className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary text-sm"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-on-surface-variant mb-1">コラムの要約（一覧画面で表示）</label>
+                <textarea
+                  rows={3}
+                  placeholder="コラムの概要や引き付ける紹介文を2〜3文で記述してください。"
+                  value={summary}
+                  onChange={(e) => setSummary(e.target.value)}
+                  className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary text-sm resize-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Core Content Blocks Builder */}
+          <div className="mt-8">
+            <h3 className="text-sm font-bold text-[#2c1a1e] border-b border-rose-100 pb-2 mb-4 flex items-center justify-between">
+              <span>本文のブロック構成</span>
+              <span className="text-xs text-on-surface-variant font-normal">お好きな順番でドラッグ・追加・編集できます</span>
+            </h3>
+
+            {/* Block list */}
+            <div className="space-y-4 mb-6" id="editor-blocks-container">
+              {blocks.map((block, idx) => (
+                <div 
+                  key={block.id} 
+                  className={`relative p-5 rounded-3xl border transition-all ${
+                    block.type === 'cta' 
+                      ? 'bg-rose-50/40 border-rose-200/60' 
+                      : block.type === 'qna'
+                      ? 'bg-[#06c755]/5 border-[#06c755]/15'
+                      : 'bg-surface border-outline-variant'
+                  }`}
+                >
+                  {/* Block Header Toolbar */}
+                  <div className="flex items-center justify-between mb-3">
+                    <span className={`px-2.5 py-0.5 rounded-lg text-[10px] font-bold ${
+                      block.type === 'h2' ? 'bg-secondary text-white' :
+                      block.type === 'h3' ? 'bg-pink-100 text-secondary' :
+                      block.type === 'list' ? 'bg-amber-100 text-amber-800' :
+                      block.type === 'cta' ? 'bg-[#2c1a1e] text-white' :
+                      block.type === 'qna' ? 'bg-[#06c755] text-white' :
+                      'bg-gray-100 text-gray-700'
+                    }`}>
+                      {block.type === 'p' && '本文段落 (p)'}
+                      {block.type === 'h2' && '中見出し (H2)'}
+                      {block.type === 'h3' && '小見出し (H3)'}
+                      {block.type === 'list' && '箇条書き (List)'}
+                      {block.type === 'cta' && 'LINEお問い合わせ誘導 (CTA)'}
+                      {block.type === 'qna' && 'よくある質問 Q&A'}
+                    </span>
+
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        disabled={idx === 0}
+                        onClick={() => moveBlock(idx, 'up')}
+                        className="p-1 hover:bg-white rounded-md text-on-surface-variant hover:text-on-surface disabled:opacity-35 cursor-pointer"
+                        title="上に移動"
+                      >
+                        <MoveUp size={14} />
+                      </button>
+                      <button
+                        type="button"
+                        disabled={idx === blocks.length - 1}
+                        onClick={() => moveBlock(idx, 'down')}
+                        className="p-1 hover:bg-white rounded-md text-on-surface-variant hover:text-on-surface disabled:opacity-35 cursor-pointer"
+                        title="下に移動"
+                      >
+                        <MoveDown size={14} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeBlock(block.id)}
+                        className="p-1 hover:bg-white rounded-md text-rose-500 hover:text-rose-700 cursor-pointer"
+                        title="ブロック削除"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Block Content Inputs */}
+                  {block.type === 'cta' ? (
+                    <div className="text-center py-2 text-xs text-on-surface-variant leading-relaxed">
+                      💡 LINE公式への無料相談リンク、および給与シミュレーターが並ぶコンバージョン用のバナーがここに自動挿入されます。
+                    </div>
+                  ) : block.type === 'qna' ? (
+                    <div className="space-y-2.5">
+                      <input
+                        type="text"
+                        placeholder="Q. 知りたい質問は？ (例: お酒が全く飲めないのですが…)"
+                        value={block.question || ''}
+                        onChange={(e) => updateBlockQna(block.id, 'question', e.target.value)}
+                        className="w-full px-3.5 py-2 bg-white border border-outline-variant rounded-xl focus:outline-none focus:ring-1 focus:ring-secondary text-xs font-semibold"
+                      />
+                      <textarea
+                        rows={2}
+                        placeholder="A. 回答を記述します。お酒が飲めなくても笑顔で話せれば全く問題ありませんよ、など安心感を与える内容がベスト。"
+                        value={block.answer || ''}
+                        onChange={(e) => updateBlockQna(block.id, 'answer', e.target.value)}
+                        className="w-full px-3.5 py-2 bg-white border border-outline-variant rounded-xl focus:outline-none focus:ring-1 focus:ring-secondary text-xs"
+                      />
+                    </div>
+                  ) : block.type === 'list' ? (
+                    <div className="space-y-2">
+                      {block.items?.map((item, itemIdx) => (
+                        <div key={itemIdx} className="flex gap-2 items-center">
+                          <span className="text-xs font-bold text-secondary">{itemIdx + 1}.</span>
+                          <input
+                            type="text"
+                            value={item}
+                            onChange={(e) => updateBlockListItems(block.id, itemIdx, e.target.value)}
+                            className="flex-grow px-3 py-1.5 bg-white border border-outline-variant rounded-xl focus:outline-none focus:ring-1 focus:ring-secondary text-xs"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removeListItem(block.id, itemIdx)}
+                            className="text-xs text-rose-500 p-1 hover:bg-rose-50 rounded-md cursor-pointer"
+                          >
+                            <Trash2 size={12} />
+                          </button>
+                        </div>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={() => addListItem(block.id)}
+                        className="mt-1 text-xs text-secondary hover:underline flex items-center gap-1 cursor-pointer font-bold"
+                      >
+                        <Plus size={12} /> 箇条書き項目を追加
+                      </button>
+                    </div>
+                  ) : (
+                    <textarea
+                      rows={block.type === 'p' ? 3 : 1}
+                      placeholder={block.type === 'p' ? "ここに段落本文を入力します。" : block.type === 'h2' ? "中見出しを入力します。" : "小見出しを入力します。"}
+                      value={block.text || ''}
+                      onChange={(e) => updateBlockText(block.id, e.target.value)}
+                      className={`w-full px-3.5 py-2 bg-white border border-outline-variant rounded-xl focus:outline-none focus:ring-1 focus:ring-secondary text-sm ${
+                        block.type === 'h2' ? 'font-bold text-[#2c1a1e]' : block.type === 'h3' ? 'font-bold text-secondary' : 'leading-relaxed'
+                      }`}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Block Adder Actions bar */}
+            <div className="bg-surface-container rounded-3xl p-5 border border-outline-variant text-center">
+              <p className="text-xs font-bold text-on-surface-variant mb-3">新しいコンテンツブロックを追加する</p>
+              <div className="flex flex-wrap gap-2 justify-center">
+                <button
+                  type="button"
+                  onClick={() => addBlock('p')}
+                  className="px-3.5 py-2 bg-white border border-outline-variant hover:border-secondary hover:text-secondary rounded-xl text-xs font-semibold cursor-pointer flex items-center gap-1 transition-all"
+                >
+                  <Plus size={14} />
+                  本文段落 (P)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => addBlock('h2')}
+                  className="px-3.5 py-2 bg-white border border-outline-variant hover:border-secondary hover:text-secondary rounded-xl text-xs font-semibold cursor-pointer flex items-center gap-1 transition-all"
+                >
+                  <Plus size={14} />
+                  中見出し (H2)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => addBlock('h3')}
+                  className="px-3.5 py-2 bg-white border border-outline-variant hover:border-secondary hover:text-secondary rounded-xl text-xs font-semibold cursor-pointer flex items-center gap-1 transition-all"
+                >
+                  <Plus size={14} />
+                  小見出し (H3)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => addBlock('list')}
+                  className="px-3.5 py-2 bg-white border border-outline-variant hover:border-secondary hover:text-secondary rounded-xl text-xs font-semibold cursor-pointer flex items-center gap-1 transition-all"
+                >
+                  <Plus size={14} />
+                  リスト (List)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => addBlock('qna')}
+                  className="px-3.5 py-2 bg-white border border-[#06c755] text-[#06c755] hover:bg-emerald-50 rounded-xl text-xs font-semibold cursor-pointer flex items-center gap-1 transition-all"
+                >
+                  <Plus size={14} />
+                  よくある質問 (Q&A)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => addBlock('cta')}
+                  className="px-3.5 py-2 bg-[#2c1a1e] hover:bg-black text-white rounded-xl text-xs font-semibold cursor-pointer flex items-center gap-1 transition-all"
+                >
+                  <Plus size={14} />
+                  LINE誘導 (CTA)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Footer Button in Editor */}
+          <div className="flex gap-4 mt-8 pt-6 border-t border-rose-50 justify-end">
+            <button
+              onClick={() => setIsEditing(false)}
+              className="px-5 py-2.5 bg-white border border-outline-variant rounded-2xl text-sm font-bold text-on-surface hover:bg-rose-50 transition-all cursor-pointer"
+            >
+              キャンセル
+            </button>
+            <button
+              onClick={handleSaveArticle}
+              className="px-8 py-2.5 bg-secondary hover:bg-opacity-95 text-white font-bold rounded-2xl text-sm shadow-md shadow-secondary/15 transition-all cursor-pointer flex items-center gap-1"
+            >
+              <Save size={16} />
+              変更を保存して公開する
+            </button>
+          </div>
+        </div>
+      ) : (
+        /* ==========================================
+           C. CMS DASHBOARD SCREEN (LIST ALL)
+           ========================================== */
+        <div className="max-w-5xl mx-auto">
+          
+          {/* Tab Selector */}
+          <div className="flex flex-wrap border-b border-rose-100 mb-8 gap-1 md:gap-2">
+            <button
+              onClick={() => setActiveAdminTab('blog')}
+              className={`px-3 md:px-5 py-3 text-xs md:text-sm font-bold flex items-center gap-2 cursor-pointer transition-all border-b-2 ${
+                activeAdminTab === 'blog'
+                  ? 'border-secondary text-secondary font-black'
+                  : 'border-transparent text-on-surface-variant hover:text-on-surface'
+              }`}
+            >
+              <BookOpen size={16} />
+              コラム管理 (CMS)
+            </button>
+            <button
+              onClick={() => setActiveAdminTab('site')}
+              className={`px-3 md:px-5 py-3 text-xs md:text-sm font-bold flex items-center gap-2 cursor-pointer transition-all border-b-2 ${
+                activeAdminTab === 'site'
+                  ? 'border-secondary text-secondary font-black'
+                  : 'border-transparent text-on-surface-variant hover:text-on-surface'
+              }`}
+            >
+              <Settings size={16} />
+              サイト文章編集 (CMS)
+            </button>
+            <button
+              onClick={() => setActiveAdminTab('consultation')}
+              className={`px-3 md:px-5 py-3 text-xs md:text-sm font-bold flex items-center gap-2 cursor-pointer transition-all border-b-2 ${
+                activeAdminTab === 'consultation'
+                  ? 'border-secondary text-secondary font-black'
+                  : 'border-transparent text-on-surface-variant hover:text-on-surface'
+              }`}
+            >
+              <Inbox size={16} />
+              直接お問合せ一覧 (Firebase)
+            </button>
+          </div>
+
+          {activeAdminTab === 'blog' ? (
+            <>
+              {/* Dashboard Header */}
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+                <div>
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-50 text-secondary border border-rose-100">
+                    <BookOpen size={12} />
+                    コラム管理システム (CMS)
+                  </span>
+                  <h2 className="text-2xl font-bold text-[#2c1a1e] mt-1.5 font-sans">飛田ガールズ コラムダッシュボード</h2>
+                  <p className="text-xs text-on-surface-variant mt-1">
+                    現在登録されているすべてのコラムをリアルタイムで追加・変更・削除できます。
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2 w-full md:w-auto">
+                  <button
+                    onClick={handleResetToDefault}
+                    className="flex-1 md:flex-initial inline-flex items-center justify-center gap-1 px-4 py-2.5 bg-white border border-rose-200 text-rose-700 hover:bg-rose-50 rounded-2xl text-xs font-bold transition-all cursor-pointer"
+                    title="初期化"
+                  >
+                    <RotateCcw size={14} />
+                    コラム初期化
+                  </button>
+                  <button
+                    onClick={() => setShowCodeExport(true)}
+                    className="flex-1 md:flex-initial inline-flex items-center justify-center gap-1 px-4 py-2.5 bg-[#2c1a1e] hover:bg-black text-white rounded-2xl text-xs font-bold transition-all cursor-pointer"
+                  >
+                    <Copy size={14} />
+                    コード出力
+                  </button>
+                  <button
+                    onClick={handleStartCreate}
+                    className="flex-1 md:flex-initial inline-flex items-center justify-center gap-1 px-5 py-2.5 bg-secondary hover:bg-[#b03f62] text-white rounded-2xl text-xs font-bold shadow-md shadow-secondary/15 transition-all cursor-pointer"
+                  >
+                    <Plus size={16} />
+                    新規コラム追加
+                  </button>
+                </div>
+              </div>
+
+              {/* Code Export Drawer/Modal */}
+              <AnimatePresence>
+                {showCodeExport && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="bg-zinc-900 text-zinc-100 rounded-3xl p-5 mb-8 border border-zinc-800 shadow-xl overflow-hidden"
+                  >
+                    <div className="flex justify-between items-center pb-3 border-b border-zinc-800 mb-4">
+                      <div>
+                        <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+                          <Sparkles size={16} className="text-amber-400" />
+                          書き出しソースコードの取得
+                        </h3>
+                        <p className="text-[11px] text-zinc-400 mt-0.5 leading-relaxed">
+                          ここに入力したデータを含めた新しい <code className="text-secondary font-mono">blogData.ts</code> を自動生成しました。コピペで完全反映できます！
+                        </p>
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={handleCopyCode}
+                          className="px-3 py-1.5 bg-secondary hover:bg-opacity-90 rounded-xl text-xs font-bold text-white flex items-center gap-1 cursor-pointer"
+                        >
+                          {isCopied ? <Check size={13} /> : <Copy size={13} />}
+                          {isCopied ? 'コピー完了' : 'コードをコピー'}
+                        </button>
+                        <button
+                          onClick={() => setShowCodeExport(false)}
+                          className="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 rounded-xl text-xs font-bold text-zinc-300 cursor-pointer"
+                        >
+                          閉じる
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <textarea
+                        readOnly
+                        rows={8}
+                        value={getExportCode()}
+                        className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl p-4 font-mono text-[11px] leading-relaxed text-zinc-300 focus:outline-none focus:ring-0"
+                      />
+                      <div className="absolute bottom-4 right-4 text-[10px] text-zinc-500 select-none">
+                        Type: TypeScript
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Articles list grid */}
+              <div className="bg-white border border-outline-variant rounded-4xl overflow-hidden shadow-xs">
+                <div className="p-5 border-b border-rose-50 bg-surface-container-low flex justify-between items-center">
+                  <span className="text-xs font-bold text-[#2c1a1e] font-sans">コラム数: <span className="font-mono">{articles.length}</span>件</span>
+                  <button
+                    onClick={handleLogout}
+                    className="text-xs font-bold text-on-surface-variant hover:text-rose-600 flex items-center gap-1 cursor-pointer transition-colors"
+                  >
+                    <LogOut size={13} />
+                    管理画面を閉じる・ログアウト
+                  </button>
+                </div>
+
+                {articles.length > 0 ? (
+                  <div className="divide-y divide-rose-50/50">
+                    {articles.map((article) => (
+                      <div 
+                        key={article.id} 
+                        className="p-5 flex flex-col md:flex-row gap-5 items-start md:items-center justify-between hover:bg-rose-50/10 transition-colors"
+                      >
+                        {/* Left: Meta & Title */}
+                        <div className="flex gap-4 items-center flex-grow max-w-2xl">
+                          <div className="w-12 h-12 bg-surface-container rounded-2xl flex items-center justify-center shrink-0 border border-outline-variant text-2xl select-none overflow-hidden">
+                            {isImageUrl(article.eyeCatch) ? (
+                              <img 
+                                src={article.eyeCatch} 
+                                alt={article.title}
+                                className="w-full h-full object-cover"
+                                referrerPolicy="no-referrer"
+                              />
+                            ) : (
+                              article.eyeCatch
+                            )}
+                          </div>
+                          <div>
+                            <div className="flex flex-wrap gap-2 items-center text-[11px] font-sans mb-1 text-on-surface-variant">
+                              <span className="font-semibold text-secondary bg-rose-50 px-2 py-0.5 rounded-lg border border-rose-100/55">{article.categoryLabel}</span>
+                              <span>•</span>
+                              <span>公開日: <span className="font-mono">{article.publishedAt}</span></span>
+                              <span>•</span>
+                              <span>読了: <span className="font-mono">{article.readTime}</span></span>
+                            </div>
+                            <h3 className="text-sm font-bold text-[#2c1a1e] leading-snug hover:text-secondary cursor-pointer" onClick={() => handleStartEdit(article)}>
+                              {article.title}
+                            </h3>
+                            <p className="text-xs text-on-surface-variant line-clamp-1 mt-0.5 leading-relaxed">
+                              {article.summary}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Right: Actions */}
+                        <div className="flex gap-2 shrink-0 w-full md:w-auto border-t md:border-t-0 pt-3 md:pt-0 justify-end">
+                          <button
+                            onClick={() => handleStartEdit(article)}
+                            className="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-secondary border border-rose-100 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1"
+                          >
+                            <Edit3 size={13} />
+                            編集
+                          </button>
+                          <button
+                            onClick={() => handleDeleteArticle(article.id, article.title)}
+                            className="px-3.5 py-2 bg-white hover:bg-rose-50 text-rose-600 border border-rose-100 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1"
+                          >
+                            <Trash2 size={13} />
+                            削除
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-16">
+                    <ShieldAlert size={40} className="mx-auto text-rose-300 mb-3" />
+                    <p className="text-sm font-bold text-[#2c1a1e]">コラムが登録されていません</p>
+                    <p className="text-xs text-on-surface-variant mt-1">「新規コラム追加」ボタンから追加してみましょう！</p>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : activeAdminTab === 'site' ? (
+            /* ==========================================
+               SITE TEXT EDITOR CMS
+               ========================================== */
+            <div className="bg-white border border-outline-variant rounded-4xl p-6 md:p-8 shadow-sm">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-6 border-b border-rose-50">
+                <div>
+                  <h3 className="text-xl font-bold text-[#2c1a1e] flex items-center gap-1.5">
+                    <Settings size={20} className="text-secondary animate-spin-slow" />
+                    サイト内文章編集システム
+                  </h3>
+                  <p className="text-xs text-on-surface-variant mt-1 leading-relaxed">
+                    スマホやパソコンで閲覧される、求人トップページのあらゆる文章・見出しを直感的に変更できます。
+                  </p>
+                </div>
+                <div className="flex gap-2 w-full md:w-auto">
+                  <button
+                    onClick={handleResetSiteContent}
+                    className="flex-grow md:flex-initial inline-flex items-center justify-center gap-1 px-4 py-2.5 bg-white border border-rose-200 text-rose-700 hover:bg-rose-50 rounded-2xl text-xs font-bold transition-all cursor-pointer"
+                  >
+                    <RotateCcw size={14} />
+                    初期テキストに戻す
+                  </button>
+                  <button
+                    onClick={handleSaveSiteContent}
+                    className="flex-grow md:flex-initial inline-flex items-center justify-center gap-1 px-6 py-2.5 bg-secondary hover:bg-opacity-95 text-white font-bold rounded-2xl text-xs shadow-md shadow-secondary/15 transition-all cursor-pointer animate-pulse"
+                  >
+                    <Save size={14} />
+                    変更を保存する
+                  </button>
+                </div>
+              </div>
+
+              {/* Sub tabs */}
+              <div className="flex flex-wrap gap-1.5 mb-8 bg-rose-50/20 p-1.5 rounded-2xl border border-rose-100/30">
+                <button
+                  onClick={() => setActiveSiteSection('hero')}
+                  className={`px-3.5 py-2 text-xs font-bold rounded-xl cursor-pointer transition-all ${
+                    activeSiteSection === 'hero' ? 'bg-secondary text-white shadow-xs' : 'text-on-surface-variant hover:bg-rose-50/40'
+                  }`}
+                >
+                  メインビジュアル
+                </button>
+                <button
+                  onClick={() => setActiveSiteSection('concerns')}
+                  className={`px-3.5 py-2 text-xs font-bold rounded-xl cursor-pointer transition-all ${
+                    activeSiteSection === 'concerns' ? 'bg-secondary text-white shadow-xs' : 'text-on-surface-variant hover:bg-rose-50/40'
+                  }`}
+                >
+                  解決お悩み (5項目)
+                </button>
+                <button
+                  onClick={() => setActiveSiteSection('reasons')}
+                  className={`px-3.5 py-2 text-xs font-bold rounded-xl cursor-pointer transition-all ${
+                    activeSiteSection === 'reasons' ? 'bg-secondary text-white shadow-xs' : 'text-on-surface-variant hover:bg-rose-50/40'
+                  }`}
+                >
+                  選ばれる理由 (6項目)
+                </button>
+                <button
+                  onClick={() => setActiveSiteSection('jobs')}
+                  className={`px-3.5 py-2 text-xs font-bold rounded-xl cursor-pointer transition-all ${
+                    activeSiteSection === 'jobs' ? 'bg-secondary text-white shadow-xs' : 'text-on-surface-variant hover:bg-rose-50/40'
+                  }`}
+                >
+                  店舗情報・給与・シミュレータ
+                </button>
+                <button
+                  onClick={() => setActiveSiteSection('flow')}
+                  className={`px-3.5 py-2 text-xs font-bold rounded-xl cursor-pointer transition-all ${
+                    activeSiteSection === 'flow' ? 'bg-secondary text-white shadow-xs' : 'text-on-surface-variant hover:bg-rose-50/40'
+                  }`}
+                >
+                  応募フロー (6ステップ)
+                </button>
+                <button
+                  onClick={() => setActiveSiteSection('faq')}
+                  className={`px-3.5 py-2 text-xs font-bold rounded-xl cursor-pointer transition-all ${
+                    activeSiteSection === 'faq' ? 'bg-secondary text-white shadow-xs' : 'text-on-surface-variant hover:bg-rose-50/40'
+                  }`}
+                >
+                  よくある質問 (10項目)
+                </button>
+                <button
+                  onClick={() => setActiveSiteSection('consultation')}
+                  className={`px-3.5 py-2 text-xs font-bold rounded-xl cursor-pointer transition-all ${
+                    activeSiteSection === 'consultation' ? 'bg-secondary text-white shadow-xs' : 'text-on-surface-variant hover:bg-rose-50/40'
+                  }`}
+                >
+                  相談・応募フォーム・LINE
+                </button>
+              </div>
+
+              {/* Dynamic form based on selected section */}
+              <div className="space-y-6" id="site-content-form-fields">
+                {activeSiteSection === 'hero' && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <h4 className="text-xs font-bold text-secondary uppercase tracking-widest border-b pb-1 mb-2">キャッチコピー・タイトル</h4>
+                      <div>
+                        <label className="block text-[11px] font-bold text-on-surface-variant mb-1">最上部タグライン（ピンク文字）</label>
+                        <input
+                          type="text"
+                          value={siteText.hero.tagline}
+                          onChange={(e) => updateHeroField('tagline', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none focus:ring-1 focus:ring-secondary"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-on-surface-variant mb-1">大見出し1行目</label>
+                        <input
+                          type="text"
+                          value={siteText.hero.titleLine1}
+                          onChange={(e) => updateHeroField('titleLine1', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none focus:ring-1 focus:ring-secondary"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-on-surface-variant mb-1">大見出し2行目（強調）</label>
+                        <input
+                          type="text"
+                          value={siteText.hero.titleLine2}
+                          onChange={(e) => updateHeroField('titleLine2', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none focus:ring-1 focus:ring-secondary"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h4 className="text-xs font-bold text-secondary uppercase tracking-widest border-b pb-1 mb-2">説明文・CTAボタン</h4>
+                      <div>
+                        <label className="block text-[11px] font-bold text-on-surface-variant mb-1">説明文 1行目</label>
+                        <input
+                          type="text"
+                          value={siteText.hero.descriptionLine1}
+                          onChange={(e) => updateHeroField('descriptionLine1', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none focus:ring-1 focus:ring-secondary"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-on-surface-variant mb-1">説明文 2行目</label>
+                        <input
+                          type="text"
+                          value={siteText.hero.descriptionLine2}
+                          onChange={(e) => updateHeroField('descriptionLine2', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none focus:ring-1 focus:ring-secondary"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-on-surface-variant mb-1">説明文 3行目（シミュレータ誘導）</label>
+                        <input
+                          type="text"
+                          value={siteText.hero.descriptionLine3}
+                          onChange={(e) => updateHeroField('descriptionLine3', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none focus:ring-1 focus:ring-secondary"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-[11px] font-bold text-on-surface-variant mb-1">応募ボタン文字</label>
+                          <input
+                            type="text"
+                            value={siteText.hero.ctaButtonText}
+                            onChange={(e) => updateHeroField('ctaButtonText', e.target.value)}
+                            className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none focus:ring-1 focus:ring-secondary"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-bold text-on-surface-variant mb-1">バッジ文言</label>
+                          <input
+                            type="text"
+                            value={siteText.hero.badgeText}
+                            onChange={(e) => updateHeroField('badgeText', e.target.value)}
+                            className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none focus:ring-1 focus:ring-secondary"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeSiteSection === 'concerns' && (
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-bold text-on-surface-variant mb-1">セクションタイトル</label>
+                        <input
+                          type="text"
+                          value={siteText.concerns.title}
+                          onChange={(e) => updateConcernsField('title', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none focus:ring-1 focus:ring-secondary"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-on-surface-variant mb-1">セクションサブタイトル</label>
+                        <input
+                          type="text"
+                          value={siteText.concerns.subtitle}
+                          onChange={(e) => updateConcernsField('subtitle', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none focus:ring-1 focus:ring-secondary"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-4 pt-4 border-t border-rose-50">
+                      <h4 className="text-xs font-bold text-secondary">お悩み質問 & 回答 (全5項目)</h4>
+                      {siteText.concerns.items.map((item, idx) => (
+                        <div key={item.id} className="p-4 bg-rose-50/10 border border-rose-100/50 rounded-3xl space-y-3">
+                          <div className="flex justify-between items-center">
+                            <span className="text-xs font-black text-secondary font-mono">お悩み #{idx + 1} ({item.title})</span>
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-[11px] font-bold text-on-surface-variant mb-1">短縮タイトル</label>
+                              <input
+                                type="text"
+                                value={item.title}
+                                onChange={(e) => updateConcernItem(idx, 'title', e.target.value)}
+                                className="w-full px-3.5 py-1.5 bg-white border border-outline-variant rounded-xl text-xs focus:outline-none"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] font-bold text-on-surface-variant mb-1">質問（女の子側の悩み）</label>
+                              <input
+                                type="text"
+                                value={item.question}
+                                onChange={(e) => updateConcernItem(idx, 'question', e.target.value)}
+                                className="w-full px-3.5 py-1.5 bg-white border border-outline-variant rounded-xl text-xs focus:outline-none"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <label className="block text-[11px] font-bold text-on-surface-variant mb-1">回答（アドバイザーの答え）</label>
+                            <textarea
+                              rows={2}
+                              value={item.answer}
+                              onChange={(e) => updateConcernItem(idx, 'answer', e.target.value)}
+                              className="w-full px-3.5 py-1.5 bg-white border border-outline-variant rounded-xl text-xs resize-none focus:outline-none"
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {activeSiteSection === 'reasons' && (
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-bold text-on-surface-variant mb-1">セクションタイトル</label>
+                        <input
+                          type="text"
+                          value={siteText.reasons.title}
+                          onChange={(e) => updateReasonsField('title', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-on-surface-variant mb-1">セクションサブタイトル</label>
+                        <input
+                          type="text"
+                          value={siteText.reasons.subtitle}
+                          onChange={(e) => updateReasonsField('subtitle', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-4 pt-4 border-t border-rose-50">
+                      <h4 className="text-xs font-bold text-secondary">選ばれる理由 (全6項目)</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {siteText.reasons.items.map((item, idx) => (
+                          <div key={item.id} className="p-4 bg-rose-50/10 border border-rose-100/50 rounded-3xl space-y-2.5">
+                            <span className="text-xs font-black text-secondary font-mono block">理由 #{idx + 1}</span>
+                            <div>
+                              <label className="block text-[11px] font-bold text-on-surface-variant mb-1">理由タイトル</label>
+                              <input
+                                type="text"
+                                value={item.title}
+                                onChange={(e) => updateReasonItem(idx, 'title', e.target.value)}
+                                className="w-full px-3 py-1.5 bg-white border border-outline-variant rounded-xl text-xs focus:outline-none"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] font-bold text-on-surface-variant mb-1">理由詳細説明</label>
+                              <textarea
+                                rows={2}
+                                value={item.description}
+                                onChange={(e) => updateReasonItem(idx, 'description', e.target.value)}
+                                className="w-full px-3 py-1.5 bg-white border border-outline-variant rounded-xl text-xs resize-none focus:outline-none"
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeSiteSection === 'jobs' && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <h4 className="text-xs font-bold text-secondary uppercase tracking-widest border-b pb-1 mb-2">求人・店舗情報ヘッダー</h4>
+                      <div>
+                        <label className="block text-[11px] font-bold text-on-surface-variant mb-1">セクションタイトル</label>
+                        <input
+                          type="text"
+                          value={siteText.jobs.title}
+                          onChange={(e) => updateJobsField('title', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-on-surface-variant mb-1">セクションサブタイトル</label>
+                        <input
+                          type="text"
+                          value={siteText.jobs.subtitle}
+                          onChange={(e) => updateJobsField('subtitle', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-on-surface-variant mb-1">注意書き等</label>
+                        <input
+                          type="text"
+                          value={siteText.jobs.infoSubtitle}
+                          onChange={(e) => updateJobsField('infoSubtitle', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h4 className="text-xs font-bold text-secondary uppercase tracking-widest border-b pb-1 mb-2">1分でわかる！給与シミュレーター</h4>
+                      <div>
+                        <label className="block text-[11px] font-bold text-on-surface-variant mb-1">シミュレータータイトル</label>
+                        <input
+                          type="text"
+                          value={siteText.jobs.simulatorTitle}
+                          onChange={(e) => updateJobsField('simulatorTitle', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-on-surface-variant mb-1">シミュレーター概要（説明文）</label>
+                        <textarea
+                          rows={3}
+                          value={siteText.jobs.simulatorDesc}
+                          onChange={(e) => updateJobsField('simulatorDesc', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm resize-none focus:outline-none"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeSiteSection === 'flow' && (
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-bold text-on-surface-variant mb-1">セクションタイトル</label>
+                        <input
+                          type="text"
+                          value={siteText.flow.title}
+                          onChange={(e) => updateFlowField('title', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-on-surface-variant mb-1">セクションサブタイトル</label>
+                        <input
+                          type="text"
+                          value={siteText.flow.subtitle}
+                          onChange={(e) => updateFlowField('subtitle', e.target.value)}
+                          className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-3 pt-4 border-t border-rose-50">
+                      <h4 className="text-xs font-bold text-secondary">応募から開始までのフロー (全6項目)</h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        {siteText.flow.items.map((item, idx) => (
+                          <div key={item.number} className="p-4 bg-rose-50/10 border border-rose-100/50 rounded-3xl space-y-2">
+                            <span className="text-xs font-black text-secondary font-mono block">ステップ {item.number}. {item.phase}</span>
+                            <div>
+                              <label className="block text-[10px] font-bold text-on-surface-variant mb-1">ステップ名</label>
+                              <input
+                                type="text"
+                                value={item.title}
+                                onChange={(e) => updateFlowItem(idx, e.target.value)}
+                                className="w-full px-3 py-1.5 bg-white border border-outline-variant rounded-xl text-xs focus:outline-none"
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeSiteSection === 'faq' && (
+                  <div className="space-y-6">
+                    <div className="p-4 bg-rose-50/15 border border-rose-100/50 rounded-3xl grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="md:col-span-1">
+                        <label className="block text-xs font-bold text-on-surface-variant mb-1">Q&A大見出し（改行は \n または直接入力）</label>
+                        <textarea
+                          rows={2}
+                          value={siteText.faq.title}
+                          onChange={(e) => updateFaqField('title', e.target.value)}
+                          className="w-full px-3 py-1.5 bg-white border border-outline-variant rounded-xl text-xs focus:outline-none"
+                        />
+                      </div>
+                      <div className="md:col-span-1">
+                        <label className="block text-xs font-bold text-on-surface-variant mb-1">相談役の役職ラベル</label>
+                        <input
+                          type="text"
+                          value={siteText.faq.sidebarRole}
+                          onChange={(e) => updateFaqField('sidebarRole', e.target.value)}
+                          className="w-full px-3 py-1.5 bg-white border border-outline-variant rounded-xl text-xs focus:outline-none"
+                        />
+                      </div>
+                      <div className="md:col-span-1">
+                        <label className="block text-xs font-bold text-on-surface-variant mb-1">相談役からの一言</label>
+                        <textarea
+                          rows={2}
+                          value={siteText.faq.sidebarMessage}
+                          onChange={(e) => updateFaqField('sidebarMessage', e.target.value)}
+                          className="w-full px-3 py-1.5 bg-white border border-outline-variant rounded-xl text-xs focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-4 pt-4 border-t border-rose-50">
+                      <h4 className="text-xs font-bold text-secondary">よくある不安 Q&A リスト (全10問)</h4>
+                      <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2" id="faq-admin-scrollable">
+                        {siteText.faq.items.map((item, idx) => (
+                          <div key={item.id} className="p-4 bg-rose-50/10 border border-rose-100/50 rounded-3xl space-y-2">
+                            <span className="text-xs font-black text-secondary font-mono block">質問 #{idx + 1}</span>
+                            <div>
+                              <label className="block text-[11px] font-bold text-on-surface-variant mb-1">質問 (Q)</label>
+                              <input
+                                type="text"
+                                value={item.question}
+                                onChange={(e) => updateFaqItem(idx, 'question', e.target.value)}
+                                className="w-full px-3 py-1.5 bg-white border border-outline-variant rounded-xl text-xs focus:outline-none"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] font-bold text-on-surface-variant mb-1">回答 (A)</label>
+                              <textarea
+                                rows={2}
+                                value={item.answer}
+                                onChange={(e) => updateFaqItem(idx, 'answer', e.target.value)}
+                                className="w-full px-3 py-1.5 bg-white border border-outline-variant rounded-xl text-xs resize-none focus:outline-none"
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeSiteSection === 'consultation' && (
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Left: Consultation Headers */}
+                      <div className="space-y-4">
+                        <h4 className="text-xs font-bold text-secondary uppercase tracking-widest border-b pb-1 mb-2">相談・応募セクションヘッダー</h4>
+                        <div>
+                          <label className="block text-[11px] font-bold text-on-surface-variant mb-1">セクション大見出し（改行はそのまま入力）</label>
+                          <textarea
+                            rows={2}
+                            value={siteText.consultation.title}
+                            onChange={(e) => updateConsultationField('title', e.target.value)}
+                            className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-bold text-on-surface-variant mb-1">相談説明・メッセージ本文（改行はそのまま入力）</label>
+                          <textarea
+                            rows={3}
+                            value={siteText.consultation.description}
+                            onChange={(e) => updateConsultationField('description', e.target.value)}
+                            className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-bold text-on-surface-variant mb-1">プライバシー・厳守事項に関する注釈</label>
+                          <input
+                            type="text"
+                            value={siteText.consultation.privacyNote}
+                            onChange={(e) => updateConsultationField('privacyNote', e.target.value)}
+                            className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Right: Copy Template & LINE CTA */}
+                      <div className="space-y-4">
+                        <h4 className="text-xs font-bold text-secondary uppercase tracking-widest border-b pb-1 mb-2">テンプレートコピー & LINE案内</h4>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-[11px] font-bold text-on-surface-variant mb-1">コピペ用上部バッジ</label>
+                            <input
+                              type="text"
+                              value={siteText.consultation.badgeText}
+                              onChange={(e) => updateConsultationField('badgeText', e.target.value)}
+                              className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] font-bold text-on-surface-variant mb-1">コピーボタン文言</label>
+                            <input
+                              type="text"
+                              value={siteText.consultation.copyButtonText}
+                              onChange={(e) => updateConsultationField('copyButtonText', e.target.value)}
+                              className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-bold text-on-surface-variant mb-1">コピー促しサブタイトル</label>
+                          <input
+                            type="text"
+                            value={siteText.consultation.copySubtitle}
+                            onChange={(e) => updateConsultationField('copySubtitle', e.target.value)}
+                            className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-bold text-on-surface-variant mb-1">コピペ用応募テンプレート（改行はそのまま入力）</label>
+                          <textarea
+                            rows={4}
+                            value={siteText.consultation.templateText}
+                            onChange={(e) => updateConsultationField('templateText', e.target.value)}
+                            className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl font-mono text-xs focus:outline-none"
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-[11px] font-bold text-on-surface-variant mb-1">LINEボタン上のバッジ案内</label>
+                            <input
+                              type="text"
+                              value={siteText.consultation.lineBadgeText}
+                              onChange={(e) => updateConsultationField('lineBadgeText', e.target.value)}
+                              className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] font-bold text-on-surface-variant mb-1">LINEボタン表示文字</label>
+                            <input
+                              type="text"
+                              value={siteText.consultation.lineButtonText}
+                              onChange={(e) => updateConsultationField('lineButtonText', e.target.value)}
+                              className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-bold text-on-surface-variant mb-1">LINEボタン下の注釈</label>
+                          <input
+                            type="text"
+                            value={siteText.consultation.lineSubtitle}
+                            onChange={(e) => updateConsultationField('lineSubtitle', e.target.value)}
+                            className="w-full px-4 py-2 bg-surface border border-outline-variant rounded-2xl text-sm focus:outline-none"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Action Footer Button inside Site Editor */}
+              <div className="flex gap-4 mt-8 pt-6 border-t border-rose-50 justify-end">
+                <button
+                  onClick={onClose}
+                  className="px-5 py-2.5 bg-white border border-outline-variant rounded-2xl text-sm font-bold text-on-surface hover:bg-rose-50 transition-all cursor-pointer"
+                >
+                  編集をやめる
+                </button>
+                <button
+                  onClick={handleSaveSiteContent}
+                  className="px-8 py-2.5 bg-secondary hover:bg-opacity-95 text-white font-bold rounded-2xl text-sm shadow-md shadow-secondary/15 transition-all cursor-pointer flex items-center gap-1.5"
+                >
+                  <Save size={16} />
+                  変更を保存して反映する
+                </button>
+              </div>
+            </div>
+          ) : (
+            /* ==========================================
+               FIREBASE CONSULTATIONS MANAGER
+               ========================================== */
+            <div className="bg-white border border-outline-variant rounded-4xl p-6 md:p-8 shadow-sm">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-6 border-b border-rose-50">
+                <div>
+                  <h3 className="text-xl font-bold text-[#2c1a1e] flex items-center gap-1.5 font-sans">
+                    <Inbox size={20} className="text-secondary" />
+                    直接お問合せ一覧 (Firebase CRM)
+                  </h3>
+                  <p className="text-xs text-on-surface-variant mt-1 leading-relaxed">
+                    求人サイトのWEBフォームから直接送信された、応募者の生の声と連絡先が Firebase Firestore データベースに安全に蓄積されています。
+                  </p>
+                </div>
+                <div className="flex gap-2 w-full md:w-auto">
+                  <button
+                    onClick={fetchConsultationsData}
+                    disabled={isLoadingConsultations}
+                    className="flex-grow md:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-white border border-rose-200 text-secondary hover:bg-rose-50 rounded-2xl text-xs font-bold transition-all cursor-pointer disabled:opacity-50"
+                  >
+                    <RotateCcw size={14} className={isLoadingConsultations ? 'animate-spin' : ''} />
+                    一覧を更新する
+                  </button>
+                </div>
+              </div>
+
+              {isLoadingConsultations ? (
+                <div className="text-center py-16 space-y-3">
+                  <div className="w-8 h-8 border-2 border-secondary/30 border-t-secondary rounded-full animate-spin mx-auto" />
+                  <p className="text-xs font-bold text-on-surface-variant">データをロード中...</p>
+                </div>
+              ) : consultationsList.length > 0 ? (
+                <div className="space-y-4">
+                  {consultationsList.map((item) => (
+                    <div 
+                      key={item.id} 
+                      className={`p-5 rounded-3xl border transition-all text-left ${
+                        item.status === 'unread' 
+                          ? 'bg-rose-50/20 border-rose-200/60 shadow-xs' 
+                          : 'bg-white border-outline-variant'
+                      }`}
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-3 mb-3 pb-3 border-b border-rose-50/50">
+                        <div className="flex items-center gap-2 flex-wrap text-xs font-sans">
+                          <span className="font-bold text-sm text-[#2c1a1e]">{item.name}</span>
+                          {item.age && (
+                            <span className="bg-zinc-100 text-zinc-600 px-2 py-0.5 rounded-lg text-[10px] font-bold">
+                              {item.age}
+                            </span>
+                          )}
+                          <span className="text-zinc-400 font-mono text-[10px]">
+                            {new Date(item.createdAt).toLocaleString('ja-JP')}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <select
+                            value={item.status}
+                            onChange={(e) => handleUpdateStatus(item.id, e.target.value as any)}
+                            className={`px-3 py-1 text-[11px] font-black rounded-lg border focus:outline-none cursor-pointer transition-all ${
+                              item.status === 'unread'
+                                ? 'bg-rose-50 text-secondary border-rose-200 font-bold'
+                                : item.status === 'contacted'
+                                ? 'bg-emerald-50 text-emerald-700 border-emerald-200 font-bold'
+                                : 'bg-zinc-50 text-zinc-500 border-zinc-200 font-medium'
+                            }`}
+                          >
+                            <option value="unread">未対応 (新規)</option>
+                            <option value="read">確認済み</option>
+                            <option value="contacted">対応完了 (連絡済み)</option>
+                          </select>
+                          <button
+                            onClick={() => handleDeleteConsultationData(item.id)}
+                            className="p-1.5 hover:bg-rose-50 text-rose-600 rounded-lg transition-colors cursor-pointer"
+                            title="削除"
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div className="md:col-span-1 bg-zinc-50 rounded-2xl p-3 border border-zinc-200 space-y-1">
+                          <span className="block text-[10px] font-bold text-zinc-500">返信用連絡先</span>
+                          <span className="block text-xs font-bold text-[#2c1a1e] break-all select-all font-mono">
+                            {item.contact}
+                          </span>
+                        </div>
+                        <div className="md:col-span-3 bg-zinc-50/50 rounded-2xl p-3 border border-zinc-200">
+                          <span className="block text-[10px] font-bold text-zinc-500 mb-1">相談内容</span>
+                          <p className="text-xs text-zinc-700 whitespace-pre-wrap leading-relaxed select-text font-sans">
+                            {item.message}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-16 space-y-3">
+                  <div className="w-12 h-12 bg-rose-50 border border-rose-100 rounded-full flex items-center justify-center mx-auto text-secondary/60">
+                    <Inbox size={22} />
+                  </div>
+                  <p className="text-sm font-bold text-[#2c1a1e]">お問合せはまだ届いていません</p>
+                  <p className="text-xs text-on-surface-variant">求人サイトのWEBフォームから相談が送信されると、ここに自動的に追加されます。</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Safe ZIP Download Options Section for Authenticated Admins */}
+          <div className="max-w-md mx-auto mt-12 bg-white border border-outline-variant rounded-4xl p-6 md:p-8 shadow-sm text-center">
+            <div className="w-12 h-12 bg-rose-50 border border-rose-100 rounded-2xl flex items-center justify-center mx-auto text-secondary mb-3">
+              <Download size={22} />
+            </div>
+            <h3 className="text-base font-bold text-[#2c1a1e] mb-1.5">ファイル直接ダウンロード</h3>
+            <p className="text-xs text-on-surface-variant leading-relaxed mb-6">
+              プレビュー警告を完全に回避して、ウェブサイトのデータやソースコードを安全かつ一瞬でダウンロードできます。
+            </p>
+            <div className="space-y-3">
+              <button
+                onClick={() => handleDownloadFile('/tobita-girls-website-release.zip', 'tobita-girls-website-release.zip', setIsDownloadingWeb)}
+                disabled={isDownloadingWeb}
+                className="w-full py-3 bg-secondary hover:bg-opacity-95 text-white font-bold rounded-2xl text-xs shadow-md shadow-secondary/10 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                <Archive size={14} />
+                {isDownloadingWeb ? 'ダウンロード中...' : '本番公開用ウェブサイトZIP (HTML/CSS)'}
+              </button>
+              <button
+                onClick={() => handleDownloadFile('/tobita-girls-source-code.zip', 'tobita-girls-source-code.zip', setIsDownloadingSource)}
+                disabled={isDownloadingSource}
+                className="w-full py-3 bg-white border border-outline-variant hover:bg-rose-50 font-bold text-on-surface rounded-2xl text-xs transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                <Download size={14} />
+                {isDownloadingSource ? 'ダウンロード中...' : '開発用フルソースコードZIP (Node.js/React)'}
+              </button>
+            </div>
+            <div className="mt-4 text-[10px] text-on-surface-variant opacity-70 leading-relaxed">
+              ※ボタンをクリックするとブラウザのBlob通信により、リダイレクトの警告なしに直接ローカルへ安全に保存されます。
+            </div>
+          </div>
+
+          {/* Action Back To App */}
+          <div className="mt-8 text-center">
+            <button
+              onClick={onClose}
+              className="inline-flex items-center gap-1.5 text-sm font-bold text-[#2c1a1e] hover:text-secondary cursor-pointer py-2 border-b border-transparent hover:border-secondary transition-all"
+            >
+              <ArrowLeft size={16} />
+              プレビュー・コラム表示画面へ戻る
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
