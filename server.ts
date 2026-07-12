@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import fs from "fs";
+import { exec } from "child_process";
 import { BLOG_ARTICLES } from "./src/blogData";
 import { DEFAULT_SITE_CONTENT } from "./src/siteContent";
 
@@ -44,6 +45,47 @@ async function startServer() {
 
   const DATA_DIR = path.join(projectRootDir, "data");
   const distPath = path.join(projectRootDir, "dist");
+
+  // Automatically sync local changes to GitHub
+  const syncToGitHub = () => {
+    const repoUrl = process.env.GITHUB_REPO_URL || "https://github.com/shinky0924-wq/tobitagirls.git";
+    const username = process.env.GITHUB_USERNAME || "shinky0924-wq";
+    const pat = process.env.GITHUB_PAT;
+
+    if (!repoUrl || !pat) {
+      console.log("[GitHub Sync] Skipped: Repo URL or Token not configured.");
+      return;
+    }
+
+    // Format the authenticated URL
+    const cleanUrl = repoUrl.replace("https://", "");
+    const authUrl = `https://${username}:${pat}@${cleanUrl}`;
+
+    console.log("[GitHub Sync] Starting automatic commit & push to GitHub...");
+
+    const gitDir = path.join(projectRootDir, ".git");
+    const hasGit = fs.existsSync(gitDir);
+
+    let setupCmds = "";
+    if (!hasGit) {
+      setupCmds = `git init && git checkout -b main && git remote add origin "${authUrl}" && `;
+    } else {
+      setupCmds = `git remote set-url origin "${authUrl}" || git remote add origin "${authUrl}" && `;
+    }
+
+    const execOptions = { cwd: projectRootDir };
+    const pushCmd = hasGit ? `git push origin main` : `git push -f -u origin main`;
+    const gitCmds = `${setupCmds}git config user.name "${username}" && git config user.email "shinky0924@gmail.com" && git add data/blogArticles.json data/siteContent.json && git commit -m "Update site content and blog articles from CMS [auto-sync]" && ${pushCmd}`;
+
+    exec(gitCmds, execOptions, (error: any, stdout: string, stderr: string) => {
+      if (error) {
+        console.error("[GitHub Sync] Failed to sync with GitHub:", error.message);
+        console.error("[GitHub Sync] Stderr:", stderr);
+      } else {
+        console.log("[GitHub Sync] Successfully synced to GitHub! Output:", stdout);
+      }
+    });
+  };
 
   // Direct ZIP file download handlers
   app.get("/tobita-girls-website-release.zip", (req, res) => {
@@ -208,6 +250,8 @@ async function startServer() {
       if (isWritable) {
         try {
           fs.writeFileSync(ARTICLES_PATH, JSON.stringify(articles, null, 2), "utf-8");
+          // Trigger automatic push to GitHub
+          syncToGitHub();
         } catch (fileErr) {
           console.error("Non-fatal error writing articles to file:", fileErr);
           // Don't crash or return 500 since we updated the memory cache successfully!
@@ -234,6 +278,8 @@ async function startServer() {
       if (isWritable) {
         try {
           fs.writeFileSync(SITE_CONTENT_PATH, JSON.stringify(siteContent, null, 2), "utf-8");
+          // Trigger automatic push to GitHub
+          syncToGitHub();
         } catch (fileErr) {
           console.error("Non-fatal error writing site content to file:", fileErr);
           // Don't crash or return 500 since we updated the memory cache successfully!
