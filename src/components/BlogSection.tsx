@@ -16,6 +16,10 @@ export default function BlogSection({ articles, selectedSlug, onSelectSlug, onCt
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
+  const isLoading = useMemo(() => {
+    return !!selectedSlug && articles.length === 0;
+  }, [selectedSlug, articles]);
+
   // Filter & Search articles
   const filteredArticles = useMemo(() => {
     return articles.filter((article) => {
@@ -148,7 +152,7 @@ export default function BlogSection({ articles, selectedSlug, onSelectSlug, onCt
                   >
                     {/* Eyecatch Image */}
                     <div className="relative h-48 bg-neutral-100 flex items-center justify-center overflow-hidden">
-                      {article.eyeCatch.startsWith('http') || article.eyeCatch.startsWith('/') || article.eyeCatch.includes('.') ? (
+                      {article.eyeCatch && (article.eyeCatch.startsWith('http') || article.eyeCatch.startsWith('/') || article.eyeCatch.includes('.')) ? (
                         <img
                           src={article.eyeCatch}
                           alt={article.title}
@@ -158,7 +162,7 @@ export default function BlogSection({ articles, selectedSlug, onSelectSlug, onCt
                       ) : (
                         <div className={`absolute inset-0 bg-gradient-to-tr ${getCategoryGradient(article.category)} flex items-center justify-center`}>
                           <div className="text-6xl select-none group-hover:scale-110 transition-transform duration-300">
-                            {article.eyeCatch}
+                            {article.eyeCatch || '🌸'}
                           </div>
                         </div>
                       )}
@@ -172,7 +176,7 @@ export default function BlogSection({ articles, selectedSlug, onSelectSlug, onCt
                       <div className="flex items-center gap-4 text-xs text-on-surface-variant font-sans mb-3">
                         <span className="flex items-center gap-1">
                           <Calendar size={13} />
-                          <span className="font-mono">{article.publishedAt.replace(/-/g, '.')}</span>
+                          <span className="font-mono">{(article.publishedAt || '').replace(/-/g, '.')}</span>
                         </span>
                         <span className="flex items-center gap-1">
                           <Clock size={13} />
@@ -190,22 +194,22 @@ export default function BlogSection({ articles, selectedSlug, onSelectSlug, onCt
 
                       {/* Tags */}
                       <div className="mt-4 flex flex-wrap gap-1.5">
-                        {article.tags.map((tag) => (
+                        {article.tags?.map((tag) => (
                           <span key={tag} className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md text-[10px] font-medium bg-rose-50 text-secondary border border-rose-100">
                             #{tag}
                           </span>
-                        ))}
+                        )) || null}
                       </div>
 
                       {/* Author */}
                       <div className="mt-6 pt-4 border-t border-rose-50 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <span className="text-xl w-7 h-7 bg-rose-50 rounded-full flex items-center justify-center border border-rose-100">
-                            {article.author.avatar}
+                            {article.author?.avatar || '👩‍💼'}
                           </span>
                           <div>
-                            <p className="text-xs font-semibold text-on-surface leading-none">{article.author.name}</p>
-                            <p className="text-[10px] text-on-surface-variant mt-0.5 leading-none">{article.author.role}</p>
+                            <p className="text-xs font-semibold text-on-surface leading-none">{article.author?.name || 'スタッフ'}</p>
+                            <p className="text-[10px] text-on-surface-variant mt-0.5 leading-none">{article.author?.role || 'サポートスタッフ'}</p>
                           </div>
                         </div>
                         <span className="text-secondary group-hover:translate-x-1 transition-transform">
@@ -231,6 +235,47 @@ export default function BlogSection({ articles, selectedSlug, onSelectSlug, onCt
               </div>
             )}
           </motion.div>
+        ) : isLoading ? (
+          /* ==========================================
+             LOADING STATE
+             ========================================== */
+          <motion.div
+            key="loading-view"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex flex-col items-center justify-center py-24 text-center"
+          >
+            <div className="w-12 h-12 border-4 border-rose-100 border-t-secondary rounded-full animate-spin mb-4" />
+            <p className="text-on-surface-variant text-sm font-sans">コラムを読み込んでいます...</p>
+          </motion.div>
+        ) : !currentArticle ? (
+          /* ==========================================
+             NOT FOUND STATE
+             ========================================== */
+          <motion.div
+            key="not-found-view"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3 }}
+            className="max-w-md mx-auto text-center py-16 px-6 bg-white border border-rose-100 rounded-3xl shadow-xl my-12"
+          >
+            <div className="w-16 h-16 bg-rose-50 text-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+              <Search size={32} />
+            </div>
+            <h2 className="text-xl md:text-2xl font-bold text-[#2c1a1e] mb-3">コラムが見つかりませんでした</h2>
+            <p className="text-on-surface-variant text-sm mb-8 leading-relaxed">
+              お探しの記事は削除されたか、URLが変更された可能性があります。
+            </p>
+            <button
+              onClick={handleBackToList}
+              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-secondary hover:bg-secondary/90 text-white font-bold rounded-2xl shadow-md transition-all cursor-pointer"
+            >
+              <ArrowLeft size={16} />
+              コラム一覧に戻る
+            </button>
+          </motion.div>
         ) : (
           /* ==========================================
              2. ARTICLE DETAIL VIEW
@@ -254,7 +299,7 @@ export default function BlogSection({ articles, selectedSlug, onSelectSlug, onCt
 
             {/* Eyecatch hero */}
             <div className="h-56 md:h-72 rounded-4xl bg-neutral-100 flex flex-col items-center justify-center relative overflow-hidden shadow-xs border border-outline-variant">
-              {currentArticle!.eyeCatch.startsWith('http') || currentArticle!.eyeCatch.startsWith('/') || currentArticle!.eyeCatch.includes('.') ? (
+              {currentArticle!.eyeCatch && (currentArticle!.eyeCatch.startsWith('http') || currentArticle!.eyeCatch.startsWith('/') || currentArticle!.eyeCatch.includes('.')) ? (
                 <img
                   src={currentArticle!.eyeCatch}
                   alt={currentArticle!.title}
@@ -264,7 +309,7 @@ export default function BlogSection({ articles, selectedSlug, onSelectSlug, onCt
               ) : (
                 <div className={`absolute inset-0 bg-gradient-to-tr ${getCategoryGradient(currentArticle!.category)} flex flex-col items-center justify-center`}>
                   <div className="text-8xl select-none animate-bounce duration-1000 mb-2">
-                    {currentArticle!.eyeCatch}
+                    {currentArticle!.eyeCatch || '🌸'}
                   </div>
                 </div>
               )}
@@ -278,7 +323,7 @@ export default function BlogSection({ articles, selectedSlug, onSelectSlug, onCt
               <div className="flex items-center gap-4 text-xs font-sans text-on-surface-variant mb-4">
                 <span className="flex items-center gap-1 bg-surface-container px-2.5 py-1 rounded-lg">
                   <Calendar size={13} />
-                  <span className="font-mono">{currentArticle!.publishedAt.replace(/-/g, '.')}</span>
+                  <span className="font-mono">{(currentArticle!.publishedAt || '').replace(/-/g, '.')}</span>
                 </span>
                 <span className="flex items-center gap-1 bg-surface-container px-2.5 py-1 rounded-lg">
                   <Clock size={13} />
@@ -294,22 +339,22 @@ export default function BlogSection({ articles, selectedSlug, onSelectSlug, onCt
               <div className="mt-6 flex items-center justify-between p-4 bg-surface-container rounded-3xl border border-outline-variant">
                 <div className="flex items-center gap-3">
                   <span className="text-2xl w-10 h-10 bg-white rounded-full flex items-center justify-center border border-outline-variant shadow-2xs">
-                    {currentArticle!.author.avatar}
+                    {currentArticle!.author?.avatar || '👩‍💼'}
                   </span>
                   <div>
                     <div className="text-xs text-on-surface-variant">この記事の監修スタッフ</div>
-                    <div className="text-sm font-bold text-on-surface">{currentArticle!.author.name}</div>
+                    <div className="text-sm font-bold text-on-surface">{currentArticle!.author?.name || 'スタッフ'}</div>
                   </div>
                 </div>
                 <div className="text-xs text-on-surface-variant bg-white/80 border border-outline-variant px-3 py-1.5 rounded-full">
-                  {currentArticle!.author.role}
+                  {currentArticle!.author?.role || 'サポートスタッフ'}
                 </div>
               </div>
             </div>
 
             {/* Article Content Render */}
             <div className="mt-8 space-y-6 text-[#2c1a1e] text-base md:text-lg leading-relaxed font-sans">
-              {currentArticle!.content.map((block, idx) => {
+              {(currentArticle!.content || []).map((block, idx) => {
                 switch (block.type) {
                   case 'p':
                     return (
