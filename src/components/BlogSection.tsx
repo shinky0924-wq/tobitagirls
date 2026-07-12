@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { BLOG_CATEGORIES, BlogArticle } from '../blogData';
 import { BookOpen, Calendar, Clock, Search, ArrowLeft, Tag, MessageCircle, ChevronRight, Sparkles, Send, ShieldCheck, HeartHandshake } from 'lucide-react';
@@ -36,6 +36,23 @@ export default function BlogSection({ articles, selectedSlug, onSelectSlug, onCt
     if (!selectedSlug) return null;
     return articles.find(a => a.slug === selectedSlug) || null;
   }, [articles, selectedSlug]);
+
+  // Dynamically update document title and description for SEO based on the active article
+  useEffect(() => {
+    if (currentArticle) {
+      document.title = `${currentArticle.title} | 飛田ガールズ`;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute('content', currentArticle.summary);
+      }
+    } else {
+      document.title = '飛田新地求人、飛田新地バイトなら【飛田ガールズ】女の子のためのサイト・高収入募集';
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute('content', '【飛田新地求人の公式窓口】飛田新地で女の子の求人・お仕事探しなら「飛田ガールズ」。未経験から高収入（日給3万〜8万円）を稼げる優良店・安心安全なお店のみを厳選してご紹介します。24時間いつでもお気軽にご相談・ご応募いただけます。');
+      }
+    }
+  }, [currentArticle]);
 
   // Back to article list
   const handleBackToList = () => {
