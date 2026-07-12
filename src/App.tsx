@@ -20,6 +20,7 @@ import BlogSection from './components/BlogSection';
 import AdminPanel from './components/AdminPanel';
 import { getStoredArticles, BlogArticle } from './blogData';
 import { getStoredSiteContent, SiteContent } from './siteContent';
+import { getBlogArticlesFromFirestore, getSiteContentFromFirestore } from './firebase';
 
 export default function App() {
   const [path, setPath] = useState(() => {
@@ -89,11 +90,27 @@ export default function App() {
 
   const fetchArticles = async () => {
     try {
+      // 1. Try to fetch from Firestore first
+      const firestoreData = await getBlogArticlesFromFirestore();
+      if (firestoreData && firestoreData.length > 0) {
+        setBlogArticles(firestoreData);
+        localStorage.setItem('custom_blog_articles', JSON.stringify(firestoreData));
+        return;
+      }
+
+      // 2. Fallback to API if not in Firestore
       const res = await fetch('/api/cms/articles');
       if (res.ok) {
         const data = await res.json();
         setBlogArticles(data);
         localStorage.setItem('custom_blog_articles', JSON.stringify(data));
+        // Seed to Firestore for next time
+        try {
+          const { saveBlogArticlesToFirestore } = await import('./firebase');
+          await saveBlogArticlesToFirestore(data);
+        } catch (seedErr) {
+          console.warn('First-time Firestore seeding skipped or failed:', seedErr);
+        }
       } else {
         setBlogArticles(getStoredArticles());
       }
@@ -104,12 +121,27 @@ export default function App() {
 
   const fetchSiteContent = async () => {
     try {
+      // 1. Try to fetch from Firestore first
+      const firestoreData = await getSiteContentFromFirestore();
+      if (firestoreData) {
+        setSiteContent(firestoreData);
+        localStorage.setItem('custom_site_content', JSON.stringify(firestoreData));
+        return;
+      }
+
+      // 2. Fallback to API if not in Firestore
       const res = await fetch('/api/cms/site');
       if (res.ok) {
         const data = await res.json();
-        const dataStr = JSON.stringify(data);
         setSiteContent(data);
-        localStorage.setItem('custom_site_content', dataStr);
+        localStorage.setItem('custom_site_content', JSON.stringify(data));
+        // Seed to Firestore for next time
+        try {
+          const { saveSiteContentToFirestore } = await import('./firebase');
+          await saveSiteContentToFirestore(data);
+        } catch (seedErr) {
+          console.warn('First-time Firestore seeding skipped or failed:', seedErr);
+        }
       } else {
         setSiteContent(getStoredSiteContent());
       }
@@ -132,9 +164,19 @@ export default function App() {
   };
 
   const handleScrollToForm = () => {
-    const target = document.getElementById('consultation');
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (currentTab !== 'recruit') {
+      setCurrentTab('recruit');
+      setTimeout(() => {
+        const target = document.getElementById('consultation');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 150);
+    } else {
+      const target = document.getElementById('consultation');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
   };
 
@@ -240,6 +282,15 @@ export default function App() {
               <div id="flow">
                 <Flow content={siteContent.flow} />
               </div>
+
+              {/* Action interactive consultation panel */}
+              <div id="consultation">
+                <ConsultationForm 
+                  content={siteContent.consultation}
+                  initialMessage={injectedMessage} 
+                  onClearInitialMessage={handleClearInjected} 
+                />
+              </div>
             </motion.div>
           ) : currentTab === 'blog' ? (
             /* ==========================================
@@ -286,15 +337,6 @@ export default function App() {
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Action interactive consultation panel - Shared on both modes for maximize conversions */}
-        <div id="consultation">
-          <ConsultationForm 
-            content={siteContent.consultation}
-            initialMessage={injectedMessage} 
-            onClearInitialMessage={handleClearInjected} 
-          />
-        </div>
       </main>
 
       {/* Footer component */}

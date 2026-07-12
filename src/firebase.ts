@@ -1,6 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { initializeFirestore, collection, addDoc, getDocs, setDoc, doc, getDoc, query, orderBy, deleteDoc, updateDoc } from 'firebase/firestore';
 import config from '../firebase-applet-config.json';
+import { BlogArticle } from './blogData';
+import { SiteContent } from './siteContent';
 
 const firebaseConfig = {
   apiKey: config.apiKey,
@@ -86,5 +88,63 @@ export async function deleteConsultation(id: string) {
   } catch (e) {
     console.error('Error deleting consultation:', e);
     return false;
+  }
+}
+
+// Save blog articles to Firestore (under collection 'cms', document 'blog')
+export async function saveBlogArticlesToFirestore(articles: BlogArticle[]): Promise<boolean> {
+  try {
+    const docRef = doc(db, 'cms', 'blog');
+    await setDoc(docRef, { articles });
+    console.log('Successfully saved blog articles to Firestore');
+    return true;
+  } catch (e) {
+    console.error('Error saving blog articles to Firestore:', e);
+    return false;
+  }
+}
+
+// Get blog articles from Firestore (returns null if not exists or on error)
+export async function getBlogArticlesFromFirestore(): Promise<BlogArticle[] | null> {
+  try {
+    const docRef = doc(db, 'cms', 'blog');
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      return data.articles as BlogArticle[];
+    }
+    return null;
+  } catch (e) {
+    console.error('Error getting blog articles from Firestore:', e);
+    return null;
+  }
+}
+
+// Save site content to Firestore (under collection 'cms', document 'site')
+export async function saveSiteContentToFirestore(content: SiteContent): Promise<boolean> {
+  try {
+    const docRef = doc(db, 'cms', 'site');
+    await setDoc(docRef, { content });
+    console.log('Successfully saved site content to Firestore');
+    return true;
+  } catch (e) {
+    console.error('Error saving site content to Firestore:', e);
+    return false;
+  }
+}
+
+// Get site content from Firestore (returns null if not exists or on error)
+export async function getSiteContentFromFirestore(): Promise<SiteContent | null> {
+  try {
+    const docRef = doc(db, 'cms', 'site');
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      return data.content as SiteContent;
+    }
+    return null;
+  } catch (e) {
+    console.error('Error getting site content from Firestore:', e);
+    return null;
   }
 }

@@ -2,7 +2,7 @@ import { useState, useEffect, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { getStoredArticles, saveArticles, BlogArticle, BLOG_CATEGORIES } from '../blogData';
 import { getStoredSiteContent, saveSiteContent, SiteContent, DEFAULT_SITE_CONTENT } from '../siteContent';
-import { getConsultations, updateConsultationStatus, deleteConsultation } from '../firebase';
+import { getConsultations, updateConsultationStatus, deleteConsultation, saveBlogArticlesToFirestore, saveSiteContentToFirestore } from '../firebase';
 import { 
   Lock, KeyRound, ShieldAlert, FileText, Plus, Trash2, Edit3, Save, 
   ArrowLeft, RotateCcw, Copy, Check, Eye, HelpCircle, MoveUp, MoveDown, 
@@ -219,21 +219,48 @@ export default function AdminPanel({ onClose, onRefreshBlog, onRefreshSite }: Ad
     onRefreshSite();
     
     try {
-      const res = await fetch('/api/cms/site', {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'X-Admin-Password': getAdminPassword()
-        },
-        body: JSON.stringify(siteText)
-      });
-      if (res.ok) {
-        showAlert('サーバーにサイト文章を永久保存しました！ (Hyonix等のサーバーでも同期されます)');
+      // 1. Save directly to Firebase Firestore for durable multi-browser real-time synchronization
+      const firestoreSuccess = await saveSiteContentToFirestore(siteText);
+      
+      if (firestoreSuccess) {
+        showAlert('データベース(Firestore)にサイト文章を永久保存しました！別ブラウザや本番環境でも瞬時に反映されます。');
+        
+        // 2. Also send to the Express server as backup quietly (it doesn't matter if it fails)
+        try {
+          await fetch('/api/cms/site', {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json',
+              'X-Admin-Password': getAdminPassword()
+            },
+            body: JSON.stringify(siteText)
+          });
+        } catch (serverErr) {
+          console.warn('Backup to Express server failed, but Firestore was successful:', serverErr);
+        }
       } else {
-        showAlert('ブラウザには一時保存されましたが、サーバーへの同期に失敗しました。', 'error');
+        // Try server backup if Firestore failed
+        try {
+          const res = await fetch('/api/cms/site', {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json',
+              'X-Admin-Password': getAdminPassword()
+            },
+            body: JSON.stringify(siteText)
+          });
+          if (res.ok) {
+            showAlert('サーバーのディスクにサイト文章を保存しました！');
+          } else {
+            showAlert('ブラウザには一時保存されましたが、サーバーへの同期に失敗しました。', 'error');
+          }
+        } catch (serverErr) {
+          console.error('Both Firestore and Server saving failed:', serverErr);
+          showAlert('ブラウザには一時保存されましたが、サーバーへの同期に失敗しました。', 'error');
+        }
       }
     } catch (e) {
-      console.error('Error saving to server:', e);
+      console.error('Error in handleSaveSiteContent:', e);
       showAlert('ブラウザには一時保存されましたが、サーバーへの同期に失敗しました。', 'error');
     }
   };
@@ -249,18 +276,43 @@ export default function AdminPanel({ onClose, onRefreshBlog, onRefreshSite }: Ad
       onRefreshSite();
 
       try {
-        const res = await fetch('/api/cms/site', {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'X-Admin-Password': getAdminPassword()
-          },
-          body: JSON.stringify(DEFAULT_SITE_CONTENT)
-        });
-        if (res.ok) {
-          showAlert('サイト内の文章を初期設定にリセット（サーバー保存完了）しました！');
+        // 1. Save directly to Firebase Firestore
+        const firestoreSuccess = await saveSiteContentToFirestore(DEFAULT_SITE_CONTENT);
+
+        if (firestoreSuccess) {
+          showAlert('データベース(Firestore)にサイト文章を初期設定にリセット保存しました！');
+          
+          // 2. Also send to Express quietly as backup
+          try {
+            await fetch('/api/cms/site', {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+                'X-Admin-Password': getAdminPassword()
+              },
+              body: JSON.stringify(DEFAULT_SITE_CONTENT)
+            });
+          } catch (serverErr) {
+            console.warn('Backup reset to Express server failed, but Firestore was successful:', serverErr);
+          }
         } else {
-          showAlert('ブラウザ側はリセットされましたが、サーバー同期に失敗しました。', 'error');
+          try {
+            const res = await fetch('/api/cms/site', {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+                'X-Admin-Password': getAdminPassword()
+              },
+              body: JSON.stringify(DEFAULT_SITE_CONTENT)
+            });
+            if (res.ok) {
+              showAlert('サイト内の文章を初期設定にリセット（サーバー保存完了）しました！');
+            } else {
+              showAlert('ブラウザ側はリセットされましたが、サーバー同期に失敗しました。', 'error');
+            }
+          } catch (serverErr) {
+            showAlert('ブラウザ側はリセットされましたが、サーバー同期に失敗しました。', 'error');
+          }
         }
       } catch (e) {
         showAlert('ブラウザ側はリセットされましたが、サーバー同期に失敗しました。', 'error');
@@ -430,18 +482,43 @@ export default function AdminPanel({ onClose, onRefreshBlog, onRefreshSite }: Ad
       onRefreshBlog();
       
       try {
-        const res = await fetch('/api/cms/articles', {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'X-Admin-Password': getAdminPassword()
-          },
-          body: JSON.stringify(defaults)
-        });
-        if (res.ok) {
-          showAlert('コラムを初期状態にリセット（サーバー保存完了）しました！');
+        // 1. Save directly to Firebase Firestore
+        const firestoreSuccess = await saveBlogArticlesToFirestore(defaults);
+
+        if (firestoreSuccess) {
+          showAlert('コラムを初期状態にリセットし、データベース(Firestore)に保存しました！');
+          
+          // 2. Also send to Express quietly
+          try {
+            await fetch('/api/cms/articles', {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+                'X-Admin-Password': getAdminPassword()
+              },
+              body: JSON.stringify(defaults)
+            });
+          } catch (serverErr) {
+            console.warn('Backup reset to Express server failed, but Firestore was successful:', serverErr);
+          }
         } else {
-          showAlert('ブラウザ側はリセットされましたが、サーバー同期に失敗しました。', 'error');
+          try {
+            const res = await fetch('/api/cms/articles', {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+                'X-Admin-Password': getAdminPassword()
+              },
+              body: JSON.stringify(defaults)
+            });
+            if (res.ok) {
+              showAlert('コラムを初期状態にリセット（サーバー保存完了）しました！');
+            } else {
+              showAlert('ブラウザ側はリセットされましたが、サーバー同期に失敗しました。', 'error');
+            }
+          } catch (serverErr) {
+            showAlert('ブラウザ側はリセットされましたが、サーバー同期に失敗しました。', 'error');
+          }
         }
       } catch (e) {
         showAlert('ブラウザ側はリセットされましたが、サーバー同期に失敗しました。', 'error');
@@ -458,18 +535,43 @@ export default function AdminPanel({ onClose, onRefreshBlog, onRefreshSite }: Ad
       onRefreshBlog();
       
       try {
-        const res = await fetch('/api/cms/articles', {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'X-Admin-Password': getAdminPassword()
-          },
-          body: JSON.stringify(updated)
-        });
-        if (res.ok) {
-          showAlert('コラムを削除し、サーバーに保存しました');
+        // 1. Save directly to Firebase Firestore
+        const firestoreSuccess = await saveBlogArticlesToFirestore(updated);
+
+        if (firestoreSuccess) {
+          showAlert('コラムを削除し、データベース(Firestore)に保存しました');
+          
+          // 2. Also send to Express quietly
+          try {
+            await fetch('/api/cms/articles', {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+                'X-Admin-Password': getAdminPassword()
+              },
+              body: JSON.stringify(updated)
+            });
+          } catch (serverErr) {
+            console.warn('Backup delete to Express server failed, but Firestore was successful:', serverErr);
+          }
         } else {
-          showAlert('コラムをブラウザから削除しましたが、サーバー同期に失敗しました。', 'error');
+          try {
+            const res = await fetch('/api/cms/articles', {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+                'X-Admin-Password': getAdminPassword()
+              },
+              body: JSON.stringify(updated)
+            });
+            if (res.ok) {
+              showAlert('コラムを削除し、サーバーに保存しました');
+            } else {
+              showAlert('コラムをブラウザから削除しましたが、サーバー同期に失敗しました。', 'error');
+            }
+          } catch (serverErr) {
+            showAlert('コラムをブラウザから削除しましたが、サーバー同期に失敗しました。', 'error');
+          }
         }
       } catch (e) {
         showAlert('コラムをブラウザから削除しましたが、サーバー同期に失敗しました。', 'error');
@@ -574,25 +676,50 @@ export default function AdminPanel({ onClose, onRefreshBlog, onRefreshSite }: Ad
     setIsEditing(false);
     onRefreshBlog();
 
-    // Send to server
+    // Send to server and Firestore
     const isEdit = !!editingArticleId;
     (async () => {
       try {
-        const res = await fetch('/api/cms/articles', {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'X-Admin-Password': getAdminPassword()
-          },
-          body: JSON.stringify(updatedArticles)
-        });
-        if (res.ok) {
-          showAlert(isEdit ? 'コラムを更新し、サーバーに保存しました！' : '新しいコラムを公開し、サーバーに保存しました！');
+        // 1. Save directly to Firebase Firestore for durable real-time synchronization
+        const firestoreSuccess = await saveBlogArticlesToFirestore(updatedArticles);
+
+        if (firestoreSuccess) {
+          showAlert(isEdit ? 'コラムを更新し、データベース(Firestore)に保存しました！別ブラウザや本番環境にも即座に反映されます。' : '新しいコラムを公開し、データベース(Firestore)に保存しました！別ブラウザや本番環境にも即座に反映されます。');
+          
+          // 2. Also send to the Express server as backup quietly (it doesn't matter if it fails)
+          try {
+            await fetch('/api/cms/articles', {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+                'X-Admin-Password': getAdminPassword()
+              },
+              body: JSON.stringify(updatedArticles)
+            });
+          } catch (serverErr) {
+            console.warn('Backup column save to Express server failed, but Firestore was successful:', serverErr);
+          }
         } else {
-          showAlert('コラムはローカルに保存されましたが、サーバーへの同期に失敗しました。', 'error');
+          try {
+            const res = await fetch('/api/cms/articles', {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+                'X-Admin-Password': getAdminPassword()
+              },
+              body: JSON.stringify(updatedArticles)
+            });
+            if (res.ok) {
+              showAlert(isEdit ? 'コラムを更新し、サーバーに保存しました！' : '新しいコラムを公開し、サーバーに保存しました！');
+            } else {
+              showAlert('コラムはブラウザに一時保存されましたが、サーバー同期に失敗しました。', 'error');
+            }
+          } catch (serverErr) {
+            showAlert('コラムはブラウザに一時保存されましたが、サーバー同期に失敗しました。', 'error');
+          }
         }
       } catch (e) {
-        showAlert('コラムはローカルに保存されましたが、サーバーへの同期に失敗しました。', 'error');
+        showAlert('コラムはブラウザに一時保存されましたが、サーバー同期に失敗しました。', 'error');
       }
     })();
   };
