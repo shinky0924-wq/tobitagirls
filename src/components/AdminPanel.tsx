@@ -95,6 +95,13 @@ export default function AdminPanel({ onClose, onRefreshBlog, onRefreshSite }: Ad
   const [aiTopic, setAiTopic] = useState<string>('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationStep, setGenerationStep] = useState<string>('');
+  const [clientGeminiKey, setClientGeminiKey] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('client_gemini_api_key') || '';
+    }
+    return '';
+  });
+  const [showClientKeyInput, setShowClientKeyInput] = useState<boolean>(false);
 
   // Deep nested updaters for SiteContent State
   const updateHeroField = (field: keyof SiteContent['hero'], val: string) => {
@@ -733,6 +740,225 @@ export default function AdminPanel({ onClose, onRefreshBlog, onRefreshSite }: Ad
     })();
   };
 
+  const generateArticleClientSide = async (apiKey: string, index: number, category: string, customTopic: string, currentArticles: BlogArticle[]) => {
+    const modelName = "gemini-2.5-flash";
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+
+    const topicPrompt = customTopic ? `特別テーマ・要望:「${customTopic}」` : "テーマは自由（未経験者向け、給料システム、身バレ対策などからバランスよく選んでください）";
+    const requestedCategory = category || "all";
+
+    const singlePrompt = `あなたは飛田新地の女性向けサポート＆求人サイト「飛田ガールズ」のプロの編集者です。
+求職中の20代女性（未経験者が多い）が抱く、不安や疑問（身バレ対策、安全面、給料システム、実際の仕事の流れ、体入（体験入店）、生活・働き方など）を優しく丁寧に解消し、一歩踏み出す安心感を与える極めて高品質なコラム記事を日本語で作成してください。
+
+今回は、全リクエストのうち「${index + 1}番目」のコラム記事を1件だけ生成してください。
+${requestedCategory !== "all" ? `カテゴリーは必ず「${requestedCategory}」にしてください。` : "カテゴリーは 'beginner', 'salary', 'security', 'lifestyle', 'onboarding' の中から適したものを1つ選択してください。"}
+${topicPrompt}
+
+記事は、以下のJSONスキーマに従った完全な1つのオブジェクトである必要があります。
+
+記事のコンテンツ（content配列）は、見出し（h2, h3）、本文（p）、リスト（list）、よくある質問（qna）、LINE誘導（cta）のブロックを複数組み合わせた、読み応えのある構成（合計文字数1000文字〜1500文字程度）にしてください。
+
+JSONスキーマ：
+{
+  "title": "読者の目を惹く魅力的なコラムタイトル（30〜50文字程度。例：【身バレ防止】飛田新地で親や友達にバレずに働くための4つの鉄則）",
+  "slug": "半角英数字とハイフンのみのURLスラッグ（例：tobitashinchi-privacy-tips-${Date.now()}-${index}）",
+  "category": "'beginner' | 'salary' | 'security' | 'lifestyle' | 'onboarding' のいずれか1つ",
+  "categoryLabel": "カテゴリーに応じた和名（例：未経験者向け、給与・待遇、安心・身バレ対策、生活・働き方、面接・お仕事の流れ）",
+  "summary": "一覧ページで表示される、記事の概要を2文程度で魅力的にまとめた紹介文",
+  "author": {
+    "name": "さくら または ひまり または ゆい などの女性サポートスタッフ名、またはマネージャー木村",
+    "role": "女性サポートスタッフ（歴8年） または 採用担当マネージャー などの役職",
+    "avatar": "👩‍💼 または 👩‍💻 または 👩"
+  },
+  "tags": ["関連するタグ名1", "タグ2", "タグ3"],
+  "content": [
+    {
+      "type": "p",
+      "text": "導入段落。読者の不安に共感し、本記事を読めば解決することを伝えます。"
+    },
+    {
+      "type": "h2",
+      "text": "中見出しのタイトル"
+    },
+    {
+      "type": "p",
+      "text": "詳細な解説。安心できるトーンで具体的に説明します。"
+    },
+    {
+      "type": "list",
+      "items": [
+        "リスト項目1",
+        "リスト項目2",
+        "リスト項目3"
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "小見出しのタイトル"
+    },
+    {
+      "type": "p",
+      "text": "より細分化した情報や豆知識。"
+    },
+    {
+      "type": "qna",
+      "question": "よくある質問の問い？",
+      "answer": "丁寧で安心感に満ちた回答。"
+    },
+    {
+      "type": "cta"
+    }
+  ]
+}
+
+注意点：
+1. 違法な行為や危険な行為を推奨する内容は避け、安心・安全・健全なサポート環境であることを一貫して強調してください。
+2. 日本の女の子が読んで自然で、温かみがあり、信頼できる言葉遣い（〜です、〜ます調）にしてください。
+3. リスト(list)やQ&A(qna)ブロックを効果的に使い、視覚的に読みやすくしてください。
+4. LINE誘導(cta)ブロックは、記事の中間か最後付近に1つ以上配置してください。ctaブロックは 'type': 'cta' のみで、'text' や 'items' などのキーは不要です。`;
+
+    const payload = {
+      contents: [
+        {
+          parts: [
+            { text: `${singlePrompt}\n\n指定されたJSONスキーマに完全に従って日本語で1記事生成してください。` }
+          ]
+        }
+      ],
+      generationConfig: {
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: "OBJECT",
+          properties: {
+            title: { type: "STRING" },
+            slug: { type: "STRING" },
+            category: { type: "STRING" },
+            categoryLabel: { type: "STRING" },
+            summary: { type: "STRING" },
+            author: {
+              type: "OBJECT",
+              properties: {
+                name: { type: "STRING" },
+                role: { type: "STRING" },
+                avatar: { type: "STRING" }
+              },
+              required: ["name", "role", "avatar"]
+            },
+            tags: {
+              type: "ARRAY",
+              items: { type: "STRING" }
+            },
+            content: {
+              type: "ARRAY",
+              items: {
+                type: "OBJECT",
+                properties: {
+                  type: { type: "STRING" },
+                  text: { type: "STRING" },
+                  items: {
+                    type: "ARRAY",
+                    items: { type: "STRING" }
+                  },
+                  question: { type: "STRING" },
+                  answer: { type: "STRING" }
+                },
+                required: ["type"]
+              }
+            }
+          },
+          required: ["title", "slug", "category", "categoryLabel", "summary", "author", "tags", "content"]
+        }
+      }
+    };
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`Gemini APIエラー: ${response.status} - ${errText}`);
+    }
+
+    const result = await response.json();
+    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!text) {
+      throw new Error("Gemini APIから空のレスポンスが返されました。");
+    }
+
+    let art = JSON.parse(text);
+
+    // Map properties and random eyecatch exactly like server.ts
+    const premiumIllustrations = [
+      "/src/assets/images/col_ill_age_looks_1783884287024.jpg",
+      "/src/assets/images/col_ill_beauty_lifestyle_1783912347430.jpg",
+      "/src/assets/images/col_ill_beginner_guide_1783884225541.jpg",
+      "/src/assets/images/col_ill_cast_holiday_1783884322866.jpg",
+      "/src/assets/images/col_ill_cherry_bloom_1783884503300.jpg",
+      "/src/assets/images/col_ill_gold_bubble_1783913188809.jpg",
+      "/src/assets/images/col_ill_housing_support_1783884256462.jpg",
+      "/src/assets/images/col_ill_interview_guide_1783884267011.jpg",
+      "/src/assets/images/col_ill_kimono_magic_1783884424450.jpg",
+      "/src/assets/images/col_ill_kimono_makeup_1783884356215.jpg",
+      "/src/assets/images/col_ill_makeup_vanity_1783884445492.jpg",
+      "/src/assets/images/col_ill_mental_support_1783884376739.jpg",
+      "/src/assets/images/col_ill_non_alcoholic_1783884312890.jpg",
+      "/src/assets/images/col_ill_obachan_role_1783884412493.jpg",
+      "/src/assets/images/col_ill_one_day_flow_1783884401530.jpg",
+      "/src/assets/images/col_ill_privacy_guide_1783884246291.jpg",
+      "/src/assets/images/col_ill_privacy_smart_1783884436471.jpg",
+      "/src/assets/images/col_ill_relax_spa_1783884493332.jpg",
+      "/src/assets/images/col_ill_safe_entrance_1783884460416.jpg",
+      "/src/assets/images/col_ill_safety_security_1783884343829.jpg",
+      "/src/assets/images/col_ill_salary_system_1783884234635.jpg",
+      "/src/assets/images/col_ill_search_words_1783884385779.jpg",
+      "/src/assets/images/col_ill_short_term_1783884332841.jpg",
+      "/src/assets/images/col_ill_smart_planner_1783884470546.jpg",
+      "/src/assets/images/col_ill_tax_guide_1783884296268.jpg",
+      "/src/assets/images/col_ill_trial_guide_1783884277032.jpg",
+      "/src/assets/images/col_ill_weekend_shift_1783884365752.jpg",
+      "/src/assets/images/col_ill_welcome_gift_1783884481747.jpg"
+    ];
+
+    let maxId = 0;
+    for (const a of currentArticles) {
+      const parsedId = parseInt(a.id, 10);
+      if (!isNaN(parsedId) && parsedId > maxId) {
+        maxId = parsedId;
+      }
+    }
+    const nextId = (maxId + index + 1).toString();
+    const todayStr = new Date().toISOString().split("T")[0];
+    const charCount = art.content ? JSON.stringify(art.content).length : 1200;
+    const readTimeMinutes = Math.max(2, Math.ceil(charCount / 400));
+    const randomEyeCatch = premiumIllustrations[Math.floor(Math.random() * premiumIllustrations.length)];
+
+    return {
+      id: nextId,
+      title: art.title || "【新コラム】飛田新地での働き方コラム",
+      slug: art.slug || `ai-column-${Date.now()}-${index}`,
+      category: art.category || "beginner",
+      categoryLabel: art.categoryLabel || "未経験者向け",
+      publishedAt: todayStr,
+      readTime: `${readTimeMinutes}分`,
+      summary: art.summary || "AIによって自動生成された最新のコラム記事です。",
+      eyeCatch: randomEyeCatch,
+      author: {
+        name: art.author?.name || "さくら",
+        role: art.author?.role || "女性サポートスタッフ",
+        avatar: art.author?.avatar || "👩‍💼"
+      },
+      content: art.content || [
+        { type: "p", text: "準備中のコラムコンテンツです。" }
+      ],
+      tags: art.tags || ["AI自動生成", "未経験歓迎"]
+    } as BlogArticle;
+  };
+
   const handleAiGenerate = async () => {
     setIsGenerating(true);
     setGenerationStep('AIコラム生成エンジンを初期化中...');
@@ -757,28 +983,65 @@ export default function AdminPanel({ onClose, onRefreshBlog, onRefreshSite }: Ad
     }, 3000);
 
     try {
-      const response = await fetch('/api/cms/generate-articles', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Admin-Password': getAdminPassword()
-        },
-        body: JSON.stringify({
-          model: aiModel,
-          count: aiCount,
-          category: aiCategory,
-          customTopic: aiTopic
-        })
-      });
+      let data;
+      let isClientSide = false;
+
+      if (clientGeminiKey && aiModel === 'gemini') {
+        isClientSide = true;
+      }
+
+      if (isClientSide) {
+        console.log('Using browser client-side Gemini generation fallback...');
+        setGenerationStep('ご自身のGemini APIキーを使用してブラウザ上で直接コラムを生成しています...');
+        
+        const generatedArticles: BlogArticle[] = [];
+        let currentTempArticles = [...articles];
+        for (let i = 0; i < aiCount; i++) {
+          setGenerationStep(`[ブラウザ直接生成] 記事 ${i + 1}/${aiCount} を生成中（約10秒）...`);
+          const art = await generateArticleClientSide(clientGeminiKey, i, aiCategory, aiTopic, currentTempArticles);
+          generatedArticles.push(art);
+          currentTempArticles = [art, ...currentTempArticles];
+        }
+        
+        data = {
+          success: true,
+          count: generatedArticles.length,
+          articles: generatedArticles
+        };
+      } else {
+        const response = await fetch('/api/cms/generate-articles', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Admin-Password': getAdminPassword()
+          },
+          body: JSON.stringify({
+            model: aiModel,
+            count: aiCount,
+            category: aiCategory,
+            customTopic: aiTopic
+          })
+        });
+
+        if (!response.ok) {
+          const textResponse = await response.text().catch(() => '');
+          if (textResponse.trim().startsWith('<!doctype html') || textResponse.trim().startsWith('<html') || response.status === 405) {
+            throw new Error('static_hosting_fallback');
+          }
+          let errData;
+          try {
+            errData = JSON.parse(textResponse);
+          } catch (e) {
+            errData = {};
+          }
+          throw new Error(errData.error || '自動生成APIの呼び出しに失敗しました。');
+        }
+
+        data = await response.json();
+      }
 
       clearInterval(interval);
 
-      if (!response.ok) {
-        const errData = await response.json().catch(() => ({}));
-        throw new Error(errData.error || '自動生成APIの呼び出しに失敗しました。');
-      }
-
-      const data = await response.json();
       if (data.success && data.articles) {
         // Prepend generated articles
         const updatedArticles = [...data.articles, ...articles];
@@ -797,8 +1060,14 @@ export default function AdminPanel({ onClose, onRefreshBlog, onRefreshSite }: Ad
       }
 
     } catch (err: any) {
+      clearInterval(interval);
       console.error(err);
-      showAlert(err.message || 'コラムの自動生成中にエラーが発生しました。時間を置いて再度お試しください。', 'error');
+      if (err.message === 'static_hosting_fallback') {
+        setShowClientKeyInput(true);
+        showAlert('【重要】このWebサイトは、現在「静的ホスティング（Cloudflare/Vercel等）」で公開されているため、サーバー側でのAI自動生成APIが利用できません。ご自身の Gemini APIキーを入力し、ブラウザから直接自動生成を実行（無料）してください。入力欄を自動で開きました。', 'error');
+      } else {
+        showAlert(err.message || 'コラムの自動生成中にエラーが発生しました。時間を置いて再度お試しください。', 'error');
+      }
     } finally {
       clearInterval(interval);
       setIsGenerating(false);
@@ -1690,6 +1959,70 @@ export function saveArticles(articles: BlogArticle[]) {
                                 className="w-full px-4 py-2 bg-white border border-outline-variant rounded-xl focus:outline-none focus:ring-1 focus:ring-secondary text-xs"
                               />
                             </div>
+                          </div>
+
+                          {/* Client API Key Fallback Settings */}
+                          <div className="mt-4 pt-3 border-t border-rose-100/50">
+                            <div className="flex justify-between items-center mb-1.5">
+                              <label className="text-xs font-bold text-[#2c1a1e] flex items-center gap-1.5">
+                                <span>🔑 ブラウザ直接生成モード (静的ホスティング用)</span>
+                              </label>
+                              <button
+                                type="button"
+                                onClick={() => setShowClientKeyInput(!showClientKeyInput)}
+                                className="text-[10px] font-bold text-secondary hover:underline cursor-pointer"
+                              >
+                                {showClientKeyInput ? '設定を閉じる' : 'Gemini APIキーを設定・表示する'}
+                              </button>
+                            </div>
+                            
+                            {showClientKeyInput && (
+                              <div className="p-3.5 bg-rose-50/50 border border-rose-100 rounded-2xl space-y-2">
+                                <p className="text-[10px] text-on-surface-variant leading-relaxed">
+                                  Cloudflare Pages、Vercelなどの静的ホスティングで運用されている場合、サーバー側のAPIが動作しません。
+                                  下記にご自身の <strong>Gemini APIキー</strong> を保存することで、ブラウザから直接AI生成を可能にします（キーは本人のブラウザ内にのみ安全に保存されます）。
+                                </p>
+                                <div className="flex gap-2">
+                                  <input
+                                    type="password"
+                                    placeholder="AIzaSy..."
+                                    value={clientGeminiKey}
+                                    onChange={(e) => {
+                                      const key = e.target.value;
+                                      setClientGeminiKey(key);
+                                      localStorage.setItem('client_gemini_api_key', key);
+                                    }}
+                                    className="flex-grow px-3 py-1.5 bg-white border border-outline-variant rounded-xl focus:outline-none focus:ring-1 focus:ring-secondary text-xs font-mono"
+                                  />
+                                  {clientGeminiKey && (
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setClientGeminiKey('');
+                                        localStorage.removeItem('client_gemini_api_key');
+                                        showAlert('APIキーを消去しました。');
+                                      }}
+                                      className="px-3 py-1.5 bg-rose-100 text-rose-700 font-bold rounded-xl text-xs hover:bg-rose-200 cursor-pointer"
+                                    >
+                                      クリア
+                                    </button>
+                                  )}
+                                </div>
+                                <div className="text-[9px] text-rose-500/80">
+                                  ※ APIキーをお持ちでない場合は、Google AI Studio で無料のキーを1分で発行できます。
+                                </div>
+                              </div>
+                            )}
+                            
+                            {clientGeminiKey ? (
+                              <div className="text-[10px] font-bold text-emerald-600 flex items-center gap-1 mt-1">
+                                <span>● ブラウザ直接生成モードが有効です (Gemini APIキー設定済み)</span>
+                              </div>
+                            ) : (
+                              <div className="text-[10px] text-on-surface-variant flex items-center gap-1 mt-1">
+                                <span>○ 通常モード (サーバーAPI経由で生成します)</span>
+                              </div>
+                            )}
                           </div>
                         </div>
 
