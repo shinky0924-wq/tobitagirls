@@ -97,7 +97,17 @@ export default function App() {
         const localArticles = getStoredArticles();
         const firestoreIds = new Set(firestoreData.map(a => a.id));
         let hasNewDefault = false;
-        const mergedArticles = [...firestoreData];
+        let hasImageUpdates = false;
+
+        const mergedArticles = firestoreData.map(fArt => {
+          const localMatch = localArticles.find(lArt => lArt.id === fArt.id);
+          if (localMatch && localMatch.eyeCatch !== fArt.eyeCatch) {
+            hasImageUpdates = true;
+            return { ...fArt, eyeCatch: localMatch.eyeCatch };
+          }
+          return fArt;
+        });
+
         for (const localArt of localArticles) {
           if (!firestoreIds.has(localArt.id)) {
             mergedArticles.push(localArt);
@@ -105,7 +115,7 @@ export default function App() {
           }
         }
 
-        if (hasNewDefault) {
+        if (hasNewDefault || hasImageUpdates) {
           // Sort mergedArticles by numeric ID
           mergedArticles.sort((a, b) => {
             const idA = parseInt(a.id, 10) || 0;
@@ -119,9 +129,9 @@ export default function App() {
           try {
             const { saveBlogArticlesToFirestore } = await import('./firebase');
             await saveBlogArticlesToFirestore(mergedArticles);
-            console.log('Successfully updated Firestore with new default articles.');
+            console.log('Successfully updated Firestore with new default articles and images.');
           } catch (seedErr) {
-            console.warn('Updating Firestore with newly added local articles failed:', seedErr);
+            console.warn('Updating Firestore with newly added local articles/images failed:', seedErr);
           }
         } else {
           setBlogArticles(firestoreData);
