@@ -67,15 +67,19 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
           
           {/* Logo details */}
           <div className="space-y-4">
-            <div className="font-display font-extrabold text-xl text-secondary flex items-center gap-2">
-              <LucideIcon name="Heart" className="fill-secondary text-secondary" size={18} />
-              飛田ガールズ
+            <div className="space-y-1">
+              <div className="text-xs font-bold text-on-surface-variant/80 uppercase tracking-wider">
+                飛田新地求人サイト
+              </div>
+              <div className="font-display font-extrabold text-xl text-secondary flex items-center gap-2 pb-2">
+                <LucideIcon name="Heart" className="fill-secondary text-secondary" size={18} />
+                飛田ガールズ
+              </div>
             </div>
             <p className="font-sans text-xs md:text-sm text-on-surface-variant leading-loose">
-              飛田新地専門求人サイト<br />
               運営時間：10:00〜24:00<br />
               定休日：年中無休<br />
-              対応エリア：飛田新地・大阪市周辺
+              エリア：大阪天王寺飛田新地
             </p>
           </div>
 
