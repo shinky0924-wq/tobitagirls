@@ -367,7 +367,7 @@ JSONスキーマ：
         const ai = new GoogleGenAI({ apiKey });
 
         const response = await ai.models.generateContent({
-          model: "gemini-3.5-flash",
+          model: "gemini-2.5-flash",
           contents: `${systemPrompt}\n\n飛田新地お仕事コラムを、指定されたJSONスキーマに従って日本語で生成してください。`,
           config: {
             responseMimeType: "application/json",
