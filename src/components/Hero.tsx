@@ -114,41 +114,44 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
           id="hero-cta-container"
         >
           {randomArticles.length > 0 && (
-            <div className="w-full text-left bg-white p-5 md:p-6 rounded-2xl border border-rose-100 shadow-lg" id="hero-random-columns">
-              <h3 className="font-sans font-bold text-sm md:text-base text-secondary mb-3.5 flex items-center gap-2 border-b border-rose-50 pb-2">
-                <LucideIcon name="BookOpen" className="text-secondary animate-pulse" size={18} />
-                <span>人気のお仕事コラム（おすすめ5選）</span>
+            <div className="w-full text-left bg-white p-5 md:p-6 rounded-2xl border-2 border-[#ff69b4] shadow-xl shadow-rose-100/40 relative overflow-hidden" id="hero-random-columns">
+              {/* Cute top subtle decorative bar */}
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-rose-400 via-pink-500 to-rose-400" />
+              
+              <h3 className="font-sans font-extrabold text-sm md:text-base text-secondary mb-4 flex items-center gap-2 border-b-2 border-rose-100 pb-2.5">
+                <LucideIcon name="Sparkles" className="text-[#ff69b4] animate-pulse" size={18} />
+                <span className="bg-gradient-to-r from-secondary to-pink-600 bg-clip-text text-transparent">人気のお仕事コラム（おすすめ5選）</span>
               </h3>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2.5">
                 {randomArticles.map((art) => (
                   <button
                     key={art.id}
                     onClick={() => onArticleClick && onArticleClick(art.slug)}
-                    className="w-full text-left font-sans font-semibold text-xs md:text-sm text-on-surface hover:text-secondary bg-surface hover:bg-rose-50/40 p-2.5 rounded-lg border border-gray-100 hover:border-rose-100 transition-all flex items-center justify-between gap-3 cursor-pointer group shadow-xs"
+                    className="w-full text-left font-sans font-bold text-xs md:text-sm text-on-surface hover:text-secondary bg-[#fff0f5]/40 hover:bg-[#ffe4e1]/60 p-3 rounded-xl border border-rose-100 hover:border-[#ff69b4] transition-all flex items-center justify-between gap-3 cursor-pointer group shadow-sm hover:shadow-md"
                     id={`hero-col-item-${art.id}`}
                   >
-                    <div className="flex items-center gap-2 overflow-hidden">
-                      <span className="bg-rose-100 text-secondary text-[9px] font-bold px-1.5 py-0.5 rounded-md whitespace-nowrap shrink-0">
+                    <div className="flex items-center gap-2.5 overflow-hidden">
+                      <span className="bg-[#ff69b4] text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap shrink-0 tracking-wider shadow-xs">
                         コラム
                       </span>
-                      <span className="truncate group-hover:underline">
+                      <span className="truncate text-gray-800 group-hover:text-secondary font-medium md:font-semibold">
                         {art.title}
                       </span>
                     </div>
-                    <LucideIcon name="ChevronRight" className="text-gray-400 group-hover:text-secondary group-hover:translate-x-0.5 transition-transform shrink-0" size={14} />
+                    <LucideIcon name="Heart" className="text-rose-300 group-hover:text-[#ff69b4] group-hover:scale-115 transition-all shrink-0" size={14} />
                   </button>
                 ))}
               </div>
               
               {onBlogClick && (
-                <div className="mt-4 text-center border-t border-rose-50 pt-3">
+                <div className="mt-4 text-center border-t-2 border-dashed border-rose-100 pt-3.5">
                   <button
                     onClick={onBlogClick}
-                    className="inline-flex items-center gap-1 text-xs md:text-sm font-bold text-secondary hover:text-[#a13762] hover:underline cursor-pointer group"
+                    className="inline-flex items-center gap-1.5 text-xs md:text-sm font-extrabold text-[#ff69b4] hover:text-[#d04b86] hover:underline cursor-pointer group bg-rose-50/40 hover:bg-rose-50 px-4 py-1.5 rounded-full border border-rose-100 hover:border-[#ff69b4]/50 transition-all"
                     id="hero-all-columns-link"
                   >
                     <span>すべてのコラムを見る</span>
-                    <LucideIcon name="ArrowRight" className="group-hover:translate-x-1 transition-transform" size={14} />
+                    <LucideIcon name="ChevronRight" className="group-hover:translate-x-1 transition-transform" size={14} />
                   </button>
                 </div>
               )}
