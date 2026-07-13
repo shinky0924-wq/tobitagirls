@@ -114,40 +114,50 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
           id="hero-cta-container"
         >
           {randomArticles.length > 0 && (
-            <div className="w-full text-left bg-white p-5 md:p-6 rounded-2xl border-2 border-secondary shadow-xl shadow-rose-100/40 relative overflow-hidden" id="hero-random-columns">
-              {/* Cute top subtle decorative bar */}
-              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-rose-400 via-secondary to-rose-400" />
+            <div className="w-full text-left bg-gradient-to-br from-white to-[#fffbfd] p-5 md:p-6 rounded-3xl border border-secondary/20 shadow-xl shadow-rose-100/30 relative" id="hero-random-columns">
+              {/* Elegant floating accent sparkles */}
+              <div className="absolute -top-3 -right-3 bg-secondary text-white text-[10px] px-3 py-1 rounded-full font-black shadow-sm flex items-center gap-1 border border-secondary/10 tracking-widest animate-pulse">
+                <LucideIcon name="Sparkles" size={11} />
+                <span>PICK UP</span>
+              </div>
               
-              <h3 className="font-sans font-extrabold text-sm md:text-base text-secondary mb-4 flex items-center gap-2 border-b-2 border-rose-100 pb-2.5">
-                <LucideIcon name="Sparkles" className="text-secondary animate-pulse" size={18} />
-                <span className="bg-gradient-to-r from-secondary to-[#a13762] bg-clip-text text-transparent">人気のお仕事コラム（おすすめ5選）</span>
+              <h3 className="font-sans font-extrabold text-sm md:text-base text-secondary mb-4 flex items-center gap-2 border-b border-rose-100 pb-3">
+                <span className="bg-secondary text-white text-[9px] tracking-wider px-2 py-0.5 rounded-md font-black">RECOMMEND</span>
+                <span className="bg-gradient-to-r from-secondary to-[#a13762] bg-clip-text text-transparent font-black">人気のお仕事コラム（おすすめ5選）</span>
               </h3>
+              
               <div className="flex flex-col gap-2.5">
-                {randomArticles.map((art) => (
+                {randomArticles.map((art, index) => (
                   <button
                     key={art.id}
                     onClick={() => onArticleClick && onArticleClick(art.slug)}
-                    className="w-full text-left font-sans font-bold text-xs md:text-sm text-on-surface hover:text-secondary bg-[#fff0f5]/40 hover:bg-[#ffe4e1]/60 p-3 rounded-xl border border-rose-100 hover:border-secondary transition-all flex items-center justify-between gap-3 cursor-pointer group shadow-sm hover:shadow-md"
+                    className="w-full text-left font-sans text-xs md:text-sm text-on-surface bg-white hover:bg-secondary-container/10 p-3 rounded-2xl border border-rose-100 hover:border-secondary-container/50 transition-all flex items-center justify-between gap-3 cursor-pointer group shadow-[0_2px_8px_-3px_rgba(210,84,123,0.06)] hover:shadow-[0_4px_12px_-2px_rgba(210,84,123,0.12)] hover:-translate-y-0.5"
                     id={`hero-col-item-${art.id}`}
                   >
-                    <div className="flex items-center gap-2.5 overflow-hidden">
-                      <span className="bg-secondary text-white text-[9px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap shrink-0 tracking-wider shadow-xs">
-                        コラム
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      {/* Premium Number indicator */}
+                      <span className="font-sans font-black text-xs text-secondary-container group-hover:text-secondary transition-colors shrink-0 w-5 text-center">
+                        {String(index + 1).padStart(2, '0')}
                       </span>
-                      <span className="truncate text-gray-800 group-hover:text-secondary font-medium md:font-semibold">
+                      <span className="truncate text-gray-700 group-hover:text-secondary transition-colors font-semibold text-xs md:text-sm">
                         {art.title}
                       </span>
                     </div>
-                    <LucideIcon name="Heart" className="text-rose-300 group-hover:text-secondary group-hover:scale-115 transition-all shrink-0" size={14} />
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <span className="hidden sm:inline text-[10px] text-secondary font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                        読む
+                      </span>
+                      <LucideIcon name="Heart" className="text-secondary/20 group-hover:text-secondary fill-transparent group-hover:fill-secondary/20 transition-all scale-95 group-hover:scale-110 shrink-0" size={14} />
+                    </div>
                   </button>
                 ))}
               </div>
               
               {onBlogClick && (
-                <div className="mt-4 text-center border-t-2 border-dashed border-rose-100 pt-3.5">
+                <div className="mt-4 text-center border-t border-rose-100/50 pt-4">
                   <button
                     onClick={onBlogClick}
-                    className="inline-flex items-center gap-1.5 text-xs md:text-sm font-extrabold text-secondary hover:text-[#a13762] hover:underline cursor-pointer group bg-rose-50/40 hover:bg-rose-50 px-4 py-1.5 rounded-full border border-rose-100 hover:border-secondary/50 transition-all"
+                    className="inline-flex items-center gap-2 text-xs md:text-sm font-extrabold text-white bg-gradient-to-r from-secondary to-[#e2628b] hover:from-[#c2446c] hover:to-[#d2547b] px-6 py-2.5 rounded-full shadow-md shadow-rose-200/50 hover:shadow-lg transition-all cursor-pointer group"
                     id="hero-all-columns-link"
                   >
                     <span>すべてのコラムを見る</span>
