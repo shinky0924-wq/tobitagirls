@@ -761,7 +761,7 @@ ${topicPrompt}
 JSONスキーマ：
 {
   "title": "読者の目を惹く魅力的なコラムタイトル（30〜50文字程度。例：【身バレ防止】飛田新地で親や友達にバレずに働くための4つの鉄則）",
-  "slug": "半角英数字とハイフンのみのURLスラッグ（例：tobitashinchi-privacy-tips-${Date.now()}-${index}）",
+  "slug": "記事のタイトルを簡潔に英訳・ローマ字にし、半角小文字の英数字とハイフンのみで構成したURLスラッグ。末尾にランダムな文字列や日付は含めず、タイトルに即した意味のある英単語（3〜5単語程度）にしてください。（例：タイトルが「【身バレ防止】親や友達にバレずに働く4つの鉄則」なら「tobitashinchi-privacy-rules」や「work-without-revealing-identity」など）",
   "category": "'beginner' | 'salary' | 'security' | 'lifestyle' | 'onboarding' のいずれか1つ",
   "categoryLabel": "カテゴリーに応じた和名（例：未経験者向け、給与・待遇、安心・身バレ対策、生活・働き方、面接・お仕事の流れ）",
   "summary": "一覧ページで表示される、記事の概要を2文程度で魅力的にまとめた紹介文",
@@ -937,10 +937,29 @@ JSONスキーマ：
     const readTimeMinutes = Math.max(2, Math.ceil(charCount / 400));
     const randomEyeCatch = premiumIllustrations[Math.floor(Math.random() * premiumIllustrations.length)];
 
+    // Deduplicate and sanitize URL slug on client side
+    const existingSlugs = new Set(currentArticles.map(a => (a.slug || "").toLowerCase()));
+    let slug = (art.slug || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9\-]/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+
+    if (!slug) {
+      slug = "tobitashinchi-column";
+    }
+
+    let uniqueSlug = slug;
+    let counter = 1;
+    while (existingSlugs.has(uniqueSlug)) {
+      uniqueSlug = `${slug}-${counter}`;
+      counter++;
+    }
+
     return {
       id: nextId,
       title: art.title || "【新コラム】飛田新地での働き方コラム",
-      slug: art.slug || `ai-column-${Date.now()}-${index}`,
+      slug: uniqueSlug,
       category: art.category || "beginner",
       categoryLabel: art.categoryLabel || "未経験者向け",
       publishedAt: todayStr,

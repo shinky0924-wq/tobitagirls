@@ -5,6 +5,30 @@ import { exec } from "child_process";
 import { BLOG_ARTICLES } from "./src/blogData";
 import { DEFAULT_SITE_CONTENT } from "./src/siteContent";
 
+function sanitizeAndDeduplicateSlug(requestedSlug: string, title: string, existingSlugs: Set<string>): string {
+  // 1. Sanitize the slug (convert to lowercase, replace invalid characters with hyphens)
+  let slug = (requestedSlug || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\-]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+
+  // If the slug is empty (e.g. AI returned Japanese only or was blank), fallback to fallback-column
+  if (!slug) {
+    slug = "tobitashinchi-column";
+  }
+
+  // 2. Resolve duplicates
+  let uniqueSlug = slug;
+  let counter = 1;
+  while (existingSlugs.has(uniqueSlug)) {
+    uniqueSlug = `${slug}-${counter}`;
+    counter++;
+  }
+
+  return uniqueSlug;
+}
+
 async function startServer() {
   const app = express();
   const PORT = 3000;
@@ -269,7 +293,7 @@ ${topicPrompt}
 JSONスキーマ：
 {
   "title": "読者の目を惹く魅力的なコラムタイトル（30〜50文字程度。例：【身バレ防止】飛田新地で親や友達にバレずに働くための4つの鉄則）",
-  "slug": "半角英数字とハイフンのみのURLスラッグ（例：tobitashinchi-privacy-tips-${Date.now()}-${i}）",
+  "slug": "記事のタイトルを簡潔に英訳・ローマ字にし、半角小文字の英数字とハイフンのみで構成したURLスラッグ。末尾にランダムな文字列や日付は含めず、タイトルに即した意味のある英単語（3〜5単語程度）にしてください。（例：タイトルが「【身バレ防止】親や友達にバレずに働く4つの鉄則」なら「tobitashinchi-privacy-rules」や「work-without-revealing-identity」など）",
   "category": "'beginner' | 'salary' | 'security' | 'lifestyle' | 'onboarding' のいずれか1つ",
   "categoryLabel": "カテゴリーに応じた和名（例：未経験者向け、給与・待遇、安心・身バレ対策、生活・働き方、面接・お仕事の流れ）",
   "summary": "一覧ページで表示される、記事の概要を2文程度で魅力的にまとめた紹介文",
@@ -354,7 +378,7 @@ ${topicPrompt}
 JSONスキーマ：
 {
   "title": "読者の目を惹く魅力的なコラムタイトル（30〜50文字程度。例：【身バレ防止】飛田新地で親や友達にバレずに働くための4つの鉄則）",
-  "slug": "半角英数字とハイフンのみのURLスラッグ（例：tobitashinchi-privacy-tips-${Date.now()}-${i}）",
+  "slug": "記事のタイトルを簡潔に英訳・ローマ字にし、半角小文字の英数字とハイフンのみで構成したURLスラッグ。末尾にランダムな文字列や日付は含めず、タイトルに即した意味のある英単語（3〜5単語程度）にしてください。（例：タイトルが「【身バレ防止】親や友達にバレずに働く4つの鉄則」なら「tobitashinchi-privacy-rules」や「work-without-revealing-identity」など）",
   "category": "'beginner' | 'salary' | 'security' | 'lifestyle' | 'onboarding' のいずれか1つ",
   "categoryLabel": "カテゴリーに応じた和名（例：未経験者向け、給与・待遇、安心・身バレ対策、生活・働き方、面接・お仕事の流れ）",
   "summary": "一覧ページで表示される、記事の概要を2文程度で魅力的にまとめた紹介文",
@@ -520,6 +544,8 @@ JSONスキーマ：
 
       // Map and populate additional standard values on server side
       const todayStr = new Date().toISOString().split("T")[0];
+      const existingSlugs = new Set(memoryArticles.map(art => (art.slug || "").toLowerCase()));
+
       const newlyGeneratedArticles = parsedArticles.map((art: any, index: number) => {
         const nextId = (maxId + index + 1).toString();
         
@@ -530,10 +556,14 @@ JSONスキーマ：
         // Randomly pick an eyecatch from our real premium illustration set
         const randomEyeCatch = premiumIllustrations[Math.floor(Math.random() * premiumIllustrations.length)];
 
+        const rawSlug = art.slug || "";
+        const uniqueSlug = sanitizeAndDeduplicateSlug(rawSlug, art.title || "", existingSlugs);
+        existingSlugs.add(uniqueSlug);
+
         return {
           id: nextId,
           title: art.title || "【新コラム】飛田新地での働き方コラム",
-          slug: art.slug || `ai-column-${Date.now()}-${index}`,
+          slug: uniqueSlug,
           category: art.category || "beginner",
           categoryLabel: art.categoryLabel || "未経験者向け",
           publishedAt: todayStr,
