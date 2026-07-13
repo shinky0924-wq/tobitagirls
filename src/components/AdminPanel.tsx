@@ -87,6 +87,15 @@ export default function AdminPanel({ onClose, onRefreshBlog, onRefreshSite }: Ad
   const [isCopied, setIsCopied] = useState(false);
   const [showCodeExport, setShowCodeExport] = useState(false);
 
+  // AI batch generator states
+  const [showAiGenerator, setShowAiGenerator] = useState(false);
+  const [aiModel, setAiModel] = useState<'gemini' | 'claude'>('gemini');
+  const [aiCount, setAiCount] = useState<number>(3);
+  const [aiCategory, setAiCategory] = useState<string>('all');
+  const [aiTopic, setAiTopic] = useState<string>('');
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generationStep, setGenerationStep] = useState<string>('');
+
   // Deep nested updaters for SiteContent State
   const updateHeroField = (field: keyof SiteContent['hero'], val: string) => {
     setSiteText(prev => ({
@@ -722,6 +731,79 @@ export default function AdminPanel({ onClose, onRefreshBlog, onRefreshSite }: Ad
         showAlert('コラムはブラウザに一時保存されましたが、サーバー同期に失敗しました。', 'error');
       }
     })();
+  };
+
+  const handleAiGenerate = async () => {
+    setIsGenerating(true);
+    setGenerationStep('AIコラム生成エンジンを初期化中...');
+    
+    // Simulate engaging progress steps
+    const steps = [
+      { text: '飛田新地のお仕事トレンド・未経験者の不安要素をAIで分析中...', delay: 1500 },
+      { text: '読者の興味を惹くSEO向けタイトル・見出しの構成を構築中...', delay: 2500 },
+      { text: '優しく安心感を与えるトーン（〜です、〜ます調）でコラム本文を執筆中（数十秒かかる場合があります）...', delay: 4000 },
+      { text: '最新のプレミアムイラスト画像をアイキャッチに選定中...', delay: 2000 },
+      { text: '全体のフォーマット確認、データベース保存準備完了...', delay: 1500 }
+    ];
+
+    let currentStep = 0;
+    const interval = setInterval(() => {
+      if (currentStep < steps.length) {
+        setGenerationStep(steps[currentStep].text);
+        currentStep++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 3000);
+
+    try {
+      const response = await fetch('/api/cms/generate-articles', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Admin-Password': getAdminPassword()
+        },
+        body: JSON.stringify({
+          model: aiModel,
+          count: aiCount,
+          category: aiCategory,
+          customTopic: aiTopic
+        })
+      });
+
+      clearInterval(interval);
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || '自動生成APIの呼び出しに失敗しました。');
+      }
+
+      const data = await response.json();
+      if (data.success && data.articles) {
+        // Prepend generated articles
+        const updatedArticles = [...data.articles, ...articles];
+        setArticles(updatedArticles);
+        saveArticles(updatedArticles);
+        onRefreshBlog();
+        
+        // Push durably to Firebase
+        await saveBlogArticlesToFirestore(updatedArticles);
+        
+        showAlert(`コラムを ${data.count} 件自動生成し、データベースに公開保存しました！`);
+        setShowAiGenerator(false);
+        setAiTopic('');
+      } else {
+        throw new Error('コラムの生成結果が空、または不正な形式です。');
+      }
+
+    } catch (err: any) {
+      console.error(err);
+      showAlert(err.message || 'コラムの自動生成中にエラーが発生しました。時間を置いて再度お試しください。', 'error');
+    } finally {
+      clearInterval(interval);
+      setIsGenerating(false);
+      setGenerationStep('');
+    }
   };
 
   // Block handlers
@@ -1403,6 +1485,17 @@ export function saveArticles(articles: BlogArticle[]) {
                     コード出力
                   </button>
                   <button
+                    onClick={() => setShowAiGenerator(!showAiGenerator)}
+                    className={`flex-1 md:flex-initial inline-flex items-center justify-center gap-1 px-4 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer border ${
+                      showAiGenerator
+                        ? 'bg-rose-100 border-rose-300 text-rose-800'
+                        : 'bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white shadow-md shadow-rose-500/10 border-transparent'
+                    }`}
+                  >
+                    <Sparkles size={14} className={showAiGenerator ? 'animate-spin' : 'animate-pulse'} />
+                    AIコラム自動生成
+                  </button>
+                  <button
                     onClick={handleStartCreate}
                     className="flex-1 md:flex-initial inline-flex items-center justify-center gap-1 px-5 py-2.5 bg-secondary hover:bg-[#b03f62] text-white rounded-2xl text-xs font-bold shadow-md shadow-secondary/15 transition-all cursor-pointer"
                   >
@@ -1459,6 +1552,167 @@ export function saveArticles(articles: BlogArticle[]) {
                         Type: TypeScript
                       </div>
                     </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* AI Auto-Generator Drawer */}
+              <AnimatePresence>
+                {showAiGenerator && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="bg-rose-50/30 border border-rose-100 rounded-3xl p-6 mb-8 shadow-sm overflow-hidden"
+                  >
+                    <div className="flex justify-between items-center pb-3 border-b border-rose-100 mb-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl flex items-center justify-center text-white">
+                          <Sparkles size={16} className="animate-pulse" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-bold text-[#2c1a1e] flex items-center gap-1">
+                            AIコラム自動生成パネル
+                          </h3>
+                          <p className="text-[11px] text-on-surface-variant mt-0.5 leading-relaxed">
+                            高品質なサポート・紹介コラムを、一括で自動生成して瞬時にデータベースへ公開・保存します。
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => setShowAiGenerator(false)}
+                        className="px-3 py-1.5 bg-white hover:bg-rose-50 border border-outline-variant rounded-xl text-xs font-bold text-on-surface cursor-pointer transition-colors"
+                        disabled={isGenerating}
+                      >
+                        閉じる
+                      </button>
+                    </div>
+
+                    {isGenerating ? (
+                      <div className="flex flex-col items-center justify-center py-12 text-center">
+                        <div className="relative w-16 h-16 mb-4">
+                          <div className="absolute inset-0 rounded-full border-4 border-pink-100 animate-pulse"></div>
+                          <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-pink-500 animate-spin"></div>
+                          <div className="absolute inset-0 flex items-center justify-center text-pink-500">
+                            <Sparkles size={24} className="animate-pulse" />
+                          </div>
+                        </div>
+                        <h4 className="text-sm font-bold text-[#2c1a1e] animate-pulse">AIがコラムを生成しています...</h4>
+                        <p className="text-xs text-secondary font-medium max-w-md mt-2 leading-relaxed transition-all duration-300">
+                          {generationStep}
+                        </p>
+                        <p className="text-[10px] text-on-surface-variant mt-4">
+                          ※生成完了まで15秒〜45秒ほどかかる場合があります。画面を閉じずにお待ちください。
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                        {/* Options Section */}
+                        <div className="md:col-span-8 space-y-4">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {/* AI Model Choice */}
+                            <div>
+                              <label className="block text-xs font-bold text-on-surface-variant mb-1.5">AIモデルの選択</label>
+                              <div className="grid grid-cols-2 gap-2">
+                                <button
+                                  type="button"
+                                  onClick={() => setAiModel('gemini')}
+                                  className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                                    aiModel === 'gemini'
+                                      ? 'bg-rose-500 border-rose-500 text-white shadow-xs'
+                                      : 'bg-white border-outline-variant text-on-surface hover:bg-rose-50/30'
+                                  }`}
+                                >
+                                  <span>Gemini (推奨・即時稼働)</span>
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => setAiModel('claude')}
+                                  className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                                    aiModel === 'claude'
+                                      ? 'bg-rose-500 border-rose-500 text-white shadow-xs'
+                                      : 'bg-white border-outline-variant text-on-surface hover:bg-rose-50/30'
+                                  }`}
+                                >
+                                  <span>Claude 3.5 Sonnet</span>
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* Batch Count Selection */}
+                            <div>
+                              <label className="block text-xs font-bold text-on-surface-variant mb-1.5">同時生成件数</label>
+                              <div className="grid grid-cols-4 gap-1.5">
+                                {[1, 2, 3, 5].map((count) => (
+                                  <button
+                                    key={count}
+                                    type="button"
+                                    onClick={() => setAiCount(count)}
+                                    className={`py-2 px-1 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                                      aiCount === count
+                                        ? 'bg-[#2c1a1e] border-[#2c1a1e] text-white shadow-xs'
+                                        : 'bg-white border-outline-variant text-on-surface hover:bg-rose-50/30'
+                                    }`}
+                                  >
+                                    {count}件
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {/* Category Filter */}
+                            <div>
+                              <label className="block text-xs font-bold text-on-surface-variant mb-1.5">生成カテゴリー</label>
+                              <select
+                                value={aiCategory}
+                                onChange={(e) => setAiCategory(e.target.value)}
+                                className="w-full px-4 py-2 bg-white border border-outline-variant rounded-xl focus:outline-none focus:ring-1 focus:ring-secondary text-xs"
+                              >
+                                <option value="all">おまかせ (カテゴリーを分散)</option>
+                                <option value="beginner">未経験者向け</option>
+                                <option value="salary">給与・待遇</option>
+                                <option value="security">安心・身バレ対策</option>
+                                <option value="lifestyle">生活・働き方</option>
+                                <option value="onboarding">面接・お仕事の流れ</option>
+                              </select>
+                            </div>
+
+                            {/* Custom topic prompt */}
+                            <div>
+                              <label className="block text-xs font-bold text-on-surface-variant mb-1.5">特定のテーマ・ご要望 (任意)</label>
+                              <input
+                                type="text"
+                                placeholder="例: 体験入店の一日の流れ、身バレ対策の鉄則など"
+                                value={aiTopic}
+                                onChange={(e) => setAiTopic(e.target.value)}
+                                className="w-full px-4 py-2 bg-white border border-outline-variant rounded-xl focus:outline-none focus:ring-1 focus:ring-secondary text-xs"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Guide/Launcher Section */}
+                        <div className="md:col-span-4 bg-white rounded-3xl p-5 border border-rose-100 flex flex-col justify-between">
+                          <div>
+                            <span className="text-[10px] text-secondary font-extrabold tracking-wider uppercase">HOW IT WORKS</span>
+                            <h4 className="text-xs font-bold text-[#2c1a1e] mt-1">安心安全な自動生成</h4>
+                            <p className="text-[10px] text-on-surface-variant mt-1.5 leading-relaxed">
+                              飛田ガールズのコンセプトに基づき、未経験の女性が知りたい情報、ノルマなし、飲酒強要なし、1日体入のメリットなどを自動で盛り込んだSEOに強い記事を作成します。アイキャッチ画像には本番用の厳選イラストを自動でセットします。
+                            </p>
+                          </div>
+                          
+                          <button
+                            onClick={handleAiGenerate}
+                            className="mt-4 w-full py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold rounded-2xl text-xs shadow-md shadow-rose-500/15 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                          >
+                            <Sparkles size={14} className="animate-pulse" />
+                            AIコラム生成を開始する
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>

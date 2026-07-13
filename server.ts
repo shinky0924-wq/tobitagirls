@@ -236,6 +236,297 @@ async function startServer() {
     }
   });
 
+  // API: AI Auto-Generate Blog Articles (Batch)
+  app.post("/api/cms/generate-articles", checkAdminAuth, async (req, res) => {
+    try {
+      const { model, count, category, customTopic } = req.body;
+      const numArticles = Math.min(Math.max(parseInt(count, 10) || 1, 1), 10);
+      
+      const requestedCategory = category || "all";
+      const topicPrompt = customTopic ? `特別テーマ・要望:「${customTopic}」` : "テーマは自由（未経験者向け、給料システム、身バレ対策などからバランスよく選んでください）";
+
+      const systemPrompt = `あなたは飛田新地の女性向けサポート＆求人サイト「飛田ガールズ」のプロの編集者です。
+求職中の20代女性（未経験者が多い）が抱く、不安や疑問（身バレ対策、安全面、給料システム、実際の仕事の流れ、体入（体験入店）、生活・働き方など）を優しく丁寧に解消し、一歩踏み出す安心感を与える極めて高品質なコラム記事を日本語で作成してください。
+
+今回は ${numArticles} 件のコラム記事を生成してください。
+${requestedCategory !== "all" ? `カテゴリーは必ず「${requestedCategory}」にしてください。` : "カテゴリーは複数の異なるものに分散させてください。"}
+${topicPrompt}
+
+各記事は、以下のJSONスキーマに従った完全なオブジェクトである必要があります。
+
+記事のコンテンツ（content配列）は、見出し（h2, h3）、本文（p）、リスト（list）、よくある質問（qna）、LINE誘導（cta）のブロックを複数組み合わせた、読み応えのある構成（合計文字数1000文字〜1500文字程度）にしてください。
+
+JSONスキーマ：
+[
+  {
+    "title": "読者の目を惹く魅力的なコラムタイトル（30〜50文字程度。例：【身バレ防止】飛田新地で親や友達にバレずに働くための4つの鉄則）",
+    "slug": "半角英数字とハイフンのみのURLスラッグ（例：tobitashinchi-privacy-tips）",
+    "category": "'beginner' | 'salary' | 'security' | 'lifestyle' | 'onboarding' のいずれか1つ",
+    "categoryLabel": "カテゴリーに応じた和名（例：未経験者向け、給与・待遇、安心・身バレ対策、生活・働き方、面接・お仕事の流れ）",
+    "summary": "一覧ページで表示される、記事の概要を2文程度で魅力的にまとめた紹介文",
+    "author": {
+      "name": "さくら または ひまり または ゆい などの女性サポートスタッフ名、またはマネージャー木村",
+      "role": "女性サポートスタッフ（歴8年） または 採用担当マネージャー などの役職",
+      "avatar": "👩‍💼 または 👩‍💻 または 👩"
+    },
+    "tags": ["関連するタグ名1", "タグ2", "タグ3"],
+    "content": [
+      {
+        "type": "p",
+        "text": "導入段落。読者の不安に共感し、本記事を読めば解決することを伝えます。"
+      },
+      {
+        "type": "h2",
+        "text": "中見出しのタイトル"
+      },
+      {
+        "type": "p",
+        "text": "詳細な解説。安心できるトーンで具体的に説明します。"
+      },
+      {
+        "type": "list",
+        "items": [
+          "リスト項目1",
+          "リスト項目2",
+          "リスト項目3"
+        ]
+      },
+      {
+        "type": "h3",
+        "text": "小見出しのタイトル"
+      },
+      {
+        "type": "p",
+        "text": "より細分化した情報や豆知識。"
+      },
+      {
+        "type": "qna",
+        "question": "よくある質問の問い？",
+        "answer": "丁寧で安心感に満ちた回答。"
+      },
+      {
+        "type": "cta"
+      }
+    ]
+  }
+]
+
+注意点：
+1. 違法な行為や危険な行為を推奨する内容は避け、安心・安全・健全なサポート環境であることを一貫して強調してください。
+2. 日本の女の子が読んで自然で、温かみがあり、信頼できる言葉遣い（〜です、〜ます調）にしてください。
+3. リスト(list)やQ&A(qna)ブロックを効果的に使い、視覚的に読みやすくしてください。
+4. LINE誘導(cta)ブロックは、記事の中間か最後付近に1つ以上配置してください。ctaブロックは 'type': 'cta' のみで、'text' や 'items' などのキーは不要です。`;
+
+      let generatedJsonText = "";
+
+      if (model === "claude") {
+        const apiKey = process.env.ANTHROPIC_API_KEY;
+        if (!apiKey) {
+          return res.status(400).json({ error: "ClaudeのAPIキー(ANTHROPIC_API_KEY)が設定されていません。環境変数に設定するか、Geminiを使用してください。" });
+        }
+
+        // Call Claude via standard fetch to keep dependencies light
+        const fetchResponse = await fetch("https://api.anthropic.com/v1/messages", {
+          method: "POST",
+          headers: {
+            "x-api-key": apiKey,
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json"
+          },
+          body: JSON.stringify({
+            model: "claude-3-5-sonnet-20241022",
+            max_tokens: 8000,
+            system: "You are a professional blog writer. Output strictly valid JSON conforming to the requested schema. Do not include any conversational filler.",
+            messages: [
+              {
+                role: "user",
+                content: `${systemPrompt}\n\n必ず、マークダウンのバッククォーツ記法( \`\`\`json と \`\`\` )で囲んだJSONを1つだけ出力してください。余計な前置きや説明は一切不要です。`
+              }
+            ]
+          })
+        });
+
+        if (!fetchResponse.ok) {
+          const errText = await fetchResponse.text();
+          throw new Error(`Claude API returned status ${fetchResponse.status}: ${errText}`);
+        }
+
+        const claudeResult: any = await fetchResponse.json();
+        const fullText = claudeResult.content?.[0]?.text || "";
+        // Extract JSON block
+        const jsonMatch = fullText.match(/```json\s*([\s\S]*?)\s*```/) || fullText.match(/\[\s*\{[\s\S]*\}\s*\]/);
+        generatedJsonText = jsonMatch ? (jsonMatch[1] || jsonMatch[0]) : fullText;
+      } else {
+        // Default to Gemini
+        const apiKey = process.env.GEMINI_API_KEY;
+        if (!apiKey) {
+          return res.status(500).json({ error: "Gemini APIキー(GEMINI_API_KEY)がサーバーに設定されていません。" });
+        }
+
+        const { GoogleGenAI, Type } = await import("@google/genai");
+        const ai = new GoogleGenAI({ apiKey });
+
+        const response = await ai.models.generateContent({
+          model: "gemini-3.5-flash",
+          contents: `${systemPrompt}\n\n飛田新地お仕事コラムを、指定されたJSONスキーマに従って日本語で生成してください。`,
+          config: {
+            responseMimeType: "application/json",
+            responseSchema: {
+              type: Type.ARRAY,
+              items: {
+                type: Type.OBJECT,
+                properties: {
+                  title: { type: Type.STRING },
+                  slug: { type: Type.STRING },
+                  category: { type: Type.STRING },
+                  categoryLabel: { type: Type.STRING },
+                  summary: { type: Type.STRING },
+                  author: {
+                    type: Type.OBJECT,
+                    properties: {
+                      name: { type: Type.STRING },
+                      role: { type: Type.STRING },
+                      avatar: { type: Type.STRING }
+                    },
+                    required: ["name", "role", "avatar"]
+                  },
+                  tags: {
+                    type: Type.ARRAY,
+                    items: { type: Type.STRING }
+                  },
+                  content: {
+                    type: Type.ARRAY,
+                    items: {
+                      type: Type.OBJECT,
+                      properties: {
+                        type: { type: Type.STRING },
+                        text: { type: Type.STRING },
+                        items: {
+                          type: Type.ARRAY,
+                          items: { type: Type.STRING }
+                        },
+                        question: { type: Type.STRING },
+                        answer: { type: Type.STRING }
+                      },
+                      required: ["type"]
+                    }
+                  }
+                },
+                required: ["title", "slug", "category", "categoryLabel", "summary", "author", "tags", "content"]
+              }
+            }
+          }
+        });
+
+        generatedJsonText = response.text || "";
+      }
+
+      // Parse generated articles
+      const parsedArticles = JSON.parse(generatedJsonText.trim());
+      if (!Array.isArray(parsedArticles)) {
+        throw new Error("Generated content is not a valid JSON array of articles.");
+      }
+
+      // Premium Illustration paths we found in /src/assets/images
+      const premiumIllustrations = [
+        "/src/assets/images/col_ill_age_looks_1783884287024.jpg",
+        "/src/assets/images/col_ill_beauty_lifestyle_1783912347430.jpg",
+        "/src/assets/images/col_ill_beginner_guide_1783884225541.jpg",
+        "/src/assets/images/col_ill_cast_holiday_1783884322866.jpg",
+        "/src/assets/images/col_ill_cherry_bloom_1783884503300.jpg",
+        "/src/assets/images/col_ill_gold_bubble_1783913188809.jpg",
+        "/src/assets/images/col_ill_housing_support_1783884256462.jpg",
+        "/src/assets/images/col_ill_interview_guide_1783884267011.jpg",
+        "/src/assets/images/col_ill_kimono_magic_1783884424450.jpg",
+        "/src/assets/images/col_ill_kimono_makeup_1783884356215.jpg",
+        "/src/assets/images/col_ill_makeup_vanity_1783884445492.jpg",
+        "/src/assets/images/col_ill_mental_support_1783884376739.jpg",
+        "/src/assets/images/col_ill_non_alcoholic_1783884312890.jpg",
+        "/src/assets/images/col_ill_obachan_role_1783884412493.jpg",
+        "/src/assets/images/col_ill_one_day_flow_1783884401530.jpg",
+        "/src/assets/images/col_ill_privacy_guide_1783884246291.jpg",
+        "/src/assets/images/col_ill_privacy_smart_1783884436471.jpg",
+        "/src/assets/images/col_ill_relax_spa_1783884493332.jpg",
+        "/src/assets/images/col_ill_safe_entrance_1783884460416.jpg",
+        "/src/assets/images/col_ill_safety_security_1783884343829.jpg",
+        "/src/assets/images/col_ill_salary_system_1783884234635.jpg",
+        "/src/assets/images/col_ill_search_words_1783884385779.jpg",
+        "/src/assets/images/col_ill_short_term_1783884332841.jpg",
+        "/src/assets/images/col_ill_smart_planner_1783884470546.jpg",
+        "/src/assets/images/col_ill_tax_guide_1783884296268.jpg",
+        "/src/assets/images/col_ill_trial_guide_1783884277032.jpg",
+        "/src/assets/images/col_ill_weekend_shift_1783884365752.jpg",
+        "/src/assets/images/col_ill_welcome_gift_1783884481747.jpg"
+      ];
+
+      // Get highest numeric ID in current articles to continue sequence
+      let maxId = 0;
+      for (const art of memoryArticles) {
+        const parsedId = parseInt(art.id, 10);
+        if (!isNaN(parsedId) && parsedId > maxId) {
+          maxId = parsedId;
+        }
+      }
+
+      // Map and populate additional standard values on server side
+      const todayStr = new Date().toISOString().split("T")[0];
+      const newlyGeneratedArticles = parsedArticles.map((art: any, index: number) => {
+        const nextId = (maxId + index + 1).toString();
+        
+        // Count approximate characters for reading time
+        const charCount = art.content ? JSON.stringify(art.content).length : 1200;
+        const readTimeMinutes = Math.max(2, Math.ceil(charCount / 400));
+
+        // Randomly pick an eyecatch from our real premium illustration set
+        const randomEyeCatch = premiumIllustrations[Math.floor(Math.random() * premiumIllustrations.length)];
+
+        return {
+          id: nextId,
+          title: art.title || "【新コラム】飛田新地での働き方コラム",
+          slug: art.slug || `ai-column-${Date.now()}-${index}`,
+          category: art.category || "beginner",
+          categoryLabel: art.categoryLabel || "未経験者向け",
+          publishedAt: todayStr,
+          readTime: `${readTimeMinutes}分`,
+          summary: art.summary || "AIによって自動生成された最新のコラム記事です。",
+          eyeCatch: randomEyeCatch,
+          author: {
+            name: art.author?.name || "さくら",
+            role: art.author?.role || "女性サポートスタッフ",
+            avatar: art.author?.avatar || "👩‍💼"
+          },
+          content: art.content || [
+            { type: "p", text: "準備中のコラムコンテンツです。" }
+          ],
+          tags: art.tags || ["AI自動生成", "未経験歓迎"]
+        };
+      });
+
+      // Insert new articles at the beginning of list
+      const mergedArticles = [...newlyGeneratedArticles, ...memoryArticles];
+      memoryArticles = mergedArticles;
+
+      if (isWritable) {
+        try {
+          fs.writeFileSync(ARTICLES_PATH, JSON.stringify(mergedArticles, null, 2), "utf-8");
+          syncToGitHub();
+        } catch (fileErr) {
+          console.error("Non-fatal error writing auto-generated articles to file:", fileErr);
+        }
+      }
+
+      return res.json({
+        success: true,
+        count: newlyGeneratedArticles.length,
+        articles: newlyGeneratedArticles
+      });
+
+    } catch (e: any) {
+      console.error("Error in generate-articles API:", e);
+      return res.status(500).json({ error: e.message || "コラムの自動生成中にエラーが発生しました。" });
+    }
+  });
+
   // API: Get blog articles
   app.get("/api/cms/articles", (req, res) => {
     return res.json(memoryArticles);
