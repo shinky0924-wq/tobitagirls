@@ -921,7 +921,36 @@ JSONスキーマ：
       "/src/assets/images/col_ill_tax_guide_1783884296268.jpg",
       "/src/assets/images/col_ill_trial_guide_1783884277032.jpg",
       "/src/assets/images/col_ill_weekend_shift_1783884365752.jpg",
-      "/src/assets/images/col_ill_welcome_gift_1783884481747.jpg"
+      "/src/assets/images/col_ill_welcome_gift_1783884481747.jpg",
+      "/src/assets/images/premium_dorm_life_illust_1783982967926.jpg",
+      "/src/assets/images/premium_support_hands_illust_1783982978701.jpg",
+      "/src/assets/images/premium_cute_outfit_illust_1783982989517.jpg",
+      "/src/assets/images/premium_cafe_study_illust_1783982999931.jpg",
+      "/src/assets/images/premium_beauty_mirror_illust_1783983011517.jpg",
+      "/src/assets/images/premium_smart_finance_illust_1783983021235.jpg",
+      "/src/assets/images/premium_safety_heart_illust_1783983030211.jpg",
+      "/src/assets/images/premium_women_friends_illust_1783983040476.jpg",
+      "/src/assets/images/premium_onsen_spa_illust_1783983059885.jpg",
+      "/src/assets/images/premium_cat_mascot_illust_1783983070646.jpg",
+      "/src/assets/images/premium_planner_flow_illust_1783983081126.jpg",
+      "/src/assets/images/premium_spring_umbrella_illust_1783983092350.jpg",
+      "/src/assets/images/premium_tea_time_illust_1783983101716.jpg",
+      "/src/assets/images/premium_cute_chat_illust_1783983111499.jpg",
+      "/src/assets/images/premium_welcome_door_illust_1783983123541.jpg",
+      "/src/assets/images/premium_kimono_dress_illust_1783983134104.jpg",
+      "/src/assets/images/premium_relaxing_spa_illust_1783983152487.jpg",
+      "/src/assets/images/premium_luxury_shopping_illust_1783983163266.jpg",
+      "/src/assets/images/premium_peaceful_yoga_illust_1783983173190.jpg",
+      "/src/assets/images/premium_warm_fireplace_illust_1783983182824.jpg",
+      "/src/assets/images/premium_flower_vase_illust_1783983192676.jpg",
+      "/src/assets/images/premium_lucky_keys_illust_1783983202689.jpg",
+      "/src/assets/images/premium_mentor_advice_illust_1783983212274.jpg",
+      "/src/assets/images/premium_morning_breakfast_illust_1783983222167.jpg",
+      "/src/assets/images/premium_rainy_boots_illust_1783983237954.jpg",
+      "/src/assets/images/premium_nail_art_illust_1783983247884.jpg",
+      "/src/assets/images/premium_comfy_bedroom_illust_1783983257261.jpg",
+      "/src/assets/images/premium_piggy_bank_illust_1783983266778.jpg",
+      "/src/assets/images/premium_cute_desk_illust_1783983276314.jpg"
     ];
 
     let maxId = 0;
@@ -935,7 +964,28 @@ JSONスキーマ：
     const todayStr = new Date().toISOString().split("T")[0];
     const charCount = art.content ? JSON.stringify(art.content).length : 1200;
     const readTimeMinutes = Math.max(2, Math.ceil(charCount / 400));
-    const randomEyeCatch = premiumIllustrations[Math.floor(Math.random() * premiumIllustrations.length)];
+
+    // Calculate current usage frequencies in client-side context
+    const illustrationUsage = new Map<string, number>();
+    for (const img of premiumIllustrations) {
+      illustrationUsage.set(img, 0);
+    }
+    for (const a of currentArticles) {
+      if (a.eyeCatch && illustrationUsage.has(a.eyeCatch)) {
+        illustrationUsage.set(a.eyeCatch, illustrationUsage.get(a.eyeCatch)! + 1);
+      }
+    }
+
+    // Sort illustrations so the least-used ones are first
+    const sortedIllustrations = [...premiumIllustrations].sort((x, y) => {
+      const countX = illustrationUsage.get(x) || 0;
+      const countY = illustrationUsage.get(y) || 0;
+      if (countX !== countY) {
+        return countX - countY;
+      }
+      return premiumIllustrations.indexOf(x) - premiumIllustrations.indexOf(y);
+    });
+    const chosenEyeCatch = sortedIllustrations[0];
 
     // Deduplicate and sanitize URL slug on client side
     const existingSlugs = new Set(currentArticles.map(a => (a.slug || "").toLowerCase()));
@@ -965,7 +1015,7 @@ JSONスキーマ：
       publishedAt: todayStr,
       readTime: `${readTimeMinutes}分`,
       summary: art.summary || "AIによって自動生成された最新のコラム記事です。",
-      eyeCatch: randomEyeCatch,
+      eyeCatch: chosenEyeCatch,
       author: {
         name: art.author?.name || "さくら",
         role: art.author?.role || "女性サポートスタッフ",
