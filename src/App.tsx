@@ -93,8 +93,40 @@ export default function App() {
       // 1. Try to fetch from Firestore first
       const firestoreData = await getBlogArticlesFromFirestore();
       if (firestoreData && firestoreData.length > 0) {
-        setBlogArticles(firestoreData);
-        localStorage.setItem('custom_blog_articles', JSON.stringify(firestoreData));
+        // Automatically merge any default/local articles that are missing in Firestore (like newly added 20 columns)
+        const localArticles = getStoredArticles();
+        const firestoreIds = new Set(firestoreData.map(a => a.id));
+        let hasNewDefault = false;
+        const mergedArticles = [...firestoreData];
+        for (const localArt of localArticles) {
+          if (!firestoreIds.has(localArt.id)) {
+            mergedArticles.push(localArt);
+            hasNewDefault = true;
+          }
+        }
+
+        if (hasNewDefault) {
+          // Sort mergedArticles by numeric ID
+          mergedArticles.sort((a, b) => {
+            const idA = parseInt(a.id, 10) || 0;
+            const idB = parseInt(b.id, 10) || 0;
+            return idA - idB;
+          });
+          setBlogArticles(mergedArticles);
+          localStorage.setItem('custom_blog_articles', JSON.stringify(mergedArticles));
+
+          // Save the merged list back to Firestore
+          try {
+            const { saveBlogArticlesToFirestore } = await import('./firebase');
+            await saveBlogArticlesToFirestore(mergedArticles);
+            console.log('Successfully updated Firestore with new default articles.');
+          } catch (seedErr) {
+            console.warn('Updating Firestore with newly added local articles failed:', seedErr);
+          }
+        } else {
+          setBlogArticles(firestoreData);
+          localStorage.setItem('custom_blog_articles', JSON.stringify(firestoreData));
+        }
         return;
       }
 
