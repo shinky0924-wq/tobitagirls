@@ -283,6 +283,10 @@ export default function App() {
                   setCurrentTab('blog');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
+                articles={blogArticles}
+                onArticleClick={(slug) => {
+                  navigate(`/blog/${slug}`);
+                }}
               />
 
               {/* concerns Bento Grid block */}

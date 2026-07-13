@@ -3,18 +3,32 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { HERO_IMAGE_URL } from '../data';
 import LucideIcon from './LucideIcon';
 import { SiteContent } from '../siteContent';
+import { BlogArticle } from '../blogData';
 
 interface HeroProps {
   content: SiteContent['hero'];
   onCtaclick: () => void;
   onBlogClick?: () => void;
+  articles?: BlogArticle[];
+  onArticleClick?: (slug: string) => void;
 }
 
-export default function Hero({ content, onCtaclick, onBlogClick }: HeroProps) {
+export default function Hero({ content, onCtaclick, onBlogClick, articles, onArticleClick }: HeroProps) {
+  const [randomArticles, setRandomArticles] = useState<BlogArticle[]>([]);
+
+  useEffect(() => {
+    if (articles && articles.length > 0) {
+      // Shuffle and pick 5 articles
+      const shuffled = [...articles].sort(() => 0.5 - Math.random());
+      setRandomArticles(shuffled.slice(0, 5));
+    }
+  }, [articles]);
+
   return (
     <section className="relative pt-28 md:pt-36 pb-16 md:pb-24 overflow-hidden hero-pattern bg-radial from-rose-50/20 via-transparent to-transparent">
       {/* Backdrops */}
@@ -91,35 +105,55 @@ export default function Hero({ content, onCtaclick, onBlogClick }: HeroProps) {
           <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-rose-50 rounded-full border border-rose-100/30 flex items-center justify-center -z-10 shadow-sm" />
         </motion.div>
 
-        {/* LINE-themed CTA Button with Column Button */}
+        {/* Column Interactive List (Replacing buttons as requested) */}
         <motion.div 
-          className="flex flex-col gap-3.5 justify-center items-center w-full max-w-sm"
+          className="flex flex-col gap-3.5 justify-center items-center w-full max-w-xl"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
           id="hero-cta-container"
         >
-          {onBlogClick && (
-            <button
-              onClick={onBlogClick}
-              className="w-full bg-white hover:bg-rose-50/50 text-secondary border-2 border-secondary font-sans font-extrabold text-base md:text-lg px-8 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer group"
-              id="hero-blog-cta"
-            >
-              <LucideIcon name="BookOpen" className="text-secondary group-hover:scale-110 transition-transform" size={20} />
-              <span>お仕事コラムを見る</span>
-            </button>
-          )}
-
-          <button
-            onClick={onCtaclick}
-            className="w-full bg-gradient-to-r from-[#06c755] to-[#05b34c] text-white font-sans font-extrabold text-base md:text-lg px-8 py-4 rounded-full shadow-lg shadow-[#06c755]/20 hover:shadow-xl hover:shadow-[#06c755]/30 transition-all flex items-center justify-center gap-3 cursor-pointer group animate-pulse hover:animate-none"
-            id="hero-prime-cta"
-          >
-            <div className="bg-white rounded-full p-1 flex items-center justify-center text-[#06c755] shadow-sm group-hover:rotate-12 transition-transform">
-              <LucideIcon name="MessageCircle" className="fill-[#06c755] text-[#06c755] w-5 h-5" size={20} />
+          {randomArticles.length > 0 && (
+            <div className="w-full text-left bg-white p-5 md:p-6 rounded-2xl border border-rose-100 shadow-lg" id="hero-random-columns">
+              <h3 className="font-sans font-bold text-sm md:text-base text-secondary mb-3.5 flex items-center gap-2 border-b border-rose-50 pb-2">
+                <LucideIcon name="BookOpen" className="text-secondary animate-pulse" size={18} />
+                <span>人気のお仕事コラム（おすすめ5選）</span>
+              </h3>
+              <div className="flex flex-col gap-2">
+                {randomArticles.map((art) => (
+                  <button
+                    key={art.id}
+                    onClick={() => onArticleClick && onArticleClick(art.slug)}
+                    className="w-full text-left font-sans font-semibold text-xs md:text-sm text-on-surface hover:text-secondary bg-surface hover:bg-rose-50/40 p-2.5 rounded-lg border border-gray-100 hover:border-rose-100 transition-all flex items-center justify-between gap-3 cursor-pointer group shadow-xs"
+                    id={`hero-col-item-${art.id}`}
+                  >
+                    <div className="flex items-center gap-2 overflow-hidden">
+                      <span className="bg-rose-100 text-secondary text-[9px] font-bold px-1.5 py-0.5 rounded-md whitespace-nowrap shrink-0">
+                        コラム
+                      </span>
+                      <span className="truncate group-hover:underline">
+                        {art.title}
+                      </span>
+                    </div>
+                    <LucideIcon name="ChevronRight" className="text-gray-400 group-hover:text-secondary group-hover:translate-x-0.5 transition-transform shrink-0" size={14} />
+                  </button>
+                ))}
+              </div>
+              
+              {onBlogClick && (
+                <div className="mt-4 text-center border-t border-rose-50 pt-3">
+                  <button
+                    onClick={onBlogClick}
+                    className="inline-flex items-center gap-1 text-xs md:text-sm font-bold text-secondary hover:text-[#a13762] hover:underline cursor-pointer group"
+                    id="hero-all-columns-link"
+                  >
+                    <span>すべてのコラムを見る</span>
+                    <LucideIcon name="ArrowRight" className="group-hover:translate-x-1 transition-transform" size={14} />
+                  </button>
+                </div>
+              )}
             </div>
-            <span>{content.ctaButtonText}</span>
-          </button>
+          )}
         </motion.div>
 
         {/* Guarantee Badge */}
