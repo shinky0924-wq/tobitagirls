@@ -245,79 +245,7 @@ async function startServer() {
       const requestedCategory = category || "all";
       const topicPrompt = customTopic ? `特別テーマ・要望:「${customTopic}」` : "テーマは自由（未経験者向け、給料システム、身バレ対策などからバランスよく選んでください）";
 
-      const systemPrompt = `あなたは飛田新地の女性向けサポート＆求人サイト「飛田ガールズ」のプロの編集者です。
-求職中の20代女性（未経験者が多い）が抱く、不安や疑問（身バレ対策、安全面、給料システム、実際の仕事の流れ、体入（体験入店）、生活・働き方など）を優しく丁寧に解消し、一歩踏み出す安心感を与える極めて高品質なコラム記事を日本語で作成してください。
-
-今回は ${numArticles} 件のコラム記事を生成してください。
-${requestedCategory !== "all" ? `カテゴリーは必ず「${requestedCategory}」にしてください。` : "カテゴリーは複数の異なるものに分散させてください。"}
-${topicPrompt}
-
-各記事は、以下のJSONスキーマに従った完全なオブジェクトである必要があります。
-
-記事のコンテンツ（content配列）は、見出し（h2, h3）、本文（p）、リスト（list）、よくある質問（qna）、LINE誘導（cta）のブロックを複数組み合わせた、読み応えのある構成（合計文字数1000文字〜1500文字程度）にしてください。
-
-JSONスキーマ：
-[
-  {
-    "title": "読者の目を惹く魅力的なコラムタイトル（30〜50文字程度。例：【身バレ防止】飛田新地で親や友達にバレずに働くための4つの鉄則）",
-    "slug": "半角英数字とハイフンのみのURLスラッグ（例：tobitashinchi-privacy-tips）",
-    "category": "'beginner' | 'salary' | 'security' | 'lifestyle' | 'onboarding' のいずれか1つ",
-    "categoryLabel": "カテゴリーに応じた和名（例：未経験者向け、給与・待遇、安心・身バレ対策、生活・働き方、面接・お仕事の流れ）",
-    "summary": "一覧ページで表示される、記事の概要を2文程度で魅力的にまとめた紹介文",
-    "author": {
-      "name": "さくら または ひまり または ゆい などの女性サポートスタッフ名、またはマネージャー木村",
-      "role": "女性サポートスタッフ（歴8年） または 採用担当マネージャー などの役職",
-      "avatar": "👩‍💼 または 👩‍💻 または 👩"
-    },
-    "tags": ["関連するタグ名1", "タグ2", "タグ3"],
-    "content": [
-      {
-        "type": "p",
-        "text": "導入段落。読者の不安に共感し、本記事を読めば解決することを伝えます。"
-      },
-      {
-        "type": "h2",
-        "text": "中見出しのタイトル"
-      },
-      {
-        "type": "p",
-        "text": "詳細な解説。安心できるトーンで具体的に説明します。"
-      },
-      {
-        "type": "list",
-        "items": [
-          "リスト項目1",
-          "リスト項目2",
-          "リスト項目3"
-        ]
-      },
-      {
-        "type": "h3",
-        "text": "小見出しのタイトル"
-      },
-      {
-        "type": "p",
-        "text": "より細分化した情報や豆知識。"
-      },
-      {
-        "type": "qna",
-        "question": "よくある質問の問い？",
-        "answer": "丁寧で安心感に満ちた回答。"
-      },
-      {
-        "type": "cta"
-      }
-    ]
-  }
-]
-
-注意点：
-1. 違法な行為や危険な行為を推奨する内容は避け、安心・安全・健全なサポート環境であることを一貫して強調してください。
-2. 日本の女の子が読んで自然で、温かみがあり、信頼できる言葉遣い（〜です、〜ます調）にしてください。
-3. リスト(list)やQ&A(qna)ブロックを効果的に使い、視覚的に読みやすくしてください。
-4. LINE誘導(cta)ブロックは、記事の中間か最後付近に1つ以上配置してください。ctaブロックは 'type': 'cta' のみで、'text' や 'items' などのキーは不要です。`;
-
-      let generatedJsonText = "";
+      const parsedArticles: any[] = [];
 
       if (model === "claude") {
         const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -325,37 +253,80 @@ JSONスキーマ：
           return res.status(400).json({ error: "ClaudeのAPIキー(ANTHROPIC_API_KEY)が設定されていません。環境変数に設定するか、Geminiを使用してください。" });
         }
 
-        // Call Claude via standard fetch to keep dependencies light
-        const fetchResponse = await fetch("https://api.anthropic.com/v1/messages", {
-          method: "POST",
-          headers: {
-            "x-api-key": apiKey,
-            "anthropic-version": "2023-06-01",
-            "content-type": "application/json"
-          },
-          body: JSON.stringify({
-            model: "claude-3-5-sonnet-20241022",
-            max_tokens: 8000,
-            system: "You are a professional blog writer. Output strictly valid JSON conforming to the requested schema. Do not include any conversational filler.",
-            messages: [
-              {
-                role: "user",
-                content: `${systemPrompt}\n\n必ず、マークダウンのバッククォーツ記法( \`\`\`json と \`\`\` )で囲んだJSONを1つだけ出力してください。余計な前置きや説明は一切不要です。`
-              }
-            ]
-          })
-        });
+        for (let i = 0; i < numArticles; i++) {
+          console.log(`[AI CMS] Generating article ${i + 1} of ${numArticles} via Claude...`);
+          const singlePrompt = `あなたは飛田新地の女性向けサポート＆求人サイト「飛田ガールズ」のプロの編集者です。
+求職中の20代女性（未経験者が多い）が抱く、不安や疑問（身バレ対策、安全面、給料システム、実際の仕事の流れ、体入（体験入店）、生活・働き方など）を優しく丁寧に解消し、一歩踏み出す安心感を与える極めて高品質なコラム記事を日本語で作成してください。
 
-        if (!fetchResponse.ok) {
-          const errText = await fetchResponse.text();
-          throw new Error(`Claude API returned status ${fetchResponse.status}: ${errText}`);
+今回は、全リクエストのうち「${i + 1}番目」のコラム記事を1件だけ生成してください。
+${requestedCategory !== "all" ? `カテゴリーは必ず「${requestedCategory}」にしてください。` : "カテゴリーは 'beginner', 'salary', 'security', 'lifestyle', 'onboarding' の中から適したものを1つ選択してください。"}
+${topicPrompt}
+
+記事は、以下のJSONスキーマに従った完全な1つのオブジェクトである必要があります。
+
+記事のコンテンツ（content配列）は、見出し（h2, h3）、本文（p）、リスト（list）、よくある質問（qna）、LINE誘導（cta）のブロックを複数組み合わせた、読み応えのある構成（合計文字数1000文字〜1500文字程度）にしてください。
+
+JSONスキーマ：
+{
+  "title": "読者の目を惹く魅力的なコラムタイトル（30〜50文字程度。例：【身バレ防止】飛田新地で親や友達にバレずに働くための4つの鉄則）",
+  "slug": "半角英数字とハイフンのみのURLスラッグ（例：tobitashinchi-privacy-tips-${Date.now()}-${i}）",
+  "category": "'beginner' | 'salary' | 'security' | 'lifestyle' | 'onboarding' のいずれか1つ",
+  "categoryLabel": "カテゴリーに応じた和名（例：未経験者向け、給与・待遇、安心・身バレ対策、生活・働き方、面接・お仕事の流れ）",
+  "summary": "一覧ページで表示される、記事の概要を2文程度で魅力的にまとめた紹介文",
+  "author": {
+    "name": "さくら または ひまり または ゆい などの女性サポートスタッフ名、またはマネージャー木村",
+    "role": "女性サポートスタッフ（歴8年） または 採用担当マネージャー などの役職",
+    "avatar": "👩‍💼 または 👩‍💻 または 👩"
+  },
+  "tags": ["関連するタグ名1", "タグ2", "タグ3"],
+  "content": [
+    {
+      "type": "p",
+      "text": "導入段落。読者の不安に共感し、本記事を読めば解決することを伝えます。"
+    }
+  ]
+}`;
+
+          const fetchResponse = await fetch("https://api.anthropic.com/v1/messages", {
+            method: "POST",
+            headers: {
+              "x-api-key": apiKey,
+              "anthropic-version": "2023-06-01",
+              "content-type": "application/json"
+            },
+            body: JSON.stringify({
+              model: "claude-3-5-sonnet-20241022",
+              max_tokens: 4000,
+              system: "You are a professional blog writer. Output strictly valid JSON conforming to the requested schema. Do not include any conversational filler.",
+              messages: [
+                {
+                  role: "user",
+                  content: `${singlePrompt}\n\n必ず、マークダウンのバッククォーツ記法( \`\`\`json と \`\`\` )で囲んだJSONを1つだけ出力してください。余計な前置きや説明は一切不要です。`
+                }
+              ]
+            })
+          });
+
+          if (!fetchResponse.ok) {
+            const errText = await fetchResponse.text();
+            throw new Error(`Claude API returned status ${fetchResponse.status}: ${errText}`);
+          }
+
+          const claudeResult: any = await fetchResponse.json();
+          const fullText = claudeResult.content?.[0]?.text || "";
+          const jsonMatch = fullText.match(/```json\s*([\s\S]*?)\s*```/) || fullText.match(/\[\s*\{[\s\S]*\}\s*\]/) || fullText.match(/\{\s*[\s\S]*\}/);
+          const blockText = jsonMatch ? (jsonMatch[1] || jsonMatch[0]) : fullText;
+          try {
+            const articleObj = JSON.parse(blockText.trim());
+            if (Array.isArray(articleObj)) {
+              parsedArticles.push(...articleObj);
+            } else if (articleObj && typeof articleObj === "object") {
+              parsedArticles.push(articleObj);
+            }
+          } catch (parseErr) {
+            console.error(`Failed to parse Claude article JSON for index ${i}:`, parseErr);
+          }
         }
-
-        const claudeResult: any = await fetchResponse.json();
-        const fullText = claudeResult.content?.[0]?.text || "";
-        // Extract JSON block
-        const jsonMatch = fullText.match(/```json\s*([\s\S]*?)\s*```/) || fullText.match(/\[\s*\{[\s\S]*\}\s*\]/);
-        generatedJsonText = jsonMatch ? (jsonMatch[1] || jsonMatch[0]) : fullText;
       } else {
         // Default to Gemini
         const apiKey = process.env.GEMINI_API_KEY;
@@ -366,14 +337,85 @@ JSONスキーマ：
         const { GoogleGenAI, Type } = await import("@google/genai");
         const ai = new GoogleGenAI({ apiKey });
 
-        const response = await ai.models.generateContent({
-          model: "gemini-2.5-flash",
-          contents: `${systemPrompt}\n\n飛田新地お仕事コラムを、指定されたJSONスキーマに従って日本語で生成してください。`,
-          config: {
-            responseMimeType: "application/json",
-            responseSchema: {
-              type: Type.ARRAY,
-              items: {
+        for (let i = 0; i < numArticles; i++) {
+          console.log(`[AI CMS] Generating article ${i + 1} of ${numArticles} via Gemini...`);
+          
+          const singlePrompt = `あなたは飛田新地の女性向けサポート＆求人サイト「飛田ガールズ」のプロの編集者です。
+求職中の20代女性（未経験者が多い）が抱く、不安や疑問（身バレ対策、安全面、給料システム、実際の仕事の流れ、体入（体験入店）、生活・働き方など）を優しく丁寧に解消し、一歩踏み出す安心感を与える極めて高品質なコラム記事を日本語で作成してください。
+
+今回は、全リクエストのうち「${i + 1}番目」のコラム記事を1件だけ生成してください。
+${requestedCategory !== "all" ? `カテゴリーは必ず「${requestedCategory}」にしてください。` : "カテゴリーは 'beginner', 'salary', 'security', 'lifestyle', 'onboarding' の中から適したものを1つ選択してください。"}
+${topicPrompt}
+
+記事は、以下のJSONスキーマに従った完全な1つのオブジェクトである必要があります。
+
+記事のコンテンツ（content配列）は、見出し（h2, h3）、本文（p）、リスト（list）、よくある質問（qna）、LINE誘導（cta）のブロックを複数組み合わせた、読み応えのある構成（合計文字数1000文字〜1500文字程度）にしてください。
+
+JSONスキーマ：
+{
+  "title": "読者の目を惹く魅力的なコラムタイトル（30〜50文字程度。例：【身バレ防止】飛田新地で親や友達にバレずに働くための4つの鉄則）",
+  "slug": "半角英数字とハイフンのみのURLスラッグ（例：tobitashinchi-privacy-tips-${Date.now()}-${i}）",
+  "category": "'beginner' | 'salary' | 'security' | 'lifestyle' | 'onboarding' のいずれか1つ",
+  "categoryLabel": "カテゴリーに応じた和名（例：未経験者向け、給与・待遇、安心・身バレ対策、生活・働き方、面接・お仕事の流れ）",
+  "summary": "一覧ページで表示される、記事の概要を2文程度で魅力的にまとめた紹介文",
+  "author": {
+    "name": "さくら または ひまり または ゆい などの女性サポートスタッフ名、またはマネージャー木村",
+    "role": "女性サポートスタッフ（歴8年） または 採用担当マネージャー などの役職",
+    "avatar": "👩‍💼 または 👩‍💻 または 👩"
+  },
+  "tags": ["関連するタグ名1", "タグ2", "タグ3"],
+  "content": [
+    {
+      "type": "p",
+      "text": "導入段落。読者の不安に共感し、本記事を読めば解決することを伝えます。"
+    },
+    {
+      "type": "h2",
+      "text": "中見出しのタイトル"
+    },
+    {
+      "type": "p",
+      "text": "詳細な解説。安心できるトーンで具体的に説明します。"
+    },
+    {
+      "type": "list",
+      "items": [
+        "リスト項目1",
+        "リスト項目2",
+        "リスト項目3"
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "小見出しのタイトル"
+    },
+    {
+      "type": "p",
+      "text": "より細分化した情報や豆知識。"
+    },
+    {
+      "type": "qna",
+      "question": "よくある質問の問い？",
+      "answer": "丁寧で安心感に満ちた回答。"
+    },
+    {
+      "type": "cta"
+    }
+  ]
+}
+
+注意点：
+1. 違法な行為や危険な行為を推奨する内容は避け、安心・安全・健全なサポート環境であることを一貫して強調してください。
+2. 日本の女の子が読んで自然で、温かみがあり、信頼できる言葉遣い（〜です、〜ます調）にしてください。
+3. リスト(list)やQ&A(qna)ブロックを効果的に使い、視覚的に読みやすくしてください。
+4. LINE誘導(cta)ブロックは、記事の中間か最後付近に1つ以上配置してください。ctaブロックは 'type': 'cta' のみで、'text' や 'items' などのキーは不要です。`;
+
+          const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: `${singlePrompt}\n\n指定されたJSONスキーマに完全に従って日本語で1記事生成してください。`,
+            config: {
+              responseMimeType: "application/json",
+              responseSchema: {
                 type: Type.OBJECT,
                 properties: {
                   title: { type: Type.STRING },
@@ -415,16 +457,24 @@ JSONスキーマ：
                 required: ["title", "slug", "category", "categoryLabel", "summary", "author", "tags", "content"]
               }
             }
-          }
-        });
+          });
 
-        generatedJsonText = response.text || "";
+          const generatedJsonText = response.text || "";
+          try {
+            const articleObj = JSON.parse(generatedJsonText.trim());
+            if (Array.isArray(articleObj)) {
+              parsedArticles.push(...articleObj);
+            } else if (articleObj && typeof articleObj === "object") {
+              parsedArticles.push(articleObj);
+            }
+          } catch (parseErr) {
+            console.error(`Failed to parse Gemini article JSON for index ${i}:`, parseErr);
+          }
+        }
       }
 
-      // Parse generated articles
-      const parsedArticles = JSON.parse(generatedJsonText.trim());
-      if (!Array.isArray(parsedArticles)) {
-        throw new Error("Generated content is not a valid JSON array of articles.");
+      if (parsedArticles.length === 0) {
+        throw new Error("コラム記事の自動生成またはJSON解析に失敗しました。1件も有効な記事が取得できませんでした。");
       }
 
       // Premium Illustration paths we found in /src/assets/images
