@@ -46,15 +46,22 @@ export function getStoredArticles(): BlogArticle[] {
     const rawArticles = JSON.parse(stored) as BlogArticle[];
     if (rawArticles.length === 0) return BLOG_ARTICLES;
 
-    // もし古いUnsplash画像への参照、または正しくない画像パス、空の画像があれば、最新のオリジナル画像に自動的に置換する
+    // もし古いUnsplash画像への参照、または正しくない画像パス、空の画像、古いスラッグがあれば、最新のオリジナル画像や正しいスラッグに自動的に置換する
     const customArticles = rawArticles.map(art => {
       const defaultMatch = BLOG_ARTICLES.find(d => d.id === art.id);
       if (defaultMatch) {
         const isUnsplash = art.eyeCatch.startsWith('https://images.unsplash.com');
         const isOldPath = art.eyeCatch.includes('/assets/images/') && !art.eyeCatch.startsWith('/src/assets/images/');
         const isEmpty = !art.eyeCatch;
-        if (isUnsplash || isOldPath || isEmpty || (defaultMatch.eyeCatch.startsWith('/src/assets/images/') && art.eyeCatch !== defaultMatch.eyeCatch)) {
-          return { ...art, eyeCatch: defaultMatch.eyeCatch };
+        const hasDifferentEyeCatch = defaultMatch.eyeCatch.startsWith('/src/assets/images/') && art.eyeCatch !== defaultMatch.eyeCatch;
+        const hasDifferentSlug = defaultMatch.slug && art.slug !== defaultMatch.slug;
+
+        if (isUnsplash || isOldPath || isEmpty || hasDifferentEyeCatch || hasDifferentSlug) {
+          return {
+            ...art,
+            eyeCatch: (isUnsplash || isOldPath || isEmpty || hasDifferentEyeCatch) ? defaultMatch.eyeCatch : art.eyeCatch,
+            slug: hasDifferentSlug ? defaultMatch.slug : art.slug
+          };
         }
       }
       return art;

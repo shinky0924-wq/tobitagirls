@@ -546,6 +546,17 @@ JSONスキーマ：
       const todayStr = new Date().toISOString().split("T")[0];
       const existingSlugs = new Set(memoryArticles.map(art => (art.slug || "").toLowerCase()));
 
+      // Calculate the current usage frequency of each premium illustration
+      const illustrationUsage = new Map<string, number>();
+      for (const img of premiumIllustrations) {
+        illustrationUsage.set(img, 0);
+      }
+      for (const art of memoryArticles) {
+        if (art.eyeCatch && illustrationUsage.has(art.eyeCatch)) {
+          illustrationUsage.set(art.eyeCatch, illustrationUsage.get(art.eyeCatch)! + 1);
+        }
+      }
+
       const newlyGeneratedArticles = parsedArticles.map((art: any, index: number) => {
         const nextId = (maxId + index + 1).toString();
         
@@ -553,8 +564,21 @@ JSONスキーマ：
         const charCount = art.content ? JSON.stringify(art.content).length : 1200;
         const readTimeMinutes = Math.max(2, Math.ceil(charCount / 400));
 
-        // Randomly pick an eyecatch from our real premium illustration set
-        const randomEyeCatch = premiumIllustrations[Math.floor(Math.random() * premiumIllustrations.length)];
+        // Sort illustrations so the least-used ones are at the front.
+        // To add a bit of variety, we preserve original order for identical frequencies.
+        const sortedIllustrations = [...premiumIllustrations].sort((a, b) => {
+          const countA = illustrationUsage.get(a) || 0;
+          const countB = illustrationUsage.get(b) || 0;
+          if (countA !== countB) {
+            return countA - countB;
+          }
+          return premiumIllustrations.indexOf(a) - premiumIllustrations.indexOf(b);
+        });
+
+        // Pick the least-used illustration
+        const chosenEyeCatch = sortedIllustrations[0];
+        // Increment the usage of the chosen illustration so the next article in this batch gets a different one
+        illustrationUsage.set(chosenEyeCatch, (illustrationUsage.get(chosenEyeCatch) || 0) + 1);
 
         const rawSlug = art.slug || "";
         const uniqueSlug = sanitizeAndDeduplicateSlug(rawSlug, art.title || "", existingSlugs);
@@ -569,7 +593,7 @@ JSONスキーマ：
           publishedAt: todayStr,
           readTime: `${readTimeMinutes}分`,
           summary: art.summary || "AIによって自動生成された最新のコラム記事です。",
-          eyeCatch: randomEyeCatch,
+          eyeCatch: chosenEyeCatch,
           author: {
             name: art.author?.name || "さくら",
             role: art.author?.role || "女性サポートスタッフ",

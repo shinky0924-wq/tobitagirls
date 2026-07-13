@@ -18,7 +18,7 @@ import ConsultationForm from './components/ConsultationForm';
 import Footer from './components/Footer';
 import BlogSection from './components/BlogSection';
 import AdminPanel from './components/AdminPanel';
-import { getStoredArticles, BlogArticle } from './blogData';
+import { getStoredArticles, BlogArticle, BLOG_ARTICLES } from './blogData';
 import { getStoredSiteContent, SiteContent } from './siteContent';
 import { getBlogArticlesFromFirestore, getSiteContentFromFirestore } from './firebase';
 
@@ -100,10 +100,30 @@ export default function App() {
         let hasImageUpdates = false;
 
         const mergedArticles = firestoreData.map(fArt => {
+          const defaultMatch = BLOG_ARTICLES.find(dArt => dArt.id === fArt.id);
           const localMatch = localArticles.find(lArt => lArt.id === fArt.id);
-          if (localMatch && localMatch.eyeCatch !== fArt.eyeCatch) {
+          
+          let updated = { ...fArt };
+          let changed = false;
+
+          // Force-update default articles to use the newly distributed images and correct slugs
+          if (defaultMatch) {
+            if (defaultMatch.eyeCatch !== fArt.eyeCatch) {
+              updated.eyeCatch = defaultMatch.eyeCatch;
+              changed = true;
+            }
+            if (defaultMatch.slug !== fArt.slug) {
+              updated.slug = defaultMatch.slug;
+              changed = true;
+            }
+          } else if (localMatch && localMatch.eyeCatch !== fArt.eyeCatch) {
+            updated.eyeCatch = localMatch.eyeCatch;
+            changed = true;
+          }
+
+          if (changed) {
             hasImageUpdates = true;
-            return { ...fArt, eyeCatch: localMatch.eyeCatch };
+            return updated;
           }
           return fArt;
         });
