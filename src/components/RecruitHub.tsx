@@ -107,7 +107,7 @@ export default function RecruitHub({ onScrollToSection, onNavigateToArticle, onN
       icon: 'MapPin',
       color: 'from-violet-500 to-fuchsia-500',
       image: '/images/tobita_street_lanterns_1788153077449.jpg',
-      description: 'メイン通り・青春通り・大門通り・妖怪通りの違い。客層や好まれるタイプの比較とお勧め店選び。',
+      description: '当グループは全通りに系列店舗あり！メイン通り・青春通り・大門通り・裏通りの違いと比較、最適な店舗選び。',
       targetSection: 'reasons',
       relatedSlug: 'tobita-street-compare',
       relatedLabel: 'メイン通り・青春通りの比較'
