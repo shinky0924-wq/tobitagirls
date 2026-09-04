@@ -1,0 +1,291 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+export interface SiteContent {
+  hero: {
+    tagline: string;
+    titleLine1: string;
+    titleLine2: string;
+    descriptionLine1: string;
+    descriptionLine2: string;
+    descriptionLine3: string;
+    ctaButtonText: string;
+    badgeText: string;
+  };
+  concerns: {
+    title: string;
+    subtitle: string;
+    items: {
+      id: string;
+      iconName: string;
+      title: string;
+      question: string;
+      answer: string;
+    }[];
+  };
+  reasons: {
+    title: string;
+    subtitle: string;
+    items: {
+      number: string;
+      iconName: string;
+      title: string;
+      description: string;
+    }[];
+  };
+  jobs: {
+    title: string;
+    subtitle: string;
+    infoSubtitle: string;
+    simulatorTitle: string;
+    simulatorDesc: string;
+  };
+  flow: {
+    title: string;
+    subtitle: string;
+    items: {
+      number: string;
+      title: string;
+    }[];
+  };
+  faq: {
+    title: string;
+    sidebarTitle: string;
+    sidebarRole: string;
+    sidebarMessage: string;
+    items: {
+      id: string;
+      question: string;
+      answer: string;
+    }[];
+  };
+  consultation: {
+    title: string;
+    description: string;
+    badgeText: string;
+    copySubtitle: string;
+    templateText: string;
+    copyButtonText: string;
+    lineBadgeText: string;
+    lineButtonText: string;
+    lineSubtitle: string;
+    privacyNote: string;
+  };
+}
+
+export const DEFAULT_SITE_CONTENT: SiteContent = {
+  hero: {
+    tagline: "24時間受付中 ・ 相談だけでもOK",
+    titleLine1: "飛田新地が",
+    titleLine2: "初めての女性へ。",
+    descriptionLine1: "安心してお店選びから、しっかりサポートします。",
+    descriptionLine2: "「本当に稼げるの？」「危険じゃない？」そんな不安を抱えたまま応募しないでください。",
+    descriptionLine3: "まずは気軽にご相談ください。",
+    ctaButtonText: "LINEで今すぐ相談する",
+    badgeText: "未経験の方も安心のサポート体制"
+  },
+  concerns: {
+    title: "お悩みありませんか？",
+    subtitle: "その不安、相談前はみんな同じです。気になるところをタップしてみましょう。",
+    items: [
+      {
+        id: "concern-1",
+        iconName: "Baby",
+        title: "未経験でも",
+        question: "働ける？",
+        answer: "現在働いている女性 of 約9割が完全未経験からのスタートです。業界独自のルールや接客のコツも、お店の丁寧な研修と私たちの事前レクチャーで一から身に付けられますのでご安心ください。"
+      },
+      {
+        id: "concern-2",
+        iconName: "ShieldAlert",
+        title: "危険なお店",
+        question: "じゃない？",
+        answer: "私たちは厳しい審査をクリアした「健全経営・未経験者大歓迎・法令遵守」の優良店のみを厳選してご紹介しています。危険な取引や不当な手数料などは一切ありません。"
+      },
+      {
+        id: "concern-3",
+        iconName: "EyeOff",
+        title: "身バレ",
+        question: "したくない",
+        answer: "「源氏名（偽名）の使用」「完全非公開での募集」「特定エリアを避けた勤務地選定」など、徹底的にプライバシーを守ります。誰かに知られることなく安心して働けます。"
+      },
+      {
+        id: "concern-4",
+        iconName: "Store",
+        title: "お店選びで",
+        question: "失敗したくない",
+        answer: "「お店の本当の雰囲気」「在籍キャストのリアルな声」「稼げる時間帯」など、ネットには載らない内部情報まで熟知しています。あなたの希望条件に合わせて、ピッタリのお店をご提案します。"
+      },
+      {
+        id: "concern-5",
+        iconName: "Coins",
+        title: "ちゃんと",
+        question: "稼げる？",
+        answer: "飛田新地は他エリアと比べても非常に高水準な給与体系が確立されています。日給3万円〜8万円が初日から十分に狙えます。ノルマや罰金もなく、無理なく確実に高収入が得られます。"
+      }
+    ]
+  },
+  reasons: {
+    title: "飛田ガールズが選ばれる理由 ✨",
+    subtitle: "REASONS",
+    items: [
+      {
+        number: "01",
+        iconName: "MapPin",
+        title: "飛田新地専門",
+        description: "専門サイトだからこそ提供できる詳しい情報と信頼性があります。"
+      },
+      {
+        number: "02",
+        iconName: "Award",
+        title: "未経験歓迎店のみ紹介",
+        description: "初心者向けの優良店をスタッフが厳選してご紹介いたします。"
+      },
+      {
+        number: "03",
+        iconName: "Headphones",
+        title: "お店選びをサポート",
+        description: "あなたの希望にぴったり合うお店を一緒に丁寧にお探しします。"
+      },
+      {
+        number: "04",
+        iconName: "MessageSquare",
+        title: "LINE相談OK",
+        description: "24時間いつでもLINEでお気軽に、非対面で相談が可能です。"
+      },
+      {
+        number: "05",
+        iconName: "Users",
+        title: "面接同行可能",
+        description: "初めての方でも安心できるよう、スタッフが面接に同行します。"
+      },
+      {
+        number: "06",
+        iconName: "HandHeart",
+        title: "入店後フォロー",
+        description: "働き始めてからも、困ったことがあればしっかりサポート継続。"
+      }
+    ]
+  },
+  jobs: {
+    title: "お店情報・給与例 💰",
+    subtitle: "SALARY & INFO",
+    infoSubtitle: "※お店の種類や稼働条件により変動します",
+    simulatorTitle: "1分でわかる！給与シミュレーター",
+    simulatorDesc: "あなたの希望するシフト形態から、およその見込み収入を計算します。"
+  },
+  flow: {
+    title: "応募からお仕事開始までの流れ 🛤️",
+    subtitle: "WORKFLOW",
+    items: [
+      { number: "01", title: "LINE相談" },
+      { number: "02", title: "希望ヒアリング" },
+      { number: "03", title: "お店紹介" },
+      { number: "04", title: "面接" },
+      { number: "05", title: "体験入店" },
+      { number: "06", title: "お仕事スタート" }
+    ]
+  },
+  faq: {
+    title: "よくある不安 Q&A",
+    sidebarTitle: "よくある不安 Q&A",
+    sidebarRole: "専任アドバイザーより",
+    sidebarMessage: "「どんな小さな悩みでも解決します。プライバシーを守り、優しく丁寧にお答えします」",
+    items: [
+      {
+        id: "faq-1",
+        question: "Q. 未経験でも大丈夫ですか？",
+        answer: "A. はい、もちろんです！飛田ガールズがご紹介するお店の多くは未経験者向けの丁寧な研修制度を設けています。最初は誰でも不安ですが、一から丁寧にお教えします。"
+      },
+      {
+        id: "faq-2",
+        question: "Q. 年齢制限はありますか？",
+        answer: "A. 18歳以上（高校生不可）であれば問題ありません。幅広い年齢層の方が活躍できるお店をご提案させていただきます。"
+      },
+      {
+        id: "faq-3",
+        question: "Q. 顔出しは必要ですか？",
+        answer: "A. 飛田新地のスタイルとして、玄関先に座る形になりますが、ネット広告やSNSなどへの写真掲載は一切行われないため、想像以上に身内に知られるリスクは極めて低いです。特定されない工夫もいつでも可能です。"
+      },
+      {
+        id: "faq-4",
+        question: "Q. 身バレ対策はありますか？",
+        answer: "A. 源氏名の使用はもちろん、プライバシー保護に非常に厳しい安全管理をしているお店を厳選してご紹介していますのでご安心ください。"
+      },
+      {
+        id: "faq-5",
+        question: "Q. 確実に稼げますか？お給料は全額日払いですか？",
+        answer: "A. はい、ご紹介する優良店の大半が完全日払い制（その日の分をその日に全額支給）を導入しています。日給3万円〜8万円以上稼ぐことも初日から十分に可能です。"
+      },
+      {
+        id: "faq-6",
+        question: "Q. ノルマや罰金などはありますか？",
+        answer: "A. いいえ、ノルマや罰金・ペナルティなどは一切ありません！自分のペースでストレスなくのびのびと働いていただけるのが飛田新地最大の魅力の一つです。"
+      },
+      {
+        id: "faq-7",
+        question: "Q. お酒が飲めなくても働けますか？",
+        answer: "A. はい、お酒が全く飲めなくても問題ありません！お茶やソフトドリンクでお仕事が可能です。お酒が不得意な方も多数活躍されています。"
+      },
+      {
+        id: "faq-8",
+        question: "Q. 週1日からや短時間でもシフトに入れますか？",
+        answer: "A. はい、大歓迎です。週1日・週末だけ・1日4〜5時間の短時間勤務など、昼職・学生・主婦の方のライフスタイルに合わせて、柔軟に調整できるお店をセレクトしてご紹介します。"
+      },
+      {
+        id: "faq-9",
+        question: "Q. 働くときの服や衣装はどうなりますか？",
+        answer: "A. ほとんどのお店で、着物やドレス、可愛い和服などの素敵な衣装が無料（または格好よい衣装レンタル完備）で用意されています。ご自身で準備する手間や余計な出費はありません。"
+      },
+      {
+        id: "faq-10",
+        question: "Q. 相談だけで実際に働かなくても大丈夫ですか？",
+        answer: "A. はい、もちろん大歓迎です！ご相談・お問い合わせ段階で無理にお仕事を勧めることは絶対にありません。話を聞いてみて「やっぱりやめておきます」でも全く問題ありませんので、まずはお気軽にご活用ください。"
+      }
+    ]
+  },
+  consultation: {
+    title: "一人で悩まず、まずは気軽に相談してください。",
+    description: "飛田新地専門スタッフが、あなたに合うお店探しを全力でお手伝いします。\n秘密厳守・相談費用は無料。あなたの新しい一歩をそっと応援します。",
+    badgeText: "＼ワンタップで簡単♪／",
+    copySubtitle: "SNS・メールで質問・応募する方はコピーして使ってね♪",
+    templateText: "飛田ガールズを見ました。\nお名前／\n年齢／\n質問／",
+    copyButtonText: "テンプレートをコピーする",
+    lineBadgeText: "👇 簡単1タップで相談開始！",
+    lineButtonText: "LINEで無料相談する",
+    lineSubtitle: "※公式LINEへジャンプします。いつでもブロック・削除可能です。",
+    privacyNote: "※個人情報や秘密は厳守いたします。どうぞ安心してお問い合わせください。"
+  }
+};
+
+export function getStoredSiteContent(): SiteContent {
+  if (typeof window === 'undefined') return DEFAULT_SITE_CONTENT;
+  const stored = localStorage.getItem('custom_site_content');
+  if (!stored) {
+    return DEFAULT_SITE_CONTENT;
+  }
+  try {
+    const customContent = JSON.parse(stored);
+    const merged = { ...DEFAULT_SITE_CONTENT };
+    
+    if (customContent.hero) merged.hero = { ...merged.hero, ...customContent.hero };
+    if (customContent.concerns) merged.concerns = { ...merged.concerns, ...customContent.concerns };
+    if (customContent.reasons) merged.reasons = { ...merged.reasons, ...customContent.reasons };
+    if (customContent.jobs) merged.jobs = { ...merged.jobs, ...customContent.jobs };
+    if (customContent.flow) merged.flow = { ...merged.flow, ...customContent.flow };
+    if (customContent.faq) merged.faq = { ...merged.faq, ...customContent.faq };
+    if (customContent.consultation) merged.consultation = { ...merged.consultation, ...customContent.consultation };
+    
+    return merged as SiteContent;
+  } catch (e) {
+    console.error('Error parsing custom site content:', e);
+    return DEFAULT_SITE_CONTENT;
+  }
+}
+
+export function saveSiteContent(content: SiteContent) {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem('custom_site_content', JSON.stringify(content));
+}
