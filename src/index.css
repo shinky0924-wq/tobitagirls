@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans JP", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Noto Sans JP", sans-serif;
+
+  --color-primary: #ec4899;
+  --color-primary-container: #f43f5e;
+  --color-secondary: #d2547b;
+  --color-secondary-container: #ff9ebb;
+  --color-on-secondary-container: #761341;
+  --color-surface: #fffafb;
+  --color-surface-container: #fff0f3;
+  --color-surface-container-low: #fff8f9;
+  --color-on-surface: #2c1a1e;
+  --color-on-surface-variant: #5e474c;
+  --color-outline-variant: #f3dce2;
+}
+
+/* Mobile Friendly & Core Web Vitals optimizations */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure mobile form inputs don't trigger unwanted iOS auto-zoom */
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Prevent unwanted touch delay and highlight on mobile devices */
+button, a, input, select, textarea {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure touch targets meet Google's 48px minimum guidelines */
+.mobile-tap-target {
+  min-height: 48px;
+  min-width: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Custom background pattern for added visual polish */
+.hero-pattern {
+  background-image: radial-gradient(#fd80ac18 2px, transparent 2px);
+  background-size: 30px 30px;
+}
+
+/* Safe area inset support for modern mobile browsers */
+.pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+

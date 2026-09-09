@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tobitashinchi-recruit.com/sitemap.xml
+# LLM & AI Search Index
+# https://tobitashinchi-recruit.com/llms.txt
