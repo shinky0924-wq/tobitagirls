@@ -12,9 +12,10 @@ import { SiteContent } from '../siteContent';
 interface JobDetailsProps {
   content: SiteContent['jobs'];
   onCtaclickWithData: (data: string) => void;
+  onNavigateRequirements?: () => void;
 }
 
-export default function JobDetails({ content, onCtaclickWithData }: JobDetailsProps) {
+export default function JobDetails({ content, onCtaclickWithData, onNavigateRequirements }: JobDetailsProps) {
   // Simulator State
   const [daysPerWeek, setDaysPerWeek] = useState(3);
   const [sessionsPerDay, setSessionsPerDay] = useState(4);
@@ -37,20 +38,58 @@ export default function JobDetails({ content, onCtaclickWithData }: JobDetailsPr
   };
 
   return (
-    <section className="py-20 bg-white" id="jobs">
-      <div className="max-w-[1100px] mx-auto px-6">
+    <section className="py-16 md:py-20 bg-white" id="requirements">
+      <div id="jobs" className="max-w-[1100px] mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <span className="text-secondary font-display font-bold tracking-widest text-xs md:text-sm block mb-2 uppercase">
-            {content.subtitle}
-          </span>
-          <h2 className="font-display font-extrabold text-2xl md:text-3xl lg:text-4xl mb-4 text-on-surface">
-            {content.title}
-          </h2>
-          <p className="text-xs md:text-sm text-on-surface-variant font-medium">
-            {content.infoSubtitle}
-          </p>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-10">
+          <div>
+            <span className="text-secondary font-display font-bold tracking-widest text-xs md:text-sm block mb-2 uppercase">
+              {content?.subtitle || 'SALARY & RECRUIT INFO'}
+            </span>
+            <h2 className="font-display font-extrabold text-2xl md:text-3xl lg:text-4xl text-on-surface">
+              募集要項
+            </h2>
+            <p className="text-xs md:text-sm text-on-surface-variant font-medium mt-2">
+              {content?.infoSubtitle || '※シフトや稼働条件に応じて日給3万〜8万円以上可能です'}
+            </p>
+          </div>
+
+          {onNavigateRequirements && (
+            <button
+              type="button"
+              onClick={onNavigateRequirements}
+              className="self-start md:self-auto bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer hover:shadow-md shrink-0"
+            >
+              <LucideIcon name="FileText" size={14} />
+              <span>募集要項の詳細を見る</span>
+              <LucideIcon name="ChevronRight" size={13} />
+            </button>
+          )}
+        </div>
+
+        {/* 4-Column Primary Specification Summary */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs mb-10">
+          <div className="p-4 bg-rose-50/40 rounded-2xl border border-rose-100/70 shadow-2xs">
+            <span className="text-[10px] text-zinc-500 font-bold block mb-1">給与システム</span>
+            <p className="font-bold text-zinc-900 text-base">日給 3万〜15万円超</p>
+            <p className="text-[11px] text-rose-600 font-bold mt-1">売上50%完全バック・即日全額現金</p>
+          </div>
+          <div className="p-4 bg-rose-50/40 rounded-2xl border border-rose-100/70 shadow-2xs">
+            <span className="text-[10px] text-zinc-500 font-bold block mb-1">応募資格</span>
+            <p className="font-bold text-zinc-900 text-base">20歳以上の女性</p>
+            <p className="text-[11px] text-rose-600 font-bold mt-1">※組合規約により20歳未満不可</p>
+          </div>
+          <div className="p-4 bg-rose-50/40 rounded-2xl border border-rose-100/70 shadow-2xs">
+            <span className="text-[10px] text-zinc-500 font-bold block mb-1">勤務シフト</span>
+            <p className="font-bold text-zinc-900 text-base">10:00〜24:00 自由</p>
+            <p className="text-[11px] text-zinc-600 mt-1">週1日〜・短時間・昼シフト大歓迎</p>
+          </div>
+          <div className="p-4 bg-rose-50/40 rounded-2xl border border-rose-100/70 shadow-2xs">
+            <span className="text-[10px] text-zinc-500 font-bold block mb-1">身バレ・安全対策</span>
+            <p className="font-bold text-zinc-900 text-base">ネット写真ゼロ (100%)</p>
+            <p className="text-[11px] text-emerald-600 font-bold mt-1">完全源氏名・街全体撮影禁止</p>
+          </div>
         </div>
 
         {/* 5-Column Facts Rows */}

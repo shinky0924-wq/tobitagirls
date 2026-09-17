@@ -31,6 +31,25 @@ export interface TestimonialStory {
   workingHours: string;        // 1日の勤務時間
   actualEarnings: string;      // 実際の収入
   currentStatus: string;       // 現在どうなったか
+  adviceForOthers?: string;    // 応募を迷っている方へのメッセージ
+}
+
+export interface TestimonialProfile {
+  ageGroup: string;            // 年齢区分（例：20代 / 22歳）
+  previousJob: string;         // 前職（例：アパレル店員）
+  workPeriod: string;          // 勤務歴（例：6ヶ月）
+  nightWorkExp: string;        // 経験（例：完全未経験）
+  interviewDate: string;       // インタビュー日（例：2026年3月）
+  interviewer: string;         // インタビュアー（例：飛田ガールズ女性サポートさくら）
+  shiftStyle: string;          // 稼働スタイル（例：週4日・昼メイン）
+  consentNotice: string;       // 許諾明示文
+}
+
+export interface TestimonialInterviewQA {
+  qNumber: string;
+  topic: string;
+  question: string;
+  answer: string;
 }
 
 export interface TestimonialVerification {
@@ -56,6 +75,8 @@ export interface TestimonialItem {
   quote: string;
   highlightEarnings: string;
   monthlyAverage: string;
+  profile: TestimonialProfile;
+  interviewQAs: TestimonialInterviewQA[];
   story: TestimonialStory;
   verification: TestimonialVerification;
 }

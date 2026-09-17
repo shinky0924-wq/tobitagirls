@@ -1,5 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /*?q=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 Sitemap: https://tobitashinchi-recruit.com/sitemap.xml
 # LLM & AI Search Index

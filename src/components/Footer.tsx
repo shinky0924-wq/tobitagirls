@@ -185,8 +185,10 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
               当サイト「飛田ガールズ」は、外部の紹介所や仲介業者ではなく、飛田新地の料理組合加盟料亭が直接運営する公式求人窓口です。お店スタッフによる直接採用のため不当な紹介手数料や天引きは一切なく、売上50%バック即日日払い、完全なプライバシー保護・身バレ防止を徹底しております。
             </p>
             <div className="flex flex-col gap-2 pt-1 text-xs">
-              <button
-                onClick={() => {
+              <a
+                href="/about"
+                onClick={(e) => {
+                  e.preventDefault();
                   onChangeTab('about');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
@@ -194,7 +196,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
               >
                 <LucideIcon name="ShieldCheck" size={13} />
                 <span>運営者情報・店舗体制（独立専用ページ）</span>
-              </button>
+              </a>
               <button
                 onClick={() => setActiveModal('policy')}
                 className="text-left text-secondary font-bold hover:underline flex items-center gap-1 cursor-pointer"
@@ -210,18 +212,18 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
         {/* Topic Cluster Spoke Directory (SEO & LLMO Core Reciprocal Linking) */}
         <div className="py-6 border-t border-rose-100/60 mb-8">
           <div className="flex items-center gap-2 mb-3">
-            <LucideIcon name="Network" size={15} className="text-secondary" />
+            <LucideIcon name="Compass" size={15} className="text-secondary" />
             <h5 className="font-display font-bold text-on-surface text-xs uppercase tracking-wider">
-              飛田新地求人 トピッククラスター専門分野（公式12テーマ）
+              飛田新地求人 テーマ別お役立ちガイド（全12テーマ）
             </h5>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 text-xs">
             {[
-              { id: 'job', name: '🍵 仕事内容', path: '/job' },
+              { id: 'job', name: '🍵 お仕事内容', path: '/job' },
               { id: 'salary', name: '💰 給料・待遇', path: '/salary' },
               { id: 'beginner', name: '🔰 未経験スタート', path: '/beginner' },
               { id: 'experienced', name: '👑 経験者・移籍', path: '/experienced' },
-              { id: 'requirements', name: '📋 募集要項スペック', path: '/requirements' },
+              { id: 'requirements', name: '📋 募集要項・待遇詳細', path: '/requirements' },
               { id: 'flow', name: '🌸 面接・体入の流れ', path: '/flow' },
               { id: 'workstyle', name: '⏰ 自由な働き方', path: '/workstyle' },
               { id: 'shops', name: '🏮 お店選び・通り比較', path: '/shops' },
@@ -251,6 +253,52 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
                 className="p-2 rounded-xl bg-white hover:bg-rose-50 border border-gray-200/70 hover:border-rose-300 text-zinc-700 hover:text-rose-700 font-medium transition-colors block text-center truncate"
               >
                 {topic.name}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Featured Blog Pillar Links (Target Search Console Indexing Acceleration) */}
+        <div className="py-6 border-t border-rose-100/60 mb-8">
+          <div className="flex items-center gap-2 mb-3">
+            <LucideIcon name="BookOpen" size={15} className="text-secondary" />
+            <h5 className="font-display font-bold text-on-surface text-xs uppercase tracking-wider">
+              公式お仕事コラム ピックアップガイド（現場一次情報）
+            </h5>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 text-xs">
+            {[
+              { title: 'メイン通り・青春通り・裏通りの違いと採用基準', slug: 'tobita-street-compare' },
+              { title: '給料システム・還元率50%と日給計算式', slug: 'tobita-salary-system' },
+              { title: '個室マンション寮完備・生活支援の実態', slug: 'tobitashinchi-apartment-dorm-support-guide' },
+              { title: '1日の流れ完全密着！出勤から日払いまで', slug: 'tobitashinchi-daily-schedule-work-flow-detail' },
+              { title: '寮生活の真実と安心の生活サポート', slug: 'tobitashinchi-dorm-life-support-truth' },
+              { title: '身バレ・アリバイ対策とプライバシー保護', slug: 'tobitashinchi-identity-alibi-safety-measures' },
+              { title: '公認給与計算式と売上ハーフバックの仕組み', slug: 'tobitashinchi-official-salary-formula-breakdown' },
+              { title: '悪質スカウト・求人詐欺の見分け方と安全対策', slug: 'tobitashinchi-scout-fraud-avoidance-safe-recruitment' },
+              { title: '応募に必要な書類・住民票チェックリスト', slug: 'tobitashinchi-resident-record-requirement-checklist' },
+              { title: '体力・メンタル管理と日給10万円達成セルフケア', slug: 'tobitashinchi-stamina-mental-care-100k' },
+              { title: '週末・土日祝シフトでの効率的な稼ぎ方', slug: 'tobitashinchi-weekend-shift' },
+              { title: '休日の過ごし方・カフェ＆スイーツリフレッシュ', slug: 'cafe-sweets-holiday-enjoyment-guide' },
+              { title: 'おうち時間を癒やすルームウェア＆リラックス法', slug: 'room-wear-relaxation-home-care' },
+            ].map((art) => (
+              <a
+                key={art.slug}
+                href={`/blog/${art.slug}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (typeof window !== 'undefined') {
+                    window.history.pushState({}, '', `/blog/${art.slug}`);
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                  }
+                  onChangeTab('blog');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="p-2.5 rounded-xl bg-white hover:bg-rose-50 border border-gray-200/70 hover:border-rose-300 text-zinc-700 hover:text-rose-700 font-medium transition-colors block text-left truncate"
+                title={art.title}
+              >
+                <span className="text-rose-500 mr-1 font-bold">・</span>
+                {art.title}
               </a>
             ))}
           </div>

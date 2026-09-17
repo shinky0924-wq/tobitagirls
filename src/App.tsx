@@ -24,6 +24,7 @@ import ComparisonPage from './components/ComparisonPage';
 import FAQPage from './components/FAQPage';
 import TopicClusterPage from './components/TopicClusterPage';
 import { TOPIC_CLUSTERS } from './topicClusterData';
+import { TARGET_JOB_CATEGORIES } from './compareData';
 import LucideIcon from './components/LucideIcon';
 import { getStoredArticles, BlogArticle, BLOG_ARTICLES, getValidArticleEyeCatch, mergeWithDefaultArticles } from './blogData';
 import { getStoredSiteContent, SiteContent } from './siteContent';
@@ -177,29 +178,94 @@ export default function App() {
     }
   };
 
+  // Soft 404 Resolution: Redirect legacy/deprecated slugs to their correct current equivalents
+  useEffect(() => {
+    const slugRedirectMap: Record<string, string> = {
+      'tobitashinchi-physical-mental-care-guide': '/blog/tobitashinchi-stamina-mental-care-100k',
+      'tobitashinchi-fake-job-scout-warning': '/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment',
+      'tobitashinchi-daily-work-routine-guide': '/blog/tobitashinchi-daily-schedule-work-flow-detail',
+    };
+    if (selectedSlug && slugRedirectMap[selectedSlug]) {
+      navigate(slugRedirectMap[selectedSlug], true);
+    }
+  }, [selectedSlug]);
+
   useEffect(() => {
     if (typeof document === 'undefined') return;
+
+    let pageTitle = '【公式】飛田新地求人なら飛田ガールズ｜安心の料亭求人・高収入・身バレ完全防止';
+    let pageDesc = '【飛田新地求人公式】未経験歓迎・高収入（日給5万〜10万円即日全額日払い）。仕事内容、給料システム、20代・未経験の応募条件、面接・体験入店の流れ、個室マンション寮完備。女性サポートスタッフによる無料相談受付中。';
+    let canonicalUrl = 'https://tobitashinchi-recruit.com/';
+
     if (currentTab === 'cluster') {
       const topic = TOPIC_CLUSTERS[clusterTopic];
       if (topic) {
-        document.title = topic.seoTitle;
+        pageTitle = topic.seoTitle;
+        pageDesc = topic.metaDescription;
+        canonicalUrl = `https://tobitashinchi-recruit.com${topic.path}`;
       }
     } else if (currentTab === 'compare') {
-      document.title = '飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】｜未経験・高収入・Wワーク【公式】';
+      if (selectedCategorySlug) {
+        const cat = TARGET_JOB_CATEGORIES.find(c => c.slug === selectedCategorySlug);
+        if (cat) {
+          pageTitle = `${cat.title}｜飛田新地料亭直営公式 飛田ガールズ`;
+          pageDesc = cat.summary;
+          canonicalUrl = `https://tobitashinchi-recruit.com/compare/${cat.slug}`;
+        } else {
+          pageTitle = '飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】｜未経験・高収入・Wワーク【公式】';
+          pageDesc = '飛田新地料亭直営公式求人と街頭スカウト業者・一般求人サイトの4者徹底比較。安心の料亭直営で即日全額日払い・身バレ完全防止。';
+          canonicalUrl = 'https://tobitashinchi-recruit.com/compare';
+        }
+      } else {
+        pageTitle = '飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】｜未経験・高収入・Wワーク【公式】';
+        pageDesc = '飛田新地料亭直営公式求人と街頭スカウト業者・一般求人サイトの4者徹底比較。安心の料亭直営で即日全額日払い・身バレ完全防止。';
+        canonicalUrl = 'https://tobitashinchi-recruit.com/compare';
+      }
     } else if (currentTab === 'about') {
-      document.title = '飛田ガールズについて｜運営者情報・監修体制・一次情報ポリシー【公式】';
+      pageTitle = '飛田ガールズについて｜運営者情報・監修体制・一次情報ポリシー【公式】';
+      pageDesc = '飛田新地料理組合公認の老舗料亭直営公式求人「飛田ガールズ」の店舗情報、創業歴、運営体制、女性スタッフによるサポート方針、一次情報発信ポリシーをご紹介します。';
+      canonicalUrl = 'https://tobitashinchi-recruit.com/about';
     } else if (currentTab === 'blog') {
       if (!selectedSlug) {
-        document.title = '飛田新地お仕事コラム・給与・面接ガイド一覧｜飛田ガールズ【公式】';
+        pageTitle = '飛田新地お仕事コラム・給与・面接ガイド一覧｜飛田ガールズ【公式】';
+        pageDesc = '飛田新地のお仕事、給料システム、面接・体入の流れ、寮生活、安全対策など、現場の女性スタッフによる役立つ最新コラム一覧。';
+        canonicalUrl = 'https://tobitashinchi-recruit.com/blog';
       }
     } else if (currentTab === 'faq') {
-      document.title = '飛田新地求人 FAQ（全119問・8大テーマ体系化）｜未経験・給料・身バレ・面接【公式】';
+      pageTitle = '飛田新地求人 FAQ（全119問・8大テーマ体系化）｜未経験・給料・身バレ・面接【公式】';
+      pageDesc = '飛田新地求人のよくある質問と回答（全119問）。応募資格、面接、給料手渡し、個室寮、身バレ対策など、疑問や不安をテーマ別に完全解消。';
+      canonicalUrl = selectedFaqCategory ? `https://tobitashinchi-recruit.com/faq/${selectedFaqCategory}` : 'https://tobitashinchi-recruit.com/faq';
     } else if (currentTab === 'recruit') {
-      document.title = '【公式】飛田新地求人なら飛田ガールズ｜安心の料亭求人・高収入・身バレ完全防止';
+      pageTitle = '【公式】飛田新地求人なら飛田ガールズ｜安心の料亭求人・高収入・身バレ完全防止';
+      pageDesc = '【飛田新地求人公式】未経験歓迎・高収入（日給5万〜10万円即日全額日払い）。仕事内容、給料システム、20代・未経験の応募条件、面接・体験入店の流れ、個室マンション寮完備。女性サポートスタッフによる無料相談受付中。';
+      canonicalUrl = 'https://tobitashinchi-recruit.com/';
     } else if (currentTab === 'admin') {
-      document.title = '管理パネル｜飛田ガールズ';
+      pageTitle = '管理パネル｜飛田ガールズ';
     }
-  }, [currentTab, selectedSlug, clusterTopic]);
+
+    // Only update if not on a blog detail page (BlogSection handles its own)
+    if (currentTab !== 'blog' || !selectedSlug) {
+      document.title = pageTitle;
+
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.setAttribute('content', pageDesc);
+
+      let canonicalLink = document.querySelector('link[rel="canonical"]');
+      if (canonicalLink) {
+        canonicalLink.setAttribute('href', canonicalUrl);
+      } else {
+        canonicalLink = document.createElement('link');
+        canonicalLink.setAttribute('rel', 'canonical');
+        canonicalLink.setAttribute('href', canonicalUrl);
+        document.head.appendChild(canonicalLink);
+      }
+
+      const ogUrl = document.querySelector('meta[property="og:url"]');
+      if (ogUrl) ogUrl.setAttribute('content', canonicalUrl);
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute('content', pageTitle);
+    }
+  }, [currentTab, selectedSlug, clusterTopic, selectedCategorySlug, selectedFaqCategory]);
 
   const handleScrollToSection = (sectionId: string) => {
     const cleanId = sectionId.startsWith('#') ? sectionId.substring(1) : sectionId;
@@ -410,68 +476,31 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Primary Recruitment Specification & Guarantees Quick Summary */}
-              <section className="py-12 bg-white border-y border-rose-100/80" id="requirements-summary">
-                <div className="max-w-[1100px] mx-auto px-4 sm:px-6">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                    <div>
-                      <span className="text-[10px] font-black bg-rose-100 text-rose-700 px-3 py-1 rounded-full uppercase tracking-wider">
-                        PRIMARY RECRUITMENT SPECIFICATION
-                      </span>
-                      <h3 className="font-display font-black text-xl sm:text-2xl text-zinc-900 mt-1.5">
-                        料亭直営 募集要項・待遇スペックサマリー
-                      </h3>
-                      <p className="text-xs text-zinc-500 mt-1">
-                        料理組合公認の直営老舗料亭による現場一次情報（2026年最新基準）
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        navigate('/requirements');
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }}
-                      className="self-start md:self-auto bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer hover:shadow-md shrink-0"
-                    >
-                      <LucideIcon name="FileText" size={14} />
-                      <span>募集要項の専門ページを見る</span>
-                      <LucideIcon name="ChevronRight" size={13} />
-                    </button>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-                    <div className="p-4 bg-rose-50/40 rounded-2xl border border-rose-100/70">
-                      <span className="text-[10px] text-zinc-500 font-bold block mb-1">給与システム</span>
-                      <p className="font-bold text-zinc-900 text-base">日給 3万〜15万円超</p>
-                      <p className="text-[11px] text-rose-600 font-bold mt-1">売上50%完全バック・即日全額現金</p>
-                    </div>
-                    <div className="p-4 bg-rose-50/40 rounded-2xl border border-rose-100/70">
-                      <span className="text-[10px] text-zinc-500 font-bold block mb-1">応募資格</span>
-                      <p className="font-bold text-zinc-900 text-base">20歳以上の女性</p>
-                      <p className="text-[11px] text-rose-600 font-bold mt-1">※組合規約により20歳未満不可</p>
-                    </div>
-                    <div className="p-4 bg-rose-50/40 rounded-2xl border border-rose-100/70">
-                      <span className="text-[10px] text-zinc-500 font-bold block mb-1">勤務シフト</span>
-                      <p className="font-bold text-zinc-900 text-base">10:00〜24:00 自由</p>
-                      <p className="text-[11px] text-zinc-600 mt-1">週1日〜・短時間・昼シフト大歓迎</p>
-                    </div>
-                    <div className="p-4 bg-rose-50/40 rounded-2xl border border-rose-100/70">
-                      <span className="text-[10px] text-zinc-500 font-bold block mb-1">身バレ・安全対策</span>
-                      <p className="font-bold text-zinc-900 text-base">ネット写真ゼロ (100%)</p>
-                      <p className="text-[11px] text-emerald-600 font-bold mt-1">完全源氏名・街全体撮影禁止</p>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              {/* Job detailed specification with live interactive income simulator */}
-              <div id="jobs">
-                <JobDetails content={siteContent.jobs} onCtaclickWithData={handleInjectedScroll} />
+              {/* Reasons Section - 選ばれる6つの理由 */}
+              <div id="reasons">
+                <Reasons content={siteContent.reasons} />
               </div>
 
-              {/* Testimonials Quote Cards */}
+              {/* Testimonials Quote Cards - 女性のリアル体験談 */}
               <div id="voice">
                 <Testimonials />
+              </div>
+
+              {/* Consolidated 募集要項 Section */}
+              <div id="requirements">
+                <JobDetails 
+                  content={siteContent.jobs} 
+                  onCtaclickWithData={handleInjectedScroll}
+                  onNavigateRequirements={() => {
+                    navigate('/requirements');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                />
+              </div>
+
+              {/* Onboarding steps list - お仕事までの流れ */}
+              <div id="flow">
+                <Flow content={siteContent.flow} />
               </div>
 
               {/* Action interactive consultation panel */}

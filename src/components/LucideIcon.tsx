@@ -1,101 +1,30 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import { 
-  Heart, 
-  MessageSquare, 
-  MessageCircle, 
-  Baby, 
-  ShieldAlert, 
-  EyeOff, 
-  Store, 
-  Coins, 
-  MapPin, 
-  Award, 
-  Headphones, 
-  Users, 
-  HandHeart, 
-  ChevronDown, 
-  ChevronUp, 
-  Phone, 
-  Mail, 
-  Clock, 
-  Home, 
-  PiggyBank, 
-  Sparkles, 
-  Banknote,
-  Briefcase,
-  Calendar,
-  CheckCircle,
-  Menu,
-  X,
-  Compass,
-  Check,
-  AlertCircle,
-  Scale,
-  Building2,
-  HelpCircle,
-  ShieldCheck,
-  Layers,
-  FileText,
-  ChevronRight,
-  Search,
-  BookOpen
-} from 'lucide-react';
-
-const iconMap = {
-  Heart,
-  MessageSquare,
-  MessageCircle,
-  Baby,
-  ShieldAlert,
-  EyeOff,
-  Store,
-  Coins,
-  MapPin,
-  Award,
-  Headphones,
-  Users,
-  HandHeart,
-  ChevronDown,
-  ChevronUp,
-  Phone,
-  Mail,
-  Clock,
-  Home,
-  PiggyBank,
-  Sparkles,
-  Banknote,
-  Briefcase,
-  Calendar,
-  CheckCircle,
-  Menu,
-  X,
-  Compass,
-  Check,
-  AlertCircle,
-  Scale,
-  Building2,
-  HelpCircle,
-  ShieldCheck,
-  Layers,
-  FileText,
-  ChevronRight,
-  Search,
-  BookOpen
-};
-
-export type IconName = keyof typeof iconMap;
+import React from 'react';
+import * as LucideIcons from 'lucide-react';
 
 interface LucideIconProps {
   name: string;
+  size?: number | string;
   className?: string;
-  size?: number;
+  color?: string;
+  strokeWidth?: number;
+  [key: string]: any;
 }
 
-export default function LucideIcon({ name, className = '', size = 24 }: LucideIconProps) {
-  const IconComponent = iconMap[name as IconName] || Sparkles;
-  return <IconComponent className={className} size={size} />;
+export default function LucideIcon({ 
+  name, 
+  size = 16, 
+  className = '', 
+  color, 
+  strokeWidth = 2, 
+  ...rest 
+}: LucideIconProps) {
+  const Component = (LucideIcons as any)[name] || 
+    (LucideIcons as any)[name?.charAt(0).toUpperCase() + name?.slice(1)] || 
+    LucideIcons.Sparkles;
+
+  if (!Component) {
+    return null;
+  }
+
+  return <Component size={size} className={className} color={color} strokeWidth={strokeWidth} {...rest} />;
 }

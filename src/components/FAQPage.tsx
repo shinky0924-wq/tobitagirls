@@ -12,7 +12,11 @@ import {
   FAQCategoryDef,
   FAQ_100_LIST,
   filterFAQ100,
-  FAQ8Category
+  FAQ8Category,
+  HIGH_INTENT_FAQS,
+  SEARCH_INTENT_CATEGORIES,
+  SearchIntentCategoryKey,
+  HighIntentFAQItem
 } from '../faq100Data';
 import { CONSULTANT_AVATAR_URL } from '../data';
 
@@ -22,16 +26,21 @@ function LucideIcon({ name, size = 16, className = '' }: { name: string; size?: 
 }
 
 const POPULAR_SEARCH_TAGS = [
-  '未経験',
+  '未経験でも大丈夫？',
+  '初日は何をする？',
+  '面接で何を聞かれる？',
+  '体験入店',
   '日払い',
-  '週1日',
-  '身バレ',
-  'お酒',
-  '30代',
+  '給料の計算方法',
+  '天引きはある？',
+  '週1でもいい？',
+  '短時間',
   'Wワーク',
-  '寮',
-  '退店',
-  'LINE相談'
+  '個室寮',
+  '身バレが心配',
+  '会社に知られたくない',
+  '写真掲載はある？',
+  'SNSに載る？'
 ];
 
 interface FAQPageProps {
@@ -120,19 +129,45 @@ export default function FAQPage({ initialCategory, onNavigateHome, onCtaclick }:
     return map;
   }, []);
 
+  const [highIntentTab, setHighIntentTab] = useState<SearchIntentCategoryKey>('beginner');
+  const [highIntentOpenIds, setHighIntentOpenIds] = useState<Set<string>>(new Set(['hi-beg-1', 'hi-sal-1']));
+
+  const toggleHighIntentItem = (id: string) => {
+    setHighIntentOpenIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
   // Generate JSON-LD for rich search results / LLM consumption
   const jsonLdData = useMemo(() => {
+    const highIntentEntities = HIGH_INTENT_FAQS.map(item => ({
+      '@type': 'Question',
+      'name': `【${item.searchIntentCategoryLabel}】${item.searchQuery}（${item.question}）`,
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': `${item.keyTakeaways.join(' / ')}\n\n${item.answer}`
+      }
+    }));
+
+    const standardEntities = FAQ_100_LIST.slice(0, 30).map(item => ({
+      '@type': 'Question',
+      'name': item.question,
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': item.answer
+      }
+    }));
+
     return {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
-      'mainEntity': FAQ_100_LIST.slice(0, 30).map(item => ({
-        '@type': 'Question',
-        'name': item.question,
-        'acceptedAnswer': {
-          '@type': 'Answer',
-          'text': item.answer
-        }
-      }))
+      'mainEntity': [...highIntentEntities, ...standardEntities]
     };
   }, []);
 
@@ -191,6 +226,174 @@ export default function FAQPage({ initialCategory, onNavigateHome, onCtaclick }:
             <span>2026年最新求人実務基準で監修済み</span>
             <span className="text-zinc-300">|</span>
             <span>女性専任スタッフ常駐</span>
+          </div>
+        </div>
+
+        {/* ==========================================
+            High-Intent Search Queries Showcase (4大疑問・質重視Q&A)
+           ========================================== */}
+        <div className="bg-white rounded-3xl p-5 sm:p-7 border border-rose-200/90 shadow-sm mb-10" id="high-intent-faq-showcase">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-rose-100">
+            <div>
+              <div className="inline-flex items-center gap-1.5 text-xs font-black text-rose-700 bg-rose-50 border border-rose-200 px-3 py-1 rounded-full mb-2">
+                <LucideIcon name="Search" size={13} />
+                <span>ユーザーが実際に検索している4大疑問</span>
+              </div>
+              <h2 className="font-display font-black text-lg sm:text-xl text-zinc-900">
+                「初心者・給料・働き方・不安」の最重要Q&A
+              </h2>
+              <p className="text-xs sm:text-sm text-zinc-600 mt-1">
+                応募前に特に検索されているリアルな質問に、具体的な数字と事実で回答しています。
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-bold text-zinc-500">
+                厳選20問
+              </span>
+            </div>
+          </div>
+
+          {/* 4 Category Switcher Tabs */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-6">
+            {SEARCH_INTENT_CATEGORIES.map((cat) => {
+              const isTabActive = highIntentTab === cat.key;
+              return (
+                <button
+                  key={cat.key}
+                  type="button"
+                  onClick={() => setHighIntentTab(cat.key)}
+                  className={`p-3 rounded-2xl border text-left transition-all cursor-pointer ${
+                    isTabActive
+                      ? 'bg-rose-50/80 border-secondary ring-1 ring-secondary/20 shadow-xs'
+                      : 'bg-zinc-50/60 hover:bg-rose-50/30 border-zinc-200/80'
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-1 mb-1">
+                    <span className={`inline-flex items-center gap-1 text-[11px] font-black px-2 py-0.5 rounded-full border ${cat.colorClass}`}>
+                      <LucideIcon name={cat.icon} size={11} />
+                      <span>{cat.label}</span>
+                    </span>
+                    <span className="text-[10px] font-bold text-zinc-400">5問</span>
+                  </div>
+                  <div className="text-xs font-bold text-zinc-800 line-clamp-1">
+                    {cat.subLabel}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* High Intent Accordion List for Active Tab */}
+          <div className="space-y-3">
+            {HIGH_INTENT_FAQS.filter(item => item.searchIntentCategory === highIntentTab).map((faq, idx) => {
+              const isOpen = highIntentOpenIds.has(faq.id);
+
+              return (
+                <div
+                  key={faq.id}
+                  className={`rounded-2xl border transition-all overflow-hidden ${
+                    isOpen
+                      ? 'bg-white border-secondary/60 shadow-xs'
+                      : 'bg-zinc-50/50 hover:bg-rose-50/20 border-zinc-200/80'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => toggleHighIntentItem(faq.id)}
+                    className="w-full flex justify-between items-start sm:items-center p-3.5 sm:p-4 text-left cursor-pointer gap-3"
+                  >
+                    <div className="flex items-start sm:items-center gap-2.5 flex-1 min-w-0">
+                      <span className="flex-shrink-0 text-xs font-black bg-rose-100 text-secondary px-2.5 py-1 rounded-lg">
+                        Q.{(idx + 1).toString().padStart(2, '0')}
+                      </span>
+                      <div className="flex-1">
+                        <div className="flex flex-wrap items-center gap-1.5 mb-1">
+                          <span className="text-[10px] font-black text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.2 rounded-full inline-flex items-center gap-1">
+                            <LucideIcon name="Search" size={9} />
+                            <span>「{faq.searchQuery}」</span>
+                          </span>
+                          {faq.highlightLabel && (
+                            <span className="text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/60 px-1.5 py-0.2 rounded-full inline-flex items-center gap-0.5">
+                              <LucideIcon name="Sparkles" size={9} />
+                              {faq.highlightLabel}
+                            </span>
+                          )}
+                        </div>
+                        <h3 className="font-bold text-xs sm:text-sm text-zinc-900 leading-snug">
+                          {faq.question}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <div className={`text-zinc-400 flex-shrink-0 transition-transform ${isOpen ? 'rotate-180 text-secondary' : ''}`}>
+                      <LucideIcon name="ChevronDown" size={16} />
+                    </div>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <div className="px-4 sm:px-5 pb-5 pt-0 text-xs sm:text-sm text-zinc-700 border-t border-rose-100/60">
+                          <div className="pt-3 flex gap-2.5">
+                            <span className="text-secondary font-black text-base select-none flex-shrink-0">
+                              A.
+                            </span>
+                            <div className="flex-1 space-y-3">
+                              {faq.keyTakeaways && faq.keyTakeaways.length > 0 && (
+                                <div className="bg-rose-50/70 border border-rose-100 rounded-xl p-3 space-y-1">
+                                  <div className="text-[11px] font-black text-secondary flex items-center gap-1">
+                                    <LucideIcon name="CheckCircle2" size={12} className="text-emerald-600" />
+                                    <span>重要ポイント:</span>
+                                  </div>
+                                  <ul className="space-y-0.5">
+                                    {faq.keyTakeaways.map((point, pIdx) => (
+                                      <li key={pIdx} className="text-xs font-semibold text-zinc-800 flex items-start gap-1">
+                                        <span className="text-secondary">・</span>
+                                        <span>{point}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+
+                              <p className="whitespace-pre-line text-xs sm:text-sm text-zinc-800 leading-relaxed font-normal">
+                                {faq.answer}
+                              </p>
+
+                              <div className="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-zinc-100">
+                                <span className="text-[11px] text-zinc-500">
+                                  LINEなら匿名で24時間いつでも質問できます
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    if (onCtaclick) {
+                                      onCtaclick();
+                                    } else if (typeof window !== 'undefined') {
+                                      window.location.href = '#consultation';
+                                    }
+                                  }}
+                                  className="inline-flex items-center gap-1.5 text-xs font-bold text-secondary hover:text-rose-600 bg-rose-50 hover:bg-rose-100 px-3 py-1 rounded-lg border border-rose-200 transition-colors cursor-pointer"
+                                >
+                                  <LucideIcon name="MessageCircle" size={13} />
+                                  <span>この質問をLINEで相談する</span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
           </div>
         </div>
 

@@ -98,8 +98,8 @@ export default function TopicClusterPage({
       <div className="bg-rose-50/40 border-b border-rose-100/60 py-2 overflow-x-auto scrollbar-none">
         <div className="max-w-[1140px] mx-auto px-4 sm:px-6 flex items-center gap-1.5 whitespace-nowrap">
           <span className="text-[11px] font-black text-rose-700 shrink-0 mr-1 flex items-center gap-1">
-            <LucideIcon name="Network" size={13} />
-            <span>トピッククラスター:</span>
+            <LucideIcon name="Compass" size={13} />
+            <span>テーマ別案内:</span>
           </span>
           <button
             type="button"
@@ -153,9 +153,6 @@ export default function TopicClusterPage({
               <span className={`text-[11px] font-bold px-3 py-1 rounded-full border shadow-2xs ${data.badgeColor}`}>
                 {data.emoji} {data.badge}
               </span>
-              <span className="text-[11px] text-zinc-500 font-mono bg-zinc-100 px-2.5 py-1 rounded-full">
-                トピッククラスター専門ページ
-              </span>
             </div>
 
             {/* Main Title H1 */}
@@ -170,11 +167,11 @@ export default function TopicClusterPage({
               {data.overview}
             </p>
 
-            {/* LLM Direct Answer Box */}
+            {/* Direct Answer Summary Box */}
             <div className="bg-gradient-to-r from-rose-50 via-pink-50/50 to-white rounded-2xl p-4 sm:p-5 border border-rose-200/80 mb-8">
               <div className="flex items-center gap-2 mb-1.5 text-rose-800 font-bold text-xs">
                 <LucideIcon name="Sparkles" size={14} className="text-rose-600" />
-                <span>【公式要約・AIダイレクトアンサー】{data.title}の要点</span>
+                <span>{data.id === 'job' ? 'お仕事内容' : data.title}</span>
               </div>
               <p className="text-xs sm:text-sm text-zinc-800 leading-relaxed font-medium">
                 {data.llmDirectAnswer}
@@ -406,10 +403,10 @@ export default function TopicClusterPage({
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-white/20 mb-6">
             <div>
               <span className="text-[10px] font-black tracking-widest bg-white/20 px-3 py-1 rounded-full uppercase mb-2 inline-block">
-                TOPIC CLUSTER HUB
+                RECRUIT TOP
               </span>
               <h2 className="font-display font-black text-xl sm:text-2xl text-white">
-                飛田新地求人 総合ハブ（トップページ）
+                飛田新地求人 公式トップページ
               </h2>
               <p className="text-xs sm:text-sm text-rose-100 mt-1 max-w-xl">
                 料理組合公認 老舗料亭直営公式採用。売上50%完全バック・即日全額日払い手渡し・ネット写真掲載ゼロ。
@@ -431,8 +428,8 @@ export default function TopicClusterPage({
           {/* Related Spokes in the Topic Cluster */}
           <div>
             <h3 className="text-xs sm:text-sm font-bold text-rose-100 mb-3 flex items-center gap-1.5">
-              <LucideIcon name="GitFork" size={14} />
-              <span>「{data.title}」と関連する専門トピック（トピッククラスター網）</span>
+              <LucideIcon name="BookOpen" size={14} />
+              <span>「{data.title}」とあわせて読みたいお役立ちテーマ</span>
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
@@ -466,7 +463,7 @@ export default function TopicClusterPage({
                     </span>
                   </div>
                   <div className="mt-2 text-[10px] font-bold text-rose-200 group-hover:text-rose-600 flex items-center justify-end gap-0.5">
-                    <span>専門ページ</span>
+                    <span>詳しく見る</span>
                     <LucideIcon name="ChevronRight" size={12} />
                   </div>
                 </button>

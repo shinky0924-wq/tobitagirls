@@ -45,16 +45,42 @@ export default function ComparisonPage({
     }
   }, [initialCategorySlug]);
 
-  // Dynamically update document title based on selected category
+  // Dynamically update document title, description and canonical URL based on selected category
   useEffect(() => {
+    let title = '飛田新地求人サイト比較＆目的・属性別求人ガイド【2026年最新】｜飛田ガールズ';
+    let description = '飛田新地料亭直営公式求人と街頭スカウト業者・一般求人サイトの4者徹底比較。安心の料亭直営で即日全額日払い・身バレ完全防止。';
+    let canonicalUrl = 'https://tobitashinchi-recruit.com/compare';
+
     if (selectedTargetSlug && selectedTargetSlug !== 'all') {
       const cat = TARGET_JOB_CATEGORIES.find(c => c.slug === selectedTargetSlug);
       if (cat) {
-        document.title = `${cat.title}｜飛田新地料亭直営公式 飛田ガールズ`;
-        return;
+        title = `${cat.title}｜飛田新地料亭直営公式 飛田ガールズ`;
+        description = cat.summary || `${cat.title}についての求人情報・給与・勤務条件・安全対策を詳しく解説。`;
+        canonicalUrl = `https://tobitashinchi-recruit.com/compare/${cat.slug}`;
       }
     }
-    document.title = '飛田新地求人サイト比較＆目的・属性別求人ガイド｜飛田ガールズ';
+    document.title = title;
+
+    // Update meta description
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', description);
+    }
+    // Update canonical link
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (canonicalLink) {
+      canonicalLink.setAttribute('href', canonicalUrl);
+    } else {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      canonicalLink.setAttribute('href', canonicalUrl);
+      document.head.appendChild(canonicalLink);
+    }
+    // Update og:url and og:title
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute('content', canonicalUrl);
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', title);
   }, [selectedTargetSlug]);
 
   // Inject JSON-LD Structured Data for LLM & SEO Crawlers

@@ -93,9 +93,9 @@
     ]
   },
   "jobs": {
-    "title": "お店情報・給料例",
-    "subtitle": "SALARY & INFO",
-    "infoSubtitle": "※お店の種類や稼働条件により変動します",
+    "title": "募集要項",
+    "subtitle": "SALARY & RECRUIT INFO",
+    "infoSubtitle": "※シフトや稼働条件に応じて日給3万〜8万円以上可能です",
     "simulatorTitle": "1分でわかる！給与シミュレーター",
     "simulatorDesc": "あなたの希望するシフト形態から、およその見込み収入を計算します。"
   },

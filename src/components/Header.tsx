@@ -43,18 +43,20 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // 10 Official Categories under 総合ガイド (exact user order)
+  // 12 Official Categories under 総合ガイド (matched exactly with top page categories)
   const guideCategories = [
-    { id: 'job', name: '仕事内容', icon: 'HeartHandshake', desc: 'お茶出しとおもてなし中心・お酒一切不要', badge: 'お酒不要' },
-    { id: 'salary', name: '給料・待遇', icon: 'Coins', desc: '50%完全バック・即日全額手渡し・シミュレーター', badge: '即日日払い' },
-    { id: 'beginner', name: '未経験', icon: 'Sparkles', desc: '在籍90%が未経験スタート・丁寧な研修体制', badge: '初心者歓迎' },
-    { id: 'experienced', name: '経験者', icon: 'Award', desc: 'キャバクラ等からの移籍歓迎・即日高日給10万円超え', badge: '移籍歓迎' },
-    { id: 'interview', name: '応募・面接', icon: 'Calendar', desc: '履歴書不要・私服見学・即日体験入店OK', badge: '履歴書不要' },
-    { id: 'workstyle', name: '働き方', icon: 'Clock', desc: '週1日〜・短時間・昼シフト・自由出勤制', badge: '自由出勤' },
-    { id: 'shops', name: 'お店選び', icon: 'Store', desc: 'メイン通り・青春通りの特徴と安心の直営応募', badge: '直営安心' },
-    { id: 'dorm', name: '寮・出稼ぎ', icon: 'Home', desc: '家具家電付き個室寮完備・往復交通費支給', badge: '個室寮完備' },
-    { id: 'safety', name: '身バレ・安全', icon: 'ShieldCheck', desc: 'ネット顔出しなし・副業税金の普通徴収対策', badge: '顔出しなし' },
-    { id: 'beauty', name: 'その他', icon: 'Smile', desc: '無料レンタル着物・メイク術・セルフケア', badge: '着物無料' },
+    { id: 'job', name: '仕事内容', icon: 'HeartHandshake', desc: 'お茶出しとおもてなし接客・お酒一切不要', badge: 'お酒不要' },
+    { id: 'salary', name: '給料・待遇', icon: 'Coins', desc: '売上50%完全バック・全額即日現金手渡し', badge: '即日日払い' },
+    { id: 'beginner', name: '未経験', icon: 'Sparkles', desc: '在籍キャストの約90%が夜職完全初心者', badge: '初心者歓迎' },
+    { id: 'experienced', name: '経験者', icon: 'Award', desc: '風俗・キャバクラからの移籍人気No.1・即戦力高収入', badge: '移籍歓迎' },
+    { id: 'requirements', name: '募集要項', icon: 'FileText', desc: '20歳以上限定・料理組合公認の公式採用スペック', badge: '20歳以上' },
+    { id: 'flow', name: '面接・体験入店までの流れ', icon: 'Calendar', desc: '履歴書不要・私服見学OK・面接当日の即日体入対応', badge: '手ぶらOK' },
+    { id: 'workstyle', name: '働き方', icon: 'Clock', desc: '完全自由出勤制・週1日〜・短時間・OL副業対応', badge: '自由出勤' },
+    { id: 'shops', name: 'お店選び', icon: 'Store', desc: 'メイン通り・青春通り・大門通りの特徴と直営店', badge: '直営安心' },
+    { id: 'dorm', name: '寮・出稼ぎ', icon: 'Home', desc: '家具家電付き個室マンション寮・往復交通費全額支給', badge: '個室寮完備' },
+    { id: 'safety', name: '身バレ・安全', icon: 'EyeOff', desc: 'ネット写真ゼロ・完全源氏名・住民税普通徴収対策', badge: '秘密厳守' },
+    { id: 'faq', name: 'よくある質問 FAQ', icon: 'HelpCircle', desc: '業界最多クラス全119問・8大テーマ体系化Q&A', badge: '全119問' },
+    { id: 'blog', name: 'お仕事コラム', icon: 'BookOpen', desc: '100本以上の解説記事・テーマ別実務ノウハウ', badge: '100本超' },
   ];
 
   // Top level menu items requested by user
@@ -62,7 +64,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
     { name: '求人トップ', action: 'recruit', icon: 'Home' },
     // 総合ガイド is handled as interactive dropdown
     { name: '選ばれる6つの理由', action: 'section', target: '#reasons', icon: 'ShieldCheck' },
-    { name: 'FAQ', action: 'faq', target: '#faq', icon: 'HelpCircle' },
+    { name: '女性のリアル体験談', action: 'section', target: '#voice', icon: 'MessageSquareHeart' },
     { name: '募集要項', action: 'section', target: '#requirements', icon: 'FileText' },
     { name: 'お仕事までの流れ', action: 'section', target: '#flow', icon: 'GitMerge' },
   ];
@@ -93,15 +95,36 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (link.action === 'section' && link.target) {
       const sectionId = link.target.startsWith('#') ? link.target.substring(1) : link.target;
-      onScrollToSection(sectionId);
+      if (currentTab !== 'recruit') {
+        onChangeTab('recruit');
+        setTimeout(() => {
+          onScrollToSection(sectionId);
+        }, 120);
+      } else {
+        onScrollToSection(sectionId);
+      }
     }
   };
 
   const handleGuideCategoryClick = (categoryId: string) => {
     setMobileMenuOpen(false);
     setGuideDropdownOpen(false);
+    if (categoryId === 'faq') {
+      if (currentTab === 'recruit') {
+        onScrollToSection('faq');
+      } else {
+        onChangeTab('faq');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+    if (categoryId === 'blog') {
+      onChangeTab('blog');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     if (onNavigateTopic) {
-      onNavigateTopic(categoryId === 'interview' ? 'flow' : categoryId);
+      onNavigateTopic(categoryId);
     } else {
       if (currentTab !== 'recruit') {
         onChangeTab('recruit');
@@ -228,7 +251,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                       <div className="flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
                         <span className="text-xs font-black text-rose-700">
-                          総合ガイド（全10カテゴリー）
+                          総合ガイド（全12カテゴリー）
                         </span>
                       </div>
                       <button
@@ -290,15 +313,15 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
               <span>選ばれる6つの理由</span>
             </a>
 
-            {/* 4. FAQ */}
+            {/* 4. 女性のリアル体験談 */}
             <a
               href="#"
-              onClick={(e) => handleLinkClick(e, { action: 'faq', target: '#faq' })}
+              onClick={(e) => handleLinkClick(e, { action: 'section', target: '#voice' })}
               className="font-sans text-[13px] xl:text-[14px] px-2.5 xl:px-3 py-1.5 rounded-xl transition-all duration-200 whitespace-nowrap flex items-center gap-1.5 cursor-pointer text-zinc-800 hover:text-rose-600 hover:bg-rose-50/70 font-bold"
-              id="nav-link-faq"
+              id="nav-link-voice"
             >
-              <LucideIcon name="HelpCircle" size={14} className="text-zinc-500" />
-              <span>FAQ</span>
+              <LucideIcon name="MessageSquareHeart" size={14} className="text-zinc-500" />
+              <span>女性のリアル体験談</span>
             </a>
 
             {/* 5. 募集要項 */}
@@ -406,13 +429,13 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                         総合ガイド
                       </span>
                       <span className="text-[10px] text-zinc-500">
-                        全10カテゴリーの目的別案内
+                        全12カテゴリーの目的別案内
                       </span>
                     </div>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <span className="text-[10px] font-black bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full">
-                      10テーマ
+                      12テーマ
                     </span>
                     <LucideIcon 
                       name={mobileGuideExpanded ? 'ChevronUp' : 'ChevronDown'} 
@@ -473,19 +496,19 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                 <LucideIcon name="ChevronRight" size={16} className="text-zinc-400 group-hover:text-rose-600" />
               </button>
 
-              {/* ├─ FAQ */}
+              {/* ├─ 女性のリアル体験談 */}
               <button
                 type="button"
-                onClick={(e) => handleLinkClick(e, { action: 'faq', target: '#faq' })}
+                onClick={(e) => handleLinkClick(e, { action: 'section', target: '#voice' })}
                 className="w-full text-left px-3 py-2.5 rounded-xl border border-gray-100 hover:border-rose-200 hover:bg-rose-50/60 transition-all flex items-center justify-between group cursor-pointer bg-white"
-                id="mobile-link-faq"
+                id="mobile-link-voice"
               >
                 <div className="flex items-center gap-2.5">
                   <div className="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
-                    <LucideIcon name="HelpCircle" size={15} />
+                    <LucideIcon name="MessageSquareHeart" size={15} />
                   </div>
                   <span className="font-bold text-sm text-zinc-900 group-hover:text-rose-600">
-                    FAQ
+                    女性のリアル体験談
                   </span>
                 </div>
                 <LucideIcon name="ChevronRight" size={16} className="text-zinc-400 group-hover:text-rose-600" />

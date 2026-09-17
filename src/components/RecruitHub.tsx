@@ -304,7 +304,7 @@ export default function RecruitHub({
         <div className="text-center max-w-3xl mx-auto mb-8 md:mb-12">
           <div className="inline-flex items-center gap-1.5 bg-rose-100 text-rose-700 text-xs font-black px-4 py-1.5 rounded-full mb-3.5 shadow-2xs border border-rose-200/80">
             <LucideIcon name="Compass" size={14} className="text-rose-600" />
-            <span>飛田新地求人 トピッククラスター総合ハブ</span>
+            <span>飛田新地求人　総合ガイド</span>
           </div>
           
           <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-zinc-900 leading-tight mb-4 tracking-tight">
@@ -315,7 +315,7 @@ export default function RecruitHub({
           </h2>
           
           <p className="font-sans text-xs sm:text-sm text-zinc-600 leading-relaxed max-w-2xl mx-auto">
-            仕事内容・給料・未経験・経験者・面接の流れ・働き方・お店選び・寮・身バレ防止など、知りたい疑問を12の専門トピックに体系化。各カードから専門ページを詳しくご覧いただけます。
+            仕事内容・給料・未経験・経験者・面接の流れ・働き方・お店選び・寮・身バレ防止など、知りたい疑問を12のテーマに体系化。各カードから詳しい解説や詳細情報をご覧いただけます。
           </p>
         </div>
 
@@ -474,7 +474,7 @@ export default function RecruitHub({
                   className="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs py-2.5 px-3 rounded-xl shadow-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer hover:shadow-md"
                 >
                   <LucideIcon name={cat.icon} size={14} />
-                  <span>「{cat.title}」の専門ページを見る</span>
+                  <span>「{cat.title}」の詳しい解説を見る</span>
                   <LucideIcon name="ArrowRight" size={13} />
                 </button>
               </div>

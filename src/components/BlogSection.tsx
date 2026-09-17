@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from 'motion/react';
 import { BLOG_CATEGORIES, BlogArticle, getValidArticleEyeCatch, getAuthorProfile } from '../blogData';
 import { ArticleCardImage } from './ArticleCardImage';
 import { BookOpen, Calendar, Clock, Search, ArrowLeft, Tag, MessageCircle, ChevronRight, ChevronLeft, Sparkles, Send, ShieldCheck, HeartHandshake, CheckCircle2, RefreshCw } from 'lucide-react';
+import LucideIcon from './LucideIcon';
+import ArticleEditorialTrustBox from './ArticleEditorialTrustBox';
+import RecruiterInterviewSection from './RecruiterInterviewSection';
 
 function AvatarDisplay({
   avatar,
@@ -65,7 +68,16 @@ interface BlogSectionProps {
   onNavigateAbout?: () => void;
 }
 
-export default function BlogSection({ articles, selectedSlug, initialCategory, onSelectSlug, onCtaclick, onInjectedScroll, onSimulatorClick, onNavigateAbout }: BlogSectionProps) {
+export default function BlogSection({
+  articles,
+  selectedSlug,
+  initialCategory,
+  onSelectSlug,
+  onCtaclick,
+  onInjectedScroll,
+  onSimulatorClick,
+  onNavigateAbout
+}: BlogSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory || 'all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<'newest' | 'id'>('newest');
@@ -466,7 +478,7 @@ export default function BlogSection({ articles, selectedSlug, initialCategory, o
             id="blog-list"
           >
             {/* Header / Intro */}
-            <div className="text-center max-w-3xl mx-auto mb-12">
+            <div className="text-center max-w-3xl mx-auto mb-10">
               <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-rose-100 text-secondary mb-3">
                 <BookOpen size={13} />
                 お仕事コラム & ブログ
@@ -481,6 +493,26 @@ export default function BlogSection({ articles, selectedSlug, initialCategory, o
               <p className="mt-4 text-base text-on-surface-variant leading-relaxed">
                 飛田新地での働き方、リアルな給与システム、身バレ防止の徹底的な対策、充実の個室寮や託児所補助など、気になるすべての情報を当店女性サポートスタッフが丁寧にお答えします。
               </p>
+            </div>
+
+            {/* Recruiter Trust & Verification Highlight Card */}
+            <div className="mb-10 bg-gradient-to-r from-rose-50/90 via-pink-50/50 to-white rounded-3xl p-5 sm:p-6 border-2 border-rose-200 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="flex items-start gap-3.5">
+                <div className="w-10 h-10 rounded-2xl bg-rose-600 text-white flex items-center justify-center shrink-0 shadow-xs mt-0.5">
+                  <LucideIcon name="ShieldCheck" size={22} />
+                </div>
+                <div>
+                  <div className="inline-flex items-center gap-1.5 text-[11px] font-bold text-rose-700 bg-rose-100/90 px-2.5 py-0.5 rounded-full mb-1">
+                    一次情報・E-E-A-T基準
+                  </div>
+                  <h3 className="text-base sm:text-lg font-black text-zinc-900 leading-snug">
+                    このページの情報は、お店の求人担当スタッフへのヒアリングと実際の募集条件をもとに作成しています。
+                  </h3>
+                  <p className="text-xs sm:text-sm text-zinc-600 mt-1 leading-relaxed">
+                    虚偽や誇大広告を徹底排除し、各コラム記事にて「更新日・編集者・求人担当者・情報確認者・情報源・実際の募集条件」を完全公開。さらに店舗求人担当者への直接インタビュー（未経験の割合、初日の不安、面接内容、給与計算など全10問）を詳しく掲載しています。
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Controls (Search & Category Filters) */}
@@ -866,6 +898,14 @@ export default function BlogSection({ articles, selectedSlug, initialCategory, o
                   </span>
                 </div>
               </div>
+
+              {/* Primary Trust & Verification Declaration Box (6 Key Items Specified) */}
+              <ArticleEditorialTrustBox
+                publishedAt={(currentArticle!.publishedAt || '').replace(/-/g, '.')}
+                updatedAt="2026.09.09"
+                authorName={currentAuthorProfile?.name || 'さくら'}
+                authorRole={currentAuthorProfile?.role || '女性サポートスタッフ・相談窓口歴8年'}
+              />
             </div>
 
             {/* Article Content Render */}
@@ -923,6 +963,9 @@ export default function BlogSection({ articles, selectedSlug, initialCategory, o
                 }
               })}
             </div>
+
+            {/* Direct Recruiter Interview Section (Key Questions & Live Realities) */}
+            <RecruiterInterviewSection />
 
             {/* Article Author Profile & E-E-A-T Editorial Board Footer */}
             <div className="mt-10 p-6 bg-surface-container-low rounded-3xl border border-outline-variant">
