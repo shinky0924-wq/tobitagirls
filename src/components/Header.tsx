@@ -371,7 +371,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
         </div>
       </header>
 
-      {/* Mobile Drawer with exact tree structure requested */}
+      {/* Mobile Drawer with fixed bottom CTA preventing clipping on mobile */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -379,21 +379,23 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-[56px] sm:top-[64px] z-40 bg-white/98 backdrop-blur-xl border-b border-rose-200 shadow-2xl px-4 sm:px-5 py-4 lg:hidden flex flex-col gap-3 max-h-[calc(100vh-64px)] overflow-y-auto"
+            className="fixed inset-x-0 top-[56px] sm:top-[64px] bottom-0 z-50 bg-white/98 backdrop-blur-xl border-b border-rose-200 shadow-2xl lg:hidden flex flex-col overflow-hidden"
             id="mobile-navigation-drawer"
           >
-            {/* Header / Brand label in drawer */}
-            <div className="flex items-center justify-between pb-2 border-b border-rose-100">
-              <div className="flex items-center gap-2">
-                <span className="font-display font-black text-rose-600 text-sm">
-                  飛田ガールズ メニュー
-                </span>
+            {/* Scrollable navigation area */}
+            <div className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-5 pt-3 pb-6 space-y-3">
+              {/* Header / Brand label in drawer */}
+              <div className="flex items-center justify-between pb-2 border-b border-rose-100">
+                <div className="flex items-center gap-2">
+                  <span className="font-display font-black text-rose-600 text-sm">
+                    飛田ガールズ メニュー
+                  </span>
+                </div>
+                <span className="text-[10px] text-zinc-500 font-bold">項目をタップして移動</span>
               </div>
-              <span className="text-[10px] text-zinc-500 font-bold">項目をタップして移動</span>
-            </div>
 
-            {/* Navigation Tree list */}
-            <div className="flex flex-col space-y-1">
+              {/* Navigation Tree list */}
+              <div className="flex flex-col space-y-1">
               {/* ├─ 求人トップ */}
               <button
                 type="button"
@@ -578,18 +580,22 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
               </div>
             </div>
 
-            {/* Official LINE Consultation Button */}
-            <div className="pt-1">
+            {/* Scrollable navigation area ends */}
+            </div>
+
+            {/* Fixed Bottom CTA: Official LINE Consultation (Always Visible & Never Clipped) */}
+            <div className="border-t border-rose-200/80 bg-white/95 backdrop-blur-md px-4 sm:px-5 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_-4px_16px_rgba(0,0,0,0.06)] shrink-0">
               <button
+                type="button"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onCtaclick();
                 }}
-                className="w-full bg-[#06c755] hover:bg-[#05b34c] text-white py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-[#06c755]/20 cursor-pointer"
-                id="mobile-cta-btn"
+                className="w-full bg-[#06c755] hover:bg-[#05b34c] active:bg-[#049b42] text-white py-3.5 px-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-md shadow-[#06c755]/25 cursor-pointer text-sm select-none"
+                id="mobile-drawer-cta-btn"
               >
-                <LucideIcon name="MessageCircle" className="fill-white text-white" size={18} />
-                <span className="text-sm">応募・相談（LINE無料相談・24h対応）</span>
+                <LucideIcon name="MessageCircle" className="fill-white text-white shrink-0" size={19} />
+                <span>LINE公式 応募・相談（無料・24h受付）</span>
               </button>
             </div>
           </motion.div>
