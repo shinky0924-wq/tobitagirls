@@ -532,11 +532,12 @@ export default function Testimonials() {
             "@context": "https://schema.org",
             "@graph": TESTIMONIALS.map((t) => ({
               "@type": "Article",
-              "@id": `https://tobita-girls.example.com/#interview-${t.id}`,
+              "@id": `https://tobitashinchi-recruit.com/#interview-${t.id}`,
               "headline": `飛田新地で働いた女性インタビュー【${t.name}さん・年齢:${t.profile.ageGroup}・前職:${t.profile.previousJob}・勤務歴:${t.profile.workPeriod}】`,
               "description": `${t.name}さん（${t.profile.ageGroup}・前職:${t.profile.previousJob}・経験:${t.profile.nightWorkExp}）への公式対面インタビュー。取材日:${t.profile.interviewDate}。実在キャストの自署同意書保管・一次情報。`,
               "datePublished": "2026-03-14",
               "dateModified": "2026-08-20",
+              "inLanguage": "ja-JP",
               "author": {
                 "@type": "Person",
                 "name": t.profile.interviewer,
@@ -548,23 +549,12 @@ export default function Testimonials() {
                 "jobTitle": "料亭キャスト",
                 "description": `${t.profile.ageGroup}、前職は${t.profile.previousJob}、夜職経験:${t.profile.nightWorkExp}。勤務歴:${t.profile.workPeriod}。`
               },
-              "review": {
-                "@type": "Review",
-                "author": {
-                  "@type": "Person",
-                  "name": t.name
-                },
-                "reviewRating": {
-                  "@type": "Rating",
-                  "ratingValue": "5",
-                  "bestRating": "5"
-                },
-                "reviewBody": t.quote
-              },
+              "articleBody": `${t.quote} 前職は${t.profile.previousJob}、夜職経験は${t.profile.nightWorkExp}。${t.story.situationBefore} ${t.story.firstDayImpression} ${t.story.actualEarnings} ${t.story.adviceForOthers}`,
               "publisher": {
                 "@type": "Organization",
-                "name": "飛田新地求人・飛田ガールズ（料理組合加盟店直営）",
-                "url": "https://tobita-girls.example.com"
+                "name": "飛田新地求人 飛田ガールズ（料理組合公認料亭直営）",
+                "url": "https://tobitashinchi-recruit.com",
+                "logo": "https://tobitashinchi-recruit.com/favicon.svg"
               }
             }))
           })
