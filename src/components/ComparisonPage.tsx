@@ -13,6 +13,17 @@ import {
 } from '../compareData';
 import { CONSULTANT_AVATAR_URL } from '../data';
 
+const CATEGORY_SALARY_SCHEMA: Record<string, { min: number; max: number; employmentType: string }> = {
+  'inexperienced': { min: 30000, max: 65000, employmentType: 'PART_TIME' },
+  'high-income': { min: 60000, max: 150000, employmentType: 'PART_TIME' },
+  'weekly-1': { min: 35000, max: 80000, employmentType: 'PART_TIME' },
+  'short-term': { min: 50000, max: 120000, employmentType: 'TEMPORARY' },
+  'dormitory': { min: 40000, max: 90000, employmentType: 'PART_TIME' },
+  'double-work': { min: 35000, max: 70000, employmentType: 'PART_TIME' },
+  'age-20s': { min: 45000, max: 110000, employmentType: 'PART_TIME' },
+  'age-30s': { min: 40000, max: 90000, employmentType: 'PART_TIME' }
+};
+
 interface ComparisonPageProps {
   onNavigateHome: () => void;
   onNavigateBlog: () => void;
@@ -95,32 +106,61 @@ export default function ComparisonPage({
 
       const isSingle = selectedTargetSlug !== 'all';
       const singleCat = isSingle ? TARGET_JOB_CATEGORIES.find(c => c.slug === selectedTargetSlug) : null;
+      const salaryConfig = (singleCat && CATEGORY_SALARY_SCHEMA[singleCat.slug]) || {
+        min: 30000,
+        max: 100000,
+        employmentType: 'PART_TIME'
+      };
 
       const schemaData = singleCat ? {
         '@context': 'https://schema.org',
         '@type': 'JobPosting',
-        '@id': `https://tobitashinchi-recruit.com/compare/${singleCat.slug}`,
+        '@id': `https://tobitashinchi-recruit.com/compare/${singleCat.slug}#jobposting`,
         'title': singleCat.title,
-        'description': singleCat.llmDirectAnswer,
+        'description': `${singleCat.summary} ${singleCat.llmDirectAnswer}【飛田新地料理組合公認料亭直営 飛田ガールズ】全額日払い手渡し・ノルマ罰金一切なし・個室マンション寮完備・安心の女性スタッフサポート。`,
+        'identifier': {
+          '@type': 'PropertyValue',
+          'name': '飛田ガールズ 料亭直営採用窓口',
+          'value': `TOBITA-COMPARE-${singleCat.slug.toUpperCase()}`
+        },
+        'datePosted': '2026-08-01T00:00:00+09:00',
+        'validThrough': '2027-12-31T23:59:59+09:00',
+        'employmentType': salaryConfig.employmentType,
         'hiringOrganization': {
           '@type': 'Organization',
           'name': '飛田新地料理組合公認料亭直営 飛田ガールズ',
-          'sameAs': 'https://tobitashinchi-recruit.com'
+          'sameAs': 'https://tobitashinchi-recruit.com',
+          'logo': 'https://tobitashinchi-recruit.com/favicon.svg'
         },
         'jobLocation': {
           '@type': 'Place',
           'address': {
             '@type': 'PostalAddress',
-            'addressLocality': '大阪市西成区山王',
+            'streetAddress': '山王3丁目',
+            'addressLocality': '大阪市西成区',
             'addressRegion': '大阪府',
+            'postalCode': '557-0001',
             'addressCountry': 'JP'
           }
         },
         'baseSalary': {
           '@type': 'MonetaryAmount',
           'currency': 'JPY',
-          'value': singleCat.dailyIncomeModel
-        }
+          'value': {
+            '@type': 'QuantitativeValue',
+            'minValue': salaryConfig.min,
+            'maxValue': salaryConfig.max,
+            'unitText': 'DAY'
+          }
+        },
+        'applicantLocationRequirements': {
+          '@type': 'Country',
+          'name': 'JP'
+        },
+        'workHours': singleCat.shiftExample || '10:00〜24:00（自由シフト制・週1日〜/1日3時間〜勤務可）',
+        'experienceRequirements': singleCat.slug === 'inexperienced' ? 'no requirements' : 'not required',
+        'qualifications': '20歳以上の女性（未経験歓迎・学歴経験不問 ※料理組合規約により20歳未満不可）',
+        'directApply': true
       } : {
         '@context': 'https://schema.org',
         '@type': 'WebPage',
