@@ -158,7 +158,6 @@ export default function ComparisonPage({
           'name': 'JP'
         },
         'workHours': singleCat.shiftExample || '10:00〜24:00（自由シフト制・週1日〜/1日3時間〜勤務可）',
-        'experienceRequirements': singleCat.slug === 'inexperienced' ? 'no requirements' : 'not required',
         'qualifications': '20歳以上の女性（未経験歓迎・学歴経験不問 ※料理組合規約により20歳未満不可）',
         'directApply': true
       } : {
