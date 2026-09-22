@@ -26,5 +26,16 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ],
+  "redirects": [
+    { "source": "/blog/tobitashinchi-privacy-alibi-support", "destination": "/blog/tobitashinchi-identity-alibi-safety-measures", "permanent": true },
+    { "source": "/blog/tobitashinchi-physical-mental-care-guide", "destination": "/blog/tobitashinchi-stamina-mental-care-100k", "permanent": true },
+    { "source": "/blog/tobitashinchi-fake-job-scout-warning", "destination": "/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment", "permanent": true },
+    { "source": "/blog/tobitashinchi-daily-work-routine-guide", "destination": "/blog/tobitashinchi-daily-schedule-work-flow-detail", "permanent": true },
+    { "source": "/comparison", "destination": "/compare", "permanent": true },
+    { "source": "/target-categories", "destination": "/compare", "permanent": true },
+    { "source": "/target-jobs", "destination": "/compare", "permanent": true },
+    { "source": "/categories", "destination": "/compare", "permanent": true },
+    { "source": "/company", "destination": "/about", "permanent": true }
   ]
 }

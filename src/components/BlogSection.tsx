@@ -285,14 +285,31 @@ export default function BlogSection({
       };
       jsonLdScript.textContent = JSON.stringify(fullStructuredData);
 
+    } else if (selectedSlug) {
+      // 404 state: Slug specified but article does not exist
+      document.title = 'お探しの記事が見つかりませんでした (404) | 飛田ガールズ';
+      const metaRobots = document.querySelector('meta[name="robots"]');
+      if (metaRobots) {
+        metaRobots.setAttribute('content', 'noindex, nofollow');
+      }
+      if (canonicalLink) {
+        canonicalLink.removeAttribute('href');
+      }
+      if (jsonLdScript) {
+        jsonLdScript.remove();
+      }
     } else {
       document.title = '飛田新地求人、飛田新地バイトなら【飛田ガールズ】女の子のためのサイト・高収入募集';
+      const metaRobots = document.querySelector('meta[name="robots"]');
+      if (metaRobots) {
+        metaRobots.setAttribute('content', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
+      }
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) {
         metaDesc.setAttribute('content', '【飛田新地料亭直営求人・公式採用窓口】飛田新地でのお仕事なら「飛田ガールズ」。紹介や仲介ではなくお店スタッフが直接サポート。未経験から高収入（日給3万〜8万円・即日全額日払い）、安心安全の料亭直営求人です。24時間いつでもお気軽にご相談・ご応募いただけます。');
       }
       if (canonicalLink) {
-        canonicalLink.setAttribute('href', selectedSlug ? `https://tobitashinchi-recruit.com/blog` : 'https://tobitashinchi-recruit.com/');
+        canonicalLink.setAttribute('href', 'https://tobitashinchi-recruit.com/');
       }
       if (jsonLdScript) {
         jsonLdScript.remove();

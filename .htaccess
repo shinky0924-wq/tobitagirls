@@ -1,6 +1,18 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # 301 Permanent Redirects for legacy URLs (Soft 404 Resolution)
+  RewriteRule ^blog/tobitashinchi-privacy-alibi-support/?$ /blog/tobitashinchi-identity-alibi-safety-measures [R=301,L]
+  RewriteRule ^blog/tobitashinchi-physical-mental-care-guide/?$ /blog/tobitashinchi-stamina-mental-care-100k [R=301,L]
+  RewriteRule ^blog/tobitashinchi-fake-job-scout-warning/?$ /blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment [R=301,L]
+  RewriteRule ^blog/tobitashinchi-daily-work-routine-guide/?$ /blog/tobitashinchi-daily-schedule-work-flow-detail [R=301,L]
+  RewriteRule ^comparison/?$ /compare [R=301,L]
+  RewriteRule ^target-categories/?$ /compare [R=301,L]
+  RewriteRule ^target-jobs/?$ /compare [R=301,L]
+  RewriteRule ^categories/?$ /compare [R=301,L]
+  RewriteRule ^company/?$ /about [R=301,L]
+
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d

@@ -1,2 +1,11 @@
+/blog/tobitashinchi-privacy-alibi-support /blog/tobitashinchi-identity-alibi-safety-measures 301
+/blog/tobitashinchi-physical-mental-care-guide /blog/tobitashinchi-stamina-mental-care-100k 301
+/blog/tobitashinchi-fake-job-scout-warning /blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment 301
+/blog/tobitashinchi-daily-work-routine-guide /blog/tobitashinchi-daily-schedule-work-flow-detail 301
+/comparison /compare 301
+/target-categories /compare 301
+/target-jobs /compare 301
+/categories /compare 301
+/company /about 301
 /api/*  /api/:splat  200
 /*      /index.html  200

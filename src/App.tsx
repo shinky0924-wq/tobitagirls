@@ -181,6 +181,7 @@ export default function App() {
   // Soft 404 Resolution: Redirect legacy/deprecated slugs to their correct current equivalents
   useEffect(() => {
     const slugRedirectMap: Record<string, string> = {
+      'tobitashinchi-privacy-alibi-support': '/blog/tobitashinchi-identity-alibi-safety-measures',
       'tobitashinchi-physical-mental-care-guide': '/blog/tobitashinchi-stamina-mental-care-100k',
       'tobitashinchi-fake-job-scout-warning': '/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment',
       'tobitashinchi-daily-work-routine-guide': '/blog/tobitashinchi-daily-schedule-work-flow-detail',

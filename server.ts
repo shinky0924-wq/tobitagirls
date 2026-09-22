@@ -41,6 +41,7 @@ async function startServer() {
 
     // 2. Soft 404 URL Map
     const LEGACY_URL_REDIRECTS: Record<string, string> = {
+      '/blog/tobitashinchi-privacy-alibi-support': '/blog/tobitashinchi-identity-alibi-safety-measures',
       '/blog/tobitashinchi-physical-mental-care-guide': '/blog/tobitashinchi-stamina-mental-care-100k',
       '/blog/tobitashinchi-fake-job-scout-warning': '/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment',
       '/blog/tobitashinchi-daily-work-routine-guide': '/blog/tobitashinchi-daily-schedule-work-flow-detail',
@@ -51,7 +52,8 @@ async function startServer() {
       '/company': '/about',
     };
 
-    const targetRedirect = LEGACY_URL_REDIRECTS[req.path];
+    const cleanReqPath = req.path.replace(/\/$/, '') || '/';
+    const targetRedirect = LEGACY_URL_REDIRECTS[cleanReqPath] || LEGACY_URL_REDIRECTS[req.path];
     if (targetRedirect) {
       return res.redirect(301, targetRedirect);
     }
@@ -270,6 +272,9 @@ ${customTopic ? `【指定テーマ】: ${customTopic}` : ''}
         let template = fs.readFileSync(indexPath, 'utf-8');
         template = await vite.transformIndexHtml(url, template);
         const { html, status } = injectSeoMetadata(template, url);
+        if (status === 404) {
+          res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+        }
         res.status(status).set({ 'Content-Type': 'text/html; charset=utf-8' }).send(html);
       } catch (e) {
         vite.ssrFixStacktrace(e as Error);
@@ -287,6 +292,9 @@ ${customTopic ? `【指定テーマ】: ${customTopic}` : ''}
         }
         const template = fs.readFileSync(indexPath, 'utf-8');
         const { html, status } = injectSeoMetadata(template, req.originalUrl);
+        if (status === 404) {
+          res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+        }
         res.status(status).set({ 'Content-Type': 'text/html; charset=utf-8' }).send(html);
       } catch (e) {
         console.error('Error serving index.html:', e);
@@ -355,9 +363,9 @@ function injectSeoMetadata(originalHtml: string, reqUrl: string): { html: string
           `;
         } else {
           status = 404;
-          title = '記事が見つかりませんでした｜飛田新地求人 飛田ガールズ';
+          title = 'お探しの記事が見つかりませんでした (404 Not Found)｜飛田新地求人 飛田ガールズ';
           description = '指定された記事は存在しないか、移動した可能性があります。';
-          canonicalUrl = 'https://tobitashinchi-recruit.com/blog';
+          canonicalUrl = '';
         }
       } catch (e) {
         console.error('Error in SEO injection for blog:', e);
@@ -517,11 +525,21 @@ function injectSeoMetadata(originalHtml: string, reqUrl: string): { html: string
     html = html.replace(/<\/head>/i, `  <meta name="description" content="${escapeHtml(description)}" />\n</head>`);
   }
 
-  // Replace Canonical URL
-  if (/<link\s+rel=["']canonical["'][^>]*>/i.test(html)) {
-    html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/i, `<link rel="canonical" href="${canonicalUrl}" />`);
+  // Replace Canonical URL & Robots for 404
+  if (status === 404) {
+    if (/<meta\s+name=["']robots["'][^>]*>/i.test(html)) {
+      html = html.replace(/<meta\s+name=["']robots["'][^>]*>/i, '<meta name="robots" content="noindex, nofollow" />');
+    } else {
+      html = html.replace(/<\/head>/i, '  <meta name="robots" content="noindex, nofollow" />\n</head>');
+    }
+    // Remove canonical tag on 404 to avoid Soft 404 canonical confusion
+    html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/i, '');
   } else {
-    html = html.replace(/<\/head>/i, `  <link rel="canonical" href="${canonicalUrl}" />\n</head>`);
+    if (/<link\s+rel=["']canonical["'][^>]*>/i.test(html)) {
+      html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/i, `<link rel="canonical" href="${canonicalUrl}" />`);
+    } else {
+      html = html.replace(/<\/head>/i, `  <link rel="canonical" href="${canonicalUrl}" />\n</head>`);
+    }
   }
 
   // Replace OG Tags
