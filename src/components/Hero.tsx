@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { HERO_IMAGE_URL, LINE_OFFICIAL_URL } from '../data';
+import { HERO_IMAGE_URL } from '../data';
 import LucideIcon from './LucideIcon';
 import { SiteContent } from '../siteContent';
 import { BlogArticle, getValidArticleEyeCatch } from '../blogData';
@@ -116,29 +116,15 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
           <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-rose-50 rounded-full border border-rose-100/30 flex items-center justify-center -z-10 shadow-sm" />
         </motion.div>
 
-        {/* Hero Action CTA Buttons & Recommendation Columns */}
-        <motion.div 
-          className="flex flex-col gap-5 justify-center items-center w-full max-w-xl"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          id="hero-cta-container"
-        >
-          {/* Main Action Buttons */}
-          <div className="flex justify-center w-full max-w-md">
-            <a
-              href={LINE_OFFICIAL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full bg-[#06c755] hover:bg-[#05b34c] text-white font-sans font-extrabold py-3.5 px-6 rounded-2xl shadow-lg shadow-[#06c755]/25 hover:shadow-xl hover:shadow-[#06c755]/35 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2.5 cursor-pointer text-sm sm:text-base text-center"
-              id="hero-line-cta-btn"
-            >
-              <LucideIcon name="MessageCircle" className="fill-white text-white w-5 h-5 shrink-0" size={20} />
-              <span>{content.ctaButtonText || 'LINEで今すぐ相談する'}</span>
-            </a>
-          </div>
-
-          {randomArticles.length > 0 && (
+        {/* Hero Recommendation Columns */}
+        {randomArticles.length > 0 && (
+          <motion.div 
+            className="flex flex-col gap-5 justify-center items-center w-full max-w-xl"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            id="hero-cta-container"
+          >
             <div className="w-full text-left bg-gradient-to-br from-white to-[#fffbfd] p-5 md:p-6 rounded-3xl border border-secondary/20 shadow-xl shadow-rose-100/30 relative mt-2" id="hero-random-columns">
               {/* Elegant floating accent sparkles */}
               <div className="absolute -top-3 -right-3 bg-secondary text-white text-[10px] px-3 py-1 rounded-full font-black shadow-sm flex items-center gap-1 border border-secondary/10 tracking-widest animate-pulse">
@@ -210,8 +196,8 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
                 </div>
               )}
             </div>
-          )}
-        </motion.div>
+          </motion.div>
+        )}
 
         {/* Guarantee Badge */}
         <motion.div 
