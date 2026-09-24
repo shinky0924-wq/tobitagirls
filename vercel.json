@@ -28,6 +28,7 @@
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
   "redirects": [
+    { "source": "/blog/tobitashinchi-dormitory-lifestyle-support", "destination": "/blog/tobitashinchi-housing-support", "permanent": true },
     { "source": "/blog/tobitashinchi-privacy-alibi-support", "destination": "/blog/tobitashinchi-identity-alibi-safety-measures", "permanent": true },
     { "source": "/blog/tobitashinchi-physical-mental-care-guide", "destination": "/blog/tobitashinchi-stamina-mental-care-100k", "permanent": true },
     { "source": "/blog/tobitashinchi-fake-job-scout-warning", "destination": "/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment", "permanent": true },

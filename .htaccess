@@ -3,6 +3,7 @@
   RewriteBase /
 
   # 301 Permanent Redirects for legacy URLs (Soft 404 Resolution)
+  RewriteRule ^blog/tobitashinchi-dormitory-lifestyle-support/?$ /blog/tobitashinchi-housing-support [R=301,L]
   RewriteRule ^blog/tobitashinchi-privacy-alibi-support/?$ /blog/tobitashinchi-identity-alibi-safety-measures [R=301,L]
   RewriteRule ^blog/tobitashinchi-physical-mental-care-guide/?$ /blog/tobitashinchi-stamina-mental-care-100k [R=301,L]
   RewriteRule ^blog/tobitashinchi-fake-job-scout-warning/?$ /blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment [R=301,L]

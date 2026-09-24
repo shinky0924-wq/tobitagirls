@@ -41,6 +41,7 @@ async function startServer() {
 
     // 2. Soft 404 URL Map
     const LEGACY_URL_REDIRECTS: Record<string, string> = {
+      '/blog/tobitashinchi-dormitory-lifestyle-support': '/blog/tobitashinchi-housing-support',
       '/blog/tobitashinchi-privacy-alibi-support': '/blog/tobitashinchi-identity-alibi-safety-measures',
       '/blog/tobitashinchi-physical-mental-care-guide': '/blog/tobitashinchi-stamina-mental-care-100k',
       '/blog/tobitashinchi-fake-job-scout-warning': '/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment',
@@ -361,6 +362,100 @@ function injectSeoMetadata(originalHtml: string, reqUrl: string): { html: string
               ${bodyText}
             </article>
           `;
+
+          const articleUrl = `https://tobitashinchi-recruit.com/blog/${article.slug}`;
+          const fullImgUrl = article.eyeCatch
+            ? (article.eyeCatch.startsWith('http') ? article.eyeCatch : `https://tobitashinchi-recruit.com${article.eyeCatch}`)
+            : 'https://tobitashinchi-recruit.com/images/col_beginner_guide_art_1787803245812.jpg';
+
+          const graphItems: any[] = [
+            {
+              "@type": "BlogPosting",
+              "@id": `${articleUrl}#article`,
+              "isPartOf": {
+                "@type": "WebSite",
+                "@id": "https://tobitashinchi-recruit.com/#website",
+                "name": "飛田ガールズ",
+                "url": "https://tobitashinchi-recruit.com/"
+              },
+              "headline": article.title,
+              "description": article.summary,
+              "image": fullImgUrl,
+              "datePublished": article.publishedAt ? article.publishedAt.replace(/\./g, '-') : '2026-07-01',
+              "dateModified": "2026-09-05",
+              "articleSection": article.categoryLabel,
+              "keywords": (article.tags || []).join(', '),
+              "inLanguage": "ja-JP",
+              "author": {
+                "@type": "Person",
+                "name": article.author?.name || "さくら",
+                "jobTitle": article.author?.role || "女性サポートスタッフ"
+              },
+              "reviewedBy": {
+                "@type": "Organization",
+                "name": "飛田新地ガールズ求人サポートスタッフ",
+                "url": "https://tobitashinchi-recruit.com/about"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "飛田ガールズ",
+                "url": "https://tobitashinchi-recruit.com",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "https://tobitashinchi-recruit.com/favicon.svg"
+                }
+              },
+              "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": articleUrl
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "@id": `${articleUrl}#breadcrumb`,
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "トップ",
+                  "item": "https://tobitashinchi-recruit.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "お仕事コラム",
+                  "item": "https://tobitashinchi-recruit.com/blog"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": article.title,
+                  "item": articleUrl
+                }
+              ]
+            }
+          ];
+
+          const qnaBlocks = (article.content || []).filter((b: any) => b.type === 'qna' && b.question && (b.answer || b.text));
+          if (qnaBlocks.length > 0) {
+            graphItems.push({
+              "@type": "FAQPage",
+              "@id": `${articleUrl}#faq`,
+              "mainEntity": qnaBlocks.map((q: any) => ({
+                "@type": "Question",
+                "name": q.question,
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": q.answer || q.text || ""
+                }
+              }))
+            });
+          }
+
+          customJsonLd = JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": graphItems
+          }, null, 2);
         } else {
           status = 404;
           title = 'お探しの記事が見つかりませんでした (404 Not Found)｜飛田新地求人 飛田ガールズ';
