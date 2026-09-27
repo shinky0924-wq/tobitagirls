@@ -5,7 +5,6 @@ import { ArticleCardImage } from './ArticleCardImage';
 import { BookOpen, Calendar, Clock, Search, ArrowLeft, Tag, MessageCircle, ChevronRight, ChevronLeft, Sparkles, Send, ShieldCheck, HeartHandshake, CheckCircle2, RefreshCw } from 'lucide-react';
 import LucideIcon from './LucideIcon';
 import ArticleEditorialTrustBox from './ArticleEditorialTrustBox';
-import RecruiterInterviewSection from './RecruiterInterviewSection';
 
 function AvatarDisplay({
   avatar,
@@ -563,7 +562,7 @@ export default function BlogSection({
                     このページの情報は、お店の求人担当スタッフへのヒアリングと実際の募集条件をもとに作成しています。
                   </h3>
                   <p className="text-xs sm:text-sm text-zinc-600 mt-1 leading-relaxed">
-                    虚偽や誇大広告を徹底排除し、各コラム記事にて「更新日・編集者・求人担当者・情報確認者・情報源・実際の募集条件」を完全公開。さらに店舗求人担当者への直接インタビュー（未経験の割合、初日の不安、面接内容、給与計算など全10問）を詳しく掲載しています。
+                    虚偽や誇大広告を徹底排除し、各コラム記事にて「更新日・編集者・求人担当者・情報確認者・情報源・実際の募集条件」を完全公開しています。
                   </p>
                 </div>
               </div>
@@ -1017,9 +1016,6 @@ export default function BlogSection({
                 }
               })}
             </div>
-
-            {/* Direct Recruiter Interview Section (Key Questions & Live Realities) */}
-            <RecruiterInterviewSection />
 
             {/* Article Author Profile & E-E-A-T Editorial Board Footer */}
             <div className="mt-10 p-6 bg-surface-container-low rounded-3xl border border-outline-variant">
