@@ -266,6 +266,21 @@ export default function App() {
       if (ogUrl) ogUrl.setAttribute('content', canonicalUrl);
       const ogTitle = document.querySelector('meta[property="og:title"]');
       if (ogTitle) ogTitle.setAttribute('content', pageTitle);
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.setAttribute('content', pageDesc);
+      const ogImage = document.querySelector('meta[property="og:image"]');
+      if (ogImage) ogImage.setAttribute('content', 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg');
+      const ogType = document.querySelector('meta[property="og:type"]');
+      if (ogType) ogType.setAttribute('content', 'website');
+
+      const twCard = document.querySelector('meta[name="twitter:card"]');
+      if (twCard) twCard.setAttribute('content', 'summary_large_image');
+      const twTitle = document.querySelector('meta[name="twitter:title"]');
+      if (twTitle) twTitle.setAttribute('content', pageTitle);
+      const twDesc = document.querySelector('meta[name="twitter:description"]');
+      if (twDesc) twDesc.setAttribute('content', pageDesc);
+      const twImg = document.querySelector('meta[name="twitter:image"]');
+      if (twImg) twImg.setAttribute('content', 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg');
     }
   }, [currentTab, selectedSlug, clusterTopic, selectedCategorySlug, selectedFaqCategory]);
 

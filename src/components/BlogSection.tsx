@@ -162,24 +162,43 @@ export default function BlogSection({
     const ogImage = document.querySelector('meta[property="og:image"]');
 
     if (currentArticle) {
-      const pageTitle = `${currentArticle.title} | 飛田ガールズ お仕事コラム`;
+      const pageTitle = `${currentArticle.title}｜飛田新地求人 飛田ガールズ`;
       document.title = pageTitle;
       const articleUrl = `https://tobitashinchi-recruit.com/blog/${currentArticle.slug}`;
 
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute('content', currentArticle.summary);
-      }
+      const setMetaTag = (selector: string, attr: string, value: string, createAttr?: { key: string; val: string }) => {
+        let el = document.querySelector(selector);
+        if (!el && createAttr) {
+          el = document.createElement('meta');
+          el.setAttribute(createAttr.key, createAttr.val);
+          document.head.appendChild(el);
+        }
+        if (el) {
+          el.setAttribute(attr, value);
+        }
+      };
+
+      const imgFname = currentArticle.eyeCatch ? currentArticle.eyeCatch.split('/').pop()?.split('?')[0] : '';
+      const fullImgUrl = currentArticle.eyeCatch
+        ? (currentArticle.eyeCatch.startsWith('http') ? currentArticle.eyeCatch : `https://tobitashinchi-recruit.com/images/${imgFname}`)
+        : 'https://tobitashinchi-recruit.com/images/col_beginner_guide_art_1787803245812.jpg';
+
+      setMetaTag('meta[name="description"]', 'content', currentArticle.summary, { key: 'name', val: 'description' });
       if (canonicalLink) {
         canonicalLink.setAttribute('href', articleUrl);
       }
-      if (ogUrl) ogUrl.setAttribute('content', articleUrl);
-      if (ogTitle) ogTitle.setAttribute('content', pageTitle);
-      if (ogDesc) ogDesc.setAttribute('content', currentArticle.summary);
-      if (ogImage && currentArticle.eyeCatch) {
-        const fullImg = currentArticle.eyeCatch.startsWith('http') ? currentArticle.eyeCatch : `https://tobitashinchi-recruit.com${currentArticle.eyeCatch}`;
-        ogImage.setAttribute('content', fullImg);
-      }
+      setMetaTag('meta[property="og:url"]', 'content', articleUrl, { key: 'property', val: 'og:url' });
+      setMetaTag('meta[property="og:title"]', 'content', pageTitle, { key: 'property', val: 'og:title' });
+      setMetaTag('meta[property="og:description"]', 'content', currentArticle.summary, { key: 'property', val: 'og:description' });
+      setMetaTag('meta[property="og:type"]', 'content', 'article', { key: 'property', val: 'og:type' });
+      setMetaTag('meta[property="og:image"]', 'content', fullImgUrl, { key: 'property', val: 'og:image' });
+      setMetaTag('meta[property="og:image:alt"]', 'content', currentArticle.title, { key: 'property', val: 'og:image:alt' });
+
+      setMetaTag('meta[name="twitter:card"]', 'content', 'summary_large_image', { key: 'name', val: 'twitter:card' });
+      setMetaTag('meta[name="twitter:title"]', 'content', pageTitle, { key: 'name', val: 'twitter:title' });
+      setMetaTag('meta[name="twitter:description"]', 'content', currentArticle.summary, { key: 'name', val: 'twitter:description' });
+      setMetaTag('meta[name="twitter:image"]', 'content', fullImgUrl, { key: 'name', val: 'twitter:image' });
+      setMetaTag('meta[name="twitter:image:alt"]', 'content', currentArticle.title, { key: 'name', val: 'twitter:image:alt' });
 
       // Add or update comprehensive JSON-LD (Article + BreadcrumbList + FAQPage for SEO & LLMs)
       if (!jsonLdScript) {
@@ -188,10 +207,6 @@ export default function BlogSection({
         jsonLdScript.type = 'application/ld+json';
         document.head.appendChild(jsonLdScript);
       }
-
-      const fullImgUrl = currentArticle.eyeCatch
-        ? (currentArticle.eyeCatch.startsWith('http') ? currentArticle.eyeCatch : `https://tobitashinchi-recruit.com${currentArticle.eyeCatch}`)
-        : 'https://tobitashinchi-recruit.com/images/col_beginner_guide_art_1787803245812.jpg';
 
       const graphItems: any[] = [
         {
@@ -299,18 +314,40 @@ export default function BlogSection({
         jsonLdScript.remove();
       }
     } else {
-      document.title = '飛田新地求人、飛田新地バイトなら【飛田ガールズ】女の子のためのサイト・高収入募集';
+      const defaultTitle = '飛田新地お仕事コラム・給与・面接ガイド一覧｜飛田ガールズ【公式】';
+      const defaultDesc = '飛田新地のお仕事、給料システム、面接・体入の流れ、寮生活、安全対策など、現場の女性スタッフによる役立つ最新コラム一覧。';
+      const defaultUrl = 'https://tobitashinchi-recruit.com/blog';
+      const defaultImg = 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg';
+
+      document.title = defaultTitle;
       const metaRobots = document.querySelector('meta[name="robots"]');
       if (metaRobots) {
         metaRobots.setAttribute('content', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
       }
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) {
-        metaDesc.setAttribute('content', '【飛田新地料亭直営求人・公式採用窓口】飛田新地でのお仕事なら「飛田ガールズ」。紹介や仲介ではなくお店スタッフが直接サポート。未経験から高収入（日給3万〜8万円・即日全額日払い）、安心安全の料亭直営求人です。24時間いつでもお気軽にご相談・ご応募いただけます。');
+        metaDesc.setAttribute('content', defaultDesc);
       }
       if (canonicalLink) {
-        canonicalLink.setAttribute('href', 'https://tobitashinchi-recruit.com/');
+        canonicalLink.setAttribute('href', defaultUrl);
       }
+      if (ogUrl) ogUrl.setAttribute('content', defaultUrl);
+      if (ogTitle) ogTitle.setAttribute('content', defaultTitle);
+      if (ogDesc) ogDesc.setAttribute('content', defaultDesc);
+      if (ogImage) ogImage.setAttribute('content', defaultImg);
+
+      const twCard = document.querySelector('meta[name="twitter:card"]');
+      if (twCard) twCard.setAttribute('content', 'summary_large_image');
+      const twTitle = document.querySelector('meta[name="twitter:title"]');
+      if (twTitle) twTitle.setAttribute('content', defaultTitle);
+      const twDesc = document.querySelector('meta[name="twitter:description"]');
+      if (twDesc) twDesc.setAttribute('content', defaultDesc);
+      const twImg = document.querySelector('meta[name="twitter:image"]');
+      if (twImg) twImg.setAttribute('content', defaultImg);
+
+      const ogType = document.querySelector('meta[property="og:type"]');
+      if (ogType) ogType.setAttribute('content', 'website');
+
       if (jsonLdScript) {
         jsonLdScript.remove();
       }
