@@ -226,15 +226,6 @@ export default function ComparisonPage({
     }
   };
 
-  const handleConsultWithQuestion = (question: string) => {
-    const defaultMsg = `【事前の疑問・不安の相談】\n「${question}」について相談したいです。応募するかはまだ決めていませんが、条件等について教えていただけますでしょうか？`;
-    if (onInjectedScroll) {
-      onInjectedScroll(defaultMsg);
-    } else {
-      onCtaclick();
-    }
-  };
-
   const renderGradeBadge = (grade: ComparisonRow['ourShop']['grade']) => {
     switch (grade) {
       case 'excellent':
@@ -821,41 +812,6 @@ export default function ComparisonPage({
                   </div>
                 </div>
               </div>
-
-              {/* 女性の不安解消導線①：未経験・スキルへの不安 */}
-              <div className="mt-8 bg-gradient-to-br from-rose-50/80 via-white to-pink-50/50 rounded-3xl p-6 sm:p-8 border border-rose-200/90 shadow-sm">
-                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-                  <div className="flex-1">
-                    <div className="inline-flex items-center gap-1.5 bg-rose-100 text-secondary text-xs font-black px-3.5 py-1 rounded-full mb-3 shadow-2xs">
-                      <LucideIcon name="HelpCircle" size={14} />
-                      <span>女性の不安解消・相談ステップ ①</span>
-                    </div>
-                    <h3 className="font-display font-black text-lg sm:text-xl text-on-surface mb-2.5">
-                      「本当に自分でもできる？ 未経験でも大丈夫？」
-                    </h3>
-                    <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed mb-3">
-                      飛田新地で働く女性の<strong className="text-secondary font-black">9割以上がナイトワーク未経験</strong>からのスタートです。
-                      お酒を飲む必要はなく、お客様との連絡先交換や営業LINEも組合規約で一切禁止。お仕事はお茶出しと楽しい会話でのおもてなしが中心です。
-                      座り方やお茶の出し方、会話のコツは専任の女性スタッフが事前にマンツーマンで丁寧に教えますのでご安心ください。
-                    </p>
-                    <div className="flex items-center gap-2 text-xs font-bold text-zinc-500">
-                      <LucideIcon name="CheckCircle2" size={14} className="text-emerald-600 flex-shrink-0" />
-                      <span>「私でもできそう？」と聞くだけでOK。面接や応募の強制は一切ありません</span>
-                    </div>
-                  </div>
-                  <div className="w-full lg:w-auto flex-shrink-0 flex flex-col gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleConsultWithQuestion('未経験でも本当にできる？お仕事内容について聞きたい')}
-                      className="w-full lg:w-auto bg-[#06C755] hover:bg-[#05b34c] text-white font-black text-xs sm:text-sm px-6 py-3.5 rounded-2xl shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
-                    >
-                      <LucideIcon name="MessageCircle" size={18} />
-                      <span>LINEで「未経験だけど大丈夫？」と聞く</span>
-                    </button>
-                    <span className="text-[11px] text-zinc-400 text-center">※完全匿名・質問だけで大丈夫です</span>
-                  </div>
-                </div>
-              </div>
             </section>
 
             {/* SECTION 2: 目的・属性別求人比較ガイド（8大カテゴリー） */}
@@ -892,41 +848,6 @@ export default function ComparisonPage({
                     <span>{cat.title}</span>
                   </button>
                 ))}
-              </div>
-
-              {/* 女性の不安解消導線②：身バレへの不安 */}
-              <div className="mb-10 bg-gradient-to-br from-white via-rose-50/40 to-pink-50/30 rounded-3xl p-6 sm:p-8 border border-rose-200/90 shadow-sm">
-                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-                  <div className="flex-1">
-                    <div className="inline-flex items-center gap-1.5 bg-rose-100 text-secondary text-xs font-black px-3.5 py-1 rounded-full mb-3 shadow-2xs">
-                      <LucideIcon name="ShieldAlert" size={14} />
-                      <span>女性の不安解消・相談ステップ ②</span>
-                    </div>
-                    <h3 className="font-display font-black text-lg sm:text-xl text-on-surface mb-2.5">
-                      「身バレは本当に大丈夫？ 会社・家族・友達にバレない？」
-                    </h3>
-                    <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed mb-3">
-                      飛田新地は<strong className="text-secondary font-black">街全体が法律・組合規約で撮影禁止</strong>となっており、当店でもWEBサイトやSNS、求人サイトへの写真・動画掲載は100%行いません。
-                      また、お給料は全額その場での手渡し日払いのため、銀行口座の履歴やマイナンバー・税金関係から本業や家族に知られるリスクも防止できます。
-                      知り合いと鉢合わせしない通りや時間帯の店舗選びなど、あなたの生活環境に合わせて細心の注意を払います。
-                    </p>
-                    <div className="flex items-center gap-2 text-xs font-bold text-zinc-500">
-                      <LucideIcon name="CheckCircle2" size={14} className="text-emerald-600 flex-shrink-0" />
-                      <span>「昼間の仕事にバレないシフトは？」「知り合いが大阪にいる」なども個別に相談できます</span>
-                    </div>
-                  </div>
-                  <div className="w-full lg:w-auto flex-shrink-0 flex flex-col gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleConsultWithQuestion('身バレ対策について詳しく知りたい（会社や家族に知られたくない）')}
-                      className="w-full lg:w-auto bg-[#06C755] hover:bg-[#05b34c] text-white font-black text-xs sm:text-sm px-6 py-3.5 rounded-2xl shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
-                    >
-                      <LucideIcon name="MessageCircle" size={18} />
-                      <span>LINEで身バレ対策について質問する</span>
-                    </button>
-                    <span className="text-[11px] text-zinc-400 text-center">※本名や個人情報の入力は不要です</span>
-                  </div>
-                </div>
               </div>
 
               {/* All 8 Category Cards */}
@@ -1096,42 +1017,6 @@ export default function ComparisonPage({
                   </div>
                 ))}
               </div>
-
-              {/* 女性の不安解消導線③：怖さ・断れるかどうかの不安 */}
-              <div className="mt-10 bg-gradient-to-br from-rose-50/80 via-white to-pink-50/50 rounded-3xl p-6 sm:p-8 border border-rose-200 shadow-sm">
-                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-                  <div className="flex-1">
-                    <div className="inline-flex items-center gap-1.5 bg-rose-100 text-secondary text-xs font-black px-3.5 py-1 rounded-full mb-3 shadow-2xs">
-                      <LucideIcon name="Smile" size={14} />
-                      <span>女性の不安解消・相談ステップ ③</span>
-                    </div>
-                    <h3 className="font-display font-black text-lg sm:text-xl text-on-surface mb-2.5">
-                      「怖くない？ 自分に合わなかったらすぐに断れる？」
-                    </h3>
-                    <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed mb-3">
-                      飛田新地は料理組合が厳格に自治管理する歴史ある料亭街で、反社会的勢力や悪質なスカウトは完全に排除されています。
-                      当店では「体験入店（1日のみ）」を推奨しており、実際に店舗の雰囲気や接客を体験してみて
-                      <strong className="text-secondary font-black">「自分には合わない」「やっぱり続けられない」と感じた場合は、その日限りで終了して全く問題ありません</strong>。
-                      違約金やペナルティ、しつこい引き止めは一切なく、働いた時間分の日給はその場で全額手渡し支給されます。
-                    </p>
-                    <div className="flex items-center gap-2 text-xs font-bold text-zinc-500">
-                      <LucideIcon name="CheckCircle2" size={14} className="text-emerald-600 flex-shrink-0" />
-                      <span>「合わなければ断る」を前提にしたお試し体入・見学相談も大歓迎です</span>
-                    </div>
-                  </div>
-                  <div className="w-full lg:w-auto flex-shrink-0 flex flex-col gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleConsultWithQuestion('体入後に合わなかったら断れる？退店ルールについて聞きたい')}
-                      className="w-full lg:w-auto bg-[#06C755] hover:bg-[#05b34c] text-white font-black text-xs sm:text-sm px-6 py-3.5 rounded-2xl shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
-                    >
-                      <LucideIcon name="MessageCircle" size={18} />
-                      <span>LINEで「合わなかったらどうなる？」を聞く</span>
-                    </button>
-                    <span className="text-[11px] text-zinc-400 text-center">※違約金0円・即日終了OK</span>
-                  </div>
-                </div>
-              </div>
             </section>
           </div>
         )}
@@ -1224,109 +1109,6 @@ export default function ComparisonPage({
                 </button>
               </div>
             </div>
-          </div>
-
-          {/* 女性の不安解消導線④・総合クロージング：まだ応募するか決めなくて大丈夫。 */}
-          <div className="mt-10 bg-gradient-to-br from-rose-50/90 via-pink-50/50 to-white rounded-3xl p-6 sm:p-10 border-2 border-rose-200/90 shadow-md text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-1.5 bg-rose-100 text-secondary text-xs font-black px-4 py-1.5 rounded-full mb-4 shadow-2xs">
-              <LucideIcon name="HeartHandshake" size={15} />
-              <span>無理な応募・面接の強制は一切ありません</span>
-            </div>
-
-            <h3 className="font-display font-black text-2xl sm:text-3xl text-on-surface mb-3">
-              まだ応募するか決めなくて大丈夫。
-            </h3>
-
-            <p className="text-xs sm:text-sm text-zinc-600 mb-6 leading-relaxed">
-              気になること、心配なこと、些細な疑問でも女性スタッフが丁寧にお答えします。
-            </p>
-
-            {/* 4つの代表的な質問カード */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mx-auto mb-8 text-left">
-              <button
-                type="button"
-                onClick={() => handleConsultWithQuestion('週1でも大丈夫？')}
-                className="bg-white hover:bg-rose-50/80 border border-rose-200/80 rounded-2xl p-4 flex items-center gap-3 shadow-2xs transition-all cursor-pointer group"
-              >
-                <span className="w-8 h-8 rounded-xl bg-rose-100 text-secondary flex items-center justify-center font-black text-xs flex-shrink-0 group-hover:scale-105 transition-transform">
-                  Q1
-                </span>
-                <div className="flex-1">
-                  <span className="font-bold text-xs sm:text-sm text-zinc-800 group-hover:text-secondary transition-colors block">
-                    「週1でも大丈夫？」
-                  </span>
-                  <span className="text-[11px] text-zinc-400">完全自由シフト・月1回〜OK</span>
-                </div>
-                <LucideIcon name="ChevronRight" size={16} className="text-zinc-300 group-hover:text-secondary transition-colors" />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleConsultWithQuestion('未経験でもできる？')}
-                className="bg-white hover:bg-rose-50/80 border border-rose-200/80 rounded-2xl p-4 flex items-center gap-3 shadow-2xs transition-all cursor-pointer group"
-              >
-                <span className="w-8 h-8 rounded-xl bg-rose-100 text-secondary flex items-center justify-center font-black text-xs flex-shrink-0 group-hover:scale-105 transition-transform">
-                  Q2
-                </span>
-                <div className="flex-1">
-                  <span className="font-bold text-xs sm:text-sm text-zinc-800 group-hover:text-secondary transition-colors block">
-                    「未経験でもできる？」
-                  </span>
-                  <span className="text-[11px] text-zinc-400">9割が未経験スタート</span>
-                </div>
-                <LucideIcon name="ChevronRight" size={16} className="text-zinc-300 group-hover:text-secondary transition-colors" />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleConsultWithQuestion('どのくらい稼げる？')}
-                className="bg-white hover:bg-rose-50/80 border border-rose-200/80 rounded-2xl p-4 flex items-center gap-3 shadow-2xs transition-all cursor-pointer group"
-              >
-                <span className="w-8 h-8 rounded-xl bg-rose-100 text-secondary flex items-center justify-center font-black text-xs flex-shrink-0 group-hover:scale-105 transition-transform">
-                  Q3
-                </span>
-                <div className="flex-1">
-                  <span className="font-bold text-xs sm:text-sm text-zinc-800 group-hover:text-secondary transition-colors block">
-                    「どのくらい稼げる？」
-                  </span>
-                  <span className="text-[11px] text-zinc-400">日給5万〜10万円即日全額日払い</span>
-                </div>
-                <LucideIcon name="ChevronRight" size={16} className="text-zinc-300 group-hover:text-secondary transition-colors" />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleConsultWithQuestion('身バレ対策について詳しく知りたい')}
-                className="bg-white hover:bg-rose-50/80 border border-rose-200/80 rounded-2xl p-4 flex items-center gap-3 shadow-2xs transition-all cursor-pointer group"
-              >
-                <span className="w-8 h-8 rounded-xl bg-rose-100 text-secondary flex items-center justify-center font-black text-xs flex-shrink-0 group-hover:scale-105 transition-transform">
-                  Q4
-                </span>
-                <div className="flex-1">
-                  <span className="font-bold text-xs sm:text-sm text-zinc-800 group-hover:text-secondary transition-colors block">
-                    「身バレ対策について詳しく知りたい」
-                  </span>
-                  <span className="text-[11px] text-zinc-400">ネット写真完全非掲載・手渡し支給</span>
-                </div>
-                <LucideIcon name="ChevronRight" size={16} className="text-zinc-300 group-hover:text-secondary transition-colors" />
-              </button>
-            </div>
-
-            <p className="font-display font-bold text-sm sm:text-base text-zinc-800 mb-1.5">
-              そんな質問だけでもOKです。
-            </p>
-            <p className="text-xs sm:text-sm text-zinc-600 mb-6">
-              条件を聞いてから、自分に合うか考えてください。
-            </p>
-
-            <button
-              type="button"
-              onClick={onCtaclick}
-              className="inline-flex items-center justify-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white font-black text-sm sm:text-base px-8 py-4 rounded-2xl shadow-lg shadow-emerald-600/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer w-full sm:w-auto"
-            >
-              <LucideIcon name="MessageCircle" size={20} />
-              <span>公式LINEで今すぐ相談する</span>
-            </button>
           </div>
         </section>
 
