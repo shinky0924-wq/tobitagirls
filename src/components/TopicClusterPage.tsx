@@ -38,6 +38,64 @@ export default function TopicClusterPage({
     window.scrollTo(0, 0);
   }, [topicId]);
 
+  // Inject JSON-LD Structured Data (BreadcrumbList + FAQPage) for Search Console & Rich Snippets
+  useEffect(() => {
+    const existingScript = document.getElementById('cluster-schema');
+    if (existingScript) existingScript.remove();
+
+    try {
+      const script = document.createElement('script');
+      script.id = 'cluster-schema';
+      script.type = 'application/ld+json';
+
+      const schemaData = {
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'BreadcrumbList',
+            '@id': `https://tobitashinchi-recruit.com${data.path}#breadcrumb`,
+            'itemListElement': [
+              {
+                '@type': 'ListItem',
+                'position': 1,
+                'name': '飛田新地求人トップ',
+                'item': 'https://tobitashinchi-recruit.com/'
+              },
+              {
+                '@type': 'ListItem',
+                'position': 2,
+                'name': data.title,
+                'item': `https://tobitashinchi-recruit.com${data.path}`
+              }
+            ]
+          },
+          {
+            '@type': 'FAQPage',
+            '@id': `https://tobitashinchi-recruit.com${data.path}#faq`,
+            'mainEntity': (data.faqs || []).map((item) => ({
+              '@type': 'Question',
+              'name': item.q,
+              'acceptedAnswer': {
+                '@type': 'Answer',
+                'text': item.a
+              }
+            }))
+          }
+        ]
+      };
+
+      script.textContent = JSON.stringify(schemaData);
+      document.head.appendChild(script);
+    } catch (err) {
+      console.error('Failed to inject cluster schema:', err);
+    }
+
+    return () => {
+      const el = document.getElementById('cluster-schema');
+      if (el) el.remove();
+    };
+  }, [data]);
+
   // Find featured articles from blogData
   const featuredArticles = data.featuredArticleSlugs
     .map((slug) => BLOG_ARTICLES.find((a) => a.slug === slug))

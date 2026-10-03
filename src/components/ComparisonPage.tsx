@@ -123,9 +123,17 @@ export default function ComparisonPage({
           'name': '飛田ガールズ 料亭直営採用窓口',
           'value': `TOBITA-COMPARE-${singleCat.slug.toUpperCase()}`
         },
-        'datePosted': '2026-08-01T00:00:00+09:00',
+        'datePosted': '2026-10-01T00:00:00+09:00',
         'validThrough': '2027-12-31T23:59:59+09:00',
         'employmentType': salaryConfig.employmentType,
+        'jobBenefits': [
+          '即日全額日払い（手渡し支給）',
+          '家具家電付きワンルーム個室寮完備（即入居可）',
+          '衣装・ドレス・和装無料レンタル',
+          '専任女性スタッフによる24時間サポート体制',
+          'ノルマ・罰金・連絡先交換・お酒の強要一切なし',
+          'プロによるヘアメイク・身だしなみサポート無料'
+        ],
         'hiringOrganization': {
           '@type': 'Organization',
           'name': '飛田新地料理組合公認料亭直営 飛田ガールズ',

@@ -166,8 +166,31 @@ export default function FAQPage({ initialCategory, onNavigateHome, onCtaclick }:
 
     return {
       '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      'mainEntity': [...highIntentEntities, ...standardEntities]
+      '@graph': [
+        {
+          '@type': 'BreadcrumbList',
+          '@id': 'https://tobitashinchi-recruit.com/faq#breadcrumb',
+          'itemListElement': [
+            {
+              '@type': 'ListItem',
+              'position': 1,
+              'name': '飛田新地求人トップ',
+              'item': 'https://tobitashinchi-recruit.com/'
+            },
+            {
+              '@type': 'ListItem',
+              'position': 2,
+              'name': '飛田新地求人FAQ（全119問・8大目的別）',
+              'item': 'https://tobitashinchi-recruit.com/faq'
+            }
+          ]
+        },
+        {
+          '@type': 'FAQPage',
+          '@id': 'https://tobitashinchi-recruit.com/faq#faq',
+          'mainEntity': [...highIntentEntities, ...standardEntities]
+        }
+      ]
     };
   }, []);
 
