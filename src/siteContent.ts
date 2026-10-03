@@ -1,6 +1,7 @@
 import siteContentJson from '../data/siteContent.json';
 
 export interface SiteContent {
+  lastUpdated?: string;
   hero: {
     tagline: string;
     titleLine1: string;
@@ -84,6 +85,7 @@ export function getStoredSiteContent(): SiteContent {
     const customContent = JSON.parse(stored);
     const merged = { ...DEFAULT_SITE_CONTENT };
     
+    if (customContent.lastUpdated) merged.lastUpdated = customContent.lastUpdated;
     if (customContent.hero) merged.hero = { ...merged.hero, ...customContent.hero };
     if (customContent.concerns) merged.concerns = { ...merged.concerns, ...customContent.concerns };
     if (customContent.reasons) merged.reasons = { ...merged.reasons, ...customContent.reasons };

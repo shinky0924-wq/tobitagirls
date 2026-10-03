@@ -5,6 +5,7 @@
 
 import { MouseEvent, useState, useEffect } from 'react';
 import LucideIcon from './LucideIcon';
+import { getStoredSiteContent } from '../siteContent';
 
 interface FooterProps {
   currentTab: string;
@@ -19,6 +20,8 @@ interface FooterProps {
 export default function Footer({ currentTab, onChangeTab, onScrollToSection, onOpenAdmin, onNavigateCompare, onNavigateTopic, isAdminMode }: FooterProps) {
   const [showAdminLink, setShowAdminLink] = useState(false);
   const [activeModal, setActiveModal] = useState<'policy' | 'company' | null>(null);
+  const siteContent = getStoredSiteContent();
+  const lastUpdated = siteContent.lastUpdated || '2026年10月3日';
 
   useEffect(() => {
     try {
@@ -121,7 +124,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
             </p>
             <div className="flex items-center gap-2 text-[11px] text-gray-500 font-mono bg-white p-2.5 rounded-xl border border-rose-100/60 inline-flex">
               <LucideIcon name="CalendarCheck" size={13} className="text-secondary" />
-              <span>サイト最終更新日：2026年9月5日</span>
+              <span>サイト最終更新日：{lastUpdated}</span>
             </div>
           </div>
 

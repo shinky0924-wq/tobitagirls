@@ -7,7 +7,7 @@ import {
   Lock, KeyRound, ShieldAlert, FileText, Plus, Trash2, Edit3, Save, 
   ArrowLeft, RotateCcw, Copy, Check, Eye, HelpCircle, MoveUp, MoveDown, 
   Grid, LogOut, CheckCircle2, Sparkles, BookOpen, AlertCircle, Settings,
-  Download, Archive, User, Inbox, Heart
+  Download, Archive, User, Inbox, Heart, CalendarCheck
 } from 'lucide-react';
 
 interface AdminPanelProps {
@@ -231,12 +231,19 @@ export default function AdminPanel({ onClose, onRefreshBlog, onRefreshSite }: Ad
   };
 
   const handleSaveSiteContent = async () => {
-    saveSiteContent(siteText);
+    const now = new Date();
+    const todayJp = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
+    const toSave: SiteContent = {
+      ...siteText,
+      lastUpdated: siteText.lastUpdated || todayJp
+    };
+    setSiteText(toSave);
+    saveSiteContent(toSave);
     onRefreshSite();
     
     try {
       // 1. Save directly to Firebase Firestore for durable multi-browser real-time synchronization
-      const firestoreSuccess = await saveSiteContentToFirestore(siteText);
+      const firestoreSuccess = await saveSiteContentToFirestore(toSave);
       
       if (firestoreSuccess) {
         showAlert('データベース(Firestore)にサイト文章を永久保存しました！別ブラウザや本番環境でも瞬時に反映されます。');
@@ -2441,6 +2448,42 @@ export function saveArticles(articles: BlogArticle[]) {
 
               {/* Dynamic form based on selected section */}
               <div className="space-y-6" id="site-content-form-fields">
+                {/* サイト最終更新日設定バー */}
+                <div className="bg-rose-50/60 p-4 rounded-2xl border border-rose-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-white text-rose-600 flex items-center justify-center shadow-xs border border-rose-100 shrink-0">
+                      <CalendarCheck size={16} />
+                    </div>
+                    <div>
+                      <span className="block text-xs font-black text-rose-800">サイト最終更新日（フッターに表示）</span>
+                      <span className="text-[11px] text-zinc-500 font-mono">
+                        現在の設定: <strong className="text-zinc-800 font-bold">{siteText.lastUpdated || '2026年10月3日'}</strong>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={siteText.lastUpdated || '2026年10月3日'}
+                      onChange={(e) => setSiteText(prev => ({ ...prev, lastUpdated: e.target.value }))}
+                      className="px-3 py-1.5 bg-white border border-rose-200 rounded-xl text-xs font-mono font-bold text-zinc-800 w-36 focus:outline-none focus:ring-1 focus:ring-rose-500"
+                      placeholder="例: 2026年10月3日"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const now = new Date();
+                        const todayJp = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
+                        setSiteText(prev => ({ ...prev, lastUpdated: todayJp }));
+                        showAlert(`最終更新日を「${todayJp}」に設定しました。「サイト文章を保存」を押して確定してください。`);
+                      }}
+                      className="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-colors cursor-pointer shrink-0 shadow-2xs"
+                    >
+                      今日の日付にする
+                    </button>
+                  </div>
+                </div>
+
                 {activeSiteSection === 'hero' && (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
