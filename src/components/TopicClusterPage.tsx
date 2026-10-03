@@ -88,45 +88,47 @@ export default function TopicClusterPage({
       </div>
 
       {/* 2. Topic Cluster Quick Switcher Pill Bar */}
-      <div className="bg-rose-50/70 border-y border-rose-100/80 py-2.5 mb-6 md:mb-8 overflow-x-auto scrollbar-none">
-        <div className="max-w-[1140px] mx-auto px-4 sm:px-6 flex items-center gap-1.5 whitespace-nowrap">
-          <span className="text-[11px] font-black text-rose-700 shrink-0 mr-1 flex items-center gap-1">
-            <LucideIcon name="Compass" size={13} />
-            <span>テーマ別案内:</span>
-          </span>
-          <button
-            type="button"
-            onClick={onNavigateHome}
-            className="px-2.5 py-1 rounded-lg text-xs font-bold bg-white text-zinc-700 hover:text-rose-600 border border-rose-200/70 hover:bg-rose-50 transition-colors cursor-pointer"
-          >
-            🏢 飛田新地求人トップ
-          </button>
-          {ALL_CLUSTER_NODES.filter(n => n.id !== 'recruit').map((node) => {
-            const isActive = node.id === topicId;
-            return (
-              <button
-                key={node.id}
-                type="button"
-                onClick={() => {
-                  if (node.id === 'faq') {
-                    onNavigateFaq();
-                  } else if (node.id === 'blog') {
-                    onNavigateBlog();
-                  } else {
-                    onNavigateTopic(node.id);
-                  }
-                }}
-                className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
-                  isActive
-                    ? 'bg-rose-600 text-white shadow-xs'
-                    : 'bg-white text-zinc-700 hover:text-rose-600 border border-gray-200/70 hover:bg-rose-50'
-                }`}
-              >
-                <span>{node.emoji}</span>
-                <span>{node.title}</span>
-              </button>
-            );
-          })}
+      <div className="bg-rose-50/70 border-y border-rose-100/80 py-3 mb-6 md:mb-8">
+        <div className="max-w-[1140px] mx-auto px-4 sm:px-6">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+            <span className="text-xs font-black text-rose-700 shrink-0 mr-1 flex items-center gap-1 bg-white/80 px-2.5 py-1 rounded-lg border border-rose-200/60 shadow-2xs">
+              <LucideIcon name="Compass" size={13} className="text-rose-500" />
+              <span>テーマ別案内:</span>
+            </span>
+            <button
+              type="button"
+              onClick={onNavigateHome}
+              className="px-2.5 py-1 rounded-lg text-xs font-bold bg-white text-zinc-700 hover:text-rose-600 border border-rose-200/70 hover:bg-rose-50 transition-colors cursor-pointer shadow-2xs"
+            >
+              🏢 飛田新地求人トップ
+            </button>
+            {ALL_CLUSTER_NODES.filter(n => n.id !== 'recruit').map((node) => {
+              const isActive = node.id === topicId;
+              return (
+                <button
+                  key={node.id}
+                  type="button"
+                  onClick={() => {
+                    if (node.id === 'faq') {
+                      onNavigateFaq();
+                    } else if (node.id === 'blog') {
+                      onNavigateBlog();
+                    } else {
+                      onNavigateTopic(node.id);
+                    }
+                  }}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shadow-2xs ${
+                    isActive
+                      ? 'bg-rose-600 text-white font-extrabold shadow-xs ring-2 ring-rose-300'
+                      : 'bg-white text-zinc-700 hover:text-rose-600 border border-gray-200/70 hover:bg-rose-50'
+                  }`}
+                >
+                  <span>{node.emoji}</span>
+                  <span>{node.title}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
