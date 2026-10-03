@@ -425,19 +425,21 @@ export default function RecruitHub({
                 </div>
 
                 {/* Content */}
-                <div className="p-4 sm:p-5">
-                  <p className="font-sans text-xs text-zinc-600 leading-relaxed mb-3 line-clamp-2">
-                    {cat.summary}
-                  </p>
+                <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                  <div>
+                    <p className="font-sans text-xs text-zinc-600 leading-relaxed mb-3.5">
+                      {cat.summary}
+                    </p>
 
-                  {/* Key points */}
-                  <div className="bg-rose-50/40 rounded-xl p-2.5 border border-rose-100/60 mb-3.5 space-y-1">
-                    {cat.keyPoints.map((pt, i) => (
-                      <div key={i} className="flex items-center gap-1.5 text-[11px] text-zinc-700 font-medium">
-                        <LucideIcon name="Check" size={12} className="text-rose-500 shrink-0" />
-                        <span className="truncate">{pt}</span>
-                      </div>
-                    ))}
+                    {/* Key points */}
+                    <div className="bg-rose-50/40 rounded-xl p-2.5 border border-rose-100/60 mb-3.5 space-y-1">
+                      {cat.keyPoints.map((pt, i) => (
+                        <div key={i} className="flex items-center gap-1.5 text-[11px] text-zinc-700 font-medium">
+                          <LucideIcon name="Check" size={12} className="text-rose-500 shrink-0" />
+                          <span className="leading-snug">{pt}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
 
                   {/* Featured articles */}
