@@ -592,25 +592,25 @@ export default function ComparisonPage({
               {showMatrixOnCategoryPage && (
                 <div className="mt-4 bg-white rounded-3xl border border-rose-100 shadow-md overflow-hidden">
                   <div className="overflow-x-auto scrollbar-thin">
-                    <table className="w-full text-left border-collapse min-w-[700px]">
+                    <table className="w-full text-left border-collapse min-w-[900px]">
                       <thead>
                         <tr className="border-b border-rose-100">
-                          <th className="p-4 bg-zinc-50 font-bold text-xs text-zinc-600 w-1/5 sticky left-0 z-10">
+                          <th className="p-4 bg-zinc-50 font-bold text-xs sm:text-sm text-zinc-600 w-[16%] min-w-[130px] sticky left-0 z-10 border-r border-rose-100/60">
                             比較項目
                           </th>
-                          <th className="p-4 bg-rose-500 text-white font-extrabold text-xs sm:text-sm w-2/5 shadow-xs">
+                          <th className="p-4 bg-rose-500 text-white font-extrabold text-xs sm:text-sm w-[28%] min-w-[220px] shadow-xs border-r border-rose-600/40">
                             <div className="flex items-center gap-1.5">
-                              <LucideIcon name="Award" size={16} className="text-yellow-300" />
+                              <LucideIcon name="Award" size={16} className="text-yellow-300 flex-shrink-0" />
                               <span>【公式】飛田ガールズ（料亭直営）</span>
                             </div>
                           </th>
-                          <th className="p-4 bg-zinc-100 font-bold text-xs text-zinc-700 w-1/5">
+                          <th className="p-4 bg-zinc-100 font-bold text-xs sm:text-sm text-zinc-700 w-[18.66%] min-w-[180px] border-r border-zinc-200/60">
                             SNS・街頭スカウト業者
                           </th>
-                          <th className="p-4 bg-zinc-50 font-bold text-xs text-zinc-700 w-1/5">
+                          <th className="p-4 bg-zinc-50 font-bold text-xs sm:text-sm text-zinc-700 w-[18.66%] min-w-[180px] border-r border-zinc-200/60">
                             一般求人まとめサイト
                           </th>
-                          <th className="p-4 bg-zinc-100 font-bold text-xs text-zinc-700 w-1/5">
+                          <th className="p-4 bg-zinc-100 font-bold text-xs sm:text-sm text-zinc-700 w-[18.66%] min-w-[180px]">
                             他業種ナイトワーク（ソープ等）
                           </th>
                         </tr>
@@ -621,10 +621,10 @@ export default function ComparisonPage({
                             key={row.criteria} 
                             className={idx % 2 === 0 ? 'bg-white hover:bg-rose-50/30' : 'bg-zinc-50/40 hover:bg-rose-50/30'}
                           >
-                            <td className="p-4 font-bold text-zinc-800 bg-inherit sticky left-0 z-10 border-r border-rose-100/60">
+                            <td className="p-4 font-bold text-zinc-800 bg-inherit sticky left-0 z-10 border-r border-rose-100/60 min-w-[130px]">
                               {row.criteria}
                             </td>
-                            <td className="p-4 bg-rose-50/40 border-r border-rose-200/60 font-semibold text-[#3c2a2e]">
+                            <td className="p-4 bg-rose-50/40 border-r border-rose-200/60 font-semibold text-[#3c2a2e] min-w-[220px]">
                               <div className="mb-1.5">
                                 {renderGradeBadge(row.ourShop.grade)}
                               </div>
@@ -632,27 +632,27 @@ export default function ComparisonPage({
                                 {row.ourShop.text}
                               </p>
                             </td>
-                            <td className="p-4 text-zinc-600 border-r border-zinc-200/60">
+                            <td className="p-4 text-zinc-600 border-r border-zinc-200/60 min-w-[180px]">
                               <div className="mb-1.5">
                                 {renderGradeBadge(row.scoutAgency.grade)}
                               </div>
-                              <p className="leading-snug text-xs text-zinc-600">
+                              <p className="leading-snug text-xs sm:text-sm text-zinc-600">
                                 {row.scoutAgency.text}
                               </p>
                             </td>
-                            <td className="p-4 text-zinc-600 border-r border-zinc-200/60">
+                            <td className="p-4 text-zinc-600 border-r border-zinc-200/60 min-w-[180px]">
                               <div className="mb-1.5">
                                 {renderGradeBadge(row.generalPortal.grade)}
                               </div>
-                              <p className="leading-snug text-xs text-zinc-600">
+                              <p className="leading-snug text-xs sm:text-sm text-zinc-600">
                                 {row.generalPortal.text}
                               </p>
                             </td>
-                            <td className="p-4 text-zinc-600">
+                            <td className="p-4 text-zinc-600 min-w-[180px]">
                               <div className="mb-1.5">
                                 {renderGradeBadge(row.otherNightwork.grade)}
                               </div>
-                              <p className="leading-snug text-xs text-zinc-600">
+                              <p className="leading-snug text-xs sm:text-sm text-zinc-600">
                                 {row.otherNightwork.text}
                               </p>
                             </td>
@@ -727,25 +727,25 @@ export default function ComparisonPage({
 
               <div className="bg-white rounded-3xl border border-rose-100 shadow-md overflow-hidden">
                 <div className="overflow-x-auto scrollbar-thin">
-                  <table className="w-full text-left border-collapse min-w-[700px]">
+                  <table className="w-full text-left border-collapse min-w-[900px]">
                     <thead>
                       <tr className="border-b border-rose-100">
-                        <th className="p-4 bg-zinc-50 font-bold text-xs text-zinc-600 w-1/5 sticky left-0 z-10">
+                        <th className="p-4 bg-zinc-50 font-bold text-xs sm:text-sm text-zinc-600 w-[16%] min-w-[130px] sticky left-0 z-10 border-r border-rose-100/60">
                           比較項目
                         </th>
-                        <th className="p-4 bg-rose-500 text-white font-extrabold text-xs sm:text-sm w-2/5 shadow-xs">
+                        <th className="p-4 bg-rose-500 text-white font-extrabold text-xs sm:text-sm w-[28%] min-w-[220px] shadow-xs border-r border-rose-600/40">
                           <div className="flex items-center gap-1.5">
-                            <LucideIcon name="Award" size={16} className="text-yellow-300" />
+                            <LucideIcon name="Award" size={16} className="text-yellow-300 flex-shrink-0" />
                             <span>【公式】飛田ガールズ（料亭直営）</span>
                           </div>
                         </th>
-                        <th className="p-4 bg-zinc-100 font-bold text-xs text-zinc-700 w-1/5">
+                        <th className="p-4 bg-zinc-100 font-bold text-xs sm:text-sm text-zinc-700 w-[18.66%] min-w-[180px] border-r border-zinc-200/60">
                           SNS・街頭スカウト業者
                         </th>
-                        <th className="p-4 bg-zinc-50 font-bold text-xs text-zinc-700 w-1/5">
+                        <th className="p-4 bg-zinc-50 font-bold text-xs sm:text-sm text-zinc-700 w-[18.66%] min-w-[180px] border-r border-zinc-200/60">
                           一般求人まとめサイト
                         </th>
-                        <th className="p-4 bg-zinc-100 font-bold text-xs text-zinc-700 w-1/5">
+                        <th className="p-4 bg-zinc-100 font-bold text-xs sm:text-sm text-zinc-700 w-[18.66%] min-w-[180px]">
                           他業種ナイトワーク（ソープ等）
                         </th>
                       </tr>
@@ -756,10 +756,10 @@ export default function ComparisonPage({
                           key={row.criteria} 
                           className={idx % 2 === 0 ? 'bg-white hover:bg-rose-50/30' : 'bg-zinc-50/40 hover:bg-rose-50/30'}
                         >
-                          <td className="p-4 font-bold text-zinc-800 bg-inherit sticky left-0 z-10 border-r border-rose-100/60">
+                          <td className="p-4 font-bold text-zinc-800 bg-inherit sticky left-0 z-10 border-r border-rose-100/60 min-w-[130px]">
                             {row.criteria}
                           </td>
-                          <td className="p-4 bg-rose-50/40 border-r border-rose-200/60 font-semibold text-[#3c2a2e]">
+                          <td className="p-4 bg-rose-50/40 border-r border-rose-200/60 font-semibold text-[#3c2a2e] min-w-[220px]">
                             <div className="mb-1.5">
                               {renderGradeBadge(row.ourShop.grade)}
                             </div>
@@ -767,27 +767,27 @@ export default function ComparisonPage({
                               {row.ourShop.text}
                             </p>
                           </td>
-                          <td className="p-4 text-zinc-600 border-r border-zinc-200/60">
+                          <td className="p-4 text-zinc-600 border-r border-zinc-200/60 min-w-[180px]">
                             <div className="mb-1.5">
                               {renderGradeBadge(row.scoutAgency.grade)}
                             </div>
-                            <p className="leading-snug text-xs text-zinc-600">
+                            <p className="leading-snug text-xs sm:text-sm text-zinc-600">
                               {row.scoutAgency.text}
                             </p>
                           </td>
-                          <td className="p-4 text-zinc-600 border-r border-zinc-200/60">
+                          <td className="p-4 text-zinc-600 border-r border-zinc-200/60 min-w-[180px]">
                             <div className="mb-1.5">
                               {renderGradeBadge(row.generalPortal.grade)}
                             </div>
-                            <p className="leading-snug text-xs text-zinc-600">
+                            <p className="leading-snug text-xs sm:text-sm text-zinc-600">
                               {row.generalPortal.text}
                             </p>
                           </td>
-                          <td className="p-4 text-zinc-600">
+                          <td className="p-4 text-zinc-600 min-w-[180px]">
                             <div className="mb-1.5">
                               {renderGradeBadge(row.otherNightwork.grade)}
                             </div>
-                            <p className="leading-snug text-xs text-zinc-600">
+                            <p className="leading-snug text-xs sm:text-sm text-zinc-600">
                               {row.otherNightwork.text}
                             </p>
                           </td>
