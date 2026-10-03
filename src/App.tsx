@@ -77,7 +77,7 @@ export default function App() {
           scrollToElementById(hash);
         }, 120);
       } else if (!skipScrollTop) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo(0, 0);
       }
     }
   };
@@ -425,7 +425,7 @@ export default function App() {
         onScrollToSection={handleScrollToSection}
         onNavigateTopic={(tid) => {
           navigate(`/${tid}`);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          window.scrollTo(0, 0);
         }}
         isAdminMode={isAdminMode}
       />
@@ -634,11 +634,9 @@ export default function App() {
                 topicId={clusterTopic}
                 onNavigateHome={() => {
                   navigate('/');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 onNavigateTopic={(tid) => {
                   navigate(`/${tid}`);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 onNavigateBlog={(slug) => {
                   if (slug) {
@@ -646,11 +644,9 @@ export default function App() {
                   } else {
                     navigate('/blog');
                   }
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 onNavigateFaq={() => {
                   navigate('/faq');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 onCtaclick={handleScrollToForm}
                 onInjectedScroll={handleInjectedScroll}

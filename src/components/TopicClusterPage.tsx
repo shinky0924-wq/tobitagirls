@@ -34,6 +34,10 @@ export default function TopicClusterPage({
   const siteContent = getStoredSiteContent();
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [topicId]);
+
   // Find featured articles from blogData
   const featuredArticles = data.featuredArticleSlugs
     .map((slug) => BLOG_ARTICLES.find((a) => a.slug === slug))
@@ -54,14 +58,14 @@ export default function TopicClusterPage({
   };
 
   return (
-    <div className="bg-surface min-h-screen text-zinc-900 pb-20">
+    <div className="bg-surface min-h-screen text-zinc-900 pb-20 pt-4 sm:pt-6">
       
       {/* 1. Breadcrumbs Navigation (SEO & LLMO Core Requirement: 子ページ → 飛田新地求人トップへの内部リンク) */}
-      <nav 
-        aria-label="Breadcrumb" 
-        className="bg-white/80 border-b border-rose-100/70 sticky top-14 md:top-16 z-30 backdrop-blur-md"
-      >
-        <div className="max-w-[1140px] mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between text-xs">
+      <div className="max-w-[1140px] mx-auto px-4 sm:px-6 mb-4">
+        <nav 
+          aria-label="Breadcrumb" 
+          className="flex items-center text-xs"
+        >
           <ol className="flex items-center gap-1.5 flex-wrap text-zinc-600">
             <li className="flex items-center gap-1">
               <button
@@ -80,22 +84,11 @@ export default function TopicClusterPage({
               <span>{data.title}</span>
             </li>
           </ol>
-
-          {/* Quick Hub Return Link */}
-          <button
-            type="button"
-            onClick={onNavigateHome}
-            className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-rose-700 hover:text-rose-800 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200/80 cursor-pointer"
-            id="breadcrumb-return-hub-btn"
-          >
-            <LucideIcon name="Compass" size={12} />
-            <span>総合ハブへ戻る</span>
-          </button>
-        </div>
-      </nav>
+        </nav>
+      </div>
 
       {/* 2. Topic Cluster Quick Switcher Pill Bar */}
-      <div className="bg-rose-50/40 border-b border-rose-100/60 py-2 overflow-x-auto scrollbar-none">
+      <div className="bg-rose-50/70 border-y border-rose-100/80 py-2.5 mb-6 md:mb-8 overflow-x-auto scrollbar-none">
         <div className="max-w-[1140px] mx-auto px-4 sm:px-6 flex items-center gap-1.5 whitespace-nowrap">
           <span className="text-[11px] font-black text-rose-700 shrink-0 mr-1 flex items-center gap-1">
             <LucideIcon name="Compass" size={13} />
@@ -137,7 +130,7 @@ export default function TopicClusterPage({
         </div>
       </div>
 
-      <div className="max-w-[1100px] mx-auto px-4 sm:px-6 pt-8 md:pt-12">
+      <div className="max-w-[1100px] mx-auto px-4 sm:px-6">
         
         {/* 3. Hero Header with Canonical SEO & LLM Structure */}
         <div className="bg-white rounded-3xl p-6 sm:p-10 border border-rose-100 shadow-sm mb-8 relative overflow-hidden">

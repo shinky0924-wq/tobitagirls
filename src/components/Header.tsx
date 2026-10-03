@@ -110,17 +110,13 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
     setMobileMenuOpen(false);
     setGuideDropdownOpen(false);
     if (categoryId === 'faq') {
-      if (currentTab === 'recruit') {
-        onScrollToSection('faq');
-      } else {
-        onChangeTab('faq');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      onChangeTab('faq');
+      window.scrollTo(0, 0);
       return;
     }
     if (categoryId === 'blog') {
       onChangeTab('blog');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo(0, 0);
       return;
     }
     if (onNavigateTopic) {
