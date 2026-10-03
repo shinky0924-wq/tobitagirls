@@ -90,8 +90,7 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
               alt="飛田新地のお仕事・料亭直営求人で夢を叶える場所" 
               className="w-full h-auto rounded-[20px] sm:rounded-[28px] object-cover aspect-[16/9] object-center bg-gray-100"
               decoding="async"
-              // @ts-expect-error fetchPriority is standard in modern HTML and React 18+
-              fetchpriority="high"
+              fetchPriority="high"
               width={800}
               height={450}
               referrerPolicy="no-referrer"
