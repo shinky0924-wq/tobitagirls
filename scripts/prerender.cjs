@@ -170,7 +170,7 @@ function injectSeoMetadata(originalHtml, reqUrl, articles = []) {
     ogImageUrl = DEFAULT_IMAGE;
   } else if (cleanPath === '/compare' || cleanPath === '/compare/') {
     title = '飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】｜未経験・高収入・Wワーク【公式】';
-    description = '飛田新地料亭直営公式求人と街頭スカウト業者・一般求人サイトの4者徹底比較。安心の料亭直営で即日全額日払い・身バレ完全防止。';
+    description = '飛田新地料亭直営公式求人と街頭スカウト業者・他求人サイト（飛田ジョブなど）の4者徹底比較。安心の料亭直営で即日全額日払い・身バレ完全防止。';
     canonicalUrl = 'https://tobitashinchi-recruit.com/compare';
     ogImageUrl = DEFAULT_IMAGE;
   } else if (cleanPath === '/faq' || cleanPath.startsWith('/faq/')) {

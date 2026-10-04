@@ -161,7 +161,7 @@ export default function ComparisonPage({
   // Dynamically update document title, description and canonical URL based on selected category
   useEffect(() => {
     let title = '飛田新地求人サイト比較＆目的・属性別求人ガイド【2026年最新】｜飛田ガールズ';
-    let description = '飛田新地料亭直営公式求人と街頭スカウト業者・一般求人サイトの4者徹底比較。安心の料亭直営で即日全額日払い・身バレ完全防止。';
+    let description = '飛田新地料亭直営公式求人と街頭スカウト業者・他求人サイト（飛田ジョブなど）の4者徹底比較。安心の料亭直営で即日全額日払い・身バレ完全防止。';
     let canonicalUrl = 'https://tobitashinchi-recruit.com/compare';
 
     if (selectedTargetSlug && selectedTargetSlug !== 'all') {
@@ -275,7 +275,7 @@ export default function ComparisonPage({
         '@type': 'WebPage',
         '@id': 'https://tobitashinchi-recruit.com/compare',
         'name': '飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】',
-        'description': '飛田新地の料亭直営求人とスカウト業者・一般求人サイトの徹底比較。未経験、高収入、週1日、短期出稼ぎ、寮付き、Wワーク、20代、30代別の最適求人ガイド。',
+        'description': '飛田新地の料亭直営求人とスカウト業者・他求人サイト（飛田ジョブなど）の徹底比較。未経験、高収入、週1日、短期出稼ぎ、寮付き、Wワーク、20代、30代別の最適求人ガイド。',
         'url': 'https://tobitashinchi-recruit.com/compare',
         'mainEntity': {
           '@type': 'ItemList',
@@ -710,7 +710,7 @@ export default function ComparisonPage({
                             SNS・街頭スカウト業者
                           </th>
                           <th className="p-4 bg-zinc-50 font-bold text-xs sm:text-sm text-zinc-700 w-[18.66%] min-w-[180px] border-r border-zinc-200/60">
-                            一般求人まとめサイト
+                            他求人サイト（飛田ジョブなど）
                           </th>
                           <th className="p-4 bg-zinc-100 font-bold text-xs sm:text-sm text-zinc-700 w-[18.66%] min-w-[180px]">
                             他業種ナイトワーク（ソープ等）
@@ -879,7 +879,7 @@ export default function ComparisonPage({
                           SNS・街頭スカウト業者
                         </th>
                         <th className="p-4 bg-zinc-50 font-bold text-xs sm:text-sm text-zinc-700 w-[18.66%] min-w-[180px] border-r border-zinc-200/60">
-                          一般求人まとめサイト
+                          他求人サイト（飛田ジョブなど）
                         </th>
                         <th className="p-4 bg-zinc-100 font-bold text-xs sm:text-sm text-zinc-700 w-[18.66%] min-w-[180px]">
                           他業種ナイトワーク（ソープ等）

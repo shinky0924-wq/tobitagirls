@@ -61,7 +61,7 @@ export const SITE_COMPARISON_ROWS: ComparisonRow[] = [
       grade: 'poor'
     },
     generalPortal: {
-      text: '無差別な求人まとめサイト・広告代理店掲示板',
+      text: '外部の求人情報ポータル・代理店サイト（店舗と直接ではなくサイト運営者を挟む）',
       grade: 'average'
     },
     otherNightwork: {
@@ -81,7 +81,7 @@ export const SITE_COMPARISON_ROWS: ComparisonRow[] = [
       grade: 'poor'
     },
     generalPortal: {
-      text: '掲載料や紹介料を回収するため条件が低く設定されることあり',
+      text: '店舗側に掲載料や広告費がかかるため、直接採用より待遇やバック率が抑えられる傾向',
       grade: 'average'
     },
     otherNightwork: {
@@ -101,7 +101,7 @@ export const SITE_COMPARISON_ROWS: ComparisonRow[] = [
       grade: 'poor'
     },
     generalPortal: {
-      text: '店舗により異なる（日払い上限5千〜1万円等の制約あり）',
+      text: 'サイト上の高収入表記と実際の面接時条件に差があることや、日払い制限がある場合あり',
       grade: 'average'
     },
     otherNightwork: {
@@ -121,8 +121,8 @@ export const SITE_COMPARISON_ROWS: ComparisonRow[] = [
       grade: 'poor'
     },
     generalPortal: {
-      text: 'ネット上にパネル写真やプロフ掲載が基本必須',
-      grade: 'poor'
+      text: '集客用として体験談や雰囲気写真、宣伝コンテンツに利用される懸念あり',
+      grade: 'average'
     },
     otherNightwork: {
       text: 'サイト・雑誌・広告に顔写真や体型写真が半永久的に残る',
@@ -141,7 +141,7 @@ export const SITE_COMPARISON_ROWS: ComparisonRow[] = [
       grade: 'poor'
     },
     generalPortal: {
-      text: '店舗規約による（キャバ系はお酒・同伴ノルマあり）',
+      text: '掲載店舗によって方針がバラバラで、飛田新地以外の業種や系列店を勧められるリスク',
       grade: 'average'
     },
     otherNightwork: {
@@ -161,8 +161,8 @@ export const SITE_COMPARISON_ROWS: ComparisonRow[] = [
       grade: 'poor'
     },
     generalPortal: {
-      text: '一般風俗・キャバでは営業LINEや電話が必須業務',
-      grade: 'poor'
+      text: '掲載店舗ごとに対応が異なり、事前連絡や面接時にルールが明確でない場合がある',
+      grade: 'average'
     },
     otherNightwork: {
       text: '休日の営業連絡・同伴・アフター対応が義務化され拘束時間大',
@@ -181,7 +181,7 @@ export const SITE_COMPARISON_ROWS: ComparisonRow[] = [
       grade: 'poor'
     },
     generalPortal: {
-      text: 'サイト側は単なる広告媒体のため一切の免責立場',
+      text: 'サイト運営者は掲載・紹介のみで店舗現場には不在。入店後のトラブルは自己責任',
       grade: 'poor'
     },
     otherNightwork: {
@@ -201,7 +201,7 @@ export const SITE_COMPARISON_ROWS: ComparisonRow[] = [
       grade: 'poor'
     },
     generalPortal: {
-      text: '店舗の雇用契約書による（退職予告1ヶ月前など）',
+      text: '紹介先店舗の個別雇用ルールに委ねられるため、即日精算や退店時に揉める可能性あり',
       grade: 'average'
     },
     otherNightwork: {
