@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { SITE_COMPARISON_ROWS, TARGET_JOB_CATEGORIES } from './compareData';
 
 export function escapeHtml(str: string): string {
   return String(str || '')
@@ -29,6 +30,161 @@ const DEFAULT_TITLE = '飛田新地求人｜未経験歓迎・高収入・求人
 const DEFAULT_DESC = '【飛田新地求人公式】未経験歓迎・高収入（日給5万〜10万円即日全額日払い）。仕事内容、給料システム、20代・未経験の応募条件、面接・体験入店の流れ、個室マンション寮完備。女性サポートスタッフによる無料相談受付中。';
 const DEFAULT_IMAGE = 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg';
 
+function buildCompareNoscript(slug?: string): string {
+  if (slug) {
+    const cat = TARGET_JOB_CATEGORIES.find(c => c.slug === slug);
+    if (cat) {
+      const meritsHtml = cat.merits.map(m => `<li>${escapeHtml(m)}</li>`).join('');
+      const faqsHtml = cat.faqs.map(f => `<dt>Q. ${escapeHtml(f.q)}</dt><dd>A. ${escapeHtml(f.a)}</dd>`).join('');
+
+      return `
+        <header>
+          <p>飛田新地求人比較＆目的別求人ガイド【公式】飛田ガールズ</p>
+          <p>24時間受付中・相談無料・完全秘密厳守</p>
+        </header>
+
+        <main>
+          <article>
+            <h1>${escapeHtml(cat.title)}｜飛田新地求人 飛田ガールズ【公式】</h1>
+            <p class="lead">${escapeHtml(cat.summary)} 安心の料理組合公認老舗料亭直営公式求人「飛田ガールズ」で、未経験からでも即日全額日払い（売上50%手渡し）・身バレ完全防止・お酒不要・女性専任サポート完備で働けます。</p>
+
+            <section>
+              <h2>${escapeHtml(cat.title)} 募集条件・収入モデル</h2>
+              <table border="1">
+                <tbody>
+                  <tr><th>対象者</th><td>${escapeHtml(cat.targetUser)}</td></tr>
+                  <tr><th>日給目安</th><td><strong>${escapeHtml(cat.dailyIncomeModel)}</strong></td></tr>
+                  <tr><th>月収目安</th><td>${escapeHtml(cat.monthlyIncomeModel)}</td></tr>
+                  <tr><th>シフト例</th><td>${escapeHtml(cat.shiftExample)}</td></tr>
+                  <tr><th>おすすめ通り</th><td>${escapeHtml(cat.recommendedStreet)}</td></tr>
+                  <tr><th>給与支払い</th><td>完全即日全額日払い（手渡し支給・売上50%バック・天引きなし）</td></tr>
+                  <tr><th>応募資格</th><td>20歳以上の女性（未経験歓迎・経験不問 ※料理組合規約により20歳未満不可）</td></tr>
+                  <tr><th>待遇・寮</th><td>家具家電付き個室マンション寮完備（即入居可・日額1,000円〜）・衣装無料貸出・交通費支給・完全身バレ対策</td></tr>
+                </tbody>
+              </table>
+            </section>
+
+            <section>
+              <h2>選ばれる理由と安心のメリット</h2>
+              <ul>${meritsHtml}</ul>
+            </section>
+
+            <section>
+              <h2>他求人サイト（飛田ジョブなど）やスカウトとの違い</h2>
+              <p>料亭直営公式求人「飛田ガールズ」は、外部の広告代理店や他求人サイト（飛田ジョブなど）のような中間マージンや掲載費用が一切発生しません。また、街頭・SNSスカウト業者のような日給からの10〜30%ピンハネ搾取も完全ゼロです。売上の50%がその日の退勤時に全額手渡し支給されます。</p>
+            </section>
+
+            <section>
+              <h2>よくある質問（FAQ）</h2>
+              <dl>${faqsHtml}</dl>
+            </section>
+
+            <section>
+              <h2>料亭直営公式採用窓口（飛田ガールズ）</h2>
+              <p>24時間365日、専任の女性サポートスタッフがLINEおよびお電話で質問やご相談を受付中です。無理な勧誘や引き止めは一切ありませんので、お気軽にお問い合わせください。</p>
+            </section>
+          </article>
+        </main>
+      `;
+    }
+  }
+
+  // Default: Main /compare
+  const rowsHtml = SITE_COMPARISON_ROWS.map(r => `
+    <tr>
+      <th>${escapeHtml(r.criteria)}</th>
+      <td><strong>${escapeHtml(r.ourShop.text)}</strong></td>
+      <td>${escapeHtml(r.scoutAgency.text)}</td>
+      <td>${escapeHtml(r.generalPortal.text)}</td>
+      <td>${escapeHtml(r.otherNightwork.text)}</td>
+    </tr>
+  `).join('');
+
+  return `
+    <header>
+      <p>飛田新地求人比較＆他求人サイト（飛田ジョブなど）との違い徹底検証【公式】飛田ガールズ</p>
+      <p>24時間受付中・相談無料・完全秘密厳守</p>
+    </header>
+
+    <main>
+      <article>
+        <h1>飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】｜未経験・高収入・Wワーク【公式】</h1>
+        <p class="lead">飛田新地の料亭直営公式求人「飛田ガールズ」と、街頭・SNSスカウト業者、他求人サイト（飛田ジョブなど）、一般ナイトワーク（ソープ・ヘルス等）の4者を徹底比較。安心の料理組合公認料亭直営で即日全額日払い（売上50%手渡し）・身バレ完全防止・お酒不要・仲介手数料0円の理由を詳しく解説します。</p>
+
+        <section>
+          <h2>求人サイト・応募方法の4者徹底比較表</h2>
+          <p>飛田新地で働く際の4つの応募ルート（料亭直営公式採用・スカウト業者・他求人サイト（飛田ジョブなど）・他業種ナイトワーク）を主要8項目で徹底比較した一覧表です。</p>
+          <table border="1">
+            <thead>
+              <tr>
+                <th>比較項目</th>
+                <th>【公式】飛田ガールズ<br>（料亭直営採用）</th>
+                <th>街頭・SNSスカウト業者<br>（非公認仲介）</th>
+                <th>他求人サイト<br>（飛田ジョブなど）</th>
+                <th>他業種ナイトワーク<br>（ソープ・ヘルス等）</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rowsHtml}
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>飛田新地の料亭直営が選ばれる3つの理由</h2>
+          <h3>1. 他求人サイト（飛田ジョブなど）との違い：中間コストゼロで待遇を最大還元</h3>
+          <p>外部の求人ポータルサイトや広告代理店を通さず、老舗料亭が自社で直接採用を行っているため、掲載費用や紹介料などのコストが一切かかりません。その分をバック率（完全50%即日手渡し日払い）や入店祝い金・交通費全額支給・家具家電付き個室マンション寮の無償提供など、女性への待遇として最大還元しています。</p>
+
+          <h3>2. 街頭・SNSスカウト業者との違い：一生搾取されるピンハネのリスクを完全排除</h3>
+          <p>SNSや街頭で声をかけてくるスカウト業者経由で入店すると、給料から10%〜30%が「紹介料」として毎月永久に天引きされ続けます。料亭直営公式求人「飛田ガールズ」は仲介者ゼロの直営契約。頑張って稼いだ報酬は1円も引かれることなく、退勤時に全額手渡しされます。</p>
+
+          <h3>3. 一般ナイトワーク（ソープ・ヘルス・キャバクラ）との違い：顔出し不要＆お酒不要で負担最小限</h3>
+          <p>風俗店やキャバクラのようにネットへの顔写真・パネル掲載は一切ありません。お酒を飲む必要もなく、営業LINEや連絡先交換も禁止されているため、プライベートと完全に切り離して安全・高収入を実現できます。</p>
+        </section>
+
+        <section>
+          <h2>目的別・あなたの希望に合った求人スタイル（8大ターゲット別）</h2>
+          <dl>
+            <dt>1. 未経験向け求人（在籍女性の約9割が完全未経験）</dt>
+            <dd>夜職経験ゼロ・接客初心者でも即日安心。お酒・営業LINE・指名取り一切不要で、女性スタッフによる事前講習完備。日給相場：30,000円〜65,000円（初日から全額日払い手渡し）。おすすめ：青春通り。</dd>
+            <dt>2. 高収入向け求人（日給10万円超え・月収150万円以上多数）</dt>
+            <dd>圧倒的な集客力と50%高バック率で最速で資金作り。待機カット・雑費天引きゼロ。日給相場：60,000円〜120,000円以上。おすすめ：メイン通り・大門通り。</dd>
+            <dt>3. 週1日・マイペース求人（完全自由シフト・スキマ時間3時間〜）</dt>
+            <dd>出勤ノルマ・ペナルティ一切なし。学業や本業・育児と無理なく両立。月収相場：150,000円〜400,000円。おすすめ：青春通り・妖怪通り。</dd>
+            <dt>4. 短期・出稼ぎ求人（交通費全額支給・即日入居）</dt>
+            <dd>往復交通費（新幹線・飛行機）全額支給。1週間〜1ヶ月の短期集中で100万円以上の貯金達成者多数。家具家電付き個室マンション寮完備。</dd>
+            <dt>5. 個室寮付き求人（天王寺・難波周辺・日額1,000円〜）</dt>
+            <dd>敷金礼金ゼロ・即日入居可・オートロック・Wi-Fi・家具家電完備。店舗とは別区域のマンションでプライバシー完全保護。</dd>
+            <dt>6. Wワーク・副業向け求人（会社バレ・家族バレ完全防止）</dt>
+            <dd>ネット写真掲載ゼロ、源氏名勤務、現金手渡し日払い、住民税普通徴収手続きの徹底アドバイスで昼職に絶対にバレない。</dd>
+            <dt>7. 20代向け求人（学生・フリーター・将来の夢・早期返済）</dt>
+            <dd>青春通り・メイン通りで大人気。営業連絡や同伴・アフターが一切なく、短期間で学費・美容代・夢の資金を効率よく貯金。</dd>
+            <dt>8. 30代・オトナ女子向け求人（落ち着いた大人の接客）</dt>
+            <dd>妖怪通り・若草通りなどで需要絶大。落ち着いた大人の気配りと会話が高く評価され、常連客が付きやすく安定して高日給を稼げます。</dd>
+          </dl>
+        </section>
+
+        <section>
+          <h2>比較ページ よくある質問（FAQ）</h2>
+          <dl>
+            <dt>Q. 他の求人サイト（飛田ジョブ等）やスカウト経由で応募するのと何が違いますか？</dt>
+            <dd>A. 最大の違いは「仲介料の有無」と「現場サポートの有無」です。スカウトは給料から手数料を中抜きし、他サイトは現場にスタッフがいません。当サイトは料亭直営のため仲介料0円で売上50%を即日全額支給し、女性スタッフが現場に常駐して親身にサポートします。</dd>
+            <dt>Q. 体験入店だけでも比較・確認できますか？</dt>
+            <dd>A. はい、大歓迎です。即日体験入店に対応しており、当日稼いだ給与はその場で全額現金手渡しいたします。合わないと感じた場合も無理な引き止めは一切ありません。</dd>
+            <dt>Q. 面接や相談の前に用意するものはありますか？</dt>
+            <dd>A. 履歴書は不要です。年齢確認（20歳以上限定）のため「本籍地記載の住民票原本」または「日本国パスポート」をお持ちください。私服で手ぶらでお越しいただけます。</dd>
+          </dl>
+        </section>
+
+        <section>
+          <h2>料亭直営公式採用窓口（飛田ガールズ）</h2>
+          <p>24時間365日、専任の女性サポートスタッフがLINEおよびお電話で質問やご相談を受付中です。無理な勧誘や引き止めは一切ありませんので、お気軽にお問い合わせください。</p>
+        </section>
+      </article>
+    </main>
+  `;
+}
+
 export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html: string; status: number } {
   let title = DEFAULT_TITLE;
   let description = DEFAULT_DESC;
@@ -40,6 +196,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
   let status = 200;
   let prerenderContent = '';
   let customJsonLd: string | null = null;
+  let customNoscript: string | null = null;
 
   const cleanPath = reqUrl.split('?')[0].split('#')[0];
 
@@ -199,8 +356,68 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
     description = '飛田新地料亭直営公式求人と街頭スカウト業者・他求人サイト（飛田ジョブなど）の4者徹底比較。安心の料亭直営で即日全額日払い・身バレ完全防止。';
     canonicalUrl = 'https://tobitashinchi-recruit.com/compare';
     ogImageUrl = DEFAULT_IMAGE;
+    customNoscript = buildCompareNoscript();
+    customJsonLd = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebPage',
+          '@id': 'https://tobitashinchi-recruit.com/compare#webpage',
+          'url': 'https://tobitashinchi-recruit.com/compare',
+          'name': '飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】｜未経験・高収入・Wワーク【公式】',
+          'description': '飛田新地料亭直営公式求人と街頭スカウト業者・他求人サイト（飛田ジョブなど）の4者徹底比較。安心の料亭直営で即日全額日払い・身バレ完全防止。',
+          'isPartOf': {
+            '@type': 'WebSite',
+            '@id': 'https://tobitashinchi-recruit.com/#website',
+            'name': '飛田ガールズ',
+            'url': 'https://tobitashinchi-recruit.com/'
+          },
+          'mainEntity': {
+            '@type': 'ItemList',
+            'name': '飛田新地求人 目的・属性別求人ガイド',
+            'itemListElement': TARGET_JOB_CATEGORIES.map((cat, idx) => ({
+              '@type': 'ListItem',
+              'position': idx + 1,
+              'name': cat.title,
+              'url': `https://tobitashinchi-recruit.com/compare/${cat.slug}`
+            }))
+          }
+        },
+        {
+          '@type': 'FAQPage',
+          '@id': 'https://tobitashinchi-recruit.com/compare#faq',
+          'mainEntity': [
+            {
+              '@type': 'Question',
+              'name': '他の求人サイト（飛田ジョブ等）やスカウト経由で応募するのと何が違いますか？',
+              'acceptedAnswer': {
+                '@type': 'Answer',
+                'text': '最大の違いは「仲介料の有無」と「現場サポートの有無」です。スカウトは給料から手数料を中抜きし、他サイトは現場にスタッフがいません。当サイトは料亭直営のため仲介料0円で売上50%を即日全額支給し、女性スタッフが現場に常駐して親身にサポートします。'
+              }
+            },
+            {
+              '@type': 'Question',
+              'name': '体験入店だけでも比較・確認できますか？',
+              'acceptedAnswer': {
+                '@type': 'Answer',
+                'text': 'はい、大歓迎です。即日体験入店に対応しており、当日稼いだ給与はその場で全額現金手渡しいたします。合わないと感じた場合も無理な引き止めは一切ありません。'
+              }
+            },
+            {
+              '@type': 'Question',
+              'name': '面接や相談の前に用意するものはありますか？',
+              'acceptedAnswer': {
+                '@type': 'Answer',
+                'text': '履歴書は不要です。年齢確認（20歳以上限定）のため「本籍地記載の住民票原本」または「日本国パスポート」をお持ちください。私服で手ぶらでお越しいただけます。'
+              }
+            }
+          ]
+        }
+      ]
+    }, null, 2);
   } else if (cleanPath.startsWith('/compare/')) {
     const slug = cleanPath.replace('/compare/', '').replace(/\/$/, '');
+    customNoscript = buildCompareNoscript(slug);
     const COMPARE_META: Record<string, { title: string; desc: string }> = {
       'inexperienced': {
         title: '【未経験向け求人】90%が夜職初心者！安心のサポート体制｜飛田新地求人 飛田ガールズ',
@@ -387,6 +604,11 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
   // Replace Structured Data (JSON-LD) if custom defined for specific route
   if (customJsonLd) {
     html = html.replace(/<script\s+type=["']application\/ld\+json["']>[\s\S]*?<\/script>/i, `<script type="application/ld+json">\n${customJsonLd}\n</script>`);
+  }
+
+  // Replace <noscript> with route-specific fallback for LLM crawlers
+  if (customNoscript) {
+    html = html.replace(/<noscript>[\s\S]*?<\/noscript>/i, `<noscript>\n${customNoscript}\n</noscript>`);
   }
 
   // Inject Pre-rendered content for Web Crawlers
