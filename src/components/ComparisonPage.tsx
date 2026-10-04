@@ -12,6 +12,7 @@ import {
   ComparisonRow 
 } from '../compareData';
 import { CONSULTANT_AVATAR_URL } from '../data';
+import { FAQ_100_LIST, FAQ_8_CATEGORIES, FAQ100Item } from '../faq100Data';
 
 const CATEGORY_SALARY_SCHEMA: Record<string, { min: number; max: number; employmentType: string }> = {
   'inexperienced': { min: 30000, max: 65000, employmentType: 'PART_TIME' },
@@ -99,6 +100,7 @@ const SPEC_ROWS = [
 interface ComparisonPageProps {
   onNavigateHome: () => void;
   onNavigateBlog: () => void;
+  onNavigateFaq?: (category?: string) => void;
   onCtaclick: () => void;
   onInjectedScroll?: (message: string) => void;
   initialCategorySlug?: string | null;
@@ -108,6 +110,7 @@ interface ComparisonPageProps {
 export default function ComparisonPage({
   onNavigateHome,
   onNavigateBlog,
+  onNavigateFaq,
   onCtaclick,
   onInjectedScroll,
   initialCategorySlug,
@@ -118,6 +121,33 @@ export default function ComparisonPage({
   );
   const [expandedFaqId, setExpandedFaqId] = useState<string | null>(null);
   const [showMatrixOnCategoryPage, setShowMatrixOnCategoryPage] = useState<boolean>(false);
+  const [faqCategory, setFaqCategory] = useState<string>('featured');
+  const [faqSearchQuery, setFaqSearchQuery] = useState<string>('');
+  const [visibleFaqCount, setVisibleFaqCount] = useState<number>(8);
+
+  const filteredFaqs = useMemo(() => {
+    if (faqCategory === 'featured' && !faqSearchQuery.trim()) {
+      return null;
+    }
+
+    const query = faqSearchQuery.trim().toLowerCase();
+    let list: FAQ100Item[] = FAQ_100_LIST;
+
+    if (faqCategory !== 'all' && faqCategory !== 'featured') {
+      list = list.filter(item => item.eightCategory === faqCategory);
+    }
+
+    if (query) {
+      list = list.filter(item => 
+        item.question.toLowerCase().includes(query) ||
+        item.answer.toLowerCase().includes(query) ||
+        (item.keywords && item.keywords.some(k => k.toLowerCase().includes(query))) ||
+        (item.categoryLabel && item.categoryLabel.toLowerCase().includes(query))
+      );
+    }
+
+    return list;
+  }, [faqCategory, faqSearchQuery]);
 
   // Sync internal state when initialCategorySlug changes from outside (URL change, back/forward)
   useEffect(() => {
@@ -1331,46 +1361,271 @@ export default function ComparisonPage({
                   FREQUENTLY ASKED QUESTIONS
                 </span>
               </div>
-              <h2 className="font-display font-black text-xl sm:text-2xl md:text-3xl text-on-surface mb-3">
-                6. よくある質問 FAQ｜応募前の不安を一つずつ解消
-              </h2>
-              <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed max-w-3xl mb-8">
-                求人に応募される前の女性から特に多くいただくご質問に、包み隠さず正直にお答えします。
-              </p>
 
-              <div className="space-y-3">
-                {COMPARE_PAGE_FAQS.map((faq, idx) => {
-                  const faqKey = `compare-faq-${idx}`;
-                  const isOpen = expandedFaqId === faqKey;
-                  return (
-                    <div
-                      key={faq.q}
-                      className="bg-white rounded-2xl border border-rose-100/90 shadow-2xs overflow-hidden transition-all"
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-4">
+                <div>
+                  <h2 className="font-display font-black text-xl sm:text-2xl md:text-3xl text-on-surface">
+                    6. よくある質問 FAQ｜不安解消＆FAQ100選
+                  </h2>
+                  <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed mt-1">
+                    応募前の不安を解消する厳選Q&Aに加え、全119問のFAQデータベースから気になる疑問を直接検索・確認できます。
+                  </p>
+                </div>
+                {onNavigateFaq && (
+                  <button
+                    type="button"
+                    onClick={() => onNavigateFaq()}
+                    className="self-start sm:self-auto bg-rose-50 hover:bg-rose-100 text-secondary border border-rose-200 text-xs font-bold px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1 cursor-pointer shrink-0"
+                  >
+                    <span>FAQ全119問一覧へ</span>
+                    <LucideIcon name="ChevronRight" size={13} />
+                  </button>
+                )}
+              </div>
+
+              {/* Category Filter Pills Bar */}
+              <div className="flex gap-1.5 sm:gap-2 overflow-x-auto pb-2 mb-4 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
+                <button
+                  type="button"
+                  onClick={() => { setFaqCategory('featured'); setVisibleFaqCount(8); }}
+                  className={`flex-shrink-0 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer border flex items-center gap-1 ${
+                    faqCategory === 'featured'
+                      ? 'bg-secondary text-white border-secondary shadow-xs'
+                      : 'bg-white hover:bg-rose-50 text-zinc-700 border-zinc-200'
+                  }`}
+                >
+                  <span>🔥 特に多い不安 (厳選6問)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setFaqCategory('all'); setVisibleFaqCount(8); }}
+                  className={`flex-shrink-0 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer border flex items-center gap-1 ${
+                    faqCategory === 'all'
+                      ? 'bg-secondary text-white border-secondary shadow-xs'
+                      : 'bg-white hover:bg-rose-50 text-zinc-700 border-zinc-200'
+                  }`}
+                >
+                  <span>すべて (119問)</span>
+                </button>
+                {FAQ_8_CATEGORIES.filter(c => c.id !== 'all').map(cat => (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => { setFaqCategory(cat.id); setVisibleFaqCount(8); }}
+                    className={`flex-shrink-0 text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer border flex items-center gap-1 ${
+                      faqCategory === cat.id
+                        ? 'bg-secondary text-white border-secondary shadow-xs'
+                        : 'bg-white hover:bg-rose-50 text-zinc-700 border-zinc-200'
+                    }`}
+                  >
+                    <span>{cat.label}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Keyword Search & Quick Tags */}
+              <div className="bg-white rounded-2xl p-4 border border-rose-100/90 shadow-2xs mb-5">
+                <div className="relative mb-3">
+                  <LucideIcon name="Search" size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400" />
+                  <input
+                    type="text"
+                    value={faqSearchQuery}
+                    onChange={(e) => {
+                      setFaqSearchQuery(e.target.value);
+                      setVisibleFaqCount(8);
+                      if (faqCategory === 'featured' && e.target.value.trim()) {
+                        setFaqCategory('all');
+                      }
+                    }}
+                    placeholder="気になるキーワードでFAQ100選を検索（例: お酒、身バレ、日払い、住民票、30代、ノルマ）"
+                    className="w-full bg-zinc-50 border border-zinc-200 focus:border-secondary focus:bg-white rounded-xl pl-10 pr-9 py-2.5 text-xs sm:text-sm text-zinc-800 placeholder-zinc-400 outline-hidden transition-all"
+                  />
+                  {faqSearchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setFaqSearchQuery('')}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 text-xs font-bold cursor-pointer"
                     >
-                      <button
-                        type="button"
-                        onClick={() => setExpandedFaqId(isOpen ? null : faqKey)}
-                        className="w-full text-left p-4 sm:p-5 font-bold text-xs sm:text-sm text-zinc-900 flex items-center justify-between gap-3 hover:text-secondary cursor-pointer"
+                      ✕
+                    </button>
+                  )}
+                </div>
+
+                <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
+                  <span className="text-zinc-400 font-bold mr-1">よく検索される言葉:</span>
+                  {[
+                    { label: '#未経験', tag: '未経験' },
+                    { label: '#即日日払い', tag: '日払い' },
+                    { label: '#写真非掲載', tag: '写真' },
+                    { label: '#週1日', tag: '週1' },
+                    { label: '#お酒なし', tag: 'お酒' },
+                    { label: '#個室寮', tag: '寮' },
+                    { label: '#会社バレ防止', tag: '普通徴収' },
+                    { label: '#違約金0円', tag: '違約金' }
+                  ].map(item => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      onClick={() => {
+                        setFaqSearchQuery(item.tag);
+                        setFaqCategory('all');
+                        setVisibleFaqCount(8);
+                      }}
+                      className="bg-rose-50 hover:bg-rose-100 text-secondary px-2.5 py-0.5 rounded-lg border border-rose-200/60 font-semibold cursor-pointer transition-colors"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* FAQ Accordion List */}
+              <div className="space-y-3">
+                {filteredFaqs === null ? (
+                  // Featured 6 Questions
+                  COMPARE_PAGE_FAQS.map((faq, idx) => {
+                    const faqKey = `compare-faq-${idx}`;
+                    const isOpen = expandedFaqId === faqKey;
+                    return (
+                      <div
+                        key={faq.q}
+                        className="bg-white rounded-2xl border border-rose-100/90 shadow-2xs overflow-hidden transition-all"
                       >
-                        <span className="flex items-start gap-2.5">
-                          <span className="text-secondary font-black text-sm sm:text-base mt-0.5">Q.</span>
-                          <span>{faq.q}</span>
-                        </span>
-                        <LucideIcon
-                          name="ChevronDown"
-                          size={18}
-                          className={`transition-transform flex-shrink-0 ${isOpen ? 'rotate-180 text-secondary' : 'text-zinc-400'}`}
-                        />
-                      </button>
-                      {isOpen && (
-                        <div className="px-4 sm:px-5 pb-5 pt-2 text-xs sm:text-sm text-zinc-600 border-t border-rose-50 flex gap-2.5 leading-relaxed font-medium bg-rose-50/20">
-                          <span className="text-secondary font-black text-sm sm:text-base">A.</span>
-                          <p>{faq.a}</p>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
+                        <button
+                          type="button"
+                          onClick={() => setExpandedFaqId(isOpen ? null : faqKey)}
+                          className="w-full text-left p-4 sm:p-5 font-bold text-xs sm:text-sm text-zinc-900 flex items-center justify-between gap-3 hover:text-secondary cursor-pointer"
+                        >
+                          <span className="flex items-start gap-2.5">
+                            <span className="text-secondary font-black text-sm sm:text-base mt-0.5">Q.</span>
+                            <span>{faq.q}</span>
+                          </span>
+                          <LucideIcon
+                            name="ChevronDown"
+                            size={18}
+                            className={`transition-transform flex-shrink-0 ${isOpen ? 'rotate-180 text-secondary' : 'text-zinc-400'}`}
+                          />
+                        </button>
+                        {isOpen && (
+                          <div className="px-4 sm:px-5 pb-5 pt-2 text-xs sm:text-sm text-zinc-600 border-t border-rose-50 flex gap-2.5 leading-relaxed font-medium bg-rose-50/20">
+                            <span className="text-secondary font-black text-sm sm:text-base">A.</span>
+                            <p>{faq.a}</p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })
+                ) : filteredFaqs.length > 0 ? (
+                  // Filtered Questions from FAQ 100
+                  filteredFaqs.slice(0, visibleFaqCount).map((item) => {
+                    const faqKey = `faq100-${item.id}`;
+                    const isOpen = expandedFaqId === faqKey;
+                    return (
+                      <div
+                        key={item.id}
+                        className="bg-white rounded-2xl border border-rose-100/90 shadow-2xs overflow-hidden transition-all"
+                      >
+                        <button
+                          type="button"
+                          onClick={() => setExpandedFaqId(isOpen ? null : faqKey)}
+                          className="w-full text-left p-4 sm:p-5 font-bold text-xs sm:text-sm text-zinc-900 flex items-center justify-between gap-3 hover:text-secondary cursor-pointer"
+                        >
+                          <div className="flex items-start gap-2.5">
+                            <span className="text-secondary font-black text-sm sm:text-base mt-0.5">Q.</span>
+                            <div>
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="text-[10px] font-black text-secondary bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200/60">
+                                  {item.eightCategoryLabel || item.categoryLabel}
+                                </span>
+                              </div>
+                              <span className="text-zinc-800">{item.question}</span>
+                            </div>
+                          </div>
+                          <LucideIcon
+                            name="ChevronDown"
+                            size={18}
+                            className={`transition-transform flex-shrink-0 ${isOpen ? 'rotate-180 text-secondary' : 'text-zinc-400'}`}
+                          />
+                        </button>
+                        {isOpen && (
+                          <div className="px-4 sm:px-5 pb-5 pt-2 text-xs sm:text-sm text-zinc-600 border-t border-rose-50 flex gap-2.5 leading-relaxed font-medium bg-rose-50/20 whitespace-pre-line">
+                            <span className="text-secondary font-black text-sm sm:text-base">A.</span>
+                            <p>{item.answer}</p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="text-center py-10 bg-white rounded-2xl border border-rose-100 p-6">
+                    <p className="text-xs sm:text-sm text-zinc-600 mb-3">
+                      「{faqSearchQuery}」に一致する質問が見つかりませんでした。
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => { setFaqSearchQuery(''); setFaqCategory('featured'); }}
+                      className="text-xs font-bold text-secondary bg-rose-50 px-4 py-2 rounded-xl border border-rose-200 cursor-pointer"
+                    >
+                      条件をリセットして厳選FAQを表示
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Show more button if filteredFaqs > visibleFaqCount */}
+              {filteredFaqs && filteredFaqs.length > visibleFaqCount && (
+                <div className="mt-5 text-center flex items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setVisibleFaqCount(prev => prev + 10)}
+                    className="bg-white hover:bg-rose-50 text-secondary border border-rose-200 font-bold text-xs sm:text-sm px-6 py-2.5 rounded-xl shadow-2xs transition-all flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <LucideIcon name="ChevronDown" size={16} />
+                    <span>さらに質問を表示する（残り{filteredFaqs.length - visibleFaqCount}問）</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setVisibleFaqCount(filteredFaqs.length)}
+                    className="bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-bold text-xs px-4 py-2.5 rounded-xl transition-all cursor-pointer"
+                  >
+                    すべて展開（全{filteredFaqs.length}問）
+                  </button>
+                </div>
+              )}
+
+              {/* Full FAQ Page Link Card */}
+              <div className="mt-6 bg-gradient-to-r from-rose-50/70 via-white to-pink-50/70 rounded-2xl p-4 sm:p-5 border border-rose-200/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-white text-secondary flex items-center justify-center border border-rose-200 shrink-0 shadow-2xs">
+                    <LucideIcon name="BookOpen" size={20} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-xs sm:text-sm text-zinc-800">
+                      飛田新地求人 FAQ100選（全119問の完全データベース）
+                    </h4>
+                    <p className="text-[11px] sm:text-xs text-zinc-500">
+                      応募・給料・身バレ・寮・Wワーク・退店など8大テーマ別の専用ページもご用意しています。
+                    </p>
+                  </div>
+                </div>
+                {onNavigateFaq ? (
+                  <button
+                    type="button"
+                    onClick={() => onNavigateFaq()}
+                    className="bg-secondary hover:bg-rose-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-2xs transition-all flex items-center gap-1 cursor-pointer shrink-0"
+                  >
+                    <span>FAQ専用ページを見る</span>
+                    <LucideIcon name="ArrowRight" size={14} />
+                  </button>
+                ) : (
+                  <a
+                    href="/faq"
+                    className="bg-secondary hover:bg-rose-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-2xs transition-all flex items-center gap-1 cursor-pointer shrink-0"
+                  >
+                    <span>FAQ専用ページを見る</span>
+                    <LucideIcon name="ArrowRight" size={14} />
+                  </a>
+                )}
               </div>
             </section>
 

@@ -101,11 +101,6 @@ export default function TopicClusterPage({
     .map((slug) => BLOG_ARTICLES.find((a) => a.slug === slug))
     .filter(Boolean);
 
-  // Find related topic nodes
-  const relatedTopics = data.relatedTopicIds
-    .map((id) => ALL_CLUSTER_NODES.find((node) => node.id === id))
-    .filter(Boolean);
-
   const handleLineConsultation = () => {
     const defaultMsg = `【${data.title}について相談】飛田新地求人の${data.title}（${data.badge}）について詳しく聞きたいです。`;
     if (onInjectedScroll) {
@@ -442,86 +437,6 @@ export default function TopicClusterPage({
                 </div>
               );
             })}
-          </div>
-        </div>
-
-        {/* =========================================================================
-            9. TOPIC CLUSTER RECIPROCAL INTERNAL LINKING (LLMO & SEO CORE ARCHITECTURE)
-            全ての子ページ → 「飛田新地求人」へ内部リンク
-            全ての子ページ → 関連専門ページ（トピッククラスター）へ相互リンク
-           ========================================================================= */}
-        <div className="bg-gradient-to-br from-rose-600 via-pink-600 to-rose-700 rounded-3xl p-6 sm:p-10 text-white shadow-xl mb-8">
-          
-          {/* Main Return Link to Hub */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-white/20 mb-6">
-            <div>
-              <span className="text-[10px] font-black tracking-widest bg-white/20 px-3 py-1 rounded-full uppercase mb-2 inline-block">
-                RECRUIT TOP
-              </span>
-              <h2 className="font-display font-black text-xl sm:text-2xl text-white">
-                飛田新地求人 公式トップページ
-              </h2>
-              <p className="text-xs sm:text-sm text-rose-100 mt-1 max-w-xl">
-                料理組合公認 老舗料亭直営公式採用。売上50%完全バック・即日全額日払い手渡し・ネット写真掲載ゼロ。
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={onNavigateHome}
-              className="w-full sm:w-auto bg-white hover:bg-rose-50 text-rose-700 font-black text-sm px-6 py-3.5 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer hover:scale-105 shrink-0"
-              id="cluster-return-hub-cta"
-            >
-              <LucideIcon name="Home" size={16} />
-              <span>「飛田新地求人」トップへ戻る</span>
-              <LucideIcon name="ChevronRight" size={16} />
-            </button>
-          </div>
-
-          {/* Related Spokes in the Topic Cluster */}
-          <div>
-            <h3 className="text-xs sm:text-sm font-bold text-rose-100 mb-3 flex items-center gap-1.5">
-              <LucideIcon name="BookOpen" size={14} />
-              <span>「{data.title}」とあわせて読みたいお役立ちテーマ</span>
-            </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-              {relatedTopics.map((rel: any) => (
-                <button
-                  key={rel.id}
-                  type="button"
-                  onClick={() => {
-                    if (rel.id === 'faq') {
-                      onNavigateFaq();
-                    } else if (rel.id === 'blog') {
-                      onNavigateBlog();
-                    } else {
-                      onNavigateTopic(rel.id);
-                    }
-                  }}
-                  className="bg-white/10 hover:bg-white hover:text-zinc-900 text-left p-3.5 rounded-2xl border border-white/20 transition-all cursor-pointer group flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-lg">{rel.emoji}</span>
-                      <span className="text-[10px] bg-white/20 group-hover:bg-rose-100 group-hover:text-rose-700 px-2 py-0.5 rounded font-bold">
-                        {rel.badge}
-                      </span>
-                    </div>
-                    <span className="font-bold text-xs block group-hover:text-rose-700 transition-colors">
-                      {rel.title}
-                    </span>
-                    <span className="text-[10px] text-rose-100 group-hover:text-zinc-600 block line-clamp-1 mt-0.5">
-                      {rel.desc}
-                    </span>
-                  </div>
-                  <div className="mt-2 text-[10px] font-bold text-rose-200 group-hover:text-rose-600 flex items-center justify-end gap-0.5">
-                    <span>詳しく見る</span>
-                    <LucideIcon name="ChevronRight" size={12} />
-                  </div>
-                </button>
-              ))}
-            </div>
           </div>
         </div>
 

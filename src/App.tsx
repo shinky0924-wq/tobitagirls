@@ -88,7 +88,8 @@ export default function App() {
   let selectedCategorySlug: string | null = null;
   let selectedFaqCategory: string | null = null;
 
-  const cleanPath = path.split('#')[0].split('?')[0];
+  const rawPath = path.split('#')[0].split('?')[0];
+  const cleanPath = (rawPath.length > 1 && rawPath.endsWith('/')) ? rawPath.slice(0, -1) : rawPath;
 
   const clusterPathMap: Record<string, string> = {
     '/job': 'job',
