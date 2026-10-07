@@ -977,6 +977,148 @@ export default function ComparisonPage({
             />
 
             {/* ========================================================
+                飛田新地の料亭直営が選ばれる3つの理由
+               ======================================================== */}
+            <section className="mb-14 sm:mb-20 scroll-mt-24" id="section-reasons-direct">
+              <div className="text-center max-w-2xl mx-auto mb-10">
+                <div className="inline-flex items-center gap-1.5 bg-rose-100 text-secondary text-xs font-black px-4 py-1.5 rounded-full mb-3 shadow-xs">
+                  <LucideIcon name="ShieldCheck" size={14} />
+                  <span>3 REASONS WHY GIRLS CHOOSE DIRECT</span>
+                </div>
+                <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-on-surface mb-3">
+                  飛田新地の料亭直営が選ばれる3つの理由
+                </h2>
+                <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+                  スカウト業者や他求人サイト、一般ナイトワークと比べて、なぜ料亭直営公式採用が圧倒的に選ばれているのか？その決定的な3つの違いをご説明します。
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* 理由1 */}
+                <div className="bg-white rounded-3xl p-6 sm:p-7 border-2 border-rose-100 shadow-sm hover:border-rose-300 hover:shadow-md transition-all flex flex-col justify-between">
+                  <div>
+                    <div className="w-12 h-12 rounded-2xl bg-rose-500 text-white flex items-center justify-center font-black text-lg shadow-sm mb-4">
+                      01
+                    </div>
+                    <div className="text-[11px] font-black text-secondary bg-rose-50 px-2.5 py-1 rounded-lg inline-block mb-2">
+                      他求人サイト（飛田ジョブなど）との違い
+                    </div>
+                    <h3 className="font-display font-black text-base sm:text-lg text-zinc-900 mb-3 leading-snug">
+                      中間コストゼロで待遇を最大還元
+                    </h3>
+                    <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+                      一般的な求人サイトは広告掲載料や仲介コストが発生します。飛田ガールズは料亭直営のため中間マージン完全0円。売上50%即日日払いや個室寮補助、交通費全額支給など、働く女性へ最大還元しています。
+                    </p>
+                  </div>
+                  <div className="mt-5 pt-4 border-t border-rose-100 flex items-center justify-between text-xs font-bold text-secondary">
+                    <span>仲介手数料：完全0円</span>
+                    <LucideIcon name="CheckCircle2" size={16} className="text-emerald-600" />
+                  </div>
+                </div>
+
+                {/* 理由2 */}
+                <div className="bg-white rounded-3xl p-6 sm:p-7 border-2 border-rose-100 shadow-sm hover:border-rose-300 hover:shadow-md transition-all flex flex-col justify-between">
+                  <div>
+                    <div className="w-12 h-12 rounded-2xl bg-rose-500 text-white flex items-center justify-center font-black text-lg shadow-sm mb-4">
+                      02
+                    </div>
+                    <div className="text-[11px] font-black text-secondary bg-rose-50 px-2.5 py-1 rounded-lg inline-block mb-2">
+                      街頭・SNSスカウト業者との違い
+                    </div>
+                    <h3 className="font-display font-black text-base sm:text-lg text-zinc-900 mb-3 leading-snug">
+                      一生搾取されるピンハネのリスクを完全排除
+                    </h3>
+                    <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+                      SNS（X/Twitter・インスタ）の裏垢スカウト業者を通すと、毎月10〜30%が永久に天引きされます。料亭直営なら組合公認店舗への直接採用のため、ピンハネや個人情報流出・トラブルのリスクを完全排除します。
+                    </p>
+                  </div>
+                  <div className="mt-5 pt-4 border-t border-rose-100 flex items-center justify-between text-xs font-bold text-secondary">
+                    <span>ピンハネ・天引き：一切なし</span>
+                    <LucideIcon name="ShieldCheck" size={16} className="text-emerald-600" />
+                  </div>
+                </div>
+
+                {/* 理由3 */}
+                <div className="bg-white rounded-3xl p-6 sm:p-7 border-2 border-rose-100 shadow-sm hover:border-rose-300 hover:shadow-md transition-all flex flex-col justify-between">
+                  <div>
+                    <div className="w-12 h-12 rounded-2xl bg-rose-500 text-white flex items-center justify-center font-black text-lg shadow-sm mb-4">
+                      03
+                    </div>
+                    <div className="text-[11px] font-black text-secondary bg-rose-50 px-2.5 py-1 rounded-lg inline-block mb-2">
+                      一般ナイトワーク（ソープ等）との違い
+                    </div>
+                    <h3 className="font-display font-black text-base sm:text-lg text-zinc-900 mb-3 leading-snug">
+                      顔出し不要＆お酒不要で負担最小限
+                    </h3>
+                    <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+                      街全体で一般人の撮影が禁止されているためネットへの写真掲載100%ナシ。お酒を飲む必要がなく、客への営業LINEや同伴も禁止。1回15〜20分の短時間接客で心身の負担を最小限に抑えられます。
+                    </p>
+                  </div>
+                  <div className="mt-5 pt-4 border-t border-rose-100 flex items-center justify-between text-xs font-bold text-secondary">
+                    <span>写真掲載・お酒：完全不要</span>
+                    <LucideIcon name="Heart" size={16} className="text-rose-500" />
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* ========================================================
+                目的別・あなたの希望に合った求人スタイル（8大ターゲット別）
+               ======================================================== */}
+            <section className="mb-14 sm:mb-20 scroll-mt-24" id="section-target-categories">
+              <div className="text-center max-w-2xl mx-auto mb-10">
+                <div className="inline-flex items-center gap-1.5 bg-rose-100 text-secondary text-xs font-black px-4 py-1.5 rounded-full mb-3 shadow-xs">
+                  <LucideIcon name="Sparkles" size={14} />
+                  <span>8 TARGET CATEGORIES</span>
+                </div>
+                <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-on-surface mb-3">
+                  目的別・あなたの希望に合った求人スタイル（8大ターゲット別）
+                </h2>
+                <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+                  未経験、高収入、Wワーク、寮希望など、あなたのライフスタイルに合わせた専用求人情報です。<br className="hidden sm:inline" />
+                  気になるカテゴリーを選ぶと、詳しいメリット・給与モデル・Q&Aをご覧いただけます。
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+                {TARGET_JOB_CATEGORIES.map((cat, idx) => (
+                  <div
+                    key={cat.id}
+                    onClick={() => handleCategorySelect(cat.slug)}
+                    className="bg-white rounded-3xl border-2 border-rose-100 p-5 shadow-sm hover:border-secondary hover:shadow-md transition-all flex flex-col justify-between cursor-pointer group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="w-6 h-6 rounded-full bg-rose-100 text-secondary text-xs font-black flex items-center justify-center">
+                          {idx + 1}
+                        </span>
+                        <span className="text-[11px] font-black text-white bg-secondary px-2.5 py-0.5 rounded-full">
+                          {cat.badge}
+                        </span>
+                      </div>
+                      <h3 className="font-display font-black text-sm sm:text-base text-zinc-900 group-hover:text-secondary transition-colors mb-2">
+                        {cat.title}
+                      </h3>
+                      <p className="text-xs text-zinc-600 leading-relaxed line-clamp-3 mb-4">
+                        {cat.summary}
+                      </p>
+                    </div>
+
+                    <div className="pt-3 border-t border-rose-100/80 flex items-center justify-between">
+                      <span className="text-xs font-extrabold text-secondary">
+                        {cat.dailyIncomeModel.split('（')[0]}
+                      </span>
+                      <span className="text-xs font-bold text-zinc-500 group-hover:text-secondary group-hover:translate-x-0.5 transition-all flex items-center gap-1">
+                        <span>詳しく見る</span>
+                        <LucideIcon name="ChevronRight" size={14} />
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* ========================================================
                 1. 仕事内容
                ======================================================== */}
             <section className="mb-14 sm:mb-20 scroll-mt-24" id="section-job-details">
