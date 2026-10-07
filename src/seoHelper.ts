@@ -104,7 +104,7 @@ function buildCompareNoscript(slug?: string): string {
 
   return `
     <header>
-      <p>飛田新地求人比較＆他求人サイト（飛田ジョブなど）との違い徹底検証【公式】飛田ガールズ</p>
+      <p>飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】｜未経験・高収入・Wワーク【公式】</p>
       <p>24時間受付中・相談無料・完全秘密厳守</p>
     </header>
 
