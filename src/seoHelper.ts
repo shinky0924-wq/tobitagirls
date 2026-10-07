@@ -133,40 +133,60 @@ function buildCompareNoscript(slug?: string): string {
         </section>
 
         <section id="workstyle-diagnostic">
-          <h2>「結局、自分にはどれが合ってる？」あなたに合う働き方をチェック</h2>
-          <p>求人サイトやスカウトが色々あって選べない方へ。あなたの今の状況やお悩みに合わせた最適な働き方の導線をご案内します。</p>
-          <ul>
-            <li>
-              <strong>未経験 → 未経験向け求人</strong><br>
-              在籍女性の約9割が完全未経験スタート。初日の就業前に女性スタッフが約30分で丁寧にレクチャー。お酒不要・営業連絡なし・初日から日給3万〜6.5万円を手渡し日払い。<br>
-              <a href="/compare/inexperienced">未経験向け求人の詳細を見る</a>
-            </li>
-            <li>
-              <strong>経験者 → 条件がいい（最高水準待遇）</strong><br>
-              他店や他業種（風俗・キャバクラ）経験者へ。スカウト業者の中抜き（10〜30%）や店舗雑費の天引きが完全0円。売上完全50%即日手渡し・客引きノルマなしで実力通り稼げる好条件。<br>
-              <a href="/compare/high-income">好条件・高収入求人の詳細を見る</a>
-            </li>
-            <li>
-              <strong>週1日だけ → Wワーク向け（副業・マイペース）</strong><br>
-              昼職OLや大学生・主婦の副業に。月1日〜週1日OKの完全自由出勤制。出勤強要・催促連絡一切なし。週末1日の出勤で会社員の半月分（3.5万〜7万円）を即日手渡し。<br>
-              <a href="/compare/double-work">Wワーク・週1日向け求人を見る</a>
-            </li>
-            <li>
-              <strong>とにかく稼ぎたい → 高収入向け（最速資金づくり）</strong><br>
-              短期間で借金完済・独立開業の目標資金を貯めたい方へ。メイン通りの圧倒的な来客数と15分接客の高回転。日給6万〜15万円超、月収150万円以上の実績多数。チップも全額手取り。<br>
-              <a href="/compare/high-income">高収入向け求人の詳細を見る</a>
-            </li>
-            <li>
-              <strong>身バレが心配 → 安全対策を見る（身バレ防止徹底）</strong><br>
-              会社や家族・知人に絶対に知られたくない方へ。街全体で撮影完全禁止（Web・SNSへの写真掲載100%ナシ）、完全源氏名、私服通勤、手渡し日払い、住民税の普通徴収ガイド完備で徹底守護。<br>
-              <a href="/compare/double-work">安全対策・身バレ防止の詳細を見る</a>
-            </li>
-            <li>
-              <strong>遠方から働きたい → 寮・出稼ぎ（即日入居・交通費全額）</strong><br>
-              全国からの上京・来阪に。新幹線・飛行機の往復交通費を全額支給。敷金礼金0円・家具家電Wi-Fi付きの完全個室マンション寮に即日入居OK。主要駅までお迎え対応。<br>
-              <a href="/compare/dormitory">寮・出稼ぎ求人の詳細を見る</a>
-            </li>
-          </ul>
+          <h2>結局、自分にはどれが合ってる？</h2>
+          <p>求人サイトやスカウトが色々あって選べない方へ。あなたの今の希望やお悩みに合わせた最適な働き方の導線一覧です。</p>
+          <table border="1">
+            <thead>
+              <tr>
+                <th>あなたの希望</th>
+                <th>おすすめ</th>
+                <th>特徴・詳細</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>🩷 初めてで何もわからない</td>
+                <td><strong>未経験向け求人</strong></td>
+                <td>在籍女性の約9割が完全未経験。お酒不要・営業連絡なし・初日から丁寧な講習あり。<a href="/compare/inexperienced">未経験向け求人を見る</a></td>
+              </tr>
+              <tr>
+                <td>💰 とにかくしっかり稼ぎたい</td>
+                <td><strong>高収入重視</strong></td>
+                <td>売上50%完全即日全額日払い手渡し。日給10万〜15万円以上の実績多数・天引きゼロ。<a href="/compare/high-income">高収入求人を見る</a></td>
+              </tr>
+              <tr>
+                <td>🏠 家から通うのが難しい</td>
+                <td><strong>寮・住み込み</strong></td>
+                <td>天王寺・難波周辺の家具家電付きオートロック個室寮完備。日額1,000円〜・即日入居OK。<a href="/compare/dormitory">寮・住み込み求人を見る</a></td>
+              </tr>
+              <tr>
+                <td>💼 昼職と両立したい</td>
+                <td><strong>Wワーク向け</strong></td>
+                <td>週1日・月1回〜OKの完全自由シフト制。ノルマ・出勤催促なし・住民税対策も万全。<a href="/compare/double-work">Wワーク向け求人を見る</a></td>
+              </tr>
+              <tr>
+                <td>✈️ 短期間だけ働きたい</td>
+                <td><strong>短期・出稼ぎ</strong></td>
+                <td>往復交通費全額支給。1週間〜1ヶ月の短期集中で100万円以上の貯金達成者多数。<a href="/compare/short-term">短期・出稼ぎ求人を見る</a></td>
+              </tr>
+              <tr>
+                <td>🙈 身バレが一番心配</td>
+                <td><strong>身バレ対策重視</strong></td>
+                <td>街全体で撮影完全禁止・Web写真掲載ゼロ・完全源氏名・手渡し日払いで秘密厳守。<a href="/safety">安全対策・身バレ防止を見る</a></td>
+              </tr>
+              <tr>
+                <td>💬 まだ応募するか迷っている</td>
+                <td><strong>まず相談</strong></td>
+                <td>女性スタッフが24時間受付。質問や話を聞くだけでも大歓迎、無理な勧誘ゼロ。</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="margin-top: 1.5rem; padding: 1.5rem; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 12px; text-align: center;">
+            <p><strong>どれを選べばいいかわからない方も大丈夫。</strong><br>希望や不安を聞いて、あなたに合った働き方を一緒に考えます。</p>
+            <p style="color: #e11d48; font-weight: bold;">「話だけ聞いてみたい」でもOK</p>
+            <p><a href="https://line.me" style="display: inline-block; background: #06c755; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold;">→ 女性スタッフに相談する</a></p>
+          </div>
         </section>
 
         <section>
