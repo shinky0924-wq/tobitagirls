@@ -29,8 +29,222 @@ export function resolveFullImageUrl(eyeCatch?: string): string {
 }
 
 const DEFAULT_TITLE = '飛田新地求人｜未経験歓迎・高収入・求人情報を徹底解説｜飛田ガールズ';
-const DEFAULT_DESC = '【飛田新地求人公式】未経験歓迎・高収入（日給5万〜10万円即日全額日払い）。仕事内容、給料システム、20代・未経験の応募条件、面接・体験入店の流れ、個室マンション寮完備。女性サポートスタッフによる無料相談受付中。';
+const DEFAULT_DESC = '【飛田新地求人公式】未経験歓迎・高収入（日給5万〜15万円即日全額日払い）。仕事内容、給料システム、20代・未経験の応募条件、面接・体験入店の流れ、個室マンション寮完備。女性サポートスタッフによる無料相談受付中。';
 const DEFAULT_IMAGE = 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg';
+
+function buildHomeNoscript(): string {
+  return `
+    <header>
+      <p>飛田新地求人サイト「飛田ガールズ」【公式】料亭直営採用窓口</p>
+      <p>24時間受付中・相談無料・完全秘密厳守</p>
+    </header>
+
+    <main>
+      <article>
+        <h1>飛田新地求人なら飛田ガールズ｜女性のための安心求人情報サイト【2026年最新】</h1>
+        <p class="lead">飛田新地で働きたい女性へ。仕事内容・給料システム・応募条件・未経験採用・面接や体験入店の流れを、現場サポート歴8年の女性スタッフが徹底解説します。売上50%完全即日全額現金日払い手渡し・お酒一切不要・完全身バレ防止・家具家電付き即入居個室寮完備。</p>
+
+        <section>
+          <h2>飛田新地求人の募集概要・一次情報（2026年最新採用情報）</h2>
+          <table border="1">
+            <tbody>
+              <tr>
+                <th>職種</th>
+                <td>飛田新地 料亭キャスト接客スタッフ（和室でのお茶出し・歓談おもてなし）</td>
+              </tr>
+              <tr>
+                <th>給与・報酬</th>
+                <td>日給 30,000円〜150,000円以上（売上50%完全即日全額日払い手渡し・天引きゼロ）</td>
+              </tr>
+              <tr>
+                <th>勤務地</th>
+                <td>大阪府大阪市西成区山王（飛田新地料亭街 / 動物園前駅徒歩5分・天王寺駅徒歩10分・新今宮駅徒歩7分）</td>
+              </tr>
+              <tr>
+                <th>勤務時間</th>
+                <td>10:00〜24:00（完全自由シフト制・週1日〜・1日3時間〜・昼シフト・夜シフト・終電上がりOK）</td>
+              </tr>
+              <tr>
+                <th>応募資格</th>
+                <td>20歳以上の女性（未経験者歓迎・経験不問・学歴不問・20代〜30代活躍中 ※料理組合規約により20歳未満不可）</td>
+              </tr>
+              <tr>
+                <th>待遇・福利厚生</th>
+                <td>家具家電付き個室マンション寮完備（即入居可・日額1,000円〜）・往復交通費全額支給・衣装無料貸出・ヘアメイク・完全身バレ防止対策</td>
+              </tr>
+              <tr>
+                <th>最終更新日</th>
+                <td>2026年10月最新（料理組合規約準拠・最新採用情報）</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="section-reasons">
+          <h2>飛田新地の料亭直営が選ばれる3つの理由</h2>
+          <div>
+            <h3>1. 他求人サイト（飛田ジョブなど）との違い：中間コストゼロで待遇を最大還元</h3>
+            <p>広告掲載料や仲介手数料を徴収する一般的な求人サイトと異なり、料亭直営窓口のため中間マージンが完全0円。その分、売上50%の全額即日手渡し日払いや寮費補助、交通費全額支給など、働く女性へ最大還元しています。</p>
+          </div>
+          <div>
+            <h3>2. 街頭・SNSスカウト業者との違い：一生搾取されるピンハネのリスクを完全排除</h3>
+            <p>SNS裏垢や街頭のスカウト業者を通すと、毎月10〜30%が永久に天引きされます。料亭直営なら公認店舗への直接採用のため、ピンハネや個人情報流出、違約金トラブルのリスクを完全排除します。</p>
+          </div>
+          <div>
+            <h3>3. 一般ナイトワーク（ソープ・ヘルス・キャバクラ）との違い：顔出し不要＆お酒不要で負担最小限</h3>
+            <p>街全体で一般人の撮影が禁止されておりネット写真掲載100%ナシ。お酒を飲む必要がなく、客への営業LINEや同伴も不要。1回15〜20分の短時間接客で心身の負担を最小限に抑えられます。</p>
+          </div>
+        </section>
+
+        <section id="section-topics">
+          <h2>知りたい情報から探す【10大テーマ別求人総合ガイド】</h2>
+          <ol>
+            <li>
+              <h3><a href="/job">1. お仕事内容（料亭での接客・お茶出し・お酒不要）</a></h3>
+              <p>老舗料亭のお座敷でお客様とお茶を飲みながら会話を楽しむおもてなし接客。お酒を飲む必要は一切なく、客引きや営業活動も不要です。</p>
+            </li>
+            <li>
+              <h3><a href="/salary">2. 給料・日給システム（売上50%完全即日全額日払い）</a></h3>
+              <p>売上の50%がその日の退勤時に全額現金手渡し支給。日給相場は3万〜15万円超、待機カットや雑費天引きは完全ゼロです。</p>
+            </li>
+            <li>
+              <h3><a href="/beginner">3. 未経験向け求人（在籍女性の約9割が完全未経験）</a></h3>
+              <p>夜職や接客が初めてでも安心。専任女性スタッフが初日30分のマンツーマン研修で丁寧にお教えします。</p>
+            </li>
+            <li>
+              <h3><a href="/experienced">4. 高収入・経験者（他ナイトワークからの移籍人気No.1）</a></h3>
+              <p>ネット顔出しなし・お風呂掃除なし・営業連絡なしで、ソープやヘルス、キャバクラからの移籍で初日から高日給を狙えます。</p>
+            </li>
+            <li>
+              <h3><a href="/requirements">5. 応募条件・資格（20歳以上の女性・履歴書不要）</a></h3>
+              <p>履歴書不要、手ぶら・私服で気軽に見学や面接が可能。当日体験入店（即日全額日払い）にも対応しています。</p>
+            </li>
+            <li>
+              <h3><a href="/flow">6. 応募から体験入店までの流れ（安心の5ステップ）</a></h3>
+              <p>公式LINE相談→私服見学→お試し体験入店→売上50%即日手渡し→本入店または終了を自由に選べます。</p>
+            </li>
+            <li>
+              <h3><a href="/workstyle">7. 自由な働き方・シフト（週1日〜・短時間3時間〜OK）</a></h3>
+              <p>10:00〜24:00の間で完全自由シフト制。昼だけ、夜だけ、短時間スキマ時間、月数回など自由に選べます。</p>
+            </li>
+            <li>
+              <h3><a href="/shops">8. お店選び・通りの違い（メイン通り・青春通り・大門通り）</a></h3>
+              <p>青春通り（20代中心）、メイン通り（高稼働）、大門通り（落ち着いた大人女子）など、全通りに直営店を展開。</p>
+            </li>
+            <li>
+              <h3><a href="/dorm">9. 個室マンション寮・出稼ぎ（即日入居・家具家電付き）</a></h3>
+              <p>天王寺・難波周辺にオートロック個室寮完備（日額1,000円〜・敷金礼金ゼロ）。全国からの往復交通費を全額支給。</p>
+            </li>
+            <li>
+              <h3><a href="/safety">10. 身バレ防止・安全規約（ネット写真100%非掲載・秘密厳守）</a></h3>
+              <p>街全体の撮影禁止、完全源氏名、私服通勤、住民税の普通徴収手続きサポートで会社や家族に絶対にバレません。</p>
+            </li>
+          </ol>
+        </section>
+
+        <section id="section-target-categories">
+          <h2>目的別・あなたの希望に合った求人スタイル（8大ターゲット別）</h2>
+          <ul>
+            <li><strong><a href="/compare/inexperienced">未経験向け求人</a>：</strong>夜職初心者でも安心・お酒不要・丁寧な研修あり</li>
+            <li><strong><a href="/compare/high-income">高収入向け求人</a>：</strong>日給10万〜15万円超多数・売上50%完全即日日払い</li>
+            <li><strong><a href="/compare/weekly-1">週1日・マイペース求人</a>：</strong>完全自由シフト制・ノルマ催促なし</li>
+            <li><strong><a href="/compare/short-term">短期・出稼ぎ求人</a>：</strong>交通費全額支給・1週間〜OK・スピード貯金</li>
+            <li><strong><a href="/compare/dormitory">個室寮完備求人</a>：</strong>天王寺・難波の家具家電付きオートロック個室マンション</li>
+            <li><strong><a href="/compare/double-work">Wワーク・副業向け求人</a>：</strong>OL・会社員・学生の副業・会社バレ完全防止</li>
+            <li><strong><a href="/compare/age-20s">20代向け求人</a>：</strong>青春通り・メイン通りで圧倒的稼働率</li>
+            <li><strong><a href="/compare/age-30s">30代・オトナ女子向け求人</a>：</strong>落ち着いた客層・高単価接客で安定高収入</li>
+          </ul>
+        </section>
+
+        <section id="section-faq">
+          <h2>よくある質問（FAQ）</h2>
+          <dl>
+            <dt>Q. 本当に自分でもできますか？未経験でも大丈夫？</dt>
+            <dd>A. 在籍女性の90%以上がナイトワーク未経験スタートです。お酒を飲む必要はなく、初日30分の丁寧なマンツーマン研修があるため安心です。</dd>
+            <dt>Q. 給料は本当にその日にもらえますか？天引きはありませんか？</dt>
+            <dd>A. はい、当日の売上の完全50%がその場で全額現金手渡し支給されます。雑費や待機カット、衣装代などの引かれ物は一切ありません。</dd>
+            <dt>Q. 身バレが心配です。写真がネットに出たりしませんか？</dt>
+            <dd>A. 飛田新地は街全体で一般人の撮影が禁止されており、求人サイトやSNSへの写真掲載は完全ゼロです。完全源氏名・私服通勤で秘密を厳守します。</dd>
+          </dl>
+          <p><a href="/faq">FAQ全119問一覧はこちら</a></p>
+        </section>
+
+        <section>
+          <h2>料亭直営公式採用窓口（飛田ガールズ）</h2>
+          <p>24時間365日、専任の女性サポートスタッフが公式LINEで質問やご相談を受付中です。「話だけ聞いてみたい」でも大歓迎です。</p>
+        </section>
+      </article>
+    </main>
+  `;
+}
+
+function buildHomeJsonLd(): string {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': 'https://tobitashinchi-recruit.com/#website',
+        'url': 'https://tobitashinchi-recruit.com/',
+        'name': '飛田ガールズ',
+        'description': '飛田新地料理組合公認料亭直営の公式女性向け求人情報サイト。未経験歓迎・高収入（日給5万〜15万円即日全額日払い）、仕事内容・給与・寮・安全対策を網羅。',
+        'inLanguage': 'ja-JP',
+        'publisher': {
+          '@type': 'Organization',
+          '@id': 'https://tobitashinchi-recruit.com/#organization',
+          'name': '飛田ガールズ（料亭直営求人・女性採用サポート）',
+          'url': 'https://tobitashinchi-recruit.com/',
+          'logo': {
+            '@type': 'ImageObject',
+            'url': 'https://tobitashinchi-recruit.com/favicon.svg'
+          }
+        }
+      },
+      {
+        '@type': 'JobPosting',
+        '@id': 'https://tobitashinchi-recruit.com/#jobposting',
+        'title': '飛田新地 料亭接客キャスト（未経験歓迎・お酒不要・日払い手渡し）',
+        'description': '飛田新地料理組合公認老舗料亭での接客キャスト募集。和室でのお茶出し・会話によるおもてなし。売上50%完全即日日払い手渡し、ノルマ・罰金一切なし、個室マンション寮完備、女性スタッフ常駐。',
+        'identifier': {
+          '@type': 'PropertyValue',
+          'name': '飛田ガールズ 料亭直営採用窓口',
+          'value': 'TOBITA-GIRLS-MAIN-RECRUIT'
+        },
+        'datePosted': '2026-10-01T00:00:00+09:00',
+        'validThrough': '2027-12-31T23:59:59+09:00',
+        'employmentType': 'PART_TIME',
+        'hiringOrganization': {
+          '@type': 'Organization',
+          'name': '飛田新地料理組合公認料亭直営 飛田ガールズ',
+          'sameAs': 'https://tobitashinchi-recruit.com',
+          'logo': 'https://tobitashinchi-recruit.com/favicon.svg'
+        },
+        'jobLocation': {
+          '@type': 'Place',
+          'address': {
+            '@type': 'PostalAddress',
+            'streetAddress': '山王3丁目',
+            'addressLocality': '大阪市西成区',
+            'addressRegion': '大阪府',
+            'postalCode': '557-0001',
+            'addressCountry': 'JP'
+          }
+        },
+        'baseSalary': {
+          '@type': 'MonetaryAmount',
+          'currency': 'JPY',
+          'value': {
+            '@type': 'QuantitativeValue',
+            'minValue': 30000,
+            'maxValue': 150000,
+            'unitText': 'DAY'
+          }
+        },
+        'directApply': true
+      }
+    ]
+  }, null, 2);
+}
 
 function buildCompareNoscript(slug?: string): string {
   if (slug) {
@@ -1107,6 +1321,19 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
         '@context': 'https://schema.org',
         '@graph': graphItems
       }, null, 2);
+    } else if (cleanPath === '/' || cleanPath === '') {
+      title = DEFAULT_TITLE;
+      description = DEFAULT_DESC;
+      canonicalUrl = 'https://tobitashinchi-recruit.com/';
+      ogImageUrl = DEFAULT_IMAGE;
+      ogImageAlt = '飛田新地求人 飛田ガールズ';
+      customNoscript = buildHomeNoscript();
+      customJsonLd = buildHomeJsonLd();
+    } else {
+      status = 404;
+      title = 'ページが見つかりませんでした (404 Not Found)｜飛田新地求人 飛田ガールズ';
+      description = 'お探しのページは移動したか、削除された可能性があります。トップページまたは求人一覧からお探しください。';
+      canonicalUrl = '';
     }
   }
 

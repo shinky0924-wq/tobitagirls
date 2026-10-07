@@ -289,9 +289,13 @@ ${customTopic ? `【指定テーマ】: ${customTopic}` : ''}
     app.get('*', (req, res) => {
       try {
         const cleanPath = req.path.replace(/\/$/, '') || '/';
+        const indexPath = path.join(distPath, 'index.html');
         const nestedIndex = path.join(distPath, cleanPath, 'index.html');
         const directHtml = path.join(distPath, `${cleanPath}.html`);
 
+        if (cleanPath === '/' && fs.existsSync(indexPath)) {
+          return res.status(200).sendFile(indexPath);
+        }
         if (cleanPath !== '/' && fs.existsSync(nestedIndex)) {
           return res.status(200).sendFile(nestedIndex);
         }
@@ -299,7 +303,6 @@ ${customTopic ? `【指定テーマ】: ${customTopic}` : ''}
           return res.status(200).sendFile(directHtml);
         }
 
-        const indexPath = path.join(distPath, 'index.html');
         if (!fs.existsSync(indexPath)) {
           return res.status(404).send('Not Found');
         }
