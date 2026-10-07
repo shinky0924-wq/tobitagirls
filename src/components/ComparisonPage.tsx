@@ -13,6 +13,7 @@ import {
 } from '../compareData';
 import { CONSULTANT_AVATAR_URL } from '../data';
 import { FAQ_100_LIST, FAQ_8_CATEGORIES, FAQ100Item } from '../faq100Data';
+import CompareDiagnostic from './CompareDiagnostic';
 
 const CATEGORY_SALARY_SCHEMA: Record<string, { min: number; max: number; employmentType: string }> = {
   'inexperienced': { min: 30000, max: 65000, employmentType: 'PART_TIME' },
@@ -325,6 +326,22 @@ export default function ComparisonPage({
       onInjectedScroll(defaultMsg);
     } else {
       onCtaclick();
+    }
+  };
+
+  const handleConsultSituation = (situationTitle: string, customMessage?: string) => {
+    const msg = customMessage || `【働き方診断：${situationTitle}の相談】\n「${situationTitle}」について興味があります。自分に合った働き方やシフト・給与について教えていただけますでしょうか？`;
+    if (onInjectedScroll) {
+      onInjectedScroll(msg);
+    } else {
+      onCtaclick();
+    }
+  };
+
+  const handleScrollToSafety = () => {
+    const el = document.getElementById('section-safety') || document.getElementById('section-benefits');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -951,6 +968,15 @@ export default function ComparisonPage({
             </section>
 
             {/* ========================================================
+                働き方診断：「結局、自分にはどれが合ってる？」
+               ======================================================== */}
+            <CompareDiagnostic
+              onSelectCategory={handleCategorySelect}
+              onConsultLine={handleConsultSituation}
+              onScrollToSafety={handleScrollToSafety}
+            />
+
+            {/* ========================================================
                 1. 仕事内容
                ======================================================== */}
             <section className="mb-14 sm:mb-20 scroll-mt-24" id="section-job-details">
@@ -1164,7 +1190,7 @@ export default function ComparisonPage({
                   </p>
                 </div>
 
-                <div className="bg-white rounded-2xl p-5 border border-rose-100 shadow-xs">
+                <div id="section-safety" className="bg-white rounded-2xl p-5 border border-rose-100 shadow-xs scroll-mt-28">
                   <div className="w-9 h-9 rounded-xl bg-rose-50 text-secondary flex items-center justify-center mb-3">
                     <LucideIcon name="EyeOff" size={18} />
                   </div>

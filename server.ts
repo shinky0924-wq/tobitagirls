@@ -288,6 +288,17 @@ ${customTopic ? `【指定テーマ】: ${customTopic}` : ''}
     app.use(express.static(distPath, { index: false }));
     app.get('*', (req, res) => {
       try {
+        const cleanPath = req.path.replace(/\/$/, '') || '/';
+        const nestedIndex = path.join(distPath, cleanPath, 'index.html');
+        const directHtml = path.join(distPath, `${cleanPath}.html`);
+
+        if (cleanPath !== '/' && fs.existsSync(nestedIndex)) {
+          return res.status(200).sendFile(nestedIndex);
+        }
+        if (cleanPath !== '/' && fs.existsSync(directHtml)) {
+          return res.status(200).sendFile(directHtml);
+        }
+
         const indexPath = path.join(distPath, 'index.html');
         if (!fs.existsSync(indexPath)) {
           return res.status(404).send('Not Found');

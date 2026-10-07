@@ -17,10 +17,14 @@ async function runPrerender() {
   const articlesPath = path.join(process.cwd(), 'data', 'blogArticles.json');
   let articles: any[] = [];
   if (fs.existsSync(articlesPath)) {
-    articles = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'));
+    try {
+      articles = JSON.parse(fs.readFileSync(articlesPath, 'utf-8'));
+    } catch (e) {
+      console.error('Failed to parse blogArticles.json:', e);
+    }
   }
 
-  console.log(`[Prerender] Starting pre-rendering for ${articles.length} articles and static routes...`);
+  console.log(`[Prerender] Starting full pre-rendering using injectSeoMetadata for ${articles.length} articles and all routes...`);
 
   const writeHtml = (filePath: string, htmlContent: string) => {
     const dir = path.dirname(filePath);
@@ -32,7 +36,12 @@ async function runPrerender() {
 
   let count = 0;
 
-  // 1. Pre-render every blog article with its own title, summary, thumbnail, and OGP/Twitter Card
+  // 1. Top page
+  const home = injectSeoMetadata(template, '/');
+  writeHtml(path.join(distDir, 'index.html'), home.html);
+  count++;
+
+  // 2. Pre-render every blog article
   for (const article of articles) {
     if (!article.slug) continue;
     const url = `/blog/${article.slug}`;
@@ -42,67 +51,90 @@ async function runPrerender() {
     count++;
   }
 
-  // 2. Pre-render Blog Index
+  // 3. Pre-render Blog Index
   const blogList = injectSeoMetadata(template, '/blog');
   writeHtml(path.join(distDir, 'blog', 'index.html'), blogList.html);
   writeHtml(path.join(distDir, 'blog.html'), blogList.html);
+  count++;
 
-  // 3. Pre-render About
+  // 4. Pre-render About and Company
   const about = injectSeoMetadata(template, '/about');
   writeHtml(path.join(distDir, 'about', 'index.html'), about.html);
   writeHtml(path.join(distDir, 'about.html'), about.html);
+  count++;
 
-  // 4. Pre-render FAQ
+  const company = injectSeoMetadata(template, '/company');
+  writeHtml(path.join(distDir, 'company', 'index.html'), company.html);
+  writeHtml(path.join(distDir, 'company.html'), company.html);
+  count++;
+
+  // 5. Pre-render FAQ Index & all 8 Category pages
   const faq = injectSeoMetadata(template, '/faq');
   writeHtml(path.join(distDir, 'faq', 'index.html'), faq.html);
   writeHtml(path.join(distDir, 'faq.html'), faq.html);
+  count++;
 
-  // 5. Pre-render Comparison & sub-routes
+  const faqCategories = [
+    'recruit', 'salary', 'beginner', 'hours',
+    'privacy', 'dorm', 'wwork', 'leaving'
+  ];
+  for (const cat of faqCategories) {
+    const faqCatPage = injectSeoMetadata(template, `/faq/${cat}`);
+    writeHtml(path.join(distDir, 'faq', cat, 'index.html'), faqCatPage.html);
+    writeHtml(path.join(distDir, 'faq', `${cat}.html`), faqCatPage.html);
+    count++;
+  }
+
+  // 6. Pre-render Compare Main & all 8 Category pages
   const compare = injectSeoMetadata(template, '/compare');
   writeHtml(path.join(distDir, 'compare', 'index.html'), compare.html);
   writeHtml(path.join(distDir, 'compare.html'), compare.html);
+  count++;
 
   const compareSlugs = [
-    'inexperienced',
-    'high-income',
-    'weekly-1',
-    'short-term',
-    'dormitory',
-    'double-work',
-    'age-20s',
-    'age-30s'
+    'inexperienced', 'high-income', 'weekly-1', 'short-term',
+    'dormitory', 'double-work', 'age-20s', 'age-30s'
   ];
   for (const slug of compareSlugs) {
     const compPage = injectSeoMetadata(template, `/compare/${slug}`);
     writeHtml(path.join(distDir, 'compare', slug, 'index.html'), compPage.html);
     writeHtml(path.join(distDir, 'compare', `${slug}.html`), compPage.html);
+    count++;
   }
 
-  // 6. Pre-render Topic Clusters
+  // 7. Pre-render Topic Clusters (11 routes including interview)
   const topics = [
     'job', 'salary', 'beginner', 'experienced',
-    'requirements', 'flow', 'workstyle', 'shops', 'dorm', 'safety'
+    'requirements', 'flow', 'interview', 'workstyle',
+    'shops', 'dorm', 'safety'
   ];
   for (const t of topics) {
     const topicPage = injectSeoMetadata(template, `/${t}`);
     writeHtml(path.join(distDir, t, 'index.html'), topicPage.html);
     writeHtml(path.join(distDir, `${t}.html`), topicPage.html);
+    count++;
   }
 
-  // 7. Ensure _redirects and .htaccess in dist
+  // 8. Ensure _redirects in dist
   const rootRedirects = path.join(process.cwd(), '_redirects');
   if (fs.existsSync(rootRedirects)) {
     fs.copyFileSync(rootRedirects, path.join(distDir, '_redirects'));
   }
-  const rootHtaccess = path.join(process.cwd(), '.htaccess');
-  if (fs.existsSync(rootHtaccess)) {
-    fs.copyFileSync(rootHtaccess, path.join(distDir, '.htaccess'));
+
+  // 9. Ensure sitemap and robots in dist
+  const sitemapSrc = path.join(process.cwd(), 'public', 'sitemap.xml');
+  if (fs.existsSync(sitemapSrc)) {
+    fs.copyFileSync(sitemapSrc, path.join(distDir, 'sitemap.xml'));
+  }
+  const robotsSrc = path.join(process.cwd(), 'public', 'robots.txt');
+  if (fs.existsSync(robotsSrc)) {
+    fs.copyFileSync(robotsSrc, path.join(distDir, 'robots.txt'));
   }
 
-  console.log(`[Prerender] Successfully generated pre-rendered static HTML for ${count} articles and core pages!`);
+  console.log(`[Prerender] Successfully generated pre-rendered static HTML for ${count} paths!`);
 }
 
 runPrerender().catch(err => {
-  console.error('[Prerender] Fatal error:', err);
+  console.error('[Prerender] Error during prerendering:', err);
   process.exit(1);
 });

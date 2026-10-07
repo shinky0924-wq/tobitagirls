@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import { SITE_COMPARISON_ROWS, TARGET_JOB_CATEGORIES } from './compareData';
+import { TOPIC_CLUSTERS } from './topicClusterData';
+import { FAQ_100_LIST, FAQ_8_CATEGORIES } from './faq100Data';
 
 export function escapeHtml(str: string): string {
   return String(str || '')
@@ -130,6 +132,43 @@ function buildCompareNoscript(slug?: string): string {
           </table>
         </section>
 
+        <section id="workstyle-diagnostic">
+          <h2>「結局、自分にはどれが合ってる？」あなたに合う働き方をチェック</h2>
+          <p>求人サイトやスカウトが色々あって選べない方へ。あなたの今の状況やお悩みに合わせた最適な働き方の導線をご案内します。</p>
+          <ul>
+            <li>
+              <strong>未経験 → 未経験向け求人</strong><br>
+              在籍女性の約9割が完全未経験スタート。初日の就業前に女性スタッフが約30分で丁寧にレクチャー。お酒不要・営業連絡なし・初日から日給3万〜6.5万円を手渡し日払い。<br>
+              <a href="/compare/inexperienced">未経験向け求人の詳細を見る</a>
+            </li>
+            <li>
+              <strong>経験者 → 条件がいい（最高水準待遇）</strong><br>
+              他店や他業種（風俗・キャバクラ）経験者へ。スカウト業者の中抜き（10〜30%）や店舗雑費の天引きが完全0円。売上完全50%即日手渡し・客引きノルマなしで実力通り稼げる好条件。<br>
+              <a href="/compare/high-income">好条件・高収入求人の詳細を見る</a>
+            </li>
+            <li>
+              <strong>週1日だけ → Wワーク向け（副業・マイペース）</strong><br>
+              昼職OLや大学生・主婦の副業に。月1日〜週1日OKの完全自由出勤制。出勤強要・催促連絡一切なし。週末1日の出勤で会社員の半月分（3.5万〜7万円）を即日手渡し。<br>
+              <a href="/compare/double-work">Wワーク・週1日向け求人を見る</a>
+            </li>
+            <li>
+              <strong>とにかく稼ぎたい → 高収入向け（最速資金づくり）</strong><br>
+              短期間で借金完済・独立開業の目標資金を貯めたい方へ。メイン通りの圧倒的な来客数と15分接客の高回転。日給6万〜15万円超、月収150万円以上の実績多数。チップも全額手取り。<br>
+              <a href="/compare/high-income">高収入向け求人の詳細を見る</a>
+            </li>
+            <li>
+              <strong>身バレが心配 → 安全対策を見る（身バレ防止徹底）</strong><br>
+              会社や家族・知人に絶対に知られたくない方へ。街全体で撮影完全禁止（Web・SNSへの写真掲載100%ナシ）、完全源氏名、私服通勤、手渡し日払い、住民税の普通徴収ガイド完備で徹底守護。<br>
+              <a href="/compare/double-work">安全対策・身バレ防止の詳細を見る</a>
+            </li>
+            <li>
+              <strong>遠方から働きたい → 寮・出稼ぎ（即日入居・交通費全額）</strong><br>
+              全国からの上京・来阪に。新幹線・飛行機の往復交通費を全額支給。敷金礼金0円・家具家電Wi-Fi付きの完全個室マンション寮に即日入居OK。主要駅までお迎え対応。<br>
+              <a href="/compare/dormitory">寮・出稼ぎ求人の詳細を見る</a>
+            </li>
+          </ul>
+        </section>
+
         <section>
           <h2>飛田新地の料亭直営が選ばれる3つの理由</h2>
           <h3>1. 他求人サイト（飛田ジョブなど）との違い：中間コストゼロで待遇を最大還元</h3>
@@ -175,6 +214,325 @@ function buildCompareNoscript(slug?: string): string {
             <dd>A. 履歴書は不要です。年齢確認（20歳以上限定）のため「本籍地記載の住民票原本」または「日本国パスポート」をお持ちください。私服で手ぶらでお越しいただけます。</dd>
           </dl>
         </section>
+
+        <section>
+          <h2>料亭直営公式採用窓口（飛田ガールズ）</h2>
+          <p>24時間365日、専任の女性サポートスタッフがLINEおよびお電話で質問やご相談を受付中です。無理な勧誘や引き止めは一切ありませんので、お気軽にお問い合わせください。</p>
+        </section>
+      </article>
+    </main>
+  `;
+}
+
+function buildFaqNoscript(categorySlug?: string): string {
+  const cat = categorySlug ? FAQ_8_CATEGORIES.find(c => c.slug === categorySlug || c.id === categorySlug) : undefined;
+  
+  if (cat && cat.id !== 'all') {
+    const items = FAQ_100_LIST.filter(item => item.eightCategory === cat.id);
+    const faqsHtml = items.map(item => `
+      <dt>Q. ${escapeHtml(item.question)}</dt>
+      <dd>A. ${escapeHtml(item.answer)}</dd>
+    `).join('');
+
+    const otherCatsHtml = FAQ_8_CATEGORIES.filter(c => c.id !== 'all' && c.id !== cat.id).map(c => `
+      <li><a href="/faq/${c.slug}"><strong>${escapeHtml(c.label)}</strong>（${escapeHtml(c.shortLabel)}）の質問一覧</a></li>
+    `).join('');
+
+    return `
+      <header>
+        <p>飛田新地求人 FAQ【${escapeHtml(cat.label)}】（全${items.length}問・本音回答）｜飛田ガールズ【公式】</p>
+        <p>24時間受付中・相談無料・完全秘密厳守</p>
+      </header>
+      <main>
+        <article>
+          <h1>飛田新地求人 よくある質問【${escapeHtml(cat.label)}】全${items.length}問</h1>
+          <p class="lead">${escapeHtml(cat.description)}。飛田新地料理組合公認老舗料亭直営の専任女性スタッフが、現場の事実に基づき忖度なしの本音で回答しています。</p>
+          <section>
+            <h2>${escapeHtml(cat.label)}に関する質問と回答</h2>
+            <dl>
+              ${faqsHtml}
+            </dl>
+          </section>
+          <section>
+            <h2>その他のテーマ別よくある質問</h2>
+            <ul>
+              <li><a href="/faq">すべての質問（全119問一覧）を見る</a></li>
+              ${otherCatsHtml}
+            </ul>
+          </section>
+          <section>
+            <h2>公式LINE無料相談窓口</h2>
+            <p>疑問や不安な点は、専任の女性スタッフにLINEでいつでも匿名相談いただけます（24時間受付中・完全秘密厳守）。</p>
+          </section>
+        </article>
+      </main>
+    `;
+  }
+
+  // General FAQ page (/faq)
+  const categorySectionsHtml = FAQ_8_CATEGORIES.filter(c => c.id !== 'all').map(c => {
+    const items = FAQ_100_LIST.filter(item => item.eightCategory === c.id);
+    const topItems = items.slice(0, 5);
+    const itemsHtml = topItems.map(it => `
+      <dt>Q. ${escapeHtml(it.question)}</dt>
+      <dd>A. ${escapeHtml(it.answer)}</dd>
+    `).join('');
+
+    return `
+      <section>
+        <h2>${escapeHtml(c.label)}（全${items.length}問）</h2>
+        <p>${escapeHtml(c.description)} <a href="/faq/${c.slug}">${escapeHtml(c.label)}の質問をすべて見る（全${items.length}問）</a></p>
+        <dl>
+          ${itemsHtml}
+        </dl>
+      </section>
+    `;
+  }).join('');
+
+  return `
+    <header>
+      <p>飛田新地求人 FAQ（全119問・8大テーマ完全網羅）｜未経験・給料・身バレ・面接【公式】</p>
+      <p>24時間受付中・相談無料・完全秘密厳守</p>
+    </header>
+    <main>
+      <article>
+        <h1>飛田新地求人 よくある質問100選（全119問・本音回答）</h1>
+        <p class="lead">応募前に女の子から寄せられる100以上の疑問に、飛田新地料理組合公認老舗料亭直営の女性サポートスタッフが忖度なしの本音で回答しています。応募・面接、給料、未経験、勤務時間、身バレ、寮、Wワーク、退店の8大テーマで体系化しています。</p>
+        <section>
+          <h2>8大テーマ別カテゴリーナビゲーション</h2>
+          <ul>
+            ${FAQ_8_CATEGORIES.filter(c => c.id !== 'all').map(c => `<li><a href="/faq/${c.slug}"><strong>${escapeHtml(c.label)}</strong>：${escapeHtml(c.description)}</a></li>`).join('')}
+          </ul>
+        </section>
+        ${categorySectionsHtml}
+        <section>
+          <h2>公式LINE無料相談窓口</h2>
+          <p>疑問や不安な点は、専任の女性スタッフにLINEでいつでも匿名相談いただけます（24時間受付中・完全秘密厳守）。</p>
+        </section>
+      </article>
+    </main>
+  `;
+}
+
+function buildAboutNoscript(): string {
+  return `
+    <header>
+      <p>飛田ガールズについて｜運営者情報・料亭直営体制・一次情報ポリシー【公式】</p>
+      <p>24時間受付中・相談無料・完全秘密厳守</p>
+    </header>
+    <main>
+      <article>
+        <h1>飛田ガールズについて｜運営者情報・料亭直営体制・一次情報ポリシー【公式】</h1>
+        <p class="lead">飛田新地料理組合公認の老舗料亭直営公式採用窓口「飛田ガールズ」の店舗情報、創業歴、運営理念、女性スタッフによるサポート方針、一次情報発信ポリシーをご紹介します。</p>
+
+        <section>
+          <h2>安心の実績と信頼</h2>
+          <table border="1">
+            <tbody>
+              <tr><th>創業実績</th><td><strong>創業40余年</strong>（料理組合公認・老舗直営料亭グループ）</td></tr>
+              <tr><th>未経験スタート率</th><td><strong>90%以上</strong>（夜職初心者も即日安心のマンツーマン研修完備）</td></tr>
+              <tr><th>給与還元率</th><td><strong>完全50%ハーフバック</strong>（即日全額現金日払い手渡し保証・天引きゼロ）</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>女性ファーストを貫く3つの運営理念</h2>
+          <h3>1. 徹底したプライバシー保護・身バレゼロ保証</h3>
+          <p>飛田新地は街全体で一般人の撮影が固く禁止されています。また、当グループではインターネット上・SNSへの写真掲載は一切行いません。勤務は完全源氏名、身分証の管理も厳格で、昼職OLの副業向けに住民税の普通徴収手続きもしっかりサポートいたします。</p>
+
+          <h3>2. ノルマ・罰金・上下関係なしの自由な働き方</h3>
+          <p>指名争いや同伴・アフター、営業LINEの送信などは一切不要です。お酒を飲む必要も一切ありません。週1日から、短時間から、あなたのライフスタイルに合わせた完全自由出勤制を採用しています。</p>
+
+          <h3>3. 女性スタッフ常駐による手厚いメンタルケア</h3>
+          <p>現場サポート歴8年の女性スタッフが常駐しており、お仕事の疑問やお客さま対応のコツ、プライベートの悩みまで親身に相談に乗ります。困ったときはスタッフが即座に駆けつける万全のバックアップ体制です。</p>
+        </section>
+
+        <section>
+          <h2>サイト運営者情報・公式採用窓口</h2>
+          <table border="1">
+            <tbody>
+              <tr><th>サイト名</th><td>飛田ガールズ（飛田新地料亭直営求人・公式採用窓口）</td></tr>
+              <tr><th>運営責任者</th><td>女性サポート統括担当 さくら（サポート歴8年） / 採用マネージャー 木村（管理歴12年）</td></tr>
+              <tr><th>所在地</th><td>大阪府大阪市西成区山王エリア（飛田新地料理組合加盟料亭）</td></tr>
+              <tr><th>お問い合わせ</th><td>公式LINE窓口（24時間受付中・年中無休）</td></tr>
+              <tr><th>応募資格</th><td>20歳以上の日本国籍を有する女性（未経験歓迎 ※料理組合自主規制により20歳未満不可）</td></tr>
+              <tr><th>給与体系</th><td>売上50%完全即日全額日払い（手渡し支給・天引きゼロ）</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>一次情報発信ポリシーと安全性保証</h2>
+          <p>当サイトは外部の仲介業者・広告代理店を通さず、飛田新地料理組合公認の料亭直営スタッフが現場の採用基準と給与条件を正確に一次情報として発信しています。街全体での撮影禁止規約、お酒不要、写真ネット非掲載、完全源氏名、住民税普通徴収サポートを徹底し、女性の安全を最優先に保護しています。</p>
+        </section>
+      </article>
+    </main>
+  `;
+}
+
+function buildBlogIndexNoscript(articles: any[] = []): string {
+  const listItems = articles.slice(0, 30).map((a: any) => `
+    <li>
+      <h3><a href="/blog/${escapeHtml(a.slug)}">${escapeHtml(a.title)}</a></h3>
+      <p>${escapeHtml(a.summary || '')}</p>
+    </li>
+  `).join('');
+
+  return `
+    <header>
+      <p>飛田新地お仕事コラム・給与・面接ガイド一覧｜飛田ガールズ【公式】</p>
+      <p>24時間受付中・相談無料・完全秘密厳守</p>
+    </header>
+    <main>
+      <article>
+        <h1>飛田新地お仕事コラム・給与・面接ガイド一覧</h1>
+        <p class="lead">飛田新地のお仕事、給料システム、面接・体入の流れ、寮生活、安全対策など、現場の女性スタッフによる役立つ最新コラム一覧です。</p>
+        <section>
+          <h2>コラム記事一覧</h2>
+          <ul>${listItems}</ul>
+        </section>
+      </article>
+    </main>
+  `;
+}
+
+function buildBlogArticleNoscript(article: any): string {
+  let bodyText = '';
+  if (Array.isArray(article.content)) {
+    article.content.forEach((block: any) => {
+      if (block.type === 'h2') bodyText += `<h2>${escapeHtml(block.text)}</h2>`;
+      else if (block.type === 'h3') bodyText += `<h3>${escapeHtml(block.text)}</h3>`;
+      else if (block.type === 'p') bodyText += `<p>${escapeHtml(block.text)}</p>`;
+      else if (block.type === 'list' && Array.isArray(block.items)) {
+        bodyText += `<ul>${block.items.map((it: string) => `<li>${escapeHtml(it)}</li>`).join('')}</ul>`;
+      } else if (block.type === 'qna' && block.question) {
+        bodyText += `<section><h3>Q. ${escapeHtml(block.question)}</h3><p>A. ${escapeHtml(block.answer || block.text || '')}</p></section>`;
+      }
+    });
+  }
+
+  return `
+    <header>
+      <p>飛田新地求人サイト「飛田ガールズ」</p>
+      <p><a href="/blog">お仕事コラム一覧に戻る</a></p>
+    </header>
+    <main>
+      <article>
+        <h1>${escapeHtml(article.title)}</h1>
+        <p class="summary">${escapeHtml(article.summary || '')}</p>
+        <p class="meta">公開日: ${escapeHtml(article.publishedAt || '2026.07.01')} | 執筆: ${escapeHtml(article.author?.name || 'さくら')}（${escapeHtml(article.author?.role || '女性サポートスタッフ')}）</p>
+        ${bodyText}
+        <section>
+          <h2>飛田新地 料亭直営採用の募集要項</h2>
+          <table border="1">
+            <tbody>
+              <tr><th>給与</th><td>日給 30,000円〜100,000円以上（売上50%完全即日全額日払い手渡し）</td></tr>
+              <tr><th>勤務時間</th><td>10:00〜24:00（自由シフト制・週1日〜・1日3時間〜OK）</td></tr>
+              <tr><th>応募資格</th><td>20歳以上の女性（未経験歓迎・経験不問 ※料理組合規約により20歳未満不可）</td></tr>
+              <tr><th>待遇</th><td>個室マンション寮完備・衣装無料貸出・完全身バレ防止・交通費支給</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </article>
+    </main>
+  `;
+}
+
+function buildTopicNoscript(topic: string): string {
+  const clusterKey = topic === 'interview' ? 'flow' : topic;
+  const cluster = TOPIC_CLUSTERS[clusterKey];
+
+  if (!cluster) {
+    return `
+      <header><p>飛田新地求人サイト「飛田ガールズ」【公式】</p></header>
+      <main><article><h1>飛田新地求人ガイド【${escapeHtml(topic)}】</h1><p class="lead">飛田新地料亭直営公式求人の解説ページです。</p></article></main>
+    `;
+  }
+
+  const statsHtml = cluster.stats.map(s => `
+    <tr>
+      <th>${escapeHtml(s.label)}</th>
+      <td><strong>${escapeHtml(s.value)}</strong>（${escapeHtml(s.desc)}）</td>
+    </tr>
+  `).join('');
+
+  const keyPointsHtml = cluster.keyPoints.map(p => `<li>${escapeHtml(p)}</li>`).join('');
+
+  const sectionsHtml = cluster.sections.map(sec => {
+    let secContent = `<section><h2>${escapeHtml(sec.title)}</h2><p>${escapeHtml(sec.description)}</p>`;
+    if (sec.points && sec.points.length > 0) {
+      secContent += `<ul>${sec.points.map(pt => `<li>${escapeHtml(pt)}</li>`).join('')}</ul>`;
+    }
+    if (sec.table) {
+      secContent += `<table border="1"><thead><tr>${sec.table.headers.map(h => `<th>${escapeHtml(h)}</th>`).join('')}</tr></thead><tbody>`;
+      secContent += sec.table.rows.map(row => `<tr>${row.map(cell => `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`).join('');
+      secContent += `</tbody></table>`;
+    }
+    if (sec.callout) {
+      secContent += `<blockquote><strong>${escapeHtml(sec.callout.title)}</strong>: ${escapeHtml(sec.callout.text)}</blockquote>`;
+    }
+    secContent += `</section>`;
+    return secContent;
+  }).join('');
+
+  const faqsHtml = (cluster.faqs || []).map(f => `
+    <dt>Q. ${escapeHtml(f.q)}</dt>
+    <dd>A. ${escapeHtml(f.a)}</dd>
+  `).join('');
+
+  const relatedHtml = (cluster.relatedTopicIds || []).map(rId => {
+    const rel = TOPIC_CLUSTERS[rId];
+    if (!rel) return '';
+    return `<li><a href="${rel.path}">${escapeHtml(rel.title)}（${escapeHtml(rel.seoTitle)}）</a></li>`;
+  }).filter(Boolean).join('');
+
+  return `
+    <header>
+      <p>飛田新地求人【公式】飛田ガールズ 専門解説ガイド</p>
+      <p>24時間受付中・相談無料・完全秘密厳守</p>
+    </header>
+
+    <main>
+      <article>
+        <h1>${escapeHtml(cluster.seoTitle)}</h1>
+        <p class="lead">${escapeHtml(cluster.tagline)}。${escapeHtml(cluster.metaDescription)}</p>
+
+        <section>
+          <h2>【要点・結論】${escapeHtml(cluster.title)}の概要</h2>
+          <p><strong>${escapeHtml(cluster.llmDirectAnswer)}</strong></p>
+          <ul>${keyPointsHtml}</ul>
+        </section>
+
+        <section>
+          <h2>主要条件・データハイライト</h2>
+          <table border="1">
+            <tbody>
+              ${statsHtml}
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>詳しい解説</h2>
+          <p>${escapeHtml(cluster.overview)}</p>
+        </section>
+
+        ${sectionsHtml}
+
+        ${faqsHtml ? `
+        <section>
+          <h2>よくある質問（FAQ）</h2>
+          <dl>${faqsHtml}</dl>
+        </section>
+        ` : ''}
+
+        ${relatedHtml ? `
+        <section>
+          <h2>関連テーマ・お役立ちガイド</h2>
+          <ul>${relatedHtml}</ul>
+        </section>
+        ` : ''}
 
         <section>
           <h2>料亭直営公式採用窓口（飛田ガールズ）</h2>
@@ -329,6 +687,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
             "@context": "https://schema.org",
             "@graph": graphItems
           }, null, 2);
+          customNoscript = buildBlogArticleNoscript(article);
         } else {
           status = 404;
           title = 'お探しの記事が見つかりませんでした (404 Not Found)｜飛田新地求人 飛田ガールズ';
@@ -345,12 +704,56 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
     canonicalUrl = 'https://tobitashinchi-recruit.com/blog';
     ogImageUrl = DEFAULT_IMAGE;
     ogImageAlt = '飛田新地お仕事コラム 飛田ガールズ';
-  } else if (cleanPath === '/about') {
+    try {
+      const articlesFile = path.join(process.cwd(), 'data', 'blogArticles.json');
+      let articles: any[] = [];
+      if (fs.existsSync(articlesFile)) {
+        articles = JSON.parse(fs.readFileSync(articlesFile, 'utf-8'));
+      }
+      customNoscript = buildBlogIndexNoscript(articles);
+    } catch (_e) {
+      customNoscript = buildBlogIndexNoscript([]);
+    }
+  } else if (cleanPath === '/about' || cleanPath === '/company') {
     title = '飛田ガールズについて｜運営者情報・監修体制・一次情報ポリシー【公式】';
     description = '飛田新地料理組合公認の老舗料亭直営公式求人「飛田ガールズ」の店舗情報、創業歴、運営体制、女性スタッフによるサポート方針、一次情報発信ポリシーをご紹介します。';
     canonicalUrl = 'https://tobitashinchi-recruit.com/about';
     ogImageUrl = DEFAULT_IMAGE;
     ogImageAlt = '飛田ガールズ 運営者情報';
+    customNoscript = buildAboutNoscript();
+    customJsonLd = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'AboutPage',
+          '@id': 'https://tobitashinchi-recruit.com/about#aboutpage',
+          'url': 'https://tobitashinchi-recruit.com/about',
+          'name': '飛田ガールズについて｜運営者情報・監修体制・一次情報ポリシー【公式】',
+          'description': '飛田新地料理組合公認の老舗料亭直営公式求人「飛田ガールズ」の店舗情報、創業歴、運営体制、女性スタッフによるサポート方針、一次情報発信ポリシーをご紹介します。',
+          'isPartOf': {
+            '@type': 'WebSite',
+            '@id': 'https://tobitashinchi-recruit.com/#website',
+            'name': '飛田ガールズ',
+            'url': 'https://tobitashinchi-recruit.com/'
+          }
+        },
+        {
+          '@type': 'Organization',
+          '@id': 'https://tobitashinchi-recruit.com/#organization',
+          'name': '飛田ガールズ（料理組合公認 料亭直営採用窓口）',
+          'url': 'https://tobitashinchi-recruit.com/',
+          'logo': 'https://tobitashinchi-recruit.com/favicon.svg',
+          'address': {
+            '@type': 'PostalAddress',
+            'streetAddress': '山王3丁目',
+            'addressLocality': '大阪市西成区',
+            'addressRegion': '大阪府',
+            'postalCode': '557-0001',
+            'addressCountry': 'JP'
+          }
+        }
+      ]
+    }, null, 2);
   } else if (cleanPath === '/compare' || cleanPath === '/compare/') {
     title = '飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】｜未経験・高収入・Wワーク【公式】';
     description = '飛田新地料亭直営公式求人と街頭スカウト業者・他求人サイト（飛田ジョブなど）の4者徹底比較。安心の料亭直営で即日全額日払い・身バレ完全防止。';
@@ -523,26 +926,118 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
       canonicalUrl = `https://tobitashinchi-recruit.com/compare/${slug}`;
     }
   } else if (cleanPath === '/faq' || cleanPath.startsWith('/faq/')) {
-    title = '飛田新地求人 FAQ（全119問・8大テーマ体系化）｜未経験・給料・身バレ・面接【公式】';
-    description = '飛田新地求人のよくある質問と回答（全119問）。応募資格、面接、給料手渡し、個室寮、身バレ対策など、疑問や不安をテーマ別に完全解消。';
-    canonicalUrl = `https://tobitashinchi-recruit.com${cleanPath}`;
+    const rawFaqCat = cleanPath.replace('/faq/', '').replace(/\/$/, '').replace('/faq', '');
+    const faqCat = rawFaqCat || undefined;
+    const catDef = faqCat ? FAQ_8_CATEGORIES.find(c => c.slug === faqCat || c.id === faqCat) : undefined;
+
+    if (catDef && catDef.id !== 'all') {
+      title = `【${catDef.label}】飛田新地求人 よくある質問100選（全119問・本音回答）｜飛田ガールズ【公式】`;
+      description = `【飛田新地求人FAQ：${catDef.label}】${catDef.description}。老舗料亭直営の専任女性スタッフが疑問や不安に本音回答。即日全額日払い・完全身バレ防止。`;
+      canonicalUrl = `https://tobitashinchi-recruit.com/faq/${catDef.slug}`;
+      customNoscript = buildFaqNoscript(catDef.slug);
+
+      const catQuestions = FAQ_100_LIST.filter(f => f.eightCategory === catDef.id);
+      customJsonLd = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        '@id': `https://tobitashinchi-recruit.com/faq/${catDef.slug}#faq`,
+        'mainEntity': catQuestions.map(f => ({
+          '@type': 'Question',
+          'name': f.question,
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': f.answer
+          }
+        }))
+      }, null, 2);
+    } else {
+      title = '飛田新地求人 FAQ（全119問・8大テーマ完全網羅）｜未経験・給料・身バレ・面接【公式】';
+      description = '飛田新地求人のよくある質問と回答（全119問）。応募資格、面接、給料手渡し、個室寮、身バレ対策など、疑問や不安を8大テーマ別に完全解消。';
+      canonicalUrl = 'https://tobitashinchi-recruit.com/faq';
+      customNoscript = buildFaqNoscript();
+
+      const topFaqs = FAQ_100_LIST.filter(f => f.isPopular).slice(0, 15);
+      customJsonLd = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        '@id': 'https://tobitashinchi-recruit.com/faq#faq',
+        'mainEntity': topFaqs.map(f => ({
+          '@type': 'Question',
+          'name': f.question,
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': f.answer
+          }
+        }))
+      }, null, 2);
+    }
+    ogImageUrl = DEFAULT_IMAGE;
   } else {
-    const TOPIC_PATHS: Record<string, { title: string; desc: string }> = {
-      '/job': { title: '【飛田新地求人】お仕事内容と1日の流れ｜お茶出しとおもてなし接客・お酒一切不要【公式】', desc: '飛田新地求人の仕事内容を徹底解説。料亭の玄関でお出迎えし、お部屋でお茶やお菓子を出しながらおもてなし。お酒一切不要、営業連絡禁止、1回15〜20分の短時間接客で安心です。' },
-      '/salary': { title: '【飛田新地求人】給料システムと日給相場｜売上50%完全バック・即日全額日払い【公式】', desc: '飛田新地の給与・報酬体系を完全公開。売上ハーフバック（50%）で日給3万〜10万円超。引かれもの・雑費なし、即日全額現金日払い手渡し。' },
-      '/beginner': { title: '【飛田新地求人】未経験・夜職初めての女性へ｜安心サポート体制と体験入店【公式】', desc: '夜のお仕事が初めての女性向けガイド。90%以上が未経験スタート。女性スタッフによる丁寧な研修と1回ごとのフォロー。' },
-      '/experienced': { title: '【飛田新地求人】他店・他業種からの移籍・経験者優遇｜条件交渉と入店サポート【公式】', desc: 'キャバクラ、ラウンジ、他店からの移籍・経験者サポート。自由シフト・高稼働料亭直営で無駄なストレスゼロ。' },
-      '/requirements': { title: '【飛田新地求人】応募資格・面接条件・必要書類まとめ｜20歳以上の女性【公式】', desc: '飛田新地料亭の応募資格と面接時の持ち物、住民票など必要書類の準備方法を詳しく解説。' },
-      '/flow': { title: '【飛田新地求人】応募から面接・体験入店・お仕事開始までの流れ【公式】', desc: 'LINEでの無料相談から面接、即日体験入店、日払い受け取りまでの具体的なステップを解説。' },
-      '/workstyle': { title: '【飛田新地求人】自由なシフトと働き方｜週1日・短時間・昼出勤OK【公式】', desc: '昼シフト（10時〜18時）や夜シフト、週1日出勤など、ライフスタイルに合わせた自由な働き方。' },
-      '/shops': { title: '【飛田新地求人】通り別の特徴とお客層｜メイン通り・青春通り・大門通りの違い【公式】', desc: '飛田新地の各通りごとの特色、客層の違い、自分に合った料亭選びのポイントを網羅。' },
-      '/dorm': { title: '【飛田新地求人】即日入居できる個室マンション寮・生活支援・出稼ぎサポート【公式】', desc: '家具家電付き・セキュリティ完備の個室寮を完備。遠方からの出稼ぎや即日入居も対応。' },
-      '/safety': { title: '【飛田新地求人】身バレ防止・プライバシー保護・安心の防犯体制【公式】', desc: 'ネット露出一切なし・街全体の撮影禁止規約・完全源氏名勤務。身バレを徹底的に防ぐ安全体制。' }
-    };
-    if (TOPIC_PATHS[cleanPath]) {
-      title = TOPIC_PATHS[cleanPath].title;
-      description = TOPIC_PATHS[cleanPath].desc;
-      canonicalUrl = `https://tobitashinchi-recruit.com${cleanPath}`;
+    const rawTopic = cleanPath.replace(/^\//, '').replace(/\/$/, '');
+    const topicKey = rawTopic === 'interview' ? 'flow' : rawTopic;
+    const cluster = TOPIC_CLUSTERS[topicKey];
+
+    if (cluster) {
+      title = cluster.seoTitle;
+      description = cluster.metaDescription;
+      canonicalUrl = `https://tobitashinchi-recruit.com${cleanPath === '/interview' ? '/interview' : cluster.path}`;
+      ogImageUrl = resolveFullImageUrl(cluster.heroImage);
+      ogImageAlt = cluster.title;
+      customNoscript = buildTopicNoscript(topicKey);
+
+      const graphItems: any[] = [
+        {
+          '@type': 'WebPage',
+          '@id': `https://tobitashinchi-recruit.com${cluster.path}#webpage`,
+          'url': `https://tobitashinchi-recruit.com${cluster.path}`,
+          'name': cluster.seoTitle,
+          'description': cluster.metaDescription,
+          'isPartOf': {
+            '@type': 'WebSite',
+            '@id': 'https://tobitashinchi-recruit.com/#website',
+            'name': '飛田ガールズ',
+            'url': 'https://tobitashinchi-recruit.com/'
+          }
+        },
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `https://tobitashinchi-recruit.com${cluster.path}#breadcrumb`,
+          'itemListElement': [
+            {
+              '@type': 'ListItem',
+              'position': 1,
+              'name': 'トップ',
+              'item': 'https://tobitashinchi-recruit.com/'
+            },
+            {
+              '@type': 'ListItem',
+              'position': 2,
+              'name': cluster.title,
+              'item': `https://tobitashinchi-recruit.com${cluster.path}`
+            }
+          ]
+        }
+      ];
+
+      if (cluster.faqs && cluster.faqs.length > 0) {
+        graphItems.push({
+          '@type': 'FAQPage',
+          '@id': `https://tobitashinchi-recruit.com${cluster.path}#faq`,
+          'mainEntity': cluster.faqs.map(f => ({
+            '@type': 'Question',
+            'name': f.q,
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': f.a
+            }
+          }))
+        });
+      }
+
+      customJsonLd = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': graphItems
+      }, null, 2);
     }
   }
 
@@ -603,12 +1098,20 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
 
   // Replace Structured Data (JSON-LD) if custom defined for specific route
   if (customJsonLd) {
-    html = html.replace(/<script\s+type=["']application\/ld\+json["']>[\s\S]*?<\/script>/i, `<script type="application/ld+json">\n${customJsonLd}\n</script>`);
+    if (/<script\s+type=["']application\/ld\+json["']>[\s\S]*?<\/script>/i.test(html)) {
+      html = html.replace(/<script\s+type=["']application\/ld\+json["']>[\s\S]*?<\/script>/i, `<script type="application/ld+json">\n${customJsonLd}\n</script>`);
+    } else {
+      html = html.replace(/<\/head>/i, `  <script type="application/ld+json">\n${customJsonLd}\n</script>\n</head>`);
+    }
   }
 
   // Replace <noscript> with route-specific fallback for LLM crawlers
   if (customNoscript) {
-    html = html.replace(/<noscript>[\s\S]*?<\/noscript>/i, `<noscript>\n${customNoscript}\n</noscript>`);
+    if (/<noscript>[\s\S]*?<\/noscript>/i.test(html)) {
+      html = html.replace(/<noscript>[\s\S]*?<\/noscript>/i, `<noscript>\n${customNoscript}\n</noscript>`);
+    } else {
+      html = html.replace(/<\/body>/i, `  <noscript>\n${customNoscript}\n</noscript>\n</body>`);
+    }
   }
 
   // Inject Pre-rendered content for Web Crawlers
