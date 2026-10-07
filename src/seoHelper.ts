@@ -139,8 +139,8 @@ function buildCompareNoscript(slug?: string): string {
             <thead>
               <tr>
                 <th>あなたの希望</th>
-                <th>おすすめ</th>
-                <th>特徴・詳細</th>
+                <th>こんな働き方がおすすめ</th>
+                <th>詳しく見る</th>
               </tr>
             </thead>
             <tbody>

@@ -259,17 +259,17 @@ export default function CompareDiagnostic({
         <div className="mb-8 relative z-10">
           <div className="bg-white rounded-2xl sm:rounded-3xl border border-rose-200/90 shadow-sm overflow-hidden">
             {/* Table Header */}
-            <div className="grid grid-cols-12 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-black text-xs sm:text-sm py-3 px-4 sm:px-6">
-              <div className="col-span-5 sm:col-span-5 flex items-center gap-1.5">
+            <div className="grid grid-cols-12 items-center bg-gradient-to-r from-rose-500 to-pink-500 text-white font-black text-xs sm:text-sm py-3 px-3.5 sm:px-6">
+              <div className="col-span-5 sm:col-span-4 flex items-center gap-1.5">
                 <LucideIcon name="Heart" size={15} className="text-yellow-300 hidden sm:inline" />
                 <span>あなたの希望</span>
               </div>
-              <div className="col-span-4 sm:col-span-4 flex items-center gap-1.5">
+              <div className="col-span-4 sm:col-span-5 flex items-center gap-1.5">
                 <LucideIcon name="Sparkles" size={15} className="text-yellow-300 hidden sm:inline" />
-                <span>おすすめ</span>
+                <span>こんな働き方がおすすめ</span>
               </div>
               <div className="col-span-3 sm:col-span-3 text-right">
-                <span className="text-[11px] sm:text-xs text-rose-100 font-bold">導線・詳細</span>
+                <span className="text-[11px] sm:text-xs text-rose-100 font-bold">詳しく見る</span>
               </div>
             </div>
 
@@ -288,15 +288,15 @@ export default function CompareDiagnostic({
                     }`}
                   >
                     {/* Column 1: あなたの希望 */}
-                    <div className="col-span-5 sm:col-span-5 flex items-center gap-2 pr-2">
+                    <div className="col-span-5 sm:col-span-4 flex items-center gap-2 pr-1 sm:pr-2">
                       <span className="text-base sm:text-xl flex-shrink-0">{row.emoji}</span>
                       <span className="text-xs sm:text-sm font-black text-zinc-900 leading-snug">
                         {row.wish}
                       </span>
                     </div>
 
-                    {/* Column 2: おすすめ */}
-                    <div className="col-span-4 sm:col-span-4 pr-2">
+                    {/* Column 2: こんな働き方がおすすめ */}
+                    <div className="col-span-4 sm:col-span-5 pr-1 sm:pr-2">
                       <span className="inline-flex items-center gap-1 text-xs sm:text-sm font-black text-secondary">
                         {row.recommended}
                       </span>
@@ -320,7 +320,7 @@ export default function CompareDiagnostic({
                         }`}
                       >
                         <span className="hidden sm:inline">
-                          {row.actionType === 'line' ? '相談する' : '見る'}
+                          {row.actionType === 'line' ? '相談する' : '詳しく見る'}
                         </span>
                         <LucideIcon 
                           name={row.actionType === 'line' ? 'MessageCircle' : 'ArrowRight'} 
@@ -356,7 +356,7 @@ export default function CompareDiagnostic({
                   </span>
                 </div>
                 <h3 className="font-display font-black text-lg sm:text-xl text-on-surface">
-                  おすすめ：<span className="text-secondary">{activeRow.recommended}</span>
+                  こんな働き方がおすすめ：<span className="text-secondary">{activeRow.recommended}</span>
                 </h3>
               </div>
             </div>
