@@ -137,6 +137,100 @@ export default function JobDetails({ content, onCtaclickWithData, onNavigateRequ
           })}
         </div>
 
+        {/* 実際に何をするの？ 1回の接客の流れ */}
+        <div className="bg-gradient-to-br from-rose-50/80 via-white to-pink-50/60 rounded-3xl p-6 sm:p-8 border-2 border-rose-200/90 shadow-sm mb-12 sm:mb-16">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-secondary font-black text-xs bg-rose-100 px-3 py-1 rounded-full flex items-center gap-1">
+              <LucideIcon name="Sparkles" size={13} />
+              <span>未経験でもすぐイメージできる</span>
+            </span>
+          </div>
+          <h3 className="font-display font-black text-lg sm:text-2xl text-zinc-900 mb-2">
+            「実際に何をするの？」イメージできる1回の接客の流れ
+          </h3>
+          <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed mb-6">
+            お酒不要・営業連絡ゼロ。1回わずか15〜20分のシンプルな5ステップです。
+          </p>
+
+          {/* Steps Flow Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 relative">
+            {/* Step 1 */}
+            <div className="bg-white rounded-2xl p-4 border border-rose-100 shadow-2xs relative flex flex-col justify-between">
+              <div>
+                <div className="w-8 h-8 rounded-full bg-rose-500 text-white font-black text-xs flex items-center justify-center mb-2.5 shadow-xs">
+                  ①
+                </div>
+                <h4 className="font-bold text-xs sm:text-sm text-zinc-900 mb-1">
+                  お客様をお部屋へご案内
+                </h4>
+                <p className="text-[11px] text-zinc-600 leading-relaxed">
+                  玄関でのお声がけは仲居さん担当。お客様と笑顔で個室の座敷へ入ります。
+                </p>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="bg-white rounded-2xl p-4 border border-rose-100 shadow-2xs relative flex flex-col justify-between">
+              <div>
+                <div className="w-8 h-8 rounded-full bg-rose-500 text-white font-black text-xs flex items-center justify-center mb-2.5 shadow-xs">
+                  ②
+                </div>
+                <h4 className="font-bold text-xs sm:text-sm text-zinc-900 mb-1">
+                  お茶・お菓子を用意
+                </h4>
+                <p className="text-[11px] text-zinc-600 leading-relaxed">
+                  急須で温かいお茶や冷たいお茶、季節の和菓子をお出ししておもてなし。
+                </p>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="bg-white rounded-2xl p-4 border border-rose-100 shadow-2xs relative flex flex-col justify-between">
+              <div>
+                <div className="w-8 h-8 rounded-full bg-rose-500 text-white font-black text-xs flex items-center justify-center mb-2.5 shadow-xs">
+                  ③
+                </div>
+                <h4 className="font-bold text-xs sm:text-sm text-zinc-900 mb-1">
+                  15〜20分ほど会話
+                </h4>
+                <p className="text-[11px] text-zinc-600 leading-relaxed">
+                  世間話や大阪観光のお話でリラックス。お酒を飲む必要は一切ありません！
+                </p>
+              </div>
+            </div>
+
+            {/* Step 4 */}
+            <div className="bg-white rounded-2xl p-4 border border-rose-100 shadow-2xs relative flex flex-col justify-between">
+              <div>
+                <div className="w-8 h-8 rounded-full bg-rose-500 text-white font-black text-xs flex items-center justify-center mb-2.5 shadow-xs">
+                  ④
+                </div>
+                <h4 className="font-bold text-xs sm:text-sm text-zinc-900 mb-1">
+                  時間になったら終了
+                </h4>
+                <p className="text-[11px] text-zinc-600 leading-relaxed">
+                  仲居さんが時間を正確に管理。時間通りに終了し、無理な引き延ばしもゼロ。
+                </p>
+              </div>
+            </div>
+
+            {/* Step 5 */}
+            <div className="bg-white rounded-2xl p-4 border border-rose-100 shadow-2xs relative flex flex-col justify-between">
+              <div>
+                <div className="w-8 h-8 rounded-full bg-rose-500 text-white font-black text-xs flex items-center justify-center mb-2.5 shadow-xs">
+                  ⑤
+                </div>
+                <h4 className="font-bold text-xs sm:text-sm text-zinc-900 mb-1">
+                  次のお客様へ
+                </h4>
+                <p className="text-[11px] text-zinc-600 leading-relaxed">
+                  お部屋の片付けや清掃は仲居さんが担当。重労働のお風呂掃除等もありません。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Earning Simulator Core - Micro-crafted Dashboard */}
         <div className="bg-gradient-to-br from-rose-50/50 to-pink-50/20 border border-rose-100 rounded-3xl md:rounded-[36px] p-4 md:p-10 shadow-sm" id="earnings-simulator">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">

@@ -183,6 +183,7 @@ export default function App() {
   useEffect(() => {
     const slugRedirectMap: Record<string, string> = {
       'tobitashinchi-dormitory-lifestyle-support': '/blog/tobitashinchi-housing-support',
+      'tobitashinchi-tax-declaration-guide': '/blog/tobitashinchi-tax-guide',
       'tobitashinchi-privacy-alibi-support': '/blog/tobitashinchi-identity-alibi-safety-measures',
       'tobitashinchi-physical-mental-care-guide': '/blog/tobitashinchi-stamina-mental-care-100k',
       'tobitashinchi-fake-job-scout-warning': '/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment',

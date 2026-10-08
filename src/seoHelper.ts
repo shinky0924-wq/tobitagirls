@@ -102,6 +102,7 @@ function buildHomeNoscript(): string {
             <li>
               <h3><a href="/job">1. お仕事内容（料亭での接客・お茶出し・お酒不要）</a></h3>
               <p>老舗料亭のお座敷でお客様とお茶を飲みながら会話を楽しむおもてなし接客。お酒を飲む必要は一切なく、客引きや営業活動も不要です。</p>
+              <p><strong>【「実際に何をするの？」イメージできる1回の接客の流れ】</strong><br>① お客様をお部屋へご案内 → ② お茶・お菓子を用意 → ③ 15〜20分ほど会話 → ④ 時間になったら終了 → ⑤ 次のお客様へ（お部屋の清掃は仲居さん担当）。</p>
             </li>
             <li>
               <h3><a href="/salary">2. 給料・日給システム（売上50%完全即日全額日払い）</a></h3>
@@ -444,6 +445,16 @@ function buildCompareNoscript(slug?: string): string {
             <li><strong>客引き・営業活動ゼロ：</strong>玄関先でのお声がけや客引きは専任の仲居さん（おばちゃん）が全て行います。自分から営業するストレスはありません。</li>
             <li><strong>お客様との連絡先交換禁止：</strong>店外での付きまといやストーカー・プライベート侵害を完全防止。営業LINEや同伴・アフターも一切不要です。</li>
           </ul>
+          <div>
+            <h3>【実際に何をするの？】イメージできる1回の接客の流れ（約15〜20分）</h3>
+            <ol>
+              <li><strong>① お客様をお部屋へご案内：</strong>玄関先でのお声がけや客引きは仲居さん担当。笑顔でお客様と個室座敷へ入ります。</li>
+              <li><strong>② お茶・お菓子を用意：</strong>急須で温かいお茶や冷たいお茶を淹れ、季節の和菓子をお出ししておもてなし。</li>
+              <li><strong>③ 15〜20分ほど会話：</strong>世間話や大阪観光のお話でリラックス。お酒を飲む必要は一切ありません。</li>
+              <li><strong>④ 時間になったら終了：</strong>仲居さんが時間を正確に管理。時間通りにきっちり終了し、長引く心配ゼロ。</li>
+              <li><strong>⑤ 次のお客様へ：</strong>お部屋の清掃や片付けは仲居さんが担当。重労働のお風呂掃除等もありません。</li>
+            </ol>
+          </div>
         </section>
 
         <section id="section-salary">
@@ -841,8 +852,29 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
 
   const cleanPath = reqUrl.split('?')[0].split('#')[0];
 
-  // 1. Blog details
-  if (cleanPath.startsWith('/blog/')) {
+  const LEGACY_URL_REDIRECTS: Record<string, string> = {
+    '/blog/tobitashinchi-dormitory-lifestyle-support': '/blog/tobitashinchi-housing-support',
+    '/blog/tobitashinchi-tax-declaration-guide': '/blog/tobitashinchi-tax-guide',
+    '/blog/tobitashinchi-privacy-alibi-support': '/blog/tobitashinchi-identity-alibi-safety-measures',
+    '/blog/tobitashinchi-physical-mental-care-guide': '/blog/tobitashinchi-stamina-mental-care-100k',
+    '/blog/tobitashinchi-fake-job-scout-warning': '/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment',
+    '/blog/tobitashinchi-daily-work-routine-guide': '/blog/tobitashinchi-daily-schedule-work-flow-detail',
+    '/comparison': '/compare',
+    '/target-categories': '/compare',
+    '/target-jobs': '/compare',
+    '/categories': '/compare',
+    '/company': '/about',
+  };
+
+  const cleanReqPath = cleanPath.replace(/\/$/, '') || '/';
+  if (LEGACY_URL_REDIRECTS[cleanReqPath] || LEGACY_URL_REDIRECTS[cleanPath]) {
+    const dest = LEGACY_URL_REDIRECTS[cleanReqPath] || LEGACY_URL_REDIRECTS[cleanPath];
+    canonicalUrl = `https://tobitashinchi-recruit.com${dest}`;
+    title = 'ページ移動のお知らせ｜飛田ガールズ【公式】';
+    description = '指定されたページは移転・統合されました。正規ページへ自動移動します。';
+    status = 301;
+    customNoscript = `<p>このページは移転しました。<a href="${canonicalUrl}">最新の公式ページ（${escapeHtml(canonicalUrl)}）はこちら</a></p>`;
+  } else if (cleanPath.startsWith('/blog/')) {
     const slug = cleanPath.replace('/blog/', '').replace(/\/$/, '');
     if (slug) {
       try {
@@ -1349,7 +1381,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
     html = html.replace(/<\/head>/i, `  <meta name="description" content="${escapeHtml(description)}" />\n</head>`);
   }
 
-  // Replace Canonical URL & Robots for 404
+  // Replace Canonical URL & Robots for 404 and 301
   if (status === 404) {
     if (/<meta\s+name=["']robots["'][^>]*>/i.test(html)) {
       html = html.replace(/<meta\s+name=["']robots["'][^>]*>/i, '<meta name="robots" content="noindex, nofollow" />');
@@ -1357,6 +1389,18 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
       html = html.replace(/<\/head>/i, '  <meta name="robots" content="noindex, nofollow" />\n</head>');
     }
     html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/i, '');
+  } else if (status === 301) {
+    if (/<meta\s+name=["']robots["'][^>]*>/i.test(html)) {
+      html = html.replace(/<meta\s+name=["']robots["'][^>]*>/i, '<meta name="robots" content="noindex, follow" />');
+    } else {
+      html = html.replace(/<\/head>/i, '  <meta name="robots" content="noindex, follow" />\n</head>');
+    }
+    html = html.replace(/<\/head>/i, `  <meta http-equiv="refresh" content="0;url=${canonicalUrl}" />\n</head>`);
+    if (/<link\s+rel=["']canonical["'][^>]*>/i.test(html)) {
+      html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/i, `<link rel="canonical" href="${canonicalUrl}" />`);
+    } else {
+      html = html.replace(/<\/head>/i, `  <link rel="canonical" href="${canonicalUrl}" />\n</head>`);
+    }
   } else {
     if (/<link\s+rel=["']canonical["'][^>]*>/i.test(html)) {
       html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/i, `<link rel="canonical" href="${canonicalUrl}" />`);

@@ -43,6 +43,7 @@ async function startServer() {
     // 2. Soft 404 URL Map
     const LEGACY_URL_REDIRECTS: Record<string, string> = {
       '/blog/tobitashinchi-dormitory-lifestyle-support': '/blog/tobitashinchi-housing-support',
+      '/blog/tobitashinchi-tax-declaration-guide': '/blog/tobitashinchi-tax-guide',
       '/blog/tobitashinchi-privacy-alibi-support': '/blog/tobitashinchi-identity-alibi-safety-measures',
       '/blog/tobitashinchi-physical-mental-care-guide': '/blog/tobitashinchi-stamina-mental-care-100k',
       '/blog/tobitashinchi-fake-job-scout-warning': '/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment',

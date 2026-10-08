@@ -115,13 +115,50 @@ async function runPrerender() {
     count++;
   }
 
-  // 8. Ensure _redirects in dist
+  // 8. Generate static HTML redirects for legacy URLs (ensures static hosts like GitHub Pages / Cloudflare 301 properly)
+  const legacyRedirects: Record<string, string> = {
+    '/blog/tobitashinchi-dormitory-lifestyle-support': '/blog/tobitashinchi-housing-support',
+    '/blog/tobitashinchi-tax-declaration-guide': '/blog/tobitashinchi-tax-guide',
+    '/blog/tobitashinchi-privacy-alibi-support': '/blog/tobitashinchi-identity-alibi-safety-measures',
+    '/blog/tobitashinchi-physical-mental-care-guide': '/blog/tobitashinchi-stamina-mental-care-100k',
+    '/blog/tobitashinchi-fake-job-scout-warning': '/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment',
+    '/blog/tobitashinchi-daily-work-routine-guide': '/blog/tobitashinchi-daily-schedule-work-flow-detail',
+    '/comparison': '/compare',
+    '/target-categories': '/compare',
+    '/target-jobs': '/compare',
+    '/categories': '/compare',
+    '/company': '/about',
+  };
+
+  for (const [fromPath, toPath] of Object.entries(legacyRedirects)) {
+    const fullDest = `https://tobitashinchi-recruit.com${toPath}`;
+    const redirectHtml = `<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ページ移動のお知らせ｜飛田ガールズ</title>
+  <meta http-equiv="refresh" content="0;url=${fullDest}">
+  <link rel="canonical" href="${fullDest}">
+  <meta name="robots" content="noindex, follow">
+  <script>location.replace(${JSON.stringify(fullDest)});</script>
+</head>
+<body style="font-family: sans-serif; text-align: center; padding: 50px 20px;">
+  <p>ページが移動しました。<br><a href="${fullDest}">自動的に移動しない場合はこちらをクリックしてください。</a></p>
+</body>
+</html>`;
+    const cleanFrom = fromPath.replace(/^\//, '');
+    writeHtml(path.join(distDir, cleanFrom, 'index.html'), redirectHtml);
+    writeHtml(path.join(distDir, `${cleanFrom}.html`), redirectHtml);
+    count++;
+  }
+
+  // 9. Ensure _redirects in dist
   const rootRedirects = path.join(process.cwd(), '_redirects');
   if (fs.existsSync(rootRedirects)) {
     fs.copyFileSync(rootRedirects, path.join(distDir, '_redirects'));
   }
 
-  // 9. Ensure sitemap and robots in dist
+  // 10. Ensure sitemap and robots in dist
   const sitemapSrc = path.join(process.cwd(), 'public', 'sitemap.xml');
   if (fs.existsSync(sitemapSrc)) {
     fs.copyFileSync(sitemapSrc, path.join(distDir, 'sitemap.xml'));
