@@ -25,16 +25,63 @@ export interface BlogArticle {
   tags: string[];
 }
 
-export const BLOG_CATEGORIES = [
-  { id: 'all', label: 'すべて' },
-  { id: 'beginner', label: '未経験者向け' },
-  { id: 'salary', label: '給与・待遇' },
-  { id: 'security', label: '安心・身バレ対策' },
-  { id: 'lifestyle', label: '生活・働き方' },
-  { id: 'onboarding', label: '面接・お仕事の流れ' }
+export const BLOG_CATEGORIES: { id: string; label: string; emoji?: string }[] = [
+  { id: 'all', label: 'すべて', emoji: '✨' },
+  { id: 'beginner', label: '未経験者向け', emoji: '🔰' },
+  { id: 'salary', label: '給与・待遇', emoji: '💰' },
+  { id: 'security', label: '安心・身バレ対策', emoji: '🤫' },
+  { id: 'lifestyle', label: '生活・働き方', emoji: '⏰' },
+  { id: 'onboarding', label: '面接・お仕事の流れ', emoji: '🌸' }
 ];
 
 export const BLOG_ARTICLES: BlogArticle[] = blogArticlesJson as BlogArticle[];
+
+export function getAuthorProfile(author?: { name?: string; role?: string; avatar?: string }): {
+  name: string;
+  role: string;
+  avatar: string;
+  badge: string;
+  experienceTag: string;
+  comment: string;
+  bio: string;
+} {
+  const name = author?.name || '';
+  const role = author?.role || '';
+  const avatar = author?.avatar || '';
+
+  if (name.includes('ななみ') || name.includes('チーフ')) {
+    return {
+      name: name || 'ななみ',
+      role: role || '女性キャストサポート責任者（チーフ）',
+      avatar: avatar && !avatar.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/) ? avatar : '/images/author_nanami_chief.jpg',
+      badge: '現場統括・女性ケア責任者',
+      experienceTag: '料亭業界歴12年 / 面接・新人育成担当',
+      comment: '飛田新地で働く女の子たちが一番不安に感じる「人間関係」「お店のリアルな客層」「安全面」について、現場の責任者として包み隠さず本音でお答えしています。',
+      bio: '飛田新地料理組合加盟の老舗料亭にて女性サポートチーフを務める。未経験スタートのキャストが安心して高収入を得られるよう、入店前の面談から勤務中のメンタルケアまで一貫してサポート。'
+    };
+  }
+  if (name.includes('みく') || name.includes('アドバイザー')) {
+    return {
+      name: name || 'みく',
+      role: role || '公式LINE相談窓口・女性アドバイザー',
+      avatar: avatar && !avatar.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/) ? avatar : '/images/author_miku_advisor.jpg',
+      badge: '24時間LINE相談窓口担当',
+      experienceTag: '相談窓口歴5年 / ナイトワーク転職相談担当',
+      comment: '「こんなこと聞いても大丈夫かな？」と思う些細な疑問でも大丈夫です。女性同士だからこそ話せる本音の相談に24時間お答えしています。',
+      bio: '公式LINE相談や面接前の不安解消を担当する女性アドバイザー。夜職がまったく初めての方でもリラックスして疑問を解消できるよう、寄り添った丁寧なカウンセリングを行っています。'
+    };
+  }
+  // Default: さくら (女性サポートスタッフ歴8年)
+  return {
+    name: name || 'さくら',
+    role: role || '女性サポートスタッフ（歴8年）',
+    avatar: avatar && !avatar.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/) ? avatar : '/images/sakura_advisor_portrait_1788920514818.jpg',
+    badge: '記事監修・実務執筆',
+    experienceTag: '女性相談窓口歴8年 / のべ1,000名以上対応',
+    comment: 'ネット上の不確かな噂や誇大広告ではなく、実際の料亭現場での採用基準、給与システム、女性の安全管理規約に基づいた事実のみを記載しています。',
+    bio: '飛田新地での女性サポート歴8年。未経験者から出稼ぎ希望者まで、のべ1,000名以上の相談・面接案内を担当。給与システム、身バレ防止、衛生管理、生活支援に関する現場の最新情報を発信しています。'
+  };
+}
 
 export function getValidArticleEyeCatch(art: { id?: string | number; slug?: string; category?: string; eyeCatch?: string }): string {
   // If slug matches, return dedicated cute card directly
@@ -129,6 +176,44 @@ export function getStoredArticles(): BlogArticle[] {
     console.error('Error parsing custom blog articles:', e);
     return BLOG_ARTICLES;
   }
+}
+
+export function mergeWithDefaultArticles(incomingArticles: BlogArticle[]): { merged: BlogArticle[]; hasChanges: boolean } {
+  const incoming = incomingArticles || [];
+  const defaultSlugs = new Map(BLOG_ARTICLES.map(d => [d.slug, d]));
+  const defaultIds = new Map(BLOG_ARTICLES.map(d => [String(d.id), d]));
+  let hasChanges = false;
+  
+  const updatedIncoming = incoming.map(art => {
+    const match = defaultSlugs.get(art.slug) || defaultIds.get(String(art.id));
+    if (match) {
+      hasChanges = true;
+      return match;
+    }
+    const validEyeCatch = getValidArticleEyeCatch(art);
+    if (validEyeCatch !== art.eyeCatch) {
+      hasChanges = true;
+      return { ...art, eyeCatch: validEyeCatch };
+    }
+    return art;
+  });
+
+  const existingSlugs = new Set(updatedIncoming.map(a => a.slug));
+  const merged = [...updatedIncoming];
+  for (const defaultArt of BLOG_ARTICLES) {
+    if (!existingSlugs.has(defaultArt.slug)) {
+      merged.push(defaultArt);
+      hasChanges = true;
+    }
+  }
+
+  merged.sort((a, b) => {
+    const idA = parseInt(a.id, 10) || 0;
+    const idB = parseInt(b.id, 10) || 0;
+    return idA - idB;
+  });
+
+  return { merged, hasChanges };
 }
 
 export function saveArticles(articles: BlogArticle[]) {
