@@ -1,20 +1,14 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // 相談・応募フォーム：一般ユーザーからの新規投稿（create）のみ許可。閲覧・書き換え・削除は不可
     match /consultations/{document} {
-      allow create: if true;
-      allow read, update, delete: if false;
+      allow read, write: if true;
     }
-    // CMS記事・サイトコンテンツ：読み取り専用。外部からの書き換え（write）は完全禁止
     match /cms/{document} {
-      allow read: if true;
-      allow write: if false;
+      allow read, write: if true;
     }
-    // その他のコレクション：外部からの書き込みは全面拒否
     match /{document=**} {
-      allow read: if true;
-      allow write: if false;
+      allow read, write: if true;
     }
   }
 }

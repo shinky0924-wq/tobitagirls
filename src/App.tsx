@@ -343,11 +343,8 @@ export default function App() {
       // 1. Try to fetch from Firestore first
       const firestoreData = await getBlogArticlesFromFirestore();
       if (firestoreData && firestoreData.length > 0) {
-        const { merged, hasChanges } = mergeWithDefaultArticles(firestoreData);
+        const { merged } = mergeWithDefaultArticles(firestoreData);
         setBlogArticles(merged);
-        if (hasChanges) {
-          saveBlogArticlesToFirestore(merged);
-        }
         return;
       }
 
