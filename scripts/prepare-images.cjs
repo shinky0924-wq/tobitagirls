@@ -20,7 +20,33 @@ if (fs.existsSync(srcDir)) {
       fs.copyFileSync(srcPath, path.join(pubAssetsImgDir, file));
     }
   }
-  console.log(`[Prepare Images] Copied ${files.length} images to public/images and public/assets/images`);
-} else {
-  console.log('[Prepare Images] No src/assets/images directory found, skipping.');
+  console.log(`[Prepare Images] Copied ${files.length} images from src/assets/images`);
+}
+
+// Sync public/assets/images to public/images
+if (fs.existsSync(pubAssetsImgDir)) {
+  const files = fs.readdirSync(pubAssetsImgDir);
+  let count = 0;
+  for (const file of files) {
+    const dest = path.join(pubImgDir, file);
+    if (!fs.existsSync(dest)) {
+      fs.copyFileSync(path.join(pubAssetsImgDir, file), dest);
+      count++;
+    }
+  }
+  if (count > 0) console.log(`[Prepare Images] Mirrored ${count} images from public/assets/images to public/images`);
+}
+
+// Sync public/images to public/assets/images
+if (fs.existsSync(pubImgDir)) {
+  const files = fs.readdirSync(pubImgDir);
+  let count = 0;
+  for (const file of files) {
+    const dest = path.join(pubAssetsImgDir, file);
+    if (!fs.existsSync(dest)) {
+      fs.copyFileSync(path.join(pubImgDir, file), dest);
+      count++;
+    }
+  }
+  if (count > 0) console.log(`[Prepare Images] Mirrored ${count} images from public/images to public/assets/images`);
 }

@@ -83,17 +83,50 @@ export function getAuthorProfile(author?: { name?: string; role?: string; avatar
   };
 }
 
+const DEDICATED_COLUMN_IMAGES: Record<string, string> = {
+  'tobitashinchi-salary-system': '/images/col_salary_system_1783677804535.jpg',
+  'tobitashinchi-trial-guide': '/images/col_trial_guide_1783677848466.jpg',
+  'tobitashinchi-safety-rules-faq': '/images/col_safety_security_1783677920159.jpg',
+  'tobitashinchi-shift-workstyle-guide': '/images/col_weekend_shift_1783677940789.jpg',
+  'tobitashinchi-short-term-work': '/images/col_short_term_1783677909352.jpg',
+  'tobitashinchi-search-keywords': '/images/col_search_words_1783677965204.jpg',
+  'tobitashinchi-safety-security': '/images/col_safe_entrance_1783883680643.jpg',
+  'tobitashinchi-weekend-shift': '/images/col_smart_planner_1783883692671.jpg',
+  'tobitashinchi-trial-guide-faq': '/images/col_welcome_gift_1783883703745.jpg',
+  'tobitashinchi-student-success': '/images/col_cherry_bloom_1783883726145.jpg',
+  'tobitashinchi-tennoji-shopping-cafe': '/images/col_gourmet_takoyaki_1785380270711.jpg',
+  'tobitashinchi-youth-charm': '/images/col_confidence_mirror_1785380357158.jpg',
+  'tobitashinchi-self-care-detox': '/images/col_relax_bath_1785380379937.jpg',
+  'tobitashinchi-vs-other-night-jobs': '/images/col_non_alcoholic_1783677885472.jpg',
+  'tobitashinchi-tax-save-20s-guide': '/images/col_smart_tax_104_1788073821808.jpg',
+  'tobitashinchi-salary-system-explained': '/images/col_gold_reward_50_1785495755977.jpg',
+  'tobitashinchi-salary-guide': '/images/col_daily_cash_53_1785495791484.jpg',
+  'tobitashinchi-salary-system-guide': '/images/col_savings_chart_56_1785495838818.jpg',
+  'yukata-obi-ribbon-elegance-styling': '/images/col_obi_ribbon_89_1785507575434.jpg',
+  'tobitashinchi-scout-yakuza-exclusion-guide': '/images/col_scout_warning_123_1788788941774.jpg',
+  'tobitashinchi-single-mother-childcare-support': '/images/col_wellness_clean_100_1788073772167.jpg'
+};
+
 export function getValidArticleEyeCatch(art: { id?: string | number; slug?: string; category?: string; eyeCatch?: string }): string {
-  // If slug matches, return dedicated cute card directly
+  if (art && art.slug && DEDICATED_COLUMN_IMAGES[art.slug]) {
+    return DEDICATED_COLUMN_IMAGES[art.slug];
+  }
   if (art && art.slug) {
     return `/images/card_${art.slug}.jpg`;
   }
 
-  // If art matches a default article ID, return dedicated cute card
   if (art && art.id !== undefined) {
     const defaultMatch = BLOG_ARTICLES.find(d => String(d.id) === String(art.id));
-    if (defaultMatch && defaultMatch.slug) {
-      return `/images/card_${defaultMatch.slug}.jpg`;
+    if (defaultMatch) {
+      if (defaultMatch.slug && DEDICATED_COLUMN_IMAGES[defaultMatch.slug]) {
+        return DEDICATED_COLUMN_IMAGES[defaultMatch.slug];
+      }
+      if (defaultMatch.slug) {
+        return `/images/card_${defaultMatch.slug}.jpg`;
+      }
+      if (defaultMatch.eyeCatch) {
+        return defaultMatch.eyeCatch;
+      }
     }
   }
 
@@ -108,16 +141,10 @@ export function getValidArticleEyeCatch(art: { id?: string | number; slug?: stri
     }
   }
 
-  // Find fallback from category
-  const categoryMatch = BLOG_ARTICLES.find(d => d.category === art?.category);
-  if (categoryMatch && categoryMatch.slug) {
-    return `/images/card_${categoryMatch.slug}.jpg`;
-  }
-
-  return '/images/japanese_hero_banner.jpg';
+  return '/images/col_beginner_guide_art_1787803245812.jpg';
 }
 
-const BLOG_DATA_VERSION = '20261013_job_title_space_v4';
+const BLOG_DATA_VERSION = '20261016_unique_images_v5';
 
 export function getStoredArticles(): BlogArticle[] {
   if (typeof window === 'undefined') return BLOG_ARTICLES;

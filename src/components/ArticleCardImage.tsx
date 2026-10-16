@@ -10,7 +10,7 @@ interface ArticleCardImageProps {
   isDetailHero?: boolean;
 }
 
-const DEFAULT_FALLBACK_IMAGE = '/images/col_interview_guide_1783677837312.jpg';
+const DEFAULT_FALLBACK_IMAGE = '/images/col_beginner_guide_art_1787803245812.jpg';
 
 const normalizeUrl = (originalUrl?: string): string => {
   if (!originalUrl) return DEFAULT_FALLBACK_IMAGE;

@@ -125,7 +125,12 @@ export default function Testimonials() {
                             onError={(e) => {
                               const target = e.currentTarget;
                               target.onerror = null;
-                              target.src = '/images/tobita_cast_two_real_1782374841336.jpg';
+                              const fallbacks = [
+                                '/images/tobita_cast_two_real_1782374841336.jpg',
+                                '/images/tobita_cast_three_real_1782374857559.jpg',
+                                '/images/tobita_cast_one_real_1782374824918.jpg'
+                              ];
+                              target.src = fallbacks[idx % fallbacks.length];
                             }}
                           />
                         </div>
