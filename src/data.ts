@@ -9,7 +9,7 @@ const tobitaCastOne = '/images/tobita_cast_one_real_1782374824918.jpg';
 const tobitaCastTwo = '/images/tobita_cast_two_real_1782374841336.jpg';
 const tobitaCastThree = '/images/tobita_cast_three_real_1782374857559.jpg';
 const tobitaDreamHeroBanner = '/images/tobita_dream_hero_banner_1782557055526.jpg';
-const tobitaAdvisorAvatar = '/images/tobita_advisor_avatar_1782370695372.jpg';
+const tobitaAdvisorAvatar = '/images/sakura_advisor_portrait_1788920514818.jpg';
 
 // ==========================================
 // 【LINE公式アカウント連携用設定】

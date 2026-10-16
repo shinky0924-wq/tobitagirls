@@ -1,10 +1,23 @@
 import blogArticlesJson from '../data/blogArticles.json';
 
+export type BlogCategoryType =
+  | 'job'
+  | 'salary'
+  | 'beginner'
+  | 'experienced'
+  | 'interview'
+  | 'workstyle'
+  | 'shops'
+  | 'dorm'
+  | 'safety'
+  | 'beauty'
+  | 'faq';
+
 export interface BlogArticle {
   id: string;
   title: string;
   slug: string;
-  category: 'beginner' | 'salary' | 'security' | 'lifestyle' | 'onboarding';
+  category: BlogCategoryType;
   categoryLabel: string;
   publishedAt: string;
   readTime: string;
@@ -25,18 +38,7 @@ export interface BlogArticle {
   tags: string[];
 }
 
-export const BLOG_CATEGORIES: { id: string; label: string; emoji?: string }[] = [
-  { id: 'all', label: 'すべて', emoji: '✨' },
-  { id: 'beginner', label: '未経験者向け', emoji: '🔰' },
-  { id: 'salary', label: '給与・待遇', emoji: '💰' },
-  { id: 'security', label: '安心・身バレ対策', emoji: '🤫' },
-  { id: 'lifestyle', label: '生活・働き方', emoji: '⏰' },
-  { id: 'onboarding', label: '面接・お仕事の流れ', emoji: '🌸' }
-];
-
-export const BLOG_ARTICLES: BlogArticle[] = blogArticlesJson as BlogArticle[];
-
-export function getAuthorProfile(author?: { name?: string; role?: string; avatar?: string }): {
+export interface AuthorProfile {
   name: string;
   role: string;
   avatar: string;
@@ -44,33 +46,110 @@ export function getAuthorProfile(author?: { name?: string; role?: string; avatar
   experienceTag: string;
   comment: string;
   bio: string;
-} {
-  const name = author?.name || '';
-  const role = author?.role || '';
-  const avatar = author?.avatar || '';
+}
 
-  if (name.includes('ななみ') || name.includes('チーフ')) {
+export function getAuthorProfile(author?: { name?: string; role?: string; avatar?: string }): AuthorProfile {
+  const name = author?.name || 'さくら';
+  const role = author?.role || '女性サポートスタッフ（歴8年）';
+  const avatar = author?.avatar || '👩‍💼';
+
+  // Specific profiles based on author name/role
+  if (name.includes('木村') || role.includes('採用') || role.includes('給料') || role.includes('給与')) {
     return {
-      name: name || 'ななみ',
-      role: role || '女性キャストサポート責任者（チーフ）',
-      avatar: avatar && !avatar.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/) ? avatar : '/images/author_nanami_chief.jpg',
-      badge: '現場統括・女性ケア責任者',
-      experienceTag: '料亭業界歴12年 / 面接・新人育成担当',
-      comment: '飛田新地で働く女の子たちが一番不安に感じる「人間関係」「お店のリアルな客層」「安全面」について、現場の責任者として包み隠さず本音でお答えしています。',
-      bio: '飛田新地料理組合加盟の老舗料亭にて女性サポートチーフを務める。未経験スタートのキャストが安心して高収入を得られるよう、入店前の面談から勤務中のメンタルケアまで一貫してサポート。'
+      name: name || 'マネージャー木村',
+      role: role || '採用・給与管理担当',
+      avatar: avatar || '👨‍💼',
+      badge: '採用・給料管理責任者 監修',
+      experienceTag: '給与・契約法務管理歴12年',
+      comment: '飛田新地の料亭組合規約および給与計算（50%バック即日全額日払い）、天引きなしの契約ルールを厳格に管理・精査した上で解説しています。',
+      bio: '飛田新地エリアの料亭求人・給与管理を12年にわたり統括。全額日払いの透明な報酬計算、法令遵守の雇用契約、オートロック付き個室マンション寮の設備管理を担当。虚偽や誇大広告のない「正確な現場基準」をお伝えします。'
     };
   }
-  if (name.includes('みく') || name.includes('アドバイザー')) {
+
+  if (name.includes('しほ') || role.includes('元キャスト・現相談員') || role.includes('相談員')) {
+    return {
+      name: name || 'しほ',
+      role: role || '女性スタッフ（元キャスト・現相談員）',
+      avatar: avatar && !avatar.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/) ? avatar : '/images/sakura_advisor_portrait_1788920514818.jpg',
+      badge: '元キャスト・現相談員 実務執筆',
+      experienceTag: '料亭勤務3年＋相談員歴4年',
+      comment: '私自身が実際に料亭の玄関に座って働いていた経験から、女の子が本当に不安に感じるポイント（身バレ・生理・体力）のリアルな本音を包み隠さずお伝えします。',
+      bio: '飛田新地の現役キャストとして3年間の勤務を経験後、現在は女の子専用の相談員として従事。現場経験者だからこそ分かる『初日の緊張』『確定申告のやり方』『無理のない稼ぎ方』を親身にアドバイスしています。'
+    };
+  }
+
+  if (name.includes('さゆり') || role.includes('人気キャスト') || role.includes('オーナーサポート')) {
+    return {
+      name: name || 'さゆり',
+      role: role || '元・人気キャスト（現オーナーサポート）',
+      avatar: avatar && !avatar.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/) ? avatar : '/images/tobita_cast_one_real_1782374824918.jpg',
+      badge: '元人気キャスト・接客指導 監修',
+      experienceTag: 'メイン・青春通りトップ経験＋育成歴5年',
+      comment: '玄関での座り方、仲居さんとの呼吸の合わせ方、短時間でお客さまに喜んでいただくプロのコツなど、現場で確実に役立つ実践テクニックを共有します。',
+      bio: 'メイン通り・青春通りの人気料亭で長年トップキャストとして活躍。現在は料亭の現場サポートおよび新人女性の接客指導・マナー研修を担当。容姿だけに頼らず『愛嬌と笑顔』で日給10万円以上を安定して稼ぐ極意を伝授します。'
+    };
+  }
+
+  if (name.includes('みく') || role.includes('昼職と掛け持ち') || role.includes('Wワーク')) {
     return {
       name: name || 'みく',
-      role: role || '公式LINE相談窓口・女性アドバイザー',
-      avatar: avatar && !avatar.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/) ? avatar : '/images/author_miku_advisor.jpg',
-      badge: '24時間LINE相談窓口担当',
-      experienceTag: '相談窓口歴5年 / ナイトワーク転職相談担当',
-      comment: '「こんなこと聞いても大丈夫かな？」と思う些細な疑問でも大丈夫です。女性同士だからこそ話せる本音の相談に24時間お答えしています。',
-      bio: '公式LINE相談や面接前の不安解消を担当する女性アドバイザー。夜職がまったく初めての方でもリラックスして疑問を解消できるよう、寄り添った丁寧なカウンセリングを行っています。'
+      role: role || '現役キャスト（2年目・昼職と掛け持ち）',
+      avatar: avatar && !avatar.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/) ? avatar : '/images/tobita_cast_two_real_1782374841336.jpg',
+      badge: '現役キャスト（昼職Wワーク）体験レポ',
+      experienceTag: '平日OL×週末飛田新地 2年目',
+      comment: '会社に絶対に副業がバレない住民税の普通徴収手続きや、平日の体力配分など、Wワーク実践者としての生の声をお届けします。',
+      bio: '昼間は一般企業のOLとして勤務しながら、週末や有給を活用して飛田新地で働く現役キャスト2年目。住民税の普通徴収による完全秘密保持や、無理のない週末シフトでの貯金・資産形成リアルを女性目線で執筆しています。'
     };
   }
+
+  if (name.includes('美紀') || (role.includes('現役キャスト') && role.includes('23歳'))) {
+    return {
+      name: name || '美紀',
+      role: role || '現役キャスト（歴2年・23歳）',
+      avatar: avatar && !avatar.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/) ? avatar : '/images/tobita_cast_three_real_1782374857559.jpg',
+      badge: '20代現役キャスト リアル体験談',
+      experienceTag: '地方上京組・飛田新地2年目（23歳）',
+      comment: 'まったくの未経験からカバン一つで上京してスタートした私が、実際の寮の暮らし心地やお給料の使い道をありのままにレポートします。',
+      bio: '21歳のときに地方から上京（来阪）し、未経験から飛田新地で働き始めた20代現役キャスト。家具家電付きのマンション寮のリアルな設備、毎日の持ち物、初日の面接・出勤時の体験談など、同世代の女の子のリアルな疑問にお答えします。'
+    };
+  }
+
+  if (name.includes('るな') || role.includes('天王寺在住')) {
+    return {
+      name: name || 'るな',
+      role: role || '現役キャスト（22歳・天王寺在住）',
+      avatar: avatar && !avatar.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/) ? avatar : '/images/tobita_cast_one_1781787976936.jpg',
+      badge: '現役キャスト 等身大レポート',
+      experienceTag: '飛田新地勤務歴1年半（22歳）',
+      comment: 'メイクや衣装の選び方、仲居さんとのおしゃべり、休日のリフレッシュ方法など、毎日のリアルな日常を分かりやすくまとめました。',
+      bio: '天王寺エリア在住の20代現役キャスト。料亭での衣装（ドレス・着物）の着こなしやメイクの工夫、待機時間の過ごし方、疲れない体力管理法など、現役ならではの等身大の視点で発信しています。'
+    };
+  }
+
+  if (name.includes('ゆい') || role.includes('生活支援') || role.includes('寮案内')) {
+    return {
+      name: name || 'ゆい',
+      role: role || '女性サポートスタッフ（生活・寮手配担当）',
+      avatar: avatar && !avatar.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/) ? avatar : '/images/tobita_cast_two_1781787990991.jpg',
+      badge: '生活支援・出稼ぎサポート担当',
+      experienceTag: '女性生活支援・寮手配歴5年',
+      comment: '地方からの出稼ぎや引っ越しを伴う応募でも安心していただけるよう、生活環境や初期費用0円の住居サポート情報を詳しく解説します。',
+      bio: '女性サポートスタッフとして、地方からの出稼ぎ希望者や一人暮らし希望者の生活立ち上げ・寮案内を中心に担当。即入居可能なオートロック付きマンションの手配から日用品の準備まで、安心して新生活を送れるようサポートしています。'
+    };
+  }
+
+  if (name.includes('ひまり') || role.includes('カウンセラー') || role.includes('応募相談')) {
+    return {
+      name: name || 'ひまり',
+      role: role || '女性サポートスタッフ（相談カウンセラー）',
+      avatar: avatar && !avatar.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/) ? avatar : '/images/tobita_cast_three_1788153006133.jpg',
+      badge: 'LINE相談・初心者カウンセラー',
+      experienceTag: '女性カウンセリング・応募相談歴4年',
+      comment: '初めての応募で不安や緊張を抱えている方が少しでも安心できるよう、丁寧で分かりやすい解説を心掛けています。',
+      bio: '応募前のLINE相談や面接前の不安解消を担当する女性アドバイザー。夜職がまったく初めての方でもリラックスして疑問を解消できるよう、寄り添った丁寧なカウンセリングを行っています。'
+    };
+  }
+
   // Default: さくら (女性サポートスタッフ歴8年)
   return {
     name: name || 'さくら',
@@ -83,126 +162,55 @@ export function getAuthorProfile(author?: { name?: string; role?: string; avatar
   };
 }
 
-const DEDICATED_COLUMN_IMAGES: Record<string, string> = {
-  'tobitashinchi-salary-system': '/images/col_salary_system_1783677804535.jpg',
-  'tobitashinchi-trial-guide': '/images/col_trial_guide_1783677848466.jpg',
-  'tobitashinchi-safety-rules-faq': '/images/col_safety_security_1783677920159.jpg',
-  'tobitashinchi-shift-workstyle-guide': '/images/col_weekend_shift_1783677940789.jpg',
-  'tobitashinchi-short-term-work': '/images/col_short_term_1783677909352.jpg',
-  'tobitashinchi-search-keywords': '/images/col_search_words_1783677965204.jpg',
-  'tobitashinchi-safety-security': '/images/col_safe_entrance_1783883680643.jpg',
-  'tobitashinchi-weekend-shift': '/images/col_smart_planner_1783883692671.jpg',
-  'tobitashinchi-trial-guide-faq': '/images/col_welcome_gift_1783883703745.jpg',
-  'tobitashinchi-student-success': '/images/col_cherry_bloom_1783883726145.jpg',
-  'tobitashinchi-tennoji-shopping-cafe': '/images/col_gourmet_takoyaki_1785380270711.jpg',
-  'tobitashinchi-youth-charm': '/images/col_confidence_mirror_1785380357158.jpg',
-  'tobitashinchi-self-care-detox': '/images/col_relax_bath_1785380379937.jpg',
-  'tobitashinchi-vs-other-night-jobs': '/images/col_non_alcoholic_1783677885472.jpg',
-  'tobitashinchi-tax-save-20s-guide': '/images/col_smart_tax_104_1788073821808.jpg',
-  'tobitashinchi-salary-system-explained': '/images/col_gold_reward_50_1785495755977.jpg',
-  'tobitashinchi-salary-guide': '/images/col_daily_cash_53_1785495791484.jpg',
-  'tobitashinchi-salary-system-guide': '/images/col_savings_chart_56_1785495838818.jpg',
-  'yukata-obi-ribbon-elegance-styling': '/images/col_obi_ribbon_89_1785507575434.jpg',
-  'tobitashinchi-scout-yakuza-exclusion-guide': '/images/col_scout_warning_123_1788788941774.jpg',
-  'tobitashinchi-single-mother-childcare-support': '/images/col_wellness_clean_100_1788073772167.jpg'
-};
+export const BLOG_CATEGORIES: { id: string; label: string; emoji?: string }[] = [
+  { id: 'all', label: 'すべて', emoji: '✨' },
+  { id: 'job', label: '仕事内容', emoji: '🍵' },
+  { id: 'salary', label: '給料・待遇', emoji: '💰' },
+  { id: 'beginner', label: '未経験', emoji: '🔰' },
+  { id: 'experienced', label: '経験者', emoji: '👑' },
+  { id: 'interview', label: '応募・面接', emoji: '🌸' },
+  { id: 'workstyle', label: '働き方', emoji: '⏰' },
+  { id: 'shops', label: 'お店選び', emoji: '🏮' },
+  { id: 'dorm', label: '寮・出稼ぎ', emoji: '🏠' },
+  { id: 'safety', label: '身バレ・安全', emoji: '🤫' },
+  { id: 'beauty', label: 'その他', emoji: '💄' },
+  { id: 'faq', label: 'FAQ', emoji: '💡' }
+];
 
-export function getValidArticleEyeCatch(art: { id?: string | number; slug?: string; category?: string; eyeCatch?: string }): string {
-  if (art && art.slug && DEDICATED_COLUMN_IMAGES[art.slug]) {
-    return DEDICATED_COLUMN_IMAGES[art.slug];
-  }
-  if (art && art.slug) {
-    return `/images/card_${art.slug}.jpg`;
-  }
+export const BLOG_ARTICLES: BlogArticle[] = blogArticlesJson as BlogArticle[];
 
+export function getValidArticleEyeCatch(art: { id?: string | number; category?: string; eyeCatch?: string }): string {
+  // If art matches a default article ID, prioritize the curated default image to avoid duplicates
   if (art && art.id !== undefined) {
     const defaultMatch = BLOG_ARTICLES.find(d => String(d.id) === String(art.id));
-    if (defaultMatch) {
-      if (defaultMatch.slug && DEDICATED_COLUMN_IMAGES[defaultMatch.slug]) {
-        return DEDICATED_COLUMN_IMAGES[defaultMatch.slug];
-      }
-      if (defaultMatch.slug) {
-        return `/images/card_${defaultMatch.slug}.jpg`;
-      }
-      if (defaultMatch.eyeCatch) {
-        return defaultMatch.eyeCatch;
+    if (defaultMatch && defaultMatch.eyeCatch) {
+      const filename = defaultMatch.eyeCatch.split('/').pop()?.split('?')[0];
+      if (filename) {
+        return `/images/${filename}`;
       }
     }
   }
 
   if (art && art.eyeCatch) {
     const ec = art.eyeCatch.trim();
-    if (ec.startsWith('http://') || ec.startsWith('https://') || ec.startsWith('data:') || ec.startsWith('/images/')) {
+    if (ec.startsWith('http://') || ec.startsWith('https://') || ec.startsWith('data:')) {
       return ec;
     }
-    const filename = ec.split('/').pop()?.split('?')[0];
-    if (filename) {
-      return `/images/${filename}`;
+    if (ec.includes('.jpg') || ec.includes('.png') || ec.includes('.webp') || ec.includes('.svg')) {
+      const filename = ec.split('/').pop()?.split('?')[0];
+      if (filename) {
+        return `/images/${filename}`;
+      }
     }
+  }
+
+  // Find fallback from category
+  const categoryMatch = BLOG_ARTICLES.find(d => d.category === art?.category);
+  if (categoryMatch && categoryMatch.eyeCatch) {
+    return getValidArticleEyeCatch({ eyeCatch: categoryMatch.eyeCatch });
   }
 
   return '/images/col_beginner_guide_art_1787803245812.jpg';
-}
-
-const BLOG_DATA_VERSION = '20261016_unique_images_v5';
-
-export function getStoredArticles(): BlogArticle[] {
-  if (typeof window === 'undefined') return BLOG_ARTICLES;
-  try {
-    if (localStorage.getItem('custom_blog_articles_version') !== BLOG_DATA_VERSION) {
-      localStorage.setItem('custom_blog_articles_version', BLOG_DATA_VERSION);
-      localStorage.setItem('custom_blog_articles', JSON.stringify(BLOG_ARTICLES));
-      return BLOG_ARTICLES;
-    }
-    const stored = localStorage.getItem('custom_blog_articles');
-    if (!stored) {
-      return BLOG_ARTICLES;
-    }
-    const rawArticles = JSON.parse(stored) as BlogArticle[];
-    if (rawArticles.length === 0) return BLOG_ARTICLES;
-
-    // もし古い画像への参照、または絵文字、正しくない画像パス、古いスラッグがあれば、最新のオリジナル画像や正しいスラッグに自動的に置換する
-    const customArticles = rawArticles.map(art => {
-      const defaultMatch = BLOG_ARTICLES.find(d => String(d.id) === String(art.id));
-      if (defaultMatch) {
-        return {
-          ...art,
-          eyeCatch: defaultMatch.eyeCatch,
-          slug: defaultMatch.slug
-        };
-      }
-      return {
-        ...art,
-        eyeCatch: getValidArticleEyeCatch(art)
-      };
-    });
-
-    // もしデフォルトの新規記事がローカルストレージに存在しない場合、自動的にマージする
-    const customIds = new Set(customArticles.map(a => String(a.id)));
-    let hasNewDefault = false;
-    const mergedArticles = [...customArticles];
-    for (const defaultArt of BLOG_ARTICLES) {
-      if (!customIds.has(String(defaultArt.id))) {
-        mergedArticles.push(defaultArt);
-        hasNewDefault = true;
-      }
-    }
-    if (hasNewDefault || JSON.stringify(rawArticles) !== JSON.stringify(customArticles)) {
-      // IDの数値順に並べ替えてソート
-      mergedArticles.sort((a, b) => {
-        const idA = parseInt(a.id, 10) || 0;
-        const idB = parseInt(b.id, 10) || 0;
-        return idA - idB;
-      });
-      localStorage.setItem('custom_blog_articles', JSON.stringify(mergedArticles));
-      return mergedArticles;
-    }
-
-    return customArticles;
-  } catch (e) {
-    console.error('Error parsing custom blog articles:', e);
-    return BLOG_ARTICLES;
-  }
 }
 
 export function mergeWithDefaultArticles(incomingArticles: BlogArticle[]): { merged: BlogArticle[]; hasChanges: boolean } {
@@ -241,6 +249,34 @@ export function mergeWithDefaultArticles(incomingArticles: BlogArticle[]): { mer
   });
 
   return { merged, hasChanges };
+}
+
+const BLOG_DATA_VERSION = '20261010_restored_original_v8';
+
+export function getStoredArticles(): BlogArticle[] {
+  if (typeof window === 'undefined') return BLOG_ARTICLES;
+  try {
+    if (localStorage.getItem('custom_blog_articles_version') !== BLOG_DATA_VERSION) {
+      localStorage.setItem('custom_blog_articles_version', BLOG_DATA_VERSION);
+      localStorage.setItem('custom_blog_articles', JSON.stringify(BLOG_ARTICLES));
+      return BLOG_ARTICLES;
+    }
+    const stored = localStorage.getItem('custom_blog_articles');
+    if (!stored) {
+      return BLOG_ARTICLES;
+    }
+    const rawArticles = JSON.parse(stored) as BlogArticle[];
+    if (rawArticles.length === 0) return BLOG_ARTICLES;
+
+    const { merged, hasChanges } = mergeWithDefaultArticles(rawArticles);
+    if (hasChanges) {
+      localStorage.setItem('custom_blog_articles', JSON.stringify(merged));
+    }
+    return merged;
+  } catch (e) {
+    console.error('Error parsing custom blog articles:', e);
+    return BLOG_ARTICLES;
+  }
 }
 
 export function saveArticles(articles: BlogArticle[]) {
