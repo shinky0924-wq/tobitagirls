@@ -13,11 +13,11 @@ const tobitaAdvisorAvatar = '/images/sakura_advisor_portrait_1788920514818.jpg';
 
 // ==========================================
 // 【LINE公式アカウント連携用設定】
-// あなたのLINE公式アカウントのURL（例: https://line.me/R/ti/p/@600bgcxd）をここに貼り付けてください。
+// あなたのLINE公式アカウントのURL（例: https://lin.ee/xxxxx）をここに貼り付けてください。
 // 空白（''）または初期値（'https://lin.ee/your_custom_line_id_here'）の場合は、
 // 自動的にページ下部の「お悩み相談フォーム」にスクロールする親切設計になります。
 // ==========================================
-export const LINE_OFFICIAL_URL = 'https://line.me/R/ti/p/@600bgcxd';
+export const LINE_OFFICIAL_URL = 'https://lin.ee/phFZoea';
 
 export const HERO_IMAGE_URL = tobitaDreamHeroBanner;
 export const CONSULTANT_AVATAR_URL = tobitaAdvisorAvatar;
@@ -44,8 +44,8 @@ export const CONCERNS: ConcernItem[] = [
   {
     id: 'concern-4',
     iconName: 'Store',
-    title: '直営店だから',
-    question: '失敗しない'
+    title: 'お店選びで',
+    question: '失敗したくない'
   },
   {
     id: 'concern-5',
@@ -65,14 +65,14 @@ export const REASONS: ReasonItem[] = [
   {
     number: '02',
     iconName: 'Award',
-    title: '完全未経験から歓迎',
-    description: '料亭直営だからこそ、初心者の方にも丁寧な事前レクチャーを徹底。'
+    title: '安心の料亭直営',
+    description: '紹介業者ではなく料亭のお店スタッフが直接採用・サポートいたします。'
   },
   {
     number: '03',
     iconName: 'Headphones',
-    title: '直営の手厚いフォロー',
-    description: '希望のシフトや働き方に合わせて、直営店舗スタッフが寄り添いサポート。'
+    title: '働き方を直接相談',
+    description: 'あなたの希望や生活スタイルに合う勤務条件を専任スタッフと相談できます。'
   },
   {
     number: '04',
@@ -83,8 +83,8 @@ export const REASONS: ReasonItem[] = [
   {
     number: '05',
     iconName: 'Users',
-    title: 'カフェで個別面接',
-    description: '新地内ではなく天王寺等のカフェで女性スタッフが親身に直接面接。'
+    title: '面接・見学同行',
+    description: '初めての方でも安心できるよう、女性スタッフが店内の見学や面接に同席します。'
   },
   {
     number: '06',
@@ -98,12 +98,17 @@ export const FAQS: FAQItem[] = [
   {
     id: 'faq-1',
     question: 'Q. 未経験でも大丈夫ですか？',
-    answer: 'A. はい、もちろんです！在籍キャストの約9割が完全未経験からのスタートです。接客は完全受け身で声掛けもおばちゃんが担当するため、初心者でも安心してお仕事をスタートできます。'
+    answer: 'A. はい、もちろんです！当店では未経験者向けの丁寧な研修制度を設けています。最初は誰でも不安ですが、女性スタッフが一から丁寧にお教えします。'
   },
   {
     id: 'faq-2',
-    question: 'Q. 年齢制限はありますか？',
-    answer: 'A. 満18歳以上の方であればご応募いただけます（※飛田新地料理組合の規定により、現役高校生は絶対に応募・就労不可）。直営店舗では20代を中心に幅広い女性が活躍しています。'
+    question: 'Q. 年齢制限はありますか？何歳から応募できますか？',
+    answer: 'A. 20歳以上の日本国籍を有する女性であればご応募可能です。飛田新地料理組合加盟店および当グループでは、普通料理店（料亭）としての未成年トラブル防止、法令順守および女性キャストの安全保護の観点から【20歳以上限定（20歳未満・高校生不可）】に完全統一しております。20代前半〜後半を中心に、30代・40代以上の方も各通りの特色に合わせて幅広く活躍しています。'
+  },
+  {
+    id: 'faq-age-reason',
+    question: 'Q. 18歳が成人ですが、なぜ飛田新地は「20歳以上」なのですか？',
+    answer: 'A. 2022年4月の民法改正により成年年齢は18歳に引き下げられましたが、飛田新地は料亭営業として法令を厳格に遵守し、未成年者のトラブルを未然に防ぐため、①普通料理店（料亭）としての未成年トラブル防止、②料理組合独自の自主規制規約、③女性キャストの安全保護を徹底するため、例外なく「20歳以上」に年齢条件を統一しています。そのため面接時には本籍地記載の住民票またはパスポートによる厳正な生年月日確認を行っています。'
   },
   {
     id: 'faq-3',
@@ -113,12 +118,12 @@ export const FAQS: FAQItem[] = [
   {
     id: 'faq-4',
     question: 'Q. 身バレ対策はありますか？',
-    answer: 'A. 源氏名の使用はもちろん、当店直営店では写真撮影・ネット掲載・写メ日記が完全禁止されており、個人情報の秘密管理を徹底しています。'
+    answer: 'A. 源氏名（ニックネーム）の使用はもちろん、WEBやSNSへの写真・動画掲載は全面禁止されており、料亭としてプライバシー保護を徹底していますのでご安心ください。'
   },
   {
     id: 'faq-5',
     question: 'Q. 確実に稼げますか？お給料は全額日払いですか？',
-    answer: 'A. はい、当直営グループでは働いたその日の退勤時に全額現金手渡しでお持ち帰りいただけます。初日から日給5万円〜10万円以上稼ぐことも十分に可能です。'
+    answer: 'A. はい、当店は売上50%バックの完全日払い制（その日の分をその日に全額支給）を徹底しています。日給3万円〜8万円以上稼ぐことも初日から十分に可能です。'
   },
   {
     id: 'faq-6',
@@ -133,7 +138,7 @@ export const FAQS: FAQItem[] = [
   {
     id: 'faq-8',
     question: 'Q. 週1日からや短時間でもシフトに入れますか？',
-    answer: 'A. はい、大歓迎です。週1日・週末だけ・数時間の短時間勤務など、昼職・学生・主婦の方のライフスタイルに合わせて、直営店舗で無理のない柔軟なシフトを組んでいただけます。'
+    answer: 'A. はい、大歓迎です。週1日・週末だけ・1日4〜5時間の短時間勤務など、昼職・学生・主婦の方のライフスタイルに合わせて、柔軟にシフト調整が可能です。'
   },
   {
     id: 'faq-9',
@@ -445,9 +450,10 @@ export const JOB_FACTS: JobFactItem[] = [
 ];
 
 export const FLOW_STEPS: FlowStep[] = [
-  { number: '01', title: 'LINEで無料相談' },
-  { number: '02', title: '面接・店舗見学' },
-  { number: '03', title: '1日体験入店' },
-  { number: '04', title: '即日全額日払い' },
-  { number: '05', title: '本入店・お仕事開始' }
+  { number: '01', title: 'LINE相談' },
+  { number: '02', title: '希望ヒアリング' },
+  { number: '03', title: 'お店紹介' },
+  { number: '04', title: '面接' },
+  { number: '05', title: '体験入店' },
+  { number: '06', title: 'お仕事スタート' }
 ];
