@@ -112,8 +112,20 @@ async function startServer() {
     }
   });
 
-  // POST Articles
-  app.post('/api/cms/articles', (req, res) => {
+  // Admin Auth Middleware for Write Operations
+  const requireAdminAuth = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const authHeader = req.headers.authorization || '';
+    const adminKey = req.headers['x-admin-key'] || '';
+    const token = authHeader.replace(/^Bearer\s+/i, '');
+    const validPass = process.env.ADMIN_PASS || 'tobita2026';
+    if (token === validPass || adminKey === validPass) {
+      return next();
+    }
+    return res.status(403).json({ error: '他からの書き換えは禁止されています（管理者権限が必要です）' });
+  };
+
+  // POST Articles (Protected)
+  app.post('/api/cms/articles', requireAdminAuth, (req, res) => {
     try {
       const articles = req.body;
       if (!Array.isArray(articles)) {
@@ -141,8 +153,8 @@ async function startServer() {
     }
   });
 
-  // POST Site Content
-  app.post('/api/cms/site', (req, res) => {
+  // POST Site Content (Protected)
+  app.post('/api/cms/site', requireAdminAuth, (req, res) => {
     try {
       const siteContent = req.body;
       fs.writeFileSync(SITE_CONTENT_FILE, JSON.stringify(siteContent, null, 2), 'utf-8');
