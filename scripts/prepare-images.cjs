@@ -50,3 +50,27 @@ if (fs.existsSync(pubImgDir)) {
   }
   if (count > 0) console.log(`[Prepare Images] Mirrored ${count} images from public/images to public/assets/images`);
 }
+
+// Automatically update siteContent.json lastUpdated to today's date in JST
+try {
+  const siteContentPath = path.join(process.cwd(), 'data', 'siteContent.json');
+  if (fs.existsSync(siteContentPath)) {
+    const siteContent = JSON.parse(fs.readFileSync(siteContentPath, 'utf-8'));
+    const now = new Date();
+    // UTC+9 (JST)
+    const jstOffset = 9 * 60;
+    const jstDate = new Date(now.getTime() + (jstOffset + now.getTimezoneOffset()) * 60000);
+    const year = jstDate.getFullYear();
+    const month = jstDate.getMonth() + 1;
+    const day = jstDate.getDate();
+    const formattedDate = `${year}年${month}月${day}日`;
+    
+    if (siteContent.lastUpdated !== formattedDate) {
+      siteContent.lastUpdated = formattedDate;
+      fs.writeFileSync(siteContentPath, JSON.stringify(siteContent, null, 2), 'utf-8');
+      console.log(`[Update Lastmod] Updated siteContent.json lastUpdated to ${formattedDate}`);
+    }
+  }
+} catch (err) {
+  console.warn('[Update Lastmod] Failed to update siteContent.json lastUpdated:', err);
+}

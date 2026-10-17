@@ -21,7 +21,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
   const [showAdminLink, setShowAdminLink] = useState(false);
   const [activeModal, setActiveModal] = useState<'policy' | 'company' | null>(null);
   const siteContent = getStoredSiteContent();
-  const lastUpdated = siteContent.lastUpdated || '2026年10月3日';
+  const lastUpdated = siteContent.lastUpdated || '2026年10月17日';
 
   useEffect(() => {
     try {
@@ -119,8 +119,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
             </div>
             <p className="font-sans text-xs text-on-surface-variant leading-loose">
               受付時間：24時間年中無休<br />
-              活動拠点：大阪府大阪市西成区山王（飛田新地料理組合加盟料亭）<br />
-              採用窓口：料亭現場スタッフ・女性専任サポート常駐
+              アクセス：大阪府大阪市西成区山王（飛田新地料理組合加盟料亭）
             </p>
             <div className="flex items-center gap-2 text-[11px] text-gray-500 font-mono bg-white p-2.5 rounded-xl border border-rose-100/60 inline-flex">
               <LucideIcon name="CalendarCheck" size={13} className="text-secondary" />
