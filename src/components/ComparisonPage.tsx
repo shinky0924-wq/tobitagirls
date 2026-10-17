@@ -87,15 +87,15 @@ const ONBOARDING_FLOW_STEPS = [
 ];
 
 const SPEC_ROWS = [
-  { label: '職種', val: '料亭接客キャスト（和室でのお茶出し・おもてなし会話）' },
-  { label: '応募資格', val: '20歳以上の健康な女性（※料理組合自主規制により20歳未満不可／未経験歓迎・経験者優遇）' },
-  { label: '給与システム', val: '売上50%完全バック（想定日給 30,000円〜150,000円以上）完全即日全額現金手渡し' },
+  { label: 'お仕事内容', val: '料亭接客キャスト（和室でのお茶出し・おもてなし会話、お酒不要）' },
+  { label: '応募資格', val: '20歳以上の女性（※料理組合規約により20歳未満不可／未経験歓迎・経験者優遇）' },
+  { label: '給与システム', val: '15分5,000円（売上50%完全バック・退勤時に即日全額現金日払い手渡し）' },
   { label: '勤務時間', val: '10:00〜24:00の間で完全自由出勤（1日3時間〜、昼シフト・夜シフト・終電上がりOK）' },
-  { label: '勤務日数', val: '週1日〜・月数日・週末のみ・短期出稼ぎ・長期レギュラーいずれも自由' },
-  { label: '勤務地', val: '大阪府大阪市西成区山王（飛田新地 料理組合公認料亭街）' },
+  { label: '勤務日数', val: '週1日〜・月数日・週末のみ・短期出稼ぎ・長期レギュラーいずれも自由（ノルマなし）' },
+  { label: '勤務地', val: '大阪府大阪市西成区山王（飛田新地料理組合加盟の直営料亭街）' },
   { label: '最寄り駅', val: '地下鉄「動物園前駅」徒歩5分 / JR・近鉄「天王寺駅」徒歩10分 / JR「新今宮駅」徒歩7分' },
-  { label: '待遇・福利厚生', val: '即入居可の家具家電付き個室マンション寮完備、地方からの往復交通費全額支給、衣装・着物・ヘアメイク無料、写真ネット非掲載厳守、お酒不要、ノルマ・違約金完全0円' },
-  { label: '持参書類', val: '公的身分証明書（本籍地記載の住民票原本、またはパスポート等の年齢確認書類）※履歴書は不要です' }
+  { label: '待遇・福利厚生', val: '即入居OKの家具家電付き個室マンション寮完備、地方からの往復交通費全額支給、衣装・着物・ヘアメイク無料、写真ネット非掲載厳守、お酒不要、ノルマ・違約金完全0円' },
+  { label: '面接時の持ち物', val: '公的身分証明書（本籍地記載の住民票原本、またはパスポート）※履歴書は不要・手ぶら面談OKです' }
 ];
 
 interface ComparisonPageProps {
@@ -1947,13 +1947,13 @@ export default function ComparisonPage({
               <div className="text-center max-w-2xl mx-auto mb-8">
                 <div className="inline-flex items-center gap-1.5 bg-rose-100 text-secondary text-xs font-black px-3.5 py-1 rounded-full mb-3">
                   <LucideIcon name="FileText" size={14} />
-                  <span>SPECIFICATIONS</span>
+                  <span>募集条件</span>
                 </div>
                 <h2 className="font-display font-black text-xl sm:text-2xl md:text-3xl text-on-surface mb-3">
-                  募集要項｜料亭直営公式採用スペック一覧
+                  募集要項｜料亭直営の安心お仕事条件一覧
                 </h2>
                 <p className="text-xs sm:text-sm text-zinc-600">
-                  料理組合正規加盟 老舗料亭直営公式採用の最新一次情報スペックです。
+                  飛田新地料理組合公認の料亭直営だから安心。お給料や勤務条件をわかりやすくまとめました。
                 </p>
               </div>
 

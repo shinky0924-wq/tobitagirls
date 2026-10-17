@@ -136,15 +136,15 @@ export default function RecruitHub({
       number: "05",
       emoji: "📋",
       title: "募集要項",
-      tagline: "20歳以上限定・料理組合公認の公式採用スペック",
+      tagline: "20歳以上の女性限定・料理組合公認の安心募集条件",
       badge: "20歳以上",
       badgeColor: "bg-zinc-100 text-zinc-800 border-zinc-300",
       icon: "FileText",
       image: "/images/tobita_doc_checklist_1788153025641.jpg",
-      summary: "応募資格（20歳以上の女性）、給与システム、勤務地、必要書類（本籍地記載住民票・パスポート）など一次情報を明示。",
-      keyPoints: ["20歳以上の女性限定", "履歴書不要・私服手ぶら面接", "住民票原本またはパスポート"],
+      summary: "応募資格（20歳以上の女性）、給与システム（15分5,000円）、勤務時間、持ち物など、初めての方にもわかりやすく整理。",
+      keyPoints: ["20歳以上の女性限定", "履歴書不要・手ぶら面談OK", "身分証（住民票またはパスポート）"],
       featuredArticles: [
-        { slug: "tobita-safe-recruitment", title: "安全管理基準と募集要項の一次情報", tag: "公式スペック" },
+        { slug: "tobita-safe-recruitment", title: "安全管理基準と募集要項の詳しいご案内", tag: "募集条件" },
         { slug: "tobitashinchi-no-resume-quick-trial", title: "履歴書なしで当日面接〜体入できる理由", tag: "手ぶら面接" }
       ]
     },
