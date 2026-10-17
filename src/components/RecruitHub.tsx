@@ -153,7 +153,7 @@ export default function RecruitHub({
       path: "/flow",
       number: "06",
       emoji: "🌸",
-      title: "面接・体験入店までの流れ",
+      title: "面接・体入の流れ",
       tagline: "履歴書不要・私服見学OK・面接当日の即日体入対応",
       badge: "手ぶらOK",
       badgeColor: "bg-rose-100 text-rose-800 border-rose-200",
@@ -337,17 +337,17 @@ export default function RecruitHub({
             )}
           </div>
 
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
             <button
               type="button"
               onClick={() => setActiveCategory('all')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs ${
                 activeCategory === 'all'
-                  ? 'bg-rose-600 text-white shadow-sm shadow-rose-600/20'
+                  ? 'bg-rose-600 text-white shadow-sm shadow-rose-600/25 ring-2 ring-rose-300'
                   : 'bg-white text-zinc-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200'
               }`}
             >
-              <span>すべて (全12テーマ)</span>
+              <span>✨ すべて (全12テーマ)</span>
             </button>
 
             {clusterItems.map((cat) => (
@@ -355,9 +355,9 @@ export default function RecruitHub({
                 key={cat.id}
                 type="button"
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+                className={`px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs ${
                   activeCategory === cat.id
-                    ? 'bg-rose-600 text-white shadow-sm shadow-rose-600/20'
+                    ? 'bg-rose-600 text-white shadow-sm shadow-rose-600/25 ring-2 ring-rose-300'
                     : 'bg-white text-zinc-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200'
                 }`}
               >
@@ -414,11 +414,11 @@ export default function RecruitHub({
 
                   {/* Title */}
                   <div className="absolute bottom-2.5 left-3.5 right-3.5">
-                    <h3 className="font-display font-black text-lg sm:text-xl text-white tracking-tight drop-shadow-sm flex items-center gap-1.5">
+                    <h3 className="font-display font-black text-lg sm:text-xl text-white tracking-tight drop-shadow-sm flex items-center gap-1.5 flex-wrap">
                       <span>{cat.emoji}</span>
                       <span>{cat.title}</span>
                     </h3>
-                    <p className="text-[11px] text-zinc-100 font-medium line-clamp-1 drop-shadow-xs">
+                    <p className="text-[11px] text-zinc-100 font-medium line-clamp-2 leading-snug drop-shadow-xs mt-0.5">
                       {cat.tagline}
                     </p>
                   </div>
@@ -475,9 +475,9 @@ export default function RecruitHub({
                   onClick={() => handleCardClick(cat)}
                   className="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs py-2.5 px-3 rounded-xl shadow-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer hover:shadow-md"
                 >
-                  <LucideIcon name={cat.icon} size={14} />
-                  <span>「{cat.title}」の詳しい解説を見る</span>
-                  <LucideIcon name="ArrowRight" size={13} />
+                  <LucideIcon name={cat.icon} size={14} className="shrink-0" />
+                  <span className="truncate">「{cat.title}」の詳しい解説を見る</span>
+                  <LucideIcon name="ArrowRight" size={13} className="shrink-0" />
                 </button>
               </div>
             </motion.div>
