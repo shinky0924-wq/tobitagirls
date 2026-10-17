@@ -72,8 +72,8 @@ export default function JobDetails({ content, onCtaclickWithData, onNavigateRequ
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs mb-10">
           <div className="p-4 bg-rose-50/40 rounded-2xl border border-rose-100/70 shadow-2xs">
             <span className="text-[10px] text-zinc-500 font-bold block mb-1">給与システム</span>
-            <p className="font-bold text-zinc-900 text-base">日給 3万〜15万円超</p>
-            <p className="text-[11px] text-rose-600 font-bold mt-1">売上50%完全バック・即日全額現金</p>
+            <p className="font-bold text-zinc-900 text-base">15分5000円</p>
+            <p className="text-[11px] text-rose-600 font-bold mt-1">売上50%完全バック・即日全額日払い</p>
           </div>
           <div className="p-4 bg-rose-50/40 rounded-2xl border border-rose-100/70 shadow-2xs">
             <span className="text-[10px] text-zinc-500 font-bold block mb-1">応募資格</span>
