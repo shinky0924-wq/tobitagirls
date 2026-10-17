@@ -381,8 +381,20 @@ export default function RecruitHub({
               id={`hub-cluster-${cat.id}`}
             >
               <div>
-                {/* Image Banner */}
-                <div className="relative h-40 overflow-hidden bg-rose-50">
+                {/* Image Banner (Clickable) */}
+                <div
+                  onClick={() => handleCardClick(cat)}
+                  className="relative h-40 overflow-hidden bg-rose-50 cursor-pointer select-none group/img"
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleCardClick(cat);
+                    }
+                  }}
+                  title={`「${cat.title}」の詳しい解説ページを見る`}
+                >
                   <img
                     src={cat.image}
                     alt={cat.title}
@@ -396,7 +408,7 @@ export default function RecruitHub({
                       target.src = '/images/tobita_soft_hero_1782370495398.jpg';
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent transition-opacity group-hover/img:from-black/85" />
 
                   {/* Top Badges */}
                   <div className="absolute top-3 left-3">
