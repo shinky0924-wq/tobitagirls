@@ -91,7 +91,7 @@ export default function JobDetails({ content, onCtaclickWithData, onNavigateRequ
           <div className="p-4 bg-rose-50/40 rounded-2xl border border-rose-100/70 shadow-2xs">
             <span className="text-[10px] text-zinc-500 font-bold block mb-1">勤務シフト</span>
             <p className="font-bold text-zinc-900 text-base">10:00〜24:00 自由</p>
-            <p className="text-[11px] text-zinc-600 mt-1">週1日〜・短時間・昼シフト大歓迎</p>
+            <p className="text-[11px] text-zinc-600 mt-1">週1日〜・短時間・朝シフト（10:00〜17:00）大歓迎</p>
           </div>
           <div className="p-4 bg-rose-50/40 rounded-2xl border border-rose-100/70 shadow-2xs">
             <span className="text-[10px] text-zinc-500 font-bold block mb-1">身バレ・安全対策</span>

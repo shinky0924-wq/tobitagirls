@@ -177,11 +177,11 @@ export default function RecruitHub({
       badgeColor: "bg-blue-100 text-blue-800 border-blue-200",
       icon: "Clock",
       image: "/images/tobita_shift_schedule_1788153063163.jpg",
-      summary: "飛田新地の当店では10:00〜24:00の間で完全自由出勤。週1日〜、お昼の短時間（12:00〜18:00）、本業終わりの夜シフトなど都合に合わせて稼働可能。",
-      keyPoints: ["週1日〜・短時間・月1回OK", "昼シフト（12:00〜18:00）大歓迎", "出勤ノルマ・ペナルティ一切なし"],
+      summary: "飛田新地の当店では10:00〜24:00の間で完全自由出勤。週1日〜、朝シフト（10:00〜17:00大歓迎）、本業終わりの夜シフトなど都合に合わせて稼働可能。",
+      keyPoints: ["週1日〜・短時間・月1回OK", "朝シフト（10:00〜17:00）大歓迎", "出勤ノルマ・ペナルティ一切なし"],
       featuredArticles: [
         { slug: "tobitashinchi-double-work-lifestyle", title: "OL・会社員のWワーク副業成功術", tag: "Wワーク" },
-        { slug: "tobitashinchi-daytime-shift-advantage", title: "お昼シフトが人気の理由と稼ぎやすさ", tag: "昼勤務" }
+        { slug: "tobitashinchi-daytime-shift-advantage", title: "朝シフト（10:00〜17:00）が人気の理由と稼ぎやすさ", tag: "朝シフト" }
       ]
     },
     {

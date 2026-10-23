@@ -101,7 +101,7 @@ const SPEC_ROWS = [
   { label: 'お仕事内容', val: '料亭接客キャスト（和室でのおもてなし会話・短時間接客、お酒不要）' },
   { label: '応募資格', val: '20歳以上の女性（※料理組合規約により20歳未満不可／未経験歓迎・経験者優遇）' },
   { label: '給与システム', val: '15分5,000円（売上50%完全バック・退勤時に即日全額現金日払い手渡し）' },
-  { label: '勤務時間', val: '10:00〜24:00の間で完全自由出勤（1日3時間〜、昼シフト・夜シフト・終電上がりOK）' },
+  { label: '勤務時間', val: '10:00〜24:00の間で完全自由出勤（1日3時間〜、朝シフト10:00〜17:00大歓迎・夜シフト・終電上がりOK）' },
   { label: '勤務日数', val: '週1日〜・月数日・週末のみ・短期出稼ぎ・長期レギュラーいずれも自由（ノルマなし）' },
   { label: '勤務地', val: '大阪府大阪市西成区山王（飛田新地料理組合加盟の直営料亭街）' },
   { label: '最寄り駅', val: '地下鉄「動物園前駅」徒歩5分 / JR・近鉄「天王寺駅」徒歩10分 / JR「新今宮駅」徒歩7分' },
@@ -1553,11 +1553,11 @@ export default function ComparisonPage({
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                 <div className="bg-white rounded-2xl p-5 border border-rose-100 shadow-xs text-center sm:text-left">
                   <div className="inline-block bg-amber-100 text-amber-900 text-[11px] font-black px-2.5 py-0.5 rounded-full mb-2">
-                    昼だけシフト
+                    朝シフト【大歓迎】
                   </div>
-                  <h3 className="font-bold text-zinc-900 text-sm mb-1">10:00〜18:00</h3>
+                  <h3 className="font-bold text-zinc-900 text-sm mb-1">10:00〜17:00</h3>
                   <p className="text-xs text-zinc-600 leading-relaxed">
-                    主婦・昼職OLの副業・学生に大人気。夜遅くならず、終電の心配も不要です。
+                    朝シフト（10:00〜17:00）大歓迎！主婦・昼職OLの副業・学生に大人気。夕方に帰れるため夜遅くならず安心です。
                   </p>
                 </div>
 
