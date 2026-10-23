@@ -64,13 +64,13 @@ export default function RecruitHub({
       number: "01",
       emoji: "🍵",
       title: "仕事内容",
-      tagline: "笑顔とおもてなし接客・お酒一切不要",
-      badge: "お酒不要",
+      tagline: "玄関に座って笑顔で手を振るだけ・お酒一切不要",
+      badge: "座って手を振るだけ",
       badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-200",
       icon: "HeartHandshake",
       image: "/images/tobita_job_guide_tea_1788153000519.jpg",
-      summary: "飛田新地の当店では玄関でお出迎えし、お座敷でリラックスしながら歓談。お酒一切不要、営業連絡禁止、1回15〜20分の短時間接客。",
-      keyPoints: ["お酒・タバコ一切不要", "1回15〜20分の短時間", "呼び込みは仲居さんが担当"],
+      summary: "玄関の上がり框に座って笑顔で手を振るだけ！声掛けや客引きは仲居さんが担当。お酒一切不要、営業連絡なし、1回15〜20分の安心接客。",
+      keyPoints: ["玄関で座って笑顔で手を振るだけ", "声掛け・客引きは仲居さんが担当", "お酒一切不要・営業LINEゼロ"],
       featuredArticles: [
         { slug: "tobita-job-guide", title: "飛田新地のお仕事内容と1日の流れ", tag: "お仕事ガイド" },
         { slug: "tobitashinchi-non-alcoholic", title: "お酒が飲めなくても稼げる理由", tag: "ノンアル" }
