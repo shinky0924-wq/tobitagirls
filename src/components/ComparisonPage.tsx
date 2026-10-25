@@ -1939,7 +1939,7 @@ export default function ComparisonPage({
                       飛田新地求人 FAQ100選（全119問の完全データベース）
                     </h4>
                     <p className="text-[11px] sm:text-xs text-zinc-500">
-                      応募・給料・身バレ・寮・Wワーク・退店など8大テーマ別の専用ページもご用意しています。
+                      応募・給料・身バレ・寮・Wワーク・退店など8大テーマ別のQ&Aもご用意しています。
                     </p>
                   </div>
                 </div>
@@ -1949,7 +1949,7 @@ export default function ComparisonPage({
                     onClick={() => onNavigateFaq()}
                     className="bg-secondary hover:bg-rose-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-2xs transition-all flex items-center gap-1 cursor-pointer shrink-0"
                   >
-                    <span>FAQ専用ページを見る</span>
+                    <span>よくある質問（FAQ）を見る</span>
                     <LucideIcon name="ArrowRight" size={14} />
                   </button>
                 ) : (
@@ -1957,7 +1957,7 @@ export default function ComparisonPage({
                     href="/faq"
                     className="bg-secondary hover:bg-rose-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-2xs transition-all flex items-center gap-1 cursor-pointer shrink-0"
                   >
-                    <span>FAQ専用ページを見る</span>
+                    <span>よくある質問（FAQ）を見る</span>
                     <LucideIcon name="ArrowRight" size={14} />
                   </a>
                 )}

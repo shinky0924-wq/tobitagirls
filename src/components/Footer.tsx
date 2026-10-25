@@ -197,14 +197,14 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
                 className="text-left text-secondary font-bold hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <LucideIcon name="ShieldCheck" size={13} />
-                <span>運営者情報・店舗体制（独立専用ページ）</span>
+                <span>運営者情報・店舗体制</span>
               </a>
               <button
                 onClick={() => setActiveModal('policy')}
                 className="text-left text-secondary font-bold hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <LucideIcon name="FileCheck" size={13} />
-                <span>求人情報掲載ポリシーと安全規約（要約）</span>
+                <span>求人情報掲載ポリシーと安全規約</span>
               </button>
             </div>
           </div>
