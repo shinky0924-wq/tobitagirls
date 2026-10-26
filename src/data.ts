@@ -451,7 +451,7 @@ export const JOB_FACTS: JobFactItem[] = [
 
 export const FLOW_STEPS: FlowStep[] = [
   { number: '01', title: 'LINE相談' },
-  { number: '02', title: '希望ヒアリング' },
+  { number: '02', title: 'ご希望の相談・確認' },
   { number: '03', title: 'お店紹介' },
   { number: '04', title: '面接' },
   { number: '05', title: '体験入店' },

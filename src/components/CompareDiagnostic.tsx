@@ -491,7 +491,7 @@ export default function CompareDiagnostic({
                 <div className="bg-purple-50/60 rounded-2xl p-4 border border-purple-100">
                   <div className="font-extrabold text-purple-900 mb-1 flex items-center gap-1.5">
                     <span className="w-5 h-5 rounded-full bg-purple-200 text-purple-800 text-xs flex items-center justify-center">2</span>
-                    <span>完全源氏名（偽名）＆私服通勤</span>
+                    <span>完全源氏名（お仕事用のお名前）＆私服通勤</span>
                   </div>
                   <p className="text-xs text-zinc-600 pl-6 leading-relaxed">
                     本名を名乗ることはありません。衣装や着物は料亭で無料着替えができるため、私服で手ぶら出勤でき、外見から特定される心配はありません。

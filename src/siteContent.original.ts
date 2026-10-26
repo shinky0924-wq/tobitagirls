@@ -109,7 +109,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
         iconName: "EyeOff",
         title: "身バレ",
         question: "したくない",
-        answer: "「源氏名（偽名）の使用」「完全非公開での募集」「特定エリアを避けた勤務地選定」など、徹底的にプライバシーを守ります。誰かに知られることなく安心して働けます。"
+        answer: "「源氏名（お仕事用のお名前）の使用」「完全非公開での募集」「特定エリアを避けた勤務地選定」など、徹底的にプライバシーを守ります。誰かに知られることなく安心して働けます。"
       },
       {
         id: "concern-4",
@@ -181,7 +181,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
     subtitle: "WORKFLOW",
     items: [
       { number: "01", title: "LINE相談" },
-      { number: "02", title: "希望ヒアリング" },
+      { number: "02", title: "ご希望の相談・確認" },
       { number: "03", title: "お店紹介" },
       { number: "04", title: "面接" },
       { number: "05", title: "体験入店" },

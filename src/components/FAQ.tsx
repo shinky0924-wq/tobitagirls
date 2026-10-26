@@ -228,7 +228,7 @@ export default function FAQ({ content, onCtaclick, onNavigateToFaq }: FAQProps) 
                 該当する質問が見つかりませんでした
               </p>
               <p className="text-xs text-zinc-500 mb-4">
-                キーワードを変えて検索するか、全119問のFAQデータベースをご確認ください。
+                キーワードを変えて検索するか、全119問のよくある質問一覧をご確認ください。
               </p>
               <button
                 type="button"
@@ -379,13 +379,13 @@ export default function FAQ({ content, onCtaclick, onNavigateToFaq }: FAQProps) 
             <div className="text-center md:text-left">
               <div className="inline-flex items-center gap-1.5 text-xs font-bold text-secondary bg-white px-3 py-1 rounded-full border border-rose-200 mb-2 shadow-2xs">
                 <LucideIcon name="Layers" size={13} />
-                <span>全119問のFAQデータベース</span>
+                <span>よくある質問 全119選</span>
               </div>
               <h3 className="font-bold text-base sm:text-lg text-zinc-900 mb-1">
                 もっと細かい条件やマイナーな質問も網羅したい方へ
               </h3>
               <p className="text-xs sm:text-sm text-zinc-600">
-                上記4大疑問のほか、「面接・給料・未経験・勤務時間・身バレ・寮・Wワーク・退店」の全8テーマ・全119問の網羅データベースを公開しています。
+                上記4大疑問のほか、「面接・給料・未経験・勤務時間・身バレ・寮・Wワーク・退店」の全8テーマ・119問のQ&Aをすべて公開しています。
               </p>
             </div>
 
@@ -394,7 +394,7 @@ export default function FAQ({ content, onCtaclick, onNavigateToFaq }: FAQProps) 
               onClick={() => handleNavigateFaq()}
               className="flex-shrink-0 inline-flex items-center gap-2 bg-secondary hover:bg-rose-600 text-white font-black text-xs sm:text-sm px-6 py-3.5 rounded-2xl shadow-sm hover:shadow-md transition-all cursor-pointer"
             >
-              <span>全119問のFAQデータベースを見る</span>
+              <span>よくある質問（全119問）をすべて見る</span>
               <LucideIcon name="ArrowRight" size={16} />
             </button>
           </div>

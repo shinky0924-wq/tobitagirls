@@ -124,7 +124,7 @@ const INTERVIEW_QUESTIONS: QuestionItem[] = [
     id: 'privacy-safety',
     category: 'safety',
     question: 'Q. 身バレやプライバシー対策は徹底されていますか？',
-    answer: '「徹底しています。お仕事中は100%源氏名（偽名）で活動し、本名が外部に出ることはありません。\nネットやSNSへの顔写真・体写真の掲載も一切行いません。\nまた、会社員や公務員を目指すWワークの女性には、住民税を会社に通知させない『普通徴収』の具体的な申告手続きも丁寧にレクチャーしています。」',
+    answer: '「徹底しています。お仕事中は100%源氏名（お仕事用のお名前）で活動し、本名が外部に出ることはありません。\nネットやSNSへの顔写真・体写真の掲載も一切行いません。\nまた、会社員や公務員を目指すWワークの女性には、住民税を会社に通知させない『普通徴収』の具体的な申告手続きも丁寧にレクチャーしています。」',
     respondent: {
       name: '木村',
       role: '採用マネージャー・法務担当歴12年',
@@ -184,7 +184,7 @@ export default function RecruiterInterviewSection() {
         <div>
           <div className="inline-flex items-center gap-1.5 text-xs font-bold text-rose-700 bg-rose-50 px-3 py-1 rounded-full border border-rose-200/80 mb-2">
             <LucideIcon name="MessageSquareText" size={14} className="text-rose-600" />
-            <span>店舗直撃ヒアリング・生の声</span>
+            <span>採用担当直撃インタビュー・生の声</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-black text-zinc-900 tracking-tight">
             実際にお店の求人担当者へのインタビュー
@@ -319,7 +319,7 @@ export default function RecruiterInterviewSection() {
       <div className="mt-6 pt-5 border-t border-rose-100 text-center text-xs text-zinc-500 flex flex-col sm:flex-row items-center justify-center gap-2">
         <span className="inline-flex items-center gap-1 font-bold text-rose-700">
           <LucideIcon name="ShieldCheck" size={14} />
-          店舗ヒアリング実施済み・最新実態掲載
+          店舗スタッフ直接確認済み・最新実態掲載
         </span>
         <span className="hidden sm:inline text-zinc-300">|</span>
         <span>ご不明な点や個別のご相談は、公式LINEよりいつでも匿名でお問い合わせいただけます。</span>

@@ -283,13 +283,13 @@ export default function FAQPage({ initialCategory, onNavigateHome, onCtaclick }:
             <div>
               <div className="inline-flex items-center gap-1.5 text-xs font-black text-rose-700 bg-rose-50 border border-rose-200 px-3 py-1 rounded-full mb-2">
                 <LucideIcon name="Search" size={13} />
-                <span>ユーザーが実際に検索している4大疑問</span>
+                <span>応募前によくいただく4大疑問</span>
               </div>
               <h2 className="font-display font-black text-lg sm:text-xl text-zinc-900">
                 「初心者・給料・働き方・不安」の最重要Q&A
               </h2>
               <p className="text-xs sm:text-sm text-zinc-600 mt-1">
-                応募前に特に検索されているリアルな質問に、具体的な数字と事実で回答しています。
+                応募前によくいただくリアルな質問に、具体的な数字と事実で回答しています。
               </p>
             </div>
 

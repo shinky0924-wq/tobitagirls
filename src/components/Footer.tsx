@@ -41,7 +41,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
     { name: '飛田新地求人サイト比較', action: 'compare', target: '/compare' },
     { name: '求人総合ガイド', action: 'section', target: '#hub' },
     { name: 'お仕事コラム一覧', action: 'blog' },
-    { name: '運営者情報・監修体制', action: 'about', target: '/about' },
+    { name: '運営者情報・お店のご案内', action: 'about', target: '/about' },
     { name: '選ばれる理由', action: 'section', target: '#reasons' },
     { name: 'よくある質問 FAQ（全119問）', action: 'faq', target: '/faq' },
     { name: '女性の声・体験談', action: 'section', target: '#voice' },
@@ -293,7 +293,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
             </div>
             <div className="text-xs text-gray-700 space-y-3 leading-relaxed font-sans">
               <p><strong>1. 法令遵守と健全性の徹底（20歳以上完全限定）</strong><br />料理組合規約およびコンプライアンス管理に基づき、20歳未満（18歳・19歳・高校生含む）の就労を固く禁じております（※2022年の成人年齢引き下げ後も20歳未満不可を徹底）。本籍地記載の住民票原本等による厳正な身分証確認を行い、違法行為・反社会的勢力との関わりを一切排除しています。</p>
-              <p><strong>2. 虚偽・誇大広告の禁止と一次情報の明示</strong><br />当サイトの掲載情報は、お店の求人担当スタッフへの直接ヒアリングと実際の募集条件をもとに作成しています。「誰でも日給30万円」などの誇大表記は行わず、料亭組合規約に基づいた正確な給与計算（売上50%バック即日全額日払い）と実態に即した一次情報を掲載し、条件変更時は随時更新を行っています。</p>
+              <p><strong>2. 嘘や誇大広告の禁止と、正しい情報の掲載</strong><br />当サイトの掲載情報は、お店の女性採用スタッフが直接確認した実際の募集条件をもとに作成しています。「誰でも日給30万円」などの誇大表記は行わず、料亭組合規約に基づいた正確な給与計算（売上50%バック即日全額日払い）と現場のリアルな実態をそのまま掲載し、条件変更時は随時更新を行っています。</p>
               <p><strong>3. ノルマ・天引きの禁止</strong><br />指名ノルマ・同伴ペナルティ・不当な衣装代などの天引きを行う店舗の掲載は一切認めておりません。</p>
             </div>
           </div>

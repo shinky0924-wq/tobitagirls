@@ -893,7 +893,7 @@ export default function BlogSection({
                           監修：飛田新地ガールズ求人サポートスタッフ
                         </span>
                         <span className="text-[10px] font-bold text-gray-700 bg-gray-100 px-2 py-0.5 rounded-full">
-                          一次情報保証
+                          現場スタッフ確認済み
                         </span>
                       </div>
                       <div className="text-sm sm:text-base font-bold text-[#2c1a1e] flex flex-wrap items-center gap-1.5">
@@ -904,7 +904,7 @@ export default function BlogSection({
                       </div>
                       <div className="text-[11px] text-gray-500 font-mono mt-0.5 flex items-center gap-1">
                         <RefreshCw size={11} className="text-secondary" />
-                        <span>最終更新：2026/09/05（求人担当者ヒアリング・現場実態確認済）</span>
+                        <span>最終更新：2026/09/05（女性スタッフ現場確認済み）</span>
                       </div>
                     </div>
                   </div>
@@ -912,14 +912,14 @@ export default function BlogSection({
                   <div className="flex flex-col sm:items-end gap-1.5 shrink-0 self-stretch sm:self-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-rose-100">
                     <div className="text-[11px] text-rose-800 bg-white border border-rose-200 px-3 py-1.5 rounded-full font-medium flex items-center justify-center gap-1">
                       <ShieldCheck size={13} className="text-secondary" />
-                      <span>{currentAuthorProfile?.experienceTag || '飛田新地 現場実務者レビュー済'}</span>
+                      <span>{currentAuthorProfile?.experienceTag || '女性スタッフ確認済み'}</span>
                     </div>
                     {onNavigateAbout && (
                       <button
                         onClick={onNavigateAbout}
                         className="text-[11px] text-secondary hover:text-rose-800 font-bold underline cursor-pointer text-center sm:text-right"
                       >
-                        運営者情報・監修体制について →
+                        運営者情報・お店のご案内について →
                       </button>
                     )}
                   </div>

@@ -228,8 +228,8 @@ export default function App() {
         canonicalUrl = 'https://tobitashinchi-recruit.com/compare';
       }
     } else if (currentTab === 'about') {
-      pageTitle = '飛田ガールズについて｜運営者情報・監修体制・一次情報ポリシー【公式】';
-      pageDesc = '飛田新地料理組合公認の老舗料亭直営公式求人「飛田ガールズ」の店舗情報、創業歴、運営体制、女性スタッフによるサポート方針、一次情報発信ポリシーをご紹介します。';
+      pageTitle = '飛田ガールズについて｜運営者情報・料亭直営体制・安心の情報発信について【公式】';
+      pageDesc = '飛田新地料理組合公認の老舗料亭直営公式求人「飛田ガールズ」の店舗情報、創業歴、運営体制、女性スタッフによるサポート方針、安心の情報発信ポリシーをご紹介します。';
       canonicalUrl = 'https://tobitashinchi-recruit.com/about';
     } else if (currentTab === 'blog') {
       if (!selectedSlug) {
@@ -238,7 +238,7 @@ export default function App() {
         canonicalUrl = 'https://tobitashinchi-recruit.com/blog';
       }
     } else if (currentTab === 'faq') {
-      pageTitle = '飛田新地求人 FAQ（全119問・8大テーマ体系化）｜未経験・給料・身バレ・面接【公式】';
+      pageTitle = '飛田新地求人 FAQ（全119問・8大テーマ別Q&A）｜未経験・給料・身バレ・面接【公式】';
       pageDesc = '飛田新地求人のよくある質問と回答（全119問）。応募資格、面接、給料手渡し、個室寮、身バレ対策など、疑問や不安をテーマ別に完全解消。';
       canonicalUrl = selectedFaqCategory ? `https://tobitashinchi-recruit.com/faq/${selectedFaqCategory}` : 'https://tobitashinchi-recruit.com/faq';
     } else if (currentTab === 'recruit') {

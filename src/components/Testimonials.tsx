@@ -49,7 +49,7 @@ export default function Testimonials() {
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
           <div className="inline-flex items-center gap-1.5 bg-rose-100/80 text-rose-800 text-xs font-black px-4 py-1.5 rounded-full mb-3 shadow-2xs border border-rose-200">
             <LucideIcon name="ShieldCheck" size={14} className="text-rose-600" />
-            <span>一次情報・実在キャスト対面取材記録（自署同意書保管済）</span>
+            <span>実際に働くキャストのリアルな本音・対面インタビュー</span>
           </div>
           
           <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-zinc-900 leading-tight mb-4 tracking-tight">
@@ -58,17 +58,17 @@ export default function Testimonials() {
           
           <p className="font-sans text-xs sm:text-sm text-zinc-600 leading-relaxed max-w-2xl mx-auto">
             未経験フリーター・現役大学生・副業OLの3名への直接インタビュー記録です。<br className="hidden sm:inline" />
-            ※実在する現役キャスト本人の自署サインおよび掲載許諾を得て、実際の勤務・給与データ等の事実に基づいて掲載しています。
+            ※すべて当店で実際に働く現役スタッフのリアルな体験談です（ご本人の掲載承諾をいただいています）。
           </p>
 
           <div className="mt-4 flex flex-wrap items-center justify-center gap-2.5 text-[11px] sm:text-xs text-zinc-600">
             <span className="inline-flex items-center gap-1 bg-white px-3 py-1 rounded-full border border-gray-200 shadow-2xs">
               <LucideIcon name="FileCheck2" size={13} className="text-emerald-600" />
-              満20歳以上公的確認済（住民票原本）
+              満20歳以上の在籍キャスト
             </span>
             <span className="inline-flex items-center gap-1 bg-white px-3 py-1 rounded-full border border-gray-200 shadow-2xs">
               <LucideIcon name="PenTool" size={13} className="text-secondary" />
-              本人直筆サイン原本保管
+              本人の掲載承諾済み
             </span>
             <span className="inline-flex items-center gap-1 bg-white px-3 py-1 rounded-full border border-gray-200 shadow-2xs">
               <LucideIcon name="CalendarCheck" size={13} className="text-indigo-600" />
@@ -189,7 +189,7 @@ export default function Testimonials() {
                           飛田新地で働いた女性インタビュー
                         </span>
                         <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
-                          一次情報・直接対面取材
+                          直接対面取材・本人の声
                         </span>
                       </div>
                       
@@ -361,10 +361,10 @@ export default function Testimonials() {
             </div>
             <div>
               <h4 className="font-bold text-sm text-zinc-900">
-                当サイトの体験談における「本人確認・一次情報保証」基準
+                当サイトの体験談における「安心・本物の声」をお届けする基準
               </h4>
               <p className="text-xs text-zinc-600 mt-0.5">
-                法令遵守（20歳未満の就労禁止）に基づき、本籍地記載の住民票原本による生年月日・国籍確認と、本人直筆署名（サイン）を取得した実在キャストのみを掲載しています。
+                法令遵守（20歳未満の就労禁止）に基づき、身分証による生年月日確認と、ご本人から掲載の承諾（直筆サイン）をいただいた実在のキャストのみを掲載しています。
               </p>
             </div>
           </div>
@@ -394,8 +394,8 @@ export default function Testimonials() {
                     <LucideIcon name="FileCheck" size={16} className="text-white" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm">公式本人確認・在籍証明書</h3>
-                    <p className="text-[10px] text-emerald-100">Verification Certificate of Cast Testimony</p>
+                    <h3 className="font-bold text-sm">在籍キャスト インタビュー証明</h3>
+                    <p className="text-[10px] text-emerald-100">Verification of Cast Testimony</p>
                   </div>
                 </div>
                 <button
@@ -413,21 +413,21 @@ export default function Testimonials() {
                 {/* Status Stamp */}
                 <div className="flex items-center justify-between bg-emerald-50/80 border border-emerald-200 rounded-2xl p-4">
                   <div>
-                    <span className="text-[10px] text-emerald-800 font-bold uppercase tracking-wider block">認証ステータス</span>
+                    <span className="text-[10px] text-emerald-800 font-bold uppercase tracking-wider block">確認ステータス</span>
                     <span className="text-base font-black text-emerald-700 flex items-center gap-1 mt-0.5">
                       <LucideIcon name="CheckCircle2" size={16} />
-                      本人確認・実務在籍確認 完了
+                      年齢確認・在籍確認 完了
                     </span>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] text-zinc-500 block">認証管理番号</span>
+                    <span className="text-[10px] text-zinc-500 block">管理番号</span>
                     <span className="font-mono font-bold text-xs text-zinc-800">{selectedVerification.verification.verificationId}</span>
                   </div>
                 </div>
 
                 {/* Cast Profile & Original Signature Match */}
                 <div className="border border-gray-200 rounded-2xl p-4 bg-zinc-50/60 space-y-3">
-                  <div className="text-[11px] font-bold text-zinc-500">【取材対象キャスト属性 & 自署原本照合】</div>
+                  <div className="text-[11px] font-bold text-zinc-500">【インタビューしたキャストのプロフィール】</div>
                   <div className="flex items-center justify-between gap-4">
                     <div>
                       <div className="text-sm font-black text-zinc-900">
@@ -439,7 +439,7 @@ export default function Testimonials() {
                     </div>
                     {/* Handwritten Signature Box */}
                     <div className="bg-white border border-dashed border-rose-300 rounded-xl px-3 py-1.5 text-center shadow-2xs">
-                      <span className="text-[9px] text-zinc-400 block font-medium">提出自署サイン</span>
+                      <span className="text-[9px] text-zinc-400 block font-medium">ご本人の直筆サイン</span>
                       <img
                         src={selectedVerification.signatureUrl}
                         alt={`${selectedVerification.name}の直筆サイン`}
@@ -539,7 +539,7 @@ export default function Testimonials() {
               "@type": "Article",
               "@id": `https://tobitashinchi-recruit.com/#interview-${t.id}`,
               "headline": `飛田新地で働いた女性インタビュー【${t.name}さん・年齢:${t.profile.ageGroup}・前職:${t.profile.previousJob}・勤務歴:${t.profile.workPeriod}】`,
-              "description": `${t.name}さん（${t.profile.ageGroup}・前職:${t.profile.previousJob}・経験:${t.profile.nightWorkExp}）への公式対面インタビュー。取材日:${t.profile.interviewDate}。実在キャストの自署同意書保管・一次情報。`,
+              "description": `${t.name}さん（${t.profile.ageGroup}・前職:${t.profile.previousJob}・経験:${t.profile.nightWorkExp}）への公式対面インタビュー。取材日:${t.profile.interviewDate}。実在キャストの自署同意書保管・リアルな本音。`,
               "datePublished": "2026-03-14",
               "dateModified": "2026-08-20",
               "inLanguage": "ja-JP",

@@ -55,8 +55,8 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
     { id: 'shops', name: 'お店選び', icon: 'Store', desc: 'メイン通り・青春通り・大門通りの特徴と直営店', badge: '直営安心' },
     { id: 'dorm', name: '寮・出稼ぎ', icon: 'Home', desc: '家具家電付き個室マンション寮・往復交通費全額支給', badge: '個室寮完備' },
     { id: 'safety', name: '身バレ・安全', icon: 'EyeOff', desc: 'ネット写真ゼロ・完全源氏名・住民税普通徴収対策', badge: '秘密厳守' },
-    { id: 'faq', name: 'よくある質問 FAQ', icon: 'HelpCircle', desc: '業界最多クラス全119問・8大テーマ体系化Q&A', badge: '全119問' },
-    { id: 'blog', name: 'お仕事コラム', icon: 'BookOpen', desc: '100本以上の解説記事・テーマ別実務ノウハウ', badge: '100本超' },
+    { id: 'faq', name: 'よくある質問 FAQ', icon: 'HelpCircle', desc: '知りたい疑問がすべてわかる・全119問のQ&A', badge: '全119問' },
+    { id: 'blog', name: 'お仕事コラム', icon: 'BookOpen', desc: '100本以上の解説記事・未経験者向けのお役立ち情報', badge: '100本超' },
   ];
 
   // Top level menu items requested by user

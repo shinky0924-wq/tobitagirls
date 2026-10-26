@@ -45,7 +45,7 @@ function buildHomeNoscript(): string {
         <p class="lead">飛田新地で働きたい女性へ。仕事内容・給料システム・応募条件・未経験採用・面接や体験入店の流れを、現場サポート歴8年の女性スタッフが徹底解説します。売上50%完全即日全額現金日払い手渡し・お酒一切不要・完全身バレ防止・家具家電付き即入居個室寮完備。</p>
 
         <section>
-          <h2>飛田新地求人の募集概要・一次情報（2026年最新採用情報）</h2>
+          <h2>飛田新地求人の募集概要・最新情報（2026年最新採用情報）</h2>
           <table border="1">
             <tbody>
               <tr>
@@ -612,13 +612,13 @@ function buildFaqNoscript(categorySlug?: string): string {
 function buildAboutNoscript(): string {
   return `
     <header>
-      <p>飛田ガールズについて｜運営者情報・料亭直営体制・一次情報ポリシー【公式】</p>
+      <p>飛田ガールズについて｜運営者情報・料亭直営体制・安心の情報発信について【公式】</p>
       <p>24時間受付中・相談無料・完全秘密厳守</p>
     </header>
     <main>
       <article>
-        <h1>飛田ガールズについて｜運営者情報・料亭直営体制・一次情報ポリシー【公式】</h1>
-        <p class="lead">飛田新地料理組合公認の老舗料亭直営公式採用窓口「飛田ガールズ」の店舗情報、創業歴、運営理念、女性スタッフによるサポート方針、一次情報発信ポリシーをご紹介します。</p>
+        <h1>飛田ガールズについて｜運営者情報・料亭直営体制・安心の情報発信について【公式】</h1>
+        <p class="lead">飛田新地料理組合公認の老舗料亭直営公式採用窓口「飛田ガールズ」の店舗情報、創業歴、運営理念、女性スタッフによるサポート方針、安心の情報発信ポリシーをご紹介します。</p>
 
         <section>
           <h2>安心の実績と信頼</h2>
@@ -658,8 +658,8 @@ function buildAboutNoscript(): string {
         </section>
 
         <section>
-          <h2>一次情報発信ポリシーと安全性保証</h2>
-          <p>当サイトは外部の仲介業者・広告代理店を通さず、飛田新地料理組合公認の料亭直営スタッフが現場の採用基準と給与条件を正確に一次情報として発信しています。街全体での撮影禁止規約、お酒不要、写真ネット非掲載、完全源氏名、住民税普通徴収サポートを徹底し、女性の安全を最優先に保護しています。</p>
+          <h2>安心の情報発信ポリシーと安全性保証</h2>
+          <p>当サイトは外部の仲介業者・広告代理店を通さず、飛田新地料理組合公認の料亭直営スタッフが現場の採用基準と給与条件を正確に最新情報として発信しています。街全体での撮影禁止規約、お酒不要、写真ネット非掲載、完全源氏名、住民税普通徴収サポートを徹底し、女性の安全を最優先に保護しています。</p>
         </section>
       </article>
     </main>
@@ -1033,8 +1033,8 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
       customNoscript = buildBlogIndexNoscript([]);
     }
   } else if (cleanPath === '/about' || cleanPath === '/company') {
-    title = '飛田ガールズについて｜運営者情報・監修体制・一次情報ポリシー【公式】';
-    description = '飛田新地料理組合公認の老舗料亭直営公式求人「飛田ガールズ」の店舗情報、創業歴、運営体制、女性スタッフによるサポート方針、一次情報発信ポリシーをご紹介します。';
+    title = '飛田ガールズについて｜運営者情報・料亭直営体制・安心の情報発信について【公式】';
+    description = '飛田新地料理組合公認の老舗料亭直営公式求人「飛田ガールズ」の店舗情報、創業歴、運営体制、女性スタッフによるサポート方針、安心の情報発信ポリシーをご紹介します。';
     canonicalUrl = 'https://tobitashinchi-recruit.com/about';
     ogImageUrl = DEFAULT_IMAGE;
     ogImageAlt = '飛田ガールズ 運営者情報';
@@ -1046,8 +1046,8 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
           '@type': 'AboutPage',
           '@id': 'https://tobitashinchi-recruit.com/about#aboutpage',
           'url': 'https://tobitashinchi-recruit.com/about',
-          'name': '飛田ガールズについて｜運営者情報・監修体制・一次情報ポリシー【公式】',
-          'description': '飛田新地料理組合公認の老舗料亭直営公式求人「飛田ガールズ」の店舗情報、創業歴、運営体制、女性スタッフによるサポート方針、一次情報発信ポリシーをご紹介します。',
+          'name': '飛田ガールズについて｜運営者情報・料亭直営体制・安心の情報発信について【公式】',
+          'description': '飛田新地料理組合公認の老舗料亭直営公式求人「飛田ガールズ」の店舗情報、創業歴、運営体制、女性スタッフによるサポート方針、安心の情報発信ポリシーをご紹介します。',
           'isPartOf': {
             '@type': 'WebSite',
             '@id': 'https://tobitashinchi-recruit.com/#website',

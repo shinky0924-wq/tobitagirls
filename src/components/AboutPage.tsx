@@ -9,8 +9,8 @@ interface AboutPageProps {
 
 export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }: AboutPageProps) {
   useEffect(() => {
-    document.title = '飛田ガールズについて｜運営者情報・料亭直営体制・一次情報ポリシー【公式】';
-    const desc = '飛田新地料理組合公認の老舗料亭直営公式求人「飛田ガールズ」の店舗情報、創業歴、運営体制、女性スタッフによるサポート方針、一次情報発信ポリシーをご紹介します。';
+    document.title = '飛田ガールズについて｜運営者情報・料亭直営体制・安心の情報発信について【公式】';
+    const desc = '飛田新地料理組合公認の老舗料亭直営公式求人「飛田ガールズ」の店舗情報、創業歴、運営体制、女性スタッフによるサポート方針、安心の情報発信ポリシーをご紹介します。';
     const canonicalUrl = 'https://tobitashinchi-recruit.com/about';
 
     const metaDesc = document.querySelector('meta[name="description"]');
@@ -70,7 +70,7 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
               <div className="flex flex-wrap gap-2 text-xs">
                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800 font-bold border border-rose-100">
                   <LucideIcon name="CheckCircle2" size={13} className="text-rose-600" />
-                  <span>中間業者マージンゼロ</span>
+                  <span>紹介料・手数料の天引きゼロ</span>
                 </span>
                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800 font-bold border border-rose-100">
                   <LucideIcon name="CheckCircle2" size={13} className="text-rose-600" />
