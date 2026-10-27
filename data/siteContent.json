@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年10月19日",
+  "lastUpdated": "2026年10月27日",
   "hero": {
     "tagline": "24時間受付中 ・ 相談だけでもOK",
     "titleLine1": "飛田新地が",
@@ -104,12 +104,30 @@
     "title": "応募からお仕事開始までの流れ 🛤️",
     "subtitle": "WORKFLOW",
     "items": [
-      { "number": "01", "title": "LINE相談" },
-      { "number": "02", "title": "ご希望の相談・確認" },
-      { "number": "03", "title": "お店紹介" },
-      { "number": "04", "title": "面接" },
-      { "number": "05", "title": "体験入店" },
-      { "number": "06", "title": "お仕事スタート" }
+      {
+        "number": "01",
+        "title": "LINE相談"
+      },
+      {
+        "number": "02",
+        "title": "ご希望の相談・確認"
+      },
+      {
+        "number": "03",
+        "title": "お店紹介"
+      },
+      {
+        "number": "04",
+        "title": "面接"
+      },
+      {
+        "number": "05",
+        "title": "体験入店"
+      },
+      {
+        "number": "06",
+        "title": "お仕事スタート"
+      }
     ]
   },
   "faq": {
