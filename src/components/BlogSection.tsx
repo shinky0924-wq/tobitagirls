@@ -899,7 +899,7 @@ export default function BlogSection({
                       <div className="text-sm sm:text-base font-bold text-[#2c1a1e] flex flex-wrap items-center gap-1.5">
                         <span>執筆：{currentAuthorProfile?.name || 'さくら'}</span>
                         <span className="text-xs font-normal text-on-surface-variant">
-                          （{currentAuthorProfile?.role || '女性サポートスタッフ・相談窓口歴8年'}）
+                          （{currentAuthorProfile?.role || '料亭直営 女性サポートスタッフ（歴8年）'}）
                         </span>
                       </div>
                       <div className="text-[11px] text-gray-500 font-mono mt-0.5 flex items-center gap-1">
@@ -1007,7 +1007,7 @@ export default function BlogSection({
                       この記事を書いた人 / 監修
                     </span>
                     <span className="text-xs text-on-surface-variant font-medium">
-                      {currentAuthorProfile?.role || '女性サポートスタッフ・相談窓口歴8年'}
+                      {currentAuthorProfile?.role || '料亭直営 女性サポートスタッフ（歴8年）'}
                     </span>
                   </div>
                   <h4 className="text-base font-bold text-[#2c1a1e]">

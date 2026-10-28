@@ -66,15 +66,15 @@ export function getAuthorProfile(author?: { name?: string; role?: string; avatar
     };
   }
 
-  if (name.includes('しほ') || role.includes('元キャスト・現相談員') || role.includes('相談員')) {
+  if (name.includes('しほ') || role.includes('元キャスト・現相談員') || role.includes('相談員') || role.includes('サポートスタッフ')) {
     return {
       name: name || 'しほ',
-      role: role || '女性スタッフ（元キャスト・現相談員）',
+      role: '料亭直営 女性スタッフ（元キャスト）',
       avatar: avatar && !avatar.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/) ? avatar : '/images/sakura_advisor_portrait_1788920514818.jpg',
-      badge: '元キャスト・現相談員 実務執筆',
-      experienceTag: '料亭勤務3年＋相談員歴4年',
+      badge: '料亭直営 元キャストスタッフ執筆',
+      experienceTag: '料亭キャスト勤務3年＋女性サポート歴4年',
       comment: '私自身が実際に料亭の玄関に座って働いていた経験から、女の子が本当に不安に感じるポイント（身バレ・生理・体力）のリアルな本音を包み隠さずお伝えします。',
-      bio: '飛田新地の現役キャストとして3年間の勤務を経験後、現在は女の子専用の相談員として従事。現場経験者だからこそ分かる『初日の緊張』『確定申告のやり方』『無理のない稼ぎ方』を親身にアドバイスしています。'
+      bio: '飛田新地の料亭キャストとして3年間の勤務を経験後、現在は料亭直営の女性サポート・採用スタッフとして従事。現場経験者だからこそ分かる『初日の緊張』『確定申告のやり方』『無理のない稼ぎ方』を親身にアドバイスしています。'
     };
   }
 
