@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+Disallow: /*?q=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
+
+# OpenAI Search & Crawlers (ChatGPT / SearchGPT)
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Anthropic Claude
+User-agent: ClaudeBot
+Allow: /
+
+# Google AI
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://tobitashinchi-recruit.com/sitemap.xml
+
+# LLM & AI Search Index (Web Standards)
+# https://tobitashinchi-recruit.com/llms.txt
+# https://tobitashinchi-recruit.com/llms-full.txt
