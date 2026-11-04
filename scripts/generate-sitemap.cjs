@@ -64,8 +64,9 @@ let xml = `<?xml version="1.0" encoding="UTF-8"?>
 
 // Add static routes with image extensions
 for (const r of staticRoutes) {
+  const locUrl = r.path === '' ? `${DOMAIN}/` : `${DOMAIN}${r.path}`;
   xml += `  <url>
-    <loc>${DOMAIN}${r.path}</loc>
+    <loc>${locUrl}</loc>
     <lastmod>${TODAY}</lastmod>
     <changefreq>${r.freq}</changefreq>
     <priority>${r.priority}</priority>
