@@ -1653,8 +1653,12 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
   }
 
   // LLMO Context Links for AI Crawlers
-  if (!html.includes('href="/llms.txt"')) {
-    html = html.replace(/<\/head>/i, '  <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM Context" />\n  <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="Full LLM Context" />\n</head>');
+  if (!html.includes('title="AI Markdown View"')) {
+    if (html.includes('href="/llms.txt"')) {
+      html = html.replace(/<link rel="alternate" type="text\/markdown" href="\/llms\.txt"/i, `  <link rel="alternate" type="text/markdown" href="${canonicalUrl}?format=md" title="AI Markdown View" />\n  <link rel="alternate" type="text/markdown" href="/llms.txt"`);
+    } else {
+      html = html.replace(/<\/head>/i, `  <link rel="alternate" type="text/markdown" href="${canonicalUrl}?format=md" title="AI Markdown View" />\n  <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM Context" />\n  <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="Full LLM Context" />\n</head>`);
+    }
   }
 
   // OGP and Twitter Card Tags (for X/Twitter note-style cards, LINE, and Facebook)

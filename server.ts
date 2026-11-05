@@ -4,6 +4,7 @@ import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI } from '@google/genai';
 import { injectSeoMetadata } from './src/seoHelper';
+import { renderRouteMarkdown } from './src/markdownRenderer';
 
 let aiClient: GoogleGenAI | null = null;
 function getGenAI(): GoogleGenAI {
@@ -24,6 +25,45 @@ const SITE_CONTENT_FILE = path.join(DATA_DIR, 'siteContent.json');
 // Ensure data directory exists
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
+}
+
+function isAiBotOrMarkdownRequest(req: express.Request): boolean {
+  // 1. Explicit query parameter ?format=md, ?format=markdown, ?md=1
+  const format = typeof req.query.format === 'string' ? req.query.format.toLowerCase() : '';
+  if (format === 'md' || format === 'markdown' || req.query.md === '1') {
+    return true;
+  }
+
+  // 2. HTTP Accept header specifying markdown
+  const acceptHeader = (req.headers.accept || '').toLowerCase();
+  if (acceptHeader.includes('text/markdown') || acceptHeader.includes('text/x-markdown')) {
+    return true;
+  }
+
+  // 3. User-Agent detection for AI search crawlers and LLM retrieval bots
+  const userAgent = (req.headers['user-agent'] || '').toLowerCase();
+  const aiBotSignatures = [
+    'gptbot',
+    'oai-searchbot',
+    'chatgpt-user',
+    'perplexitybot',
+    'claudebot',
+    'claude-web',
+    'anthropic-ai',
+    'google-extended',
+    'applebot-extended',
+    'ccbot',
+    'diffbot',
+    'bytespider',
+    'cohere-ai',
+    'meta-externalagent'
+  ];
+
+  if (aiBotSignatures.some((bot) => userAgent.includes(bot))) {
+    return true;
+  }
+
+  return false;
 }
 
 async function startServer() {
@@ -74,6 +114,30 @@ async function startServer() {
       return res.sendFile(sitemapPath);
     }
     return res.status(404).send('Sitemap not found');
+  });
+
+  // Markdown Auto-Delivery (Content Negotiation) for AI Bots & ?format=md / Accept: text/markdown
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/api') || req.path === '/sitemap.xml' || req.path === '/robots.txt') {
+      return next();
+    }
+    // Skip static assets
+    if (/\.(png|jpe?g|gif|webp|svg|css|js|map|ico|woff2?|xml|txt|json)$/i.test(req.path)) {
+      return next();
+    }
+
+    if (isAiBotOrMarkdownRequest(req)) {
+      const { markdown, status } = renderRouteMarkdown(req.path);
+      res.status(status);
+      res.setHeader('Content-Type', 'text/markdown; charset=utf-8');
+      res.setHeader('Vary', 'Accept, User-Agent');
+      res.setHeader('X-Content-Type-Options', 'nosniff');
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+      return res.send(markdown);
+    }
+
+    next();
   });
 
   // Health check
