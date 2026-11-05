@@ -10,6 +10,7 @@ import { TOPIC_CLUSTERS, ALL_CLUSTER_NODES, TopicClusterData } from '../topicClu
 import { BLOG_ARTICLES } from '../blogData';
 import JobDetails from './JobDetails';
 import BenefitsShowcase from './BenefitsShowcase';
+import SalaryCalculator from './SalaryCalculator';
 import { getStoredSiteContent } from '../siteContent';
 
 interface TopicClusterPageProps {
@@ -389,9 +390,10 @@ export default function TopicClusterPage({
           ))}
         </div>
 
-        {/* 6. Special Embedded Functional Components: Benefits on Salary page, JobDetails on Requirements page */}
+        {/* 6. Special Embedded Functional Components: Calculator and Benefits on Salary page, JobDetails on Requirements page */}
         {topicId === 'salary' && (
-          <div className="mb-8">
+          <div className="space-y-8 mb-8">
+            <SalaryCalculator onCtaclick={onCtaclick} />
             <BenefitsShowcase 
               onCtaclickWithData={onInjectedScroll} 
               onCtaclick={onCtaclick} 

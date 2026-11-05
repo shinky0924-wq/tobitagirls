@@ -9,7 +9,7 @@ import { getStoredSiteContent } from '../siteContent';
 
 interface FooterProps {
   currentTab: string;
-  onChangeTab: (tab: 'recruit' | 'blog' | 'admin' | 'about' | 'compare' | 'faq' | 'cluster') => void;
+  onChangeTab: (tab: 'recruit' | 'blog' | 'admin' | 'about' | 'compare' | 'faq' | 'cluster' | 'glossary') => void;
   onScrollToSection: (sectionId: string) => void;
   onOpenAdmin: () => void;
   onNavigateCompare?: (categorySlug?: string) => void;
