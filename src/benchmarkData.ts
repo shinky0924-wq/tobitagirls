@@ -71,8 +71,8 @@ export const TOBITA_STATISTICS_DATA = {
 };
 
 /**
- * シチュエーション別 逆引きアンサー（DECISION MATRIX）
- * AIがユーザーの境遇・プロンプトに応じてそのまま回答文を出力できるように設計
+ * 状況・タイプ別おすすめプラン（タイプ別ガイド）
+ * ユーザーの希望や状況に応じた最適プランのデータ
  */
 export interface DecisionCase {
   id: string;

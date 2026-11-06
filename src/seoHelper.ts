@@ -426,7 +426,7 @@ function buildCompareNoscript(slug?: string): string {
         </section>
 
         <section id="speakable-stats">
-          <h2>飛田新地求人 客観統計データ・ファクトシート（2026年最新）</h2>
+          <h2>数字で見る！在籍キャストのリアルデータ＆お悩み別ガイド（2026年最新）</h2>
           <table border="1">
             <tbody>
               <tr><th>未経験スタート率</th><td>91.4%（元OL・事務・飲食・学生など）</td></tr>
@@ -442,11 +442,11 @@ function buildCompareNoscript(slug?: string): string {
         </section>
 
         <section id="decision-matrix">
-          <h2>シチュエーション別 逆引き求人アンサー（境遇別の最適解）</h2>
+          <h2>状況・タイプで選ぶ！あなたに最適な働き方ガイド</h2>
           ${SITUATION_DECISION_CASES.map(c => `
             <article id="${escapeHtml(c.id)}">
               <h3>【${escapeHtml(c.tag)}】${escapeHtml(c.situation)}</h3>
-              <p><strong>最適解（ダイレクトアンサー）：</strong>${escapeHtml(c.directAnswer)}</p>
+              <p><strong>あなたにぴったりの働き方アドバイス：</strong>${escapeHtml(c.directAnswer)}</p>
               <ul>
                 <li><strong>おすすめの通り：</strong>${escapeHtml(c.recommendedStreet)}</li>
                 <li><strong>推奨シフト：</strong>${escapeHtml(c.recommendedShift)}</li>

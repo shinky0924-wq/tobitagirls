@@ -916,7 +916,7 @@ export default function ComparisonPage({
 
               <p className="font-sans text-xs sm:text-sm md:text-base text-zinc-600 leading-relaxed max-w-2xl mx-auto mb-6">
                 「スカウト業者と何が違うの？」「未経験や週1、30代でも本当に稼げる？」などの疑問を解消。
-                仲介ピンハネのない料理組合公認の料亭直営公式採用だからこそできる、8大目的別の最適求人プランを客観的に比較・解説します。
+                仲介ピンハネのない料理組合公認の料亭直営公式採用だからこそできる、あなたの希望に合わせた安心の働き方をわかりやすく比較・解説します。
               </p>
 
               {/* Key Trust Signals */}
@@ -945,7 +945,7 @@ export default function ComparisonPage({
               <div className="text-center max-w-2xl mx-auto mb-8">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-secondary/10 text-secondary border border-secondary/20 mb-2">
                   <LucideIcon name="Scale" size={13} />
-                  <span>中立・客観的な事実データ</span>
+                  <span>応募前に知っておきたい本音とリアル</span>
                 </div>
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-on-surface tracking-tight font-display mb-2">
                   飛田新地で働く<span className="text-secondary">メリット</span>と<span className="text-zinc-600">デメリット（注意点）</span>
@@ -1092,7 +1092,7 @@ export default function ComparisonPage({
                 <div>
                   <div className="text-xs font-extrabold text-secondary tracking-wider mb-1 flex items-center gap-1.5">
                     <LucideIcon name="Table" size={14} />
-                    <span>COMPARISON MATRIX</span>
+                    <span>応募方法の違いを比較</span>
                   </div>
                   <h2 className="font-display font-black text-xl sm:text-2xl md:text-3xl text-on-surface">
                     飛田新地求人サイト・応募方法 徹底比較

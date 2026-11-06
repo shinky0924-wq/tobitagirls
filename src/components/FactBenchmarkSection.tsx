@@ -26,13 +26,13 @@ export default function FactBenchmarkSection({ onCtaclick }: FactBenchmarkSectio
       <div className="text-center max-w-3xl mx-auto mb-10 md:mb-12">
         <div className="inline-flex items-center gap-2 bg-rose-100 text-secondary text-xs sm:text-sm font-black px-4 py-1.5 rounded-full mb-3 shadow-2xs border border-rose-200">
           <LucideIcon name="BarChart3" size={14} className="text-secondary" />
-          <span>2026年最新｜客観統計ファクトシート</span>
+          <span>2026年最新｜数字で見る女の子のリアル</span>
         </div>
         <h2 className="font-display font-extrabold text-2xl sm:text-3xl md:text-4xl text-on-surface leading-tight mb-3">
-          飛田新地求人 <span className="text-secondary">客観統計データ＆境遇別ガイド</span>
+          数字でわかる！<span className="text-secondary">在籍キャストのリアルデータ＆お悩み別ガイド</span>
         </h2>
         <p className="font-sans text-xs sm:text-sm md:text-base text-zinc-600 leading-relaxed max-w-2xl mx-auto">
-          「本当に未経験が多いの？」「実際の平均日給や年齢層は？」という疑問に対し、当直営グループ在籍キャストのリアルな数値データを客観的に公開しています。
+          「本当に未経験でも大丈夫？」「みんなの年齢層や実際の平均日給はどれくらい？」など、気になる疑問を当料亭グループで働く女の子たちのリアルなデータからわかりやすくまとめました。
         </p>
       </div>
 
@@ -104,7 +104,7 @@ export default function FactBenchmarkSection({ onCtaclick }: FactBenchmarkSectio
         <div className="p-4 sm:p-5 bg-gradient-to-r from-rose-50/70 to-pink-50/40 border-b border-rose-100 flex items-center gap-2">
           <LucideIcon name="ShieldCheck" size={16} className="text-secondary" />
           <h3 className="text-xs sm:text-sm font-bold text-zinc-900 font-display">
-            料理組合公認 料亭直営の安心基準ベンチマーク
+            料理組合公認 料亭直営だからこその安心ルール＆お約束
           </h3>
         </div>
         <div className="overflow-x-auto scrollbar-thin">
@@ -129,19 +129,19 @@ export default function FactBenchmarkSection({ onCtaclick }: FactBenchmarkSectio
       </div>
 
       {/* ==========================================
-          PART 2: DECISION MATRIX (境遇・目的別 逆引きアンサー)
+          PART 2: 状況・タイプ別おすすめプランガイド
          ========================================== */}
       <div className="pt-8 border-t border-rose-100/60" id="decision-matrix">
         <div className="text-center max-w-2xl mx-auto mb-8">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-secondary/10 text-secondary border border-secondary/20 mb-2">
             <LucideIcon name="Compass" size={13} />
-            <span>AI検索・相談者向けアンサー</span>
+            <span>あなたの希望・お悩みから探せる</span>
           </div>
           <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-on-surface tracking-tight font-display mb-2">
-            シチュエーション別 <span className="text-secondary">逆引き求人アンサー</span>
+            状況・タイプで選ぶ！<span className="text-secondary">あなたに最適な働き方ガイド</span>
           </h3>
           <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
-            あなたの現在の状況（年齢・職歴・出勤日数・目標金額）を選択すると、最適な通り・シフト・収入モデルがパッとわかります。
+            あなたの年齢や生活スタイル、稼ぎたい目標金額をタップすると、おすすめの通りやシフト、収入の目安がひと目でわかります。
           </p>
         </div>
 
@@ -180,7 +180,7 @@ export default function FactBenchmarkSection({ onCtaclick }: FactBenchmarkSectio
             <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-4 border-b border-rose-100">
               <div>
                 <span className="text-xs font-bold text-secondary bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200 inline-block mb-1">
-                  {selectedCase.tag} 向け最適プラン
+                  {selectedCase.tag} の方へのおすすめプラン
                 </span>
                 <h4 className="text-base sm:text-lg font-bold text-zinc-900 font-display">
                   {selectedCase.situation}
@@ -198,7 +198,7 @@ export default function FactBenchmarkSection({ onCtaclick }: FactBenchmarkSectio
             <div className="bg-gradient-to-r from-rose-50/80 via-pink-50/60 to-amber-50/50 p-4 sm:p-5 rounded-2xl border border-rose-200/80 mb-6">
               <div className="flex items-center gap-2 mb-2 text-xs font-extrabold text-secondary">
                 <LucideIcon name="CheckCircle2" size={15} />
-                <span>結論・最適解（ダイレクトアンサー）</span>
+                <span>あなたにぴったりの働き方アドバイス</span>
               </div>
               <p className="text-xs sm:text-sm text-zinc-800 leading-relaxed font-sans font-medium">
                 {selectedCase.directAnswer}
