@@ -398,9 +398,9 @@ export default function SalaryCalculator({ onCtaclick }: SalaryCalculatorProps) 
               className="w-full accent-secondary cursor-pointer h-2 bg-rose-100 rounded-lg"
             />
             <div className="flex justify-between text-[10px] text-zinc-400 mt-1">
-              <span>6〜7時間（10〜16 / 10〜17 / 17〜24）</span>
-              <span>10時間（14〜24）</span>
-              <span>12時間（12〜24）</span>
+              <span>6〜7時間（10〜16時 / 10〜17時 / 17〜24時）</span>
+              <span>10時間（14〜24時）</span>
+              <span>12時間（12〜24時）</span>
             </div>
           </div>
 

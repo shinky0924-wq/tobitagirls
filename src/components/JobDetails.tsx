@@ -70,7 +70,7 @@ export default function JobDetails({ content, onCtaclickWithData, onNavigateRequ
           <div className="p-4 bg-rose-50/40 rounded-2xl border border-rose-100/70 shadow-2xs">
             <span className="text-[10px] text-zinc-500 font-bold block mb-1">勤務シフト</span>
             <p className="font-bold text-zinc-900 text-base">選べる5大シフト</p>
-            <p className="text-[11px] text-zinc-600 mt-1">10〜17 / 10〜16 / 17〜24 / 14〜24 / 12〜24</p>
+            <p className="text-[11px] text-zinc-600 mt-1">10〜16時 / 10〜17時 / 17〜24時 / 14〜24時 / 12〜24時</p>
           </div>
           <div className="p-4 bg-rose-50/40 rounded-2xl border border-rose-100/70 shadow-2xs">
             <span className="text-[10px] text-zinc-500 font-bold block mb-1">身バレ・安全対策</span>
@@ -79,7 +79,7 @@ export default function JobDetails({ content, onCtaclickWithData, onNavigateRequ
           </div>
         </div>
 
-        {/* Job Content Highlight: 玄関に座って笑顔で手を振るだけ */}
+        {/* Job Content Highlight: 玄関で笑顔で手を振ってお迎え＆お部屋でサービス */}
         <div className="mb-12 p-5 sm:p-7 rounded-3xl bg-gradient-to-br from-rose-50/90 via-pink-50/40 to-white border border-rose-200/90 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-5 pb-4 border-b border-rose-100">
             <div>
@@ -91,7 +91,7 @@ export default function JobDetails({ content, onCtaclickWithData, onNavigateRequ
                 <span className="text-xs font-bold text-rose-800">未経験でも安心のシンプルなおもてなし</span>
               </div>
               <h3 className="font-display font-extrabold text-lg sm:text-2xl text-zinc-900 leading-snug">
-                玄関に座って笑顔で手を振るだけ！
+                玄関で笑顔で手を振ってお迎え＆お部屋でサービス！
                 <span className="text-rose-600 block sm:inline sm:ml-2 text-base sm:text-xl font-bold">
                   声掛けや呼び込みは仲居さんにお任せ
                 </span>
@@ -103,7 +103,7 @@ export default function JobDetails({ content, onCtaclickWithData, onNavigateRequ
           </div>
 
           <p className="text-xs sm:text-sm text-zinc-700 leading-relaxed mb-6 font-medium">
-            飛田新地の料亭接客はとてもシンプル。可愛い衣装（浴衣やドレス）を着て玄関の上がり框（座敷）にちょこんと座り、通りを歩くお客様に笑顔で手を振ったりアイコンタクトをとるのが最初のお仕事です。呼び込みや客引きはお隣に座るベテランの仲居さん（おばちゃん）が全て行うため、女の子が声を張ったり営業トークをする必要は一切ありません。
+            飛田新地の料亭接客は、可愛い衣装（浴衣やドレス）を着て玄関の上がり框（座敷）にちょこんと座り、通りを歩くお客様に笑顔で手を振ってお迎えすることから始まります。呼び込みや客引きはお隣に座るベテランの仲居さん（おばちゃん）が全て行うため、女の子が声を張ったり営業トークをする必要は一切ありません。入店が決まったらお部屋でお茶やお菓子をお出しし、15〜20分の和やかなおもてなしサービスを行います。
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
@@ -114,7 +114,7 @@ export default function JobDetails({ content, onCtaclickWithData, onNavigateRequ
                   <h4 className="font-bold text-zinc-900 text-sm">玄関で座って笑顔で手を振る</h4>
                 </div>
                 <p className="text-zinc-600 leading-relaxed text-xs">
-                  ライトアップされた玄関の上がり框に座ります。前を通るお客様と目が合ったら、にこっと笑顔で小さく手を振ったり優しく会釈するだけでOK。
+                  ライトアップされた玄関の上がり框に座ります。前を通るお客様と目が合ったら、にこっと笑顔で手を振ったり優しく会釈してお迎えします。
                 </p>
               </div>
               <div className="mt-3 pt-3 border-t border-rose-50 text-[11px] text-rose-700 font-bold">
@@ -141,10 +141,10 @@ export default function JobDetails({ content, onCtaclickWithData, onNavigateRequ
               <div>
                 <div className="flex items-center gap-2 mb-2.5">
                   <span className="w-6 h-6 rounded-full bg-rose-600 text-white font-black text-xs flex items-center justify-center shrink-0">3</span>
-                  <h4 className="font-bold text-zinc-900 text-sm">15〜20分のおもてなし</h4>
+                  <h4 className="font-bold text-zinc-900 text-sm">15〜20分のおもてなしサービス</h4>
                 </div>
                 <p className="text-zinc-600 leading-relaxed text-xs">
-                  入店が決まったらお部屋（2階個室）へご案内。お茶やお菓子をお出しし、世間話をしながら過ごします。お酒不要＆時間通りきっちり終了。
+                  入店が決まったらお部屋（2階個室）へご案内。お茶やお菓子をお出しし、世間話をしながら過ごすおもてなしサービス。お酒不要＆時間通りきっちり終了。
                 </p>
               </div>
               <div className="mt-3 pt-3 border-t border-rose-50 text-[11px] text-rose-700 font-bold">

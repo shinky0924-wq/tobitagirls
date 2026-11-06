@@ -433,7 +433,7 @@ export const JOB_FACTS: JobFactItem[] = [
     id: 'fact-3',
     iconName: 'Clock',
     title: '選べる5大勤務時間',
-    highlight: ['10〜17 / 10〜16 / 17〜24', '14〜24 / 12〜24（自由選択）']
+    highlight: ['10〜16時 / 10〜17時 / 17〜24時', '14〜24時 / 12〜24時（自由選択）']
   },
   {
     id: 'fact-4',
