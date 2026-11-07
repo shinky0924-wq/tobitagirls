@@ -45,7 +45,7 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
           id="hero-tagline"
         >
           <span className="relative flex h-2 w-2 inline-block mr-2 rounded-full bg-secondary animate-ping align-middle" />
-          {content.tagline}
+          {content.tagline && !content.tagline.includes('店舗直営公式求人') ? content.tagline : '24時間受付中 ・ 相談だけでもOK'}
         </motion.div>
 
         {/* Main Display Title */}
@@ -56,8 +56,8 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
           transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
           id="hero-title"
         >
-          {content.titleLine1}<br className="block md:hidden" />
-          <span className="text-secondary bg-clip-text">{content.titleLine2}</span>
+          飛田新地で<br className="block md:hidden" />
+          <span className="text-secondary bg-clip-text">働いてみたい女性へ。</span>
         </motion.h1>
 
         {/* Sub description */}
@@ -70,18 +70,18 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
         >
           <div className="space-y-4 text-xs sm:text-sm md:text-base text-zinc-700 leading-relaxed bg-white/80 backdrop-blur-xs p-5 sm:p-7 rounded-3xl border border-rose-100/90 shadow-xs">
             <p className="font-medium text-zinc-800 leading-relaxed text-left sm:text-center">
-              {content.descriptionLine1}
+              当店では、仕事内容や給料の仕組み、未経験から働くまでの流れ、お店選びのポイントなど、求人を探すうえで知っておきたい情報をわかりやすくまとめています。
             </p>
 
             <div className="py-2.5 px-4 sm:px-6 bg-rose-50/80 rounded-2xl border border-rose-100 inline-flex flex-col items-start sm:items-center gap-1.5 shadow-2xs">
               <span className="text-secondary font-bold text-xs sm:text-sm">
-                「未経験でも大丈夫？」
+                ・「未経験でも大丈夫？」
               </span>
               <span className="text-secondary font-bold text-xs sm:text-sm">
-                「実際どんな仕事をするの？」
+                ・「実際どんな仕事をするの？」
               </span>
               <span className="text-secondary font-bold text-xs sm:text-sm">
-                「身バレや人間関係が心配……」
+                ・「身バレや人間関係が心配……」
               </span>
             </div>
 

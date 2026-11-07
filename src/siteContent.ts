@@ -84,6 +84,26 @@ export function getStoredSiteContent(): SiteContent {
       return DEFAULT_SITE_CONTENT;
     }
     const customContent = JSON.parse(stored);
+    
+    // Auto-migrate: If the stored custom hero contains obsolete/stale text from previous versions, reset hero to current DEFAULT_SITE_CONTENT.hero
+    if (
+      customContent.hero &&
+      (customContent.hero.titleLine1?.includes('店舗直営求人') ||
+       customContent.hero.titleLine2?.includes('安心の高収入') ||
+       customContent.hero.titleLine1?.includes('飛田新地が') ||
+       customContent.hero.descriptionLine1?.includes('店舗直営だから') ||
+       customContent.hero.descriptionLine1?.includes('安心してお店選び') ||
+       customContent.hero.tagline?.includes('店舗直営公式求人') ||
+       customContent.hero.titleLine1 !== DEFAULT_SITE_CONTENT.hero.titleLine1)
+    ) {
+      customContent.hero = { ...DEFAULT_SITE_CONTENT.hero };
+      try {
+        localStorage.setItem('custom_site_content', JSON.stringify(customContent));
+      } catch (e) {
+        // ignore
+      }
+    }
+
     const merged = { ...DEFAULT_SITE_CONTENT };
     
     merged.lastUpdated = DEFAULT_SITE_CONTENT.lastUpdated || customContent.lastUpdated;
