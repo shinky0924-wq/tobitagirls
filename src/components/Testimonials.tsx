@@ -328,7 +328,7 @@ export default function Testimonials() {
                       ✓
                     </span>
                     <span className="underline decoration-dotted underline-offset-2">
-                      認証ID: {testimonial.verification.verificationId}
+                      確認番号: {testimonial.verification.verificationId}
                     </span>
                   </button>
                   
@@ -395,7 +395,7 @@ export default function Testimonials() {
                   </div>
                   <div>
                     <h3 className="font-bold text-sm">在籍キャスト インタビュー証明</h3>
-                    <p className="text-[10px] text-emerald-100">Verification of Cast Testimony</p>
+                    <p className="text-[10px] text-emerald-100">実在キャスト対談記録</p>
                   </div>
                 </div>
                 <button
@@ -413,7 +413,7 @@ export default function Testimonials() {
                 {/* Status Stamp */}
                 <div className="flex items-center justify-between bg-emerald-50/80 border border-emerald-200 rounded-2xl p-4">
                   <div>
-                    <span className="text-[10px] text-emerald-800 font-bold uppercase tracking-wider block">確認ステータス</span>
+                    <span className="text-[10px] text-emerald-800 font-bold tracking-wider block">確認状況</span>
                     <span className="text-base font-black text-emerald-700 flex items-center gap-1 mt-0.5">
                       <LucideIcon name="CheckCircle2" size={16} />
                       年齢確認・在籍確認 完了

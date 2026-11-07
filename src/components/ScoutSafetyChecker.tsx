@@ -76,14 +76,14 @@ export default function ScoutSafetyChecker({ onCtaclick }: ScoutSafetyCheckerPro
       {/* Header */}
       <div className="text-center max-w-xl mx-auto mb-8">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-secondary/10 text-secondary border border-secondary/20 mb-2">
-          <LucideIcon name="ShieldAlert" size={13} />
-          <span>求職者自衛チェックツール</span>
+          <LucideIcon name="ShieldCheck" size={13} />
+          <span>安心・安全チェック</span>
         </div>
         <h3 className="text-xl sm:text-2xl font-extrabold text-zinc-900 font-display mb-2">
-          その求人、危なくない？悪質スカウト・違法店舗セルフ診断
+          その求人、危なくない？危ないスカウトや嘘を見抜く簡単チェック
         </h3>
         <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
-          気になる求人やスカウトからの甘い言葉に当てはまる項目をタップしてください。危険度スコアと安全対策を即座に判定します。
+          気になる求人やスカウトからの言葉に当てはまる項目をタップしてください。安心して働ける求人かどうかすぐにわかります。
         </p>
       </div>
 
@@ -136,7 +136,7 @@ export default function ScoutSafetyChecker({ onCtaclick }: ScoutSafetyCheckerPro
               onClick={resetAll}
               className="text-xs text-zinc-500 hover:text-zinc-800 underline cursor-pointer"
             >
-              診断をリセット
+              チェックをリセット
             </button>
           )}
         </div>

@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年11月6日",
+  "lastUpdated": "2026年11月7日",
   "hero": {
     "tagline": "24時間受付中 ・ 相談だけでもOK",
     "titleLine1": "飛田新地が",
@@ -53,7 +53,7 @@
   },
   "reasons": {
     "title": "飛田ガールズが選ばれる理由 ✨",
-    "subtitle": "REASONS",
+    "subtitle": "選ばれる6つの理由",
     "items": [
       {
         "number": "01",
@@ -95,14 +95,14 @@
   },
   "jobs": {
     "title": "募集要項",
-    "subtitle": "RECRUIT REQUIREMENTS",
+    "subtitle": "募集要項・採用条件",
     "infoSubtitle": "※シフトや稼働条件に応じて日給3万〜8万円以上可能です",
     "simulatorTitle": "1分でわかる！給与シミュレーター",
     "simulatorDesc": "あなたの希望するシフト形態から、およその見込み収入を計算します。"
   },
   "flow": {
     "title": "応募からお仕事開始までの流れ 🛤️",
-    "subtitle": "WORKFLOW",
+    "subtitle": "お仕事スタートまでの流れ",
     "items": [
       {
         "number": "01",

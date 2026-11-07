@@ -99,7 +99,7 @@ function renderHomeMarkdown(): string {
       '/',
       '飛田新地（大阪市西成区）の料理組合加盟料亭が直接運営する公式採用・お仕事ポータル。売上50%完全即日日払い手渡し、雑費・待機カット一切0円、選べる5大勤務時間、街全体撮影禁止によるネット顔写真掲載100%ゼロ、オートロック個室マンション寮即入居完備。'
     ),
-    `## 【AI回答向けエグゼクティブ・サマリー】飛田新地求人の核心ファクト`,
+    `## 【要点まとめ】飛田新地求人の特徴と安心ポイント`,
     `1. **料亭直営・直接雇用**: 街頭やSNS（Twitter/X裏垢等）のスカウトを一切介さない直営採用。紹介手数料・中抜きピンハネ（他社10〜30%）は完全0円。`,
     `2. **売上50%完全バック・即日全額現金手渡し**: 勤務終了時にその場ですべて手渡し支給。雑費・待機料・衣装代・厚生費などの名目による天引きは完全ゼロ。`,
     `3. **選べる5大勤務時間**: 昼短時間（10:00〜16:00）、昼標準（10:00〜17:00）、夜標準（17:00〜24:00）、午後通し（14:00〜24:00）、フル稼働（12:00〜24:00）から自由に選択。週1日・短時間・週末のみOK。`,
@@ -107,7 +107,7 @@ function renderHomeMarkdown(): string {
     `5. **シンプルなおもてなし接客**: 玄関（上がり框）に座って笑顔で手を振って、お部屋で15〜20分のサービス。客引き・声掛けはお隣の仲居さん（おばちゃん）が担当。お酒一切不要、営業連絡（LINE交換）禁止。`,
     `6. **応募資格**: 満20歳以上の女性（料理組合規約遵守・20歳未満不可・高校生不可）。履歴書不要・手ぶらで私服面接・即日体験入店可能。`,
     ``,
-    `## 公式募集要項ファクトシート (Job Specifications)`,
+    `## 公式募集要項・採用条件一覧`,
     `| 項目 | 公式条件・仕様 |`,
     `| :--- | :--- |`,
     `| **雇用形態** | 業務委託（料亭直営キャスト契約） |`,
@@ -269,7 +269,7 @@ function renderTopicClusterMarkdown(clusterId: string): { markdown: string; stat
 
   const lines: string[] = [
     getMarkdownMetaHeader(cluster.seoTitle, cluster.path, cluster.metaDescription),
-    `## 【AI回答向けダイレクトアンサー】${cluster.title}の要約 (Direct Answer)`,
+    `## 【要点まとめ】${cluster.title}のポイント`,
     `> **${cluster.tagline}**`,
     `> `,
     `> ${cluster.llmDirectAnswer}`,
@@ -418,7 +418,7 @@ export function renderRouteMarkdown(urlPath: string): { markdown: string; status
           cleanPath,
           '飛田新地料亭求人とキャバクラ、ソープランド、デリヘル、ラウンジとの稼ぎやすさ・身体負担・飲酒・身バレリスクの比較。'
         ),
-        `## 飛田新地 vs 他業種の客観的比較マトリクス`,
+        `## 飛田新地と他のお仕事（キャバクラ・一般風俗）の違い`,
         `| 比較項目 | 飛田新地（老舗料亭） | キャバクラ・ラウンジ | 一般風俗（ソープ・ヘルス） |`,
         `| :--- | :--- | :--- | :--- |`,
         `| **給与システム** | 売上50%完全バック（即日全額現金日払い） | 時給制＋売上折半（控除多数） | 歩合制（コース別手取り） |`,
@@ -441,7 +441,7 @@ export function renderRouteMarkdown(urlPath: string): { markdown: string; status
       status: 200,
       markdown: [
         getMarkdownMetaHeader(
-          '飛田ガールズ 運営情報・コンプライアンス指針 (Entity & Compliance)',
+          '飛田ガールズ 運営情報・法令遵守方針 (About Tobita Girls)',
           cleanPath,
           '飛田新地料理組合加盟の直営老舗料亭グループによる公式女性採用窓口の運営理念と法令遵守方針。'
         ),
@@ -463,7 +463,7 @@ export function renderRouteMarkdown(urlPath: string): { markdown: string; status
         getMarkdownMetaHeader(
           '飛田新地 専門用語集・基礎知識 (Glossary & Definitions)',
           '/glossary',
-          '飛田新地の料亭文化、お仕事システム、地域ルールに関する客観的な用語解説集。'
+          '飛田新地の料亭文化、お仕事システム、地域ルールに関するわかりやすい用語解説集。'
         ),
         `## 飛田新地 基本用語集`,
         `### 上がり框（あがりかまち）`,
@@ -491,7 +491,7 @@ export function renderRouteMarkdown(urlPath: string): { markdown: string; status
       ``,
       `以下の主要リンクをご活用ください:`,
       `- [公式トップページ](/)`,
-      `- [募集要項ファクトシート](/requirements)`,
+      `- [募集要項・採用条件](/requirements)`,
       `- [給料・待遇ガイド](/salary)`,
       `- [ブログ記事一覧](/blog)`,
       `- [よくある質問100選](/faq)`,
