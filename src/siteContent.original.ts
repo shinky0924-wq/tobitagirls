@@ -11,6 +11,7 @@ export interface SiteContent {
     descriptionLine1: string;
     descriptionLine2: string;
     descriptionLine3: string;
+    fullDescription?: string;
     ctaButtonText: string;
     badgeText: string;
   };
@@ -78,11 +79,12 @@ export interface SiteContent {
 export const DEFAULT_SITE_CONTENT: SiteContent = {
   hero: {
     tagline: "24時間受付中 ・ 相談だけでもOK",
-    titleLine1: "飛田新地が",
-    titleLine2: "初めての女性へ。",
-    descriptionLine1: "安心してお店選びから、しっかりサポートします。",
-    descriptionLine2: "「本当に稼げるの？」「危険じゃない？」そんな不安を抱えたまま応募しないでください。",
-    descriptionLine3: "まずは気軽にご相談ください。",
+    titleLine1: "飛田新地で",
+    titleLine2: "働いてみたい女性へ。",
+    descriptionLine1: "当店では、仕事内容や給料の仕組み、未経験から働くまでの流れ、お店選びのポイントなど、求人を探すうえで知っておきたい情報をわかりやすくまとめています。",
+    descriptionLine2: "「未経験でも大丈夫？」「実際どんな仕事をするの？」「身バレや人間関係が心配……」そんな疑問や不安にも、丁寧にお答えします。",
+    descriptionLine3: "まずは相談だけでもお気軽にご相談ください。",
+    fullDescription: "当店では、仕事内容や給料の仕組み、未経験から働くまでの流れ、お店選びのポイントなど、求人を探すうえで知っておきたい情報をわかりやすくまとめています。\n\n「未経験でも大丈夫？」\n「実際どんな仕事をするの？」\n「身バレや人間関係が心配……」\n\nそんな疑問や不安にも、丁寧にお答えします。\n\nまずは相談だけでもお気軽にご相談ください。",
     ctaButtonText: "LINEで今すぐ相談する",
     badgeText: "未経験の方も安心のサポート体制"
   },

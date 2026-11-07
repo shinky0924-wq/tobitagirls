@@ -61,17 +61,39 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
         </motion.h1>
 
         {/* Sub description */}
-        <motion.p 
-          className="font-sans text-sm md:text-lg text-on-surface-variant leading-relaxed mb-8 max-w-2xl px-2 sm:px-0"
+        <motion.div 
+          className="font-sans leading-relaxed mb-8 max-w-2xl px-2 sm:px-0 text-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
           id="hero-description"
         >
-          {content.descriptionLine1}<br />
-          {content.descriptionLine2}<br />
-          {content.descriptionLine3}
-        </motion.p>
+          <div className="space-y-4 text-xs sm:text-sm md:text-base text-zinc-700 leading-relaxed bg-white/80 backdrop-blur-xs p-5 sm:p-7 rounded-3xl border border-rose-100/90 shadow-xs">
+            <p className="font-medium text-zinc-800 leading-relaxed text-left sm:text-center">
+              {content.descriptionLine1}
+            </p>
+
+            <div className="py-2.5 px-4 sm:px-6 bg-rose-50/80 rounded-2xl border border-rose-100 inline-flex flex-col items-start sm:items-center gap-1.5 shadow-2xs">
+              <span className="text-secondary font-bold text-xs sm:text-sm">
+                「未経験でも大丈夫？」
+              </span>
+              <span className="text-secondary font-bold text-xs sm:text-sm">
+                「実際どんな仕事をするの？」
+              </span>
+              <span className="text-secondary font-bold text-xs sm:text-sm">
+                「身バレや人間関係が心配……」
+              </span>
+            </div>
+
+            <p className="font-medium text-zinc-800">
+              そんな疑問や不安にも、丁寧にお答えします。
+            </p>
+
+            <p className="text-secondary font-extrabold text-sm sm:text-base">
+              まずは相談だけでもお気軽にご相談ください。
+            </p>
+          </div>
+        </motion.div>
 
         {/* Horizontal Styled Photo Wrapper */}
         <motion.div 

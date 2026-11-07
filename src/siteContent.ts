@@ -9,6 +9,7 @@ export interface SiteContent {
     descriptionLine1: string;
     descriptionLine2: string;
     descriptionLine3: string;
+    fullDescription?: string;
     ctaButtonText: string;
     badgeText: string;
   };

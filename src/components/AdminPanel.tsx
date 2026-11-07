@@ -2538,7 +2538,7 @@ export function saveArticles(articles: BlogArticle[]) {
                         />
                       </div>
                       <div>
-                        <label className="block text-[11px] font-bold text-on-surface-variant mb-1">説明文 3行目（シミュレータ誘導）</label>
+                        <label className="block text-[11px] font-bold text-on-surface-variant mb-1">説明文 3行目</label>
                         <input
                           type="text"
                           value={siteText.hero.descriptionLine3}

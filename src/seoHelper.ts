@@ -31,7 +31,7 @@ export function resolveFullImageUrl(eyeCatch?: string): string {
 }
 
 const DEFAULT_TITLE = '飛田新地求人｜未経験歓迎・高収入・求人情報を徹底解説｜飛田ガールズ';
-const DEFAULT_DESC = '【飛田新地求人公式】未経験歓迎・高収入（日給5万〜15万円即日全額日払い）。仕事内容、給料システム、20代・未経験の応募条件、面接・体験入店の流れ、個室マンション寮完備。女性サポートスタッフによる無料相談受付中。';
+const DEFAULT_DESC = '【飛田新地求人公式】飛田新地で働いてみたい女性へ。仕事内容や給料の仕組み、未経験から働くまでの流れ、お店選びのポイントなど、知っておきたい情報をわかりやすくまとめています。まずは相談だけでもお気軽にどうぞ。';
 const DEFAULT_IMAGE = 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg';
 
 function buildHomeNoscript(): string {
