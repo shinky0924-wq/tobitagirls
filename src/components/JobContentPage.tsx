@@ -122,10 +122,10 @@ export default function JobContentPage({
                   </span>
                   <div>
                     <span className="text-xs sm:text-sm font-bold text-[#38242B] block">
-                      玄関では座って笑顔で手を振るだけ
+                      玄関では座って愛想よく手招き・笑顔でお迎え
                     </span>
                     <span className="text-[11px] sm:text-xs text-[#66545A]">
-                      通りを歩くお客様への声掛けや呼び込みは、お隣の仲居さん（おばちゃん）が担当します。
+                      通りを歩くお客様に愛想よく手招きや笑顔でお迎えします。声掛けや呼び込みはお隣の仲居さんが担当します。
                     </span>
                   </div>
                 </div>
@@ -238,11 +238,11 @@ export default function JobContentPage({
                   接客前（準備・お迎え）
                 </h3>
                 <p className="text-xs text-[#66545A] leading-relaxed mb-3">
-                  出勤後はお衣装に着替え、身だしなみをチェック。玄関の上がり框（座敷）に座り、前を通るお客様を笑顔でお迎えします。
+                  出勤後はお衣装に着替え、身だしなみをチェック。玄関の上がり框（座敷）に座り、前を通るお客様に愛想よく手招きや笑顔でお迎えします。
                 </p>
               </div>
               <div className="bg-white p-2.5 rounded-xl border border-[#F3E1E6] text-[11px] font-bold text-[#38242B]">
-                担当：女性（笑顔でお迎え）＋ 仲居さん（声掛け）
+                担当：女性（手招き・笑顔でお迎え）＋ 仲居さん（声掛け・呼び込み）
               </div>
             </div>
 
@@ -259,7 +259,7 @@ export default function JobContentPage({
                   接客中（約15〜20分）
                 </h3>
                 <p className="text-xs text-[#66545A] leading-relaxed mb-3">
-                  お部屋へご案内し、女性とお客様の2人きりで過ごします。衛生準備を行い、女性側からスキンを装着して規定のサービスを提供します。
+                  お部屋へご案内し、女性とお客様の2人きりで過ごします。衛生準備を行い、スキンを装着して規定のサービスを提供します。
                 </p>
               </div>
               <div className="bg-[#FFF8F9] p-2.5 rounded-xl border border-[#F3E1E6] text-[11px] font-bold text-[#E84B78]">
@@ -315,10 +315,10 @@ export default function JobContentPage({
               </span>
               <div>
                 <h3 className="font-bold text-sm sm:text-base text-[#38242B] mb-1">
-                  お客様をお迎えする
+                  玄関で愛想よく手招き・お客様をお迎えする
                 </h3>
                 <p className="text-xs text-[#66545A] leading-relaxed">
-                  玄関の上がり框（座敷）に座り、前を通るお客様に笑顔で手を振ったり会釈します。声出しや呼び込みは不要です。
+                  玄関の上がり框（座敷）に座り、前を通るお客様に愛想よく手招きをし、笑顔で手を振ったり会釈をして親しみやすい雰囲気を作ります。声出しや呼び込みは不要です。
                 </p>
               </div>
             </div>
@@ -364,11 +364,11 @@ export default function JobContentPage({
                     お客様にスキンを装着する
                   </h3>
                   <span className="text-[10px] bg-[#E84B78] text-white font-bold px-2 py-0.5 rounded-full">
-                    女性側が担当
+                    安全管理
                   </span>
                 </div>
                 <p className="text-xs text-[#66545A] leading-relaxed">
-                  衛生管理と安全を守るため、お客様任せにせず必ず女性の手でお客様にスキンを正しく装着します。
+                  衛生管理と安全を守るため、お客様任せにせず必ず正しくスキンを装着します。
                 </p>
               </div>
             </div>
@@ -454,14 +454,14 @@ export default function JobContentPage({
               <div className="flex-1 space-y-1">
                 <div className="flex items-center gap-2">
                   <h3 className="font-bold text-sm sm:text-base text-[#38242B]">
-                    STEP 1：玄関でお迎え
+                    STEP 1：玄関でお迎え・手招き
                   </h3>
                   <span className="text-[10px] font-bold text-[#E84B78] bg-white border border-[#F3E1E6] px-2 py-0.5 rounded-full">
                     声出し不要
                   </span>
                 </div>
                 <p className="text-xs sm:text-[13px] text-[#66545A] leading-relaxed">
-                  ライトアップされた座敷（上がり框）に座り、前を通るお客様に笑顔で手を振ったり会釈します。通りへの声掛けや客引きは横にいる仲居さんが全て担当します。
+                  ライトアップされた座敷（上がり框）に座り、前を通るお客様に愛想よく手招きをしたり、笑顔で手を振って親しみやすい雰囲気を作ります。通りへの声掛けや客引きは横にいる仲居さんが全て担当します。
                 </p>
               </div>
             </div>
@@ -517,11 +517,11 @@ export default function JobContentPage({
                     STEP 4：スキンの装着
                   </h3>
                   <span className="text-[10px] font-bold text-white bg-[#E84B78] px-2 py-0.5 rounded-full">
-                    女性側が装着
+                    装着徹底
                   </span>
                 </div>
                 <p className="text-xs sm:text-[13px] text-[#66545A] leading-relaxed">
-                  安全と感染症予防のため、スキンは必ず女性側の手でお客様に装着します。お客様任せにしないことで確実な安全性を保ちます。
+                  安全と衛生管理のため、お客様任せにせず必ず正しくスキンを装着します。確実な安全性を保ちます。
                 </p>
               </div>
             </div>
@@ -607,39 +607,39 @@ export default function JobContentPage({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {/* 1. 手招き */}
-            <div className="bg-[#FFF8F9] rounded-2xl p-5 border border-[#F3E1E6] flex flex-col justify-between">
-              <div>
-                <div className="w-9 h-9 rounded-xl bg-white text-[#E84B78] border border-[#F3E1E6] flex items-center justify-center mb-3">
-                  <LucideIcon name="Hand" size={18} />
-                </div>
-                <h3 className="font-bold text-sm sm:text-base text-[#38242B] mb-2">
-                  1. 玄関で愛想よく手招きする
-                </h3>
-                <p className="text-xs text-[#66545A] leading-relaxed">
-                  玄関先で通りを歩くお客様に愛想よく手招きをし、親しみやすい雰囲気を作ります。
-                </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-[#F3E1E6] text-[11px] text-[#E84B78] font-bold">
-                女性は座って微笑むだけでOK
-              </div>
-            </div>
-
-            {/* 2. 呼び込み・料金案内 */}
+            {/* 1. 呼び込み・声掛け */}
             <div className="bg-[#FFF8F9] rounded-2xl p-5 border border-[#F3E1E6] flex flex-col justify-between">
               <div>
                 <div className="w-9 h-9 rounded-xl bg-white text-[#E84B78] border border-[#F3E1E6] flex items-center justify-center mb-3">
                   <LucideIcon name="Megaphone" size={18} />
                 </div>
                 <h3 className="font-bold text-sm sm:text-base text-[#38242B] mb-2">
-                  2. お客様への呼び込み・声掛け
+                  1. 通りへの呼び込み・声掛け
                 </h3>
                 <p className="text-xs text-[#66545A] leading-relaxed">
-                  「お兄さん寄ってって〜」などの声掛けや、料金システムのご案内、入店受付の対応はすべて仲居さんが担当します。
+                  「お兄さん寄ってって〜」などの通りを歩くお客様への呼び込みやお声掛けは、すべて仲居さんが担当します。
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-[#F3E1E6] text-[11px] text-[#E84B78] font-bold">
-                女性は客引きを一切しません
+                女性は声出し・呼び込みを一切しません
+              </div>
+            </div>
+
+            {/* 2. 料金システム案内・受付 */}
+            <div className="bg-[#FFF8F9] rounded-2xl p-5 border border-[#F3E1E6] flex flex-col justify-between">
+              <div>
+                <div className="w-9 h-9 rounded-xl bg-white text-[#E84B78] border border-[#F3E1E6] flex items-center justify-center mb-3">
+                  <LucideIcon name="Coins" size={18} />
+                </div>
+                <h3 className="font-bold text-sm sm:text-base text-[#38242B] mb-2">
+                  2. 料金案内・入店受付
+                </h3>
+                <p className="text-xs text-[#66545A] leading-relaxed">
+                  料金システムのご案内やコース説明、入店受付の対応は仲居さんが行います。女性が金銭交渉をすることはありません。
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-[#F3E1E6] text-[11px] text-[#E84B78] font-bold">
+                料金交渉や受付は店舗にお任せ
               </div>
             </div>
 
@@ -653,7 +653,7 @@ export default function JobContentPage({
                   3. 接客終了後の片付け・清掃
                 </h3>
                 <p className="text-xs text-[#66545A] leading-relaxed">
-                  接客終了後のお部屋の清掃、使用済みリネンの交換、アルコール等による消毒作業は仲居さんが速やかに行います。
+                  接客終了後のお部屋の清掃、使用済みリネンの交換、除菌・消毒作業は仲居さんが速やかに行います。
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-[#F3E1E6] text-[11px] text-[#E84B78] font-bold">
@@ -778,11 +778,11 @@ export default function JobContentPage({
               <div className="flex items-center gap-2 mb-2">
                 <LucideIcon name="ShieldCheck" size={18} className="text-[#E84B78]" />
                 <h3 className="font-bold text-sm sm:text-base text-[#38242B]">
-                  女性の手によるスキン装着の徹底
+                  スキン装着の徹底
                 </h3>
               </div>
               <p className="text-xs sm:text-[13px] text-[#66545A] leading-relaxed">
-                感染症予防および避妊の安全のため、スキンは必ず女性側の手でお客様に正しく装着します。未装着や不適切な使用は規約で厳重に禁止されています。
+                感染症予防および安全のため、お客様任せにせず必ず正しくスキンを装着します。未装着や不適切な使用は規約で厳重に禁止されています。
               </p>
             </div>
 
