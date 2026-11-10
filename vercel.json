@@ -1,0 +1,62 @@
+{
+  "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    { "source": "/blog/tobitashinchi-dormitory-lifestyle-support", "destination": "/blog/tobitashinchi-housing-support", "permanent": true },
+    { "source": "/blog/tobitashinchi-tax-declaration-guide", "destination": "/blog/tobitashinchi-tax-guide", "permanent": true },
+    { "source": "/blog/tobitashinchi-privacy-alibi-support", "destination": "/blog/tobitashinchi-identity-alibi-safety-measures", "permanent": true },
+    { "source": "/blog/tobitashinchi-physical-mental-care-guide", "destination": "/blog/tobitashinchi-stamina-mental-care-100k", "permanent": true },
+    { "source": "/blog/tobitashinchi-fake-job-scout-warning", "destination": "/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment", "permanent": true },
+    { "source": "/blog/tobitashinchi-daily-work-routine-guide", "destination": "/blog/tobitashinchi-daily-schedule-work-flow-detail", "permanent": true },
+    { "source": "/comparison", "destination": "/compare", "permanent": true },
+    { "source": "/target-categories", "destination": "/compare", "permanent": true },
+    { "source": "/target-jobs", "destination": "/compare", "permanent": true },
+    { "source": "/categories", "destination": "/compare", "permanent": true },
+    { "source": "/company", "destination": "/about", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
+}
