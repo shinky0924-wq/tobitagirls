@@ -581,7 +581,7 @@ export const INDUSTRY_COMPARISONS: IndustryComparisonItem[] = [
   {
     industry: '飛田新地（料亭直営）',
     badge: '短時間・お酒不要・完全日払い',
-    workStyle: '料亭和室でのお茶出し・短時間歓談',
+    workStyle: '料亭個室での和やかな短時間歓談・サービス',
     timePerCustomer: '15分〜20分（超短時間）',
     alcohol: '一切なし（ソフトドリンクのみ・下戸OK）',
     salesLineContact: '完全禁止（客との連絡先交換ゼロ）',
