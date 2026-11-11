@@ -237,8 +237,11 @@ export default function SalaryCalculator({ onCtaclick }: SalaryCalculatorProps) 
   // Sliders & inputs
   const [daysPerWeek, setDaysPerWeek] = useState<number>(3);
   const [hoursPerDay, setHoursPerDay] = useState<number>(8);
-  const [paceMode, setPaceMode] = useState<'relaxed' | 'standard' | 'high'>('relaxed');
   const [showBreakdown, setShowBreakdown] = useState<boolean>(true);
+
+  // 勤務時間に応じた現実的な稼働ペース自動算出
+  const paceMode: 'relaxed' | 'standard' | 'high' =
+    hoursPerDay <= 7 ? 'relaxed' : hoursPerDay <= 9 ? 'standard' : 'high';
 
   // アクセスごとに数字を変えるインデックス（訪問時にランダム決定）
   const [variationIndex, setVariationIndex] = useState<number>(() => {
@@ -404,38 +407,6 @@ export default function SalaryCalculator({ onCtaclick }: SalaryCalculatorProps) 
             </div>
           </div>
 
-          {/* Pace mode (ゆったり10本 / 標準20本 / がっつり30本) */}
-          <div>
-            <label className="text-xs font-bold text-zinc-800 block mb-2 flex items-center gap-1.5">
-              <LucideIcon name="Zap" size={14} className="text-secondary" />
-              <span>接客ペースの希望</span>
-            </label>
-            <div className="grid grid-cols-3 gap-2">
-              {(['relaxed', 'standard', 'high'] as const).map((mode) => {
-                const isSelected = paceMode === mode;
-                return (
-                  <button
-                    key={mode}
-                    type="button"
-                    onClick={() => setPaceMode(mode)}
-                    className={`p-3 rounded-2xl border text-center transition-all cursor-pointer ${
-                      isSelected
-                        ? 'bg-secondary text-white border-secondary shadow-xs font-bold'
-                        : 'bg-zinc-50 hover:bg-rose-50/50 text-zinc-700 border-zinc-200 text-xs font-medium'
-                    }`}
-                  >
-                    <span className="text-xs block mb-0.5 font-bold">{PACE_METAS[mode].label}</span>
-                    <span className={`text-[13px] block font-extrabold font-mono ${isSelected ? 'text-amber-200' : 'text-secondary'}`}>
-                      {PACE_METAS[mode].totalCount}本 / 日
-                    </span>
-                    <span className="text-[10px] opacity-80 block mt-0.5 truncate">
-                      {mode === 'relaxed' ? '初めての方' : mode === 'standard' ? '平均稼働' : '高収入レギュラー'}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
 
           {/* 単価内訳表（15分5000円〜60分20000円・外国人+2500円・雑費0円） */}
           <div className="bg-rose-50/40 rounded-2xl p-4 border border-rose-100">

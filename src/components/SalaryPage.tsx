@@ -472,9 +472,12 @@ export default function SalaryPage({
   // Sliders & inputs for Simulator
   const [daysPerWeek, setDaysPerWeek] = useState<number>(3);
   const [hoursPerDay, setHoursPerDay] = useState<number>(8);
-  const [paceMode, setPaceMode] = useState<'relaxed' | 'standard' | 'high'>('relaxed');
   const [showBreakdown, setShowBreakdown] = useState<boolean>(true);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
+  // 勤務時間に応じた現実的な稼働ペース自動算出
+  const paceMode: 'relaxed' | 'standard' | 'high' =
+    hoursPerDay <= 7 ? 'relaxed' : hoursPerDay <= 9 ? 'standard' : 'high';
 
   // アクセスごとに数字を変えるインデックス
   const [variationIndex, setVariationIndex] = useState<number>(() => {
@@ -939,41 +942,6 @@ export default function SalaryPage({
                 </div>
               </div>
 
-              {/* 3. 接客ペースの希望 */}
-              <div className="bg-[#FFF9FB] p-4.5 rounded-2xl border border-[#F0E5EA]">
-                <div className="mb-2">
-                  <label className="text-xs sm:text-sm font-bold text-[#35313A] block">
-                    接客ペースの希望
-                  </label>
-                  <span className="text-[11px] text-[#85818A]">自分に合う働き方を選択してください</span>
-                </div>
-                <div className="grid grid-cols-3 gap-2 mt-2">
-                  {(['relaxed', 'standard', 'high'] as const).map((mode) => {
-                    const isSelected = paceMode === mode;
-                    return (
-                      <button
-                        key={mode}
-                        type="button"
-                        onClick={() => setPaceMode(mode)}
-                        className={`p-3 rounded-2xl border text-center transition-all cursor-pointer ${
-                          isSelected
-                            ? 'bg-[#D94B7A] text-white border-[#D94B7A] shadow-xs font-bold ring-2 ring-[#D94B7A]/20'
-                            : 'bg-white hover:bg-[#FCE8EF]/40 text-[#35313A] border-[#F0E5EA] text-xs font-medium'
-                        }`}
-                      >
-                        <span className="text-xs block mb-0.5 font-bold">{PACE_METAS[mode].label}</span>
-                        <span className={`text-[13px] block font-extrabold font-mono ${isSelected ? 'text-white' : 'text-[#D94B7A]'}`}>
-                          {PACE_METAS[mode].totalCount}本 / 日
-                        </span>
-                        <span className="text-[10px] opacity-80 block mt-0.5 truncate">
-                          {mode === 'relaxed' ? '初めての方' : mode === 'standard' ? '平均稼働' : '高収入重視'}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
             </div>
 
             {/* 結果表示（スマホでは下・横幅いっぱい） */}
@@ -1043,8 +1011,8 @@ export default function SalaryPage({
                   <span className="font-bold text-[#35313A]">{hoursPerDay}時間</span>
                 </div>
                 <div className="flex justify-between text-[#85818A]">
-                  <span>接客ペース:</span>
-                  <span className="font-bold text-[#35313A]">{PACE_METAS[paceMode].label}（{calculated.totalCount}本/日）</span>
+                  <span>稼働本数目安:</span>
+                  <span className="font-bold text-[#35313A]">1日 約{calculated.totalCount}本（平均稼働ベース）</span>
                 </div>
                 <div className="flex justify-between text-[#85818A]">
                   <span>報酬計算条件:</span>
@@ -1099,7 +1067,7 @@ export default function SalaryPage({
                 rel="noopener noreferrer"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleLineClick(`【シミュレーターからの相談】週${daysPerWeek}日・${PACE_METAS[paceMode].label}の試算（月収約${calculated.monthlyNetIncome.toLocaleString()}円）について詳しく聞いてみたいです。`);
+                  handleLineClick(`【シミュレーターからの相談】週${daysPerWeek}日・1日${hoursPerDay}時間の試算（月収約${calculated.monthlyNetIncome.toLocaleString()}円）について詳しく聞いてみたいです。`);
                 }}
                 className="w-full py-3.5 rounded-2xl bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-xs sm:text-sm shadow-xs transition-all cursor-pointer flex items-center justify-center gap-2 text-center"
               >
