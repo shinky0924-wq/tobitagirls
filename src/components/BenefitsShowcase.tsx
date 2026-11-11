@@ -126,7 +126,7 @@ export const BENEFIT_COMPARISONS = [
   },
   {
     item: 'お酒・飲酒',
-    ourShop: 'お酒一切不要（お茶やソフトドリンクでおもてなし）',
+    ourShop: 'お酒一切不要（ソフトドリンク中心・下戸歓迎）',
     otherShop: 'お酒の付き合いが必須、二日酔いや体調不良のリスク'
   },
   {

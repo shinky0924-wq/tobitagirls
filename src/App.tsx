@@ -752,7 +752,10 @@ export default function App() {
 
       {/* Mobile Sticky Floating CTA Bar (Thumb-zone optimization for smartphone users) */}
       {currentTab !== 'admin' && (
-        <MobileStickyCta onScrollToForm={handleScrollToForm} />
+        <MobileStickyCta 
+          onScrollToForm={handleScrollToForm} 
+          isSalaryPage={currentTab === 'cluster' && clusterTopic === 'salary'}
+        />
       )}
 
     </div>
