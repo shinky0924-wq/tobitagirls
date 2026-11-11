@@ -45,7 +45,6 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
     { name: '選ばれる理由', action: 'section', target: '#reasons' },
     { name: 'よくある質問 FAQ（全119問）', action: 'faq', target: '/faq' },
     { name: '女性の声・体験談', action: 'section', target: '#voice' },
-    { name: '募集要項', action: 'section', target: '#requirements' },
     { name: '応募・面接の流れ', action: 'section', target: '#flow' },
   ];
 

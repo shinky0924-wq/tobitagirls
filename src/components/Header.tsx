@@ -49,7 +49,6 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
     { id: 'salary', name: '給料・待遇', icon: 'Coins', desc: '売上50%完全バック・全額即日現金手渡し', badge: '即日日払い' },
     { id: 'beginner', name: '未経験', icon: 'Sparkles', desc: '在籍キャストの約90%が夜職完全初心者', badge: '初心者歓迎' },
     { id: 'experienced', name: '経験者', icon: 'Award', desc: '風俗・キャバクラからの移籍人気No.1・即戦力高収入', badge: '移籍歓迎' },
-    { id: 'requirements', name: '募集要項', icon: 'FileText', desc: '20歳以上の女性限定・安心の料亭直営募集条件', badge: '20歳以上' },
     { id: 'flow', name: '面接・体入の流れ', icon: 'Calendar', desc: '履歴書不要・私服見学OK・面接当日の即日体入対応', badge: '手ぶらOK' },
     { id: 'workstyle', name: '働き方', icon: 'Clock', desc: '完全自由出勤制・週1日〜・短時間・OL副業対応', badge: '自由出勤' },
     { id: 'shops', name: 'お店選び', icon: 'Store', desc: 'メイン通り・青春通り・大門通りの特徴と直営店', badge: '直営安心' },
@@ -65,7 +64,6 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
     // 総合ガイド is handled as interactive dropdown
     { name: '選ばれる6つの理由', action: 'section', target: '#reasons', icon: 'ShieldCheck' },
     { name: '女性のリアル体験談', action: 'section', target: '#voice', icon: 'MessageSquareHeart' },
-    { name: '募集要項', action: 'section', target: '#requirements', icon: 'FileText' },
     { name: 'お仕事までの流れ', action: 'section', target: '#flow', icon: 'GitMerge' },
   ];
 
@@ -320,16 +318,6 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
               <span>女性のリアル体験談</span>
             </a>
 
-            {/* 5. 募集要項 */}
-            <a
-              href="#"
-              onClick={(e) => handleLinkClick(e, { action: 'section', target: '#requirements' })}
-              className="font-sans text-[13px] xl:text-[14px] px-2.5 xl:px-3 py-1.5 rounded-xl transition-all duration-200 whitespace-nowrap flex items-center gap-1.5 cursor-pointer text-zinc-800 hover:text-rose-600 hover:bg-rose-50/70 font-bold"
-              id="nav-link-requirements"
-            >
-              <LucideIcon name="FileText" size={14} className="text-zinc-500" />
-              <span>募集要項</span>
-            </a>
 
             {/* 6. お仕事までの流れ */}
             <a
@@ -512,23 +500,6 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                 <LucideIcon name="ChevronRight" size={16} className="text-zinc-400 group-hover:text-rose-600" />
               </button>
 
-              {/* ├─ 募集要項 */}
-              <button
-                type="button"
-                onClick={(e) => handleLinkClick(e, { action: 'section', target: '#requirements' })}
-                className="w-full text-left px-3 py-2.5 rounded-xl border border-gray-100 hover:border-rose-200 hover:bg-rose-50/60 transition-all flex items-center justify-between group cursor-pointer bg-white"
-                id="mobile-link-requirements"
-              >
-                <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
-                    <LucideIcon name="FileText" size={15} />
-                  </div>
-                  <span className="font-bold text-sm text-zinc-900 group-hover:text-rose-600">
-                    募集要項
-                  </span>
-                </div>
-                <LucideIcon name="ChevronRight" size={16} className="text-zinc-400 group-hover:text-rose-600" />
-              </button>
 
               {/* └─ お仕事までの流れ */}
               <button

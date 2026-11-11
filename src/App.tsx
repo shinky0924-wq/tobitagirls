@@ -10,9 +10,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Concerns from './components/Concerns';
 import Reasons from './components/Reasons';
-import FAQ from './components/FAQ';
 import Testimonials from './components/Testimonials';
-import JobDetails from './components/JobDetails';
 import Flow from './components/Flow';
 import ConsultationForm from './components/ConsultationForm';
 import Footer from './components/Footer';
@@ -24,7 +22,6 @@ import ComparisonPage from './components/ComparisonPage';
 import FAQPage from './components/FAQPage';
 import TopicClusterPage from './components/TopicClusterPage';
 import GlossaryPage from './components/GlossaryPage';
-import SalaryCalculator from './components/SalaryCalculator';
 import { TOPIC_CLUSTERS } from './topicClusterData';
 import { TARGET_JOB_CATEGORIES } from './compareData';
 import LucideIcon from './components/LucideIcon';
@@ -423,7 +420,8 @@ export default function App() {
   };
 
   const handleScrollToSimulator = () => {
-    handleScrollToSection('jobs');
+    navigate('/salary');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -514,40 +512,6 @@ export default function App() {
                 <Testimonials />
               </div>
 
-              {/* Consolidated 募集要項 / 給料 Section */}
-              <div id="requirements">
-                <JobDetails 
-                  content={siteContent.jobs} 
-                  onCtaclickWithData={handleInjectedScroll}
-                  onNavigateRequirements={() => {
-                    navigate('/requirements');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                />
-              </div>
-
-              {/* Realtime Salary Simulation Tool */}
-              <div className="max-w-[1040px] mx-auto px-4 sm:px-6 my-10 sm:my-14">
-                <SalaryCalculator onCtaclick={handleScrollToForm} />
-              </div>
-
-              {/* 飛田新地求人 Q＆A - 統合版（5大安心Q&A ＋ 4大検索テーマ別詳細 ＋ 全119問案内） */}
-              <div id="faq" className="scroll-mt-20">
-                <div id="qa-summary">
-                  <FAQ 
-                    content={siteContent.faq}
-                    onCtaclick={handleScrollToForm}
-                    onNavigateToFaq={(category) => {
-                      if (category) {
-                        navigate(`/faq/${category}`);
-                      } else {
-                        navigate('/faq');
-                      }
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                  />
-                </div>
-              </div>
 
               {/* Onboarding steps list - お仕事までの流れ */}
               <div id="flow">
