@@ -10,9 +10,10 @@ interface MobileStickyCtaProps {
   onScrollToForm?: () => void;
   isSalaryPage?: boolean;
   isBeginnerPage?: boolean;
+  isExperiencedPage?: boolean;
 }
 
-export default function MobileStickyCta({ onScrollToForm, isSalaryPage, isBeginnerPage }: MobileStickyCtaProps) {
+export default function MobileStickyCta({ onScrollToForm, isSalaryPage, isBeginnerPage, isExperiencedPage }: MobileStickyCtaProps) {
   const scrollToAnchor = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -85,6 +86,73 @@ export default function MobileStickyCta({ onScrollToForm, isSalaryPage, isBeginn
               rel="noopener noreferrer"
               className="w-full flex items-center justify-center gap-1 bg-[#06C755] hover:bg-[#05b34c] text-white rounded-xl py-2 px-1.5 font-bold text-xs shadow-xs transition-all cursor-pointer"
               id="mobile-beginner-line-btn"
+            >
+              <LucideIcon name="MessageCircle" size={15} className="text-white shrink-0" />
+              <span className="font-extrabold whitespace-nowrap text-[11px]">LINE相談</span>
+            </a>
+          </div>
+        </div>
+      </aside>
+    );
+  }
+
+  // 経験者・移籍ページ用: 5項目（解放・他業種比較・稼げる理由・FAQ・LINE相談）
+  if (isExperiencedPage) {
+    return (
+      <aside 
+        aria-label="経験者ナビゲーション" 
+        id="mobile-sticky-experienced-cta"
+        className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#F0E5EA] shadow-[0_-2px_12px_rgba(0,0,0,0.06)] px-2 py-1.5 pb-safe md:hidden transition-transform duration-300"
+      >
+        <div className="max-w-md mx-auto grid grid-cols-12 gap-1 items-center">
+          {/* 1. 4つの解放 */}
+          <button
+            type="button"
+            onClick={() => scrollToAnchor('relief')}
+            className="col-span-2 py-1 flex flex-col items-center justify-center text-[9.5px] font-bold text-[#35313A] hover:text-[#D94B7A] transition-colors cursor-pointer"
+          >
+            <LucideIcon name="HeartHandshake" size={14} className="text-[#D94B7A] mb-0.5" />
+            <span className="truncate">解放</span>
+          </button>
+
+          {/* 2. 他業種比較 */}
+          <button
+            type="button"
+            onClick={() => scrollToAnchor('comparison')}
+            className="col-span-2 py-1 flex flex-col items-center justify-center text-[9.5px] font-bold text-[#35313A] hover:text-[#D94B7A] transition-colors cursor-pointer"
+          >
+            <LucideIcon name="Scale" size={14} className="text-[#D94B7A] mb-0.5" />
+            <span className="truncate">比較</span>
+          </button>
+
+          {/* 3. 稼げる理由 */}
+          <button
+            type="button"
+            onClick={() => scrollToAnchor('earning-system')}
+            className="col-span-2 py-1 flex flex-col items-center justify-center text-[9.5px] font-bold text-[#35313A] hover:text-[#D94B7A] transition-colors cursor-pointer"
+          >
+            <LucideIcon name="TrendingUp" size={14} className="text-[#D94B7A] mb-0.5" />
+            <span className="truncate">稼げる理由</span>
+          </button>
+
+          {/* 4. FAQ */}
+          <button
+            type="button"
+            onClick={() => scrollToAnchor('faq')}
+            className="col-span-2 py-1 flex flex-col items-center justify-center text-[9.5px] font-bold text-[#35313A] hover:text-[#D94B7A] transition-colors cursor-pointer"
+          >
+            <LucideIcon name="HelpCircle" size={14} className="text-[#D94B7A] mb-0.5" />
+            <span className="truncate">FAQ</span>
+          </button>
+
+          {/* 5. LINE相談（目立たせた主要ボタン） */}
+          <div className="col-span-4 pl-0.5">
+            <a
+              href={LINE_OFFICIAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center justify-center gap-1 bg-[#06C755] hover:bg-[#05b34c] text-white rounded-xl py-2 px-1.5 font-bold text-xs shadow-xs transition-all cursor-pointer"
+              id="mobile-experienced-line-btn"
             >
               <LucideIcon name="MessageCircle" size={15} className="text-white shrink-0" />
               <span className="font-extrabold whitespace-nowrap text-[11px]">LINE相談</span>

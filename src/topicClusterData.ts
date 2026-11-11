@@ -288,9 +288,9 @@ export const TOPIC_CLUSTERS: Record<string, TopicClusterData> = {
   experienced: {
     id: 'experienced',
     path: '/experienced',
-    title: '経験者',
-    seoTitle: '【飛田新地求人】経験者・他業種からの移籍ガイド｜高日給・営業連絡ゼロの好環境【公式】',
-    metaDescription: 'ソープ・ヘルス・キャバクラ経験者のための飛田新地移籍ガイド。ネット顔出しなし、お風呂洗いなし、指名競争や営業LINEなし。即戦力として初日から高日給10万円超を狙える好環境を徹底比較。',
+    title: '経験者・移籍',
+    seoTitle: '経験者・他業種からの移籍ガイド｜営業連絡ゼロ・ネット顔出しなし・日給10万〜18万円【公式】',
+    metaDescription: 'キャバクラ・ソープ・デリヘル経験者へ。営業LINEや写真公開、お風呂洗いのないストレスフリーな飛田新地料亭求人。売上50%完全即日手渡し・天引き0円。他業種との徹底比較とスムーズな移籍の流れを完全解説。',
     emoji: '👑',
     icon: 'Award',
     badge: '他業種移籍歓迎',

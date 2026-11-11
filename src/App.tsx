@@ -756,6 +756,7 @@ export default function App() {
           onScrollToForm={handleScrollToForm} 
           isSalaryPage={currentTab === 'cluster' && clusterTopic === 'salary'}
           isBeginnerPage={currentTab === 'cluster' && clusterTopic === 'beginner'}
+          isExperiencedPage={currentTab === 'cluster' && clusterTopic === 'experienced'}
         />
       )}
 
