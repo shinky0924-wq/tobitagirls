@@ -13,6 +13,7 @@ import BenefitsShowcase from './BenefitsShowcase';
 import SalaryCalculator from './SalaryCalculator';
 import JobContentPage from './JobContentPage';
 import SalaryPage from './SalaryPage';
+import BeginnerPage from './BeginnerPage';
 import { getStoredSiteContent } from '../siteContent';
 
 interface TopicClusterPageProps {
@@ -52,6 +53,20 @@ export default function TopicClusterPage({
   if (topicId === 'salary') {
     return (
       <SalaryPage
+        onNavigateHome={onNavigateHome}
+        onNavigateTopic={onNavigateTopic}
+        onNavigateBlog={onNavigateBlog}
+        onNavigateFaq={onNavigateFaq}
+        onCtaclick={onCtaclick}
+        onInjectedScroll={onInjectedScroll}
+      />
+    );
+  }
+
+  // If topic is 'beginner' (or /beginner), render the dedicated comprehensive BeginnerPage
+  if (topicId === 'beginner') {
+    return (
+      <BeginnerPage
         onNavigateHome={onNavigateHome}
         onNavigateTopic={onNavigateTopic}
         onNavigateBlog={onNavigateBlog}

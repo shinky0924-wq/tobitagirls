@@ -9,9 +9,10 @@ import LucideIcon from './LucideIcon';
 interface MobileStickyCtaProps {
   onScrollToForm?: () => void;
   isSalaryPage?: boolean;
+  isBeginnerPage?: boolean;
 }
 
-export default function MobileStickyCta({ onScrollToForm, isSalaryPage }: MobileStickyCtaProps) {
+export default function MobileStickyCta({ onScrollToForm, isSalaryPage, isBeginnerPage }: MobileStickyCtaProps) {
   const scrollToAnchor = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -26,6 +27,73 @@ export default function MobileStickyCta({ onScrollToForm, isSalaryPage }: Mobile
       });
     }
   };
+
+  // 未経験ページ用: 5項目（ポイント・6つの特徴・初日の流れ・FAQ・LINE相談）
+  if (isBeginnerPage) {
+    return (
+      <aside 
+        aria-label="未経験ナビゲーション" 
+        id="mobile-sticky-beginner-cta"
+        className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#F0E5EA] shadow-[0_-2px_12px_rgba(0,0,0,0.06)] px-2 py-1.5 pb-safe md:hidden transition-transform duration-300"
+      >
+        <div className="max-w-md mx-auto grid grid-cols-12 gap-1 items-center">
+          {/* 1. ポイント */}
+          <button
+            type="button"
+            onClick={() => scrollToAnchor('points')}
+            className="col-span-2 py-1 flex flex-col items-center justify-center text-[9.5px] font-bold text-[#35313A] hover:text-[#D94B7A] transition-colors cursor-pointer"
+          >
+            <LucideIcon name="CheckCircle" size={14} className="text-[#D94B7A] mb-0.5" />
+            <span className="truncate">ポイント</span>
+          </button>
+
+          {/* 2. 6つの特徴 */}
+          <button
+            type="button"
+            onClick={() => scrollToAnchor('features')}
+            className="col-span-2 py-1 flex flex-col items-center justify-center text-[9.5px] font-bold text-[#35313A] hover:text-[#D94B7A] transition-colors cursor-pointer"
+          >
+            <LucideIcon name="Sparkles" size={14} className="text-[#D94B7A] mb-0.5" />
+            <span className="truncate">6つの特徴</span>
+          </button>
+
+          {/* 3. 初日の流れ */}
+          <button
+            type="button"
+            onClick={() => scrollToAnchor('first-day-flow')}
+            className="col-span-2 py-1 flex flex-col items-center justify-center text-[9.5px] font-bold text-[#35313A] hover:text-[#D94B7A] transition-colors cursor-pointer"
+          >
+            <LucideIcon name="Clock" size={14} className="text-[#D94B7A] mb-0.5" />
+            <span className="truncate">初日の流れ</span>
+          </button>
+
+          {/* 4. FAQ */}
+          <button
+            type="button"
+            onClick={() => scrollToAnchor('faq')}
+            className="col-span-2 py-1 flex flex-col items-center justify-center text-[9.5px] font-bold text-[#35313A] hover:text-[#D94B7A] transition-colors cursor-pointer"
+          >
+            <LucideIcon name="HelpCircle" size={14} className="text-[#D94B7A] mb-0.5" />
+            <span className="truncate">FAQ</span>
+          </button>
+
+          {/* 5. LINE相談（目立たせた主要ボタン） */}
+          <div className="col-span-4 pl-0.5">
+            <a
+              href={LINE_OFFICIAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center justify-center gap-1 bg-[#06C755] hover:bg-[#05b34c] text-white rounded-xl py-2 px-1.5 font-bold text-xs shadow-xs transition-all cursor-pointer"
+              id="mobile-beginner-line-btn"
+            >
+              <LucideIcon name="MessageCircle" size={15} className="text-white shrink-0" />
+              <span className="font-extrabold whitespace-nowrap text-[11px]">LINE相談</span>
+            </a>
+          </div>
+        </div>
+      </aside>
+    );
+  }
 
   // 給料・待遇ページ用: 4項目の洗練されたコンパクト固定ナビゲーション（Section 14要件）
   if (isSalaryPage) {

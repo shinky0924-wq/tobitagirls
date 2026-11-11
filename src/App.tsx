@@ -755,6 +755,7 @@ export default function App() {
         <MobileStickyCta 
           onScrollToForm={handleScrollToForm} 
           isSalaryPage={currentTab === 'cluster' && clusterTopic === 'salary'}
+          isBeginnerPage={currentTab === 'cluster' && clusterTopic === 'beginner'}
         />
       )}
 
