@@ -56,6 +56,9 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
           transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
           id="hero-title"
         >
+          <span className="block text-xs sm:text-sm font-sans font-bold text-[#D94B7A] tracking-wide mb-2">
+            飛田新地求人・未経験歓迎の公式ガイド
+          </span>
           飛田新地で<br className="block md:hidden" />
           <span className="text-secondary bg-clip-text">働いてみたい女性へ。</span>
         </motion.h1>
@@ -92,6 +95,26 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
             <p className="text-secondary font-extrabold text-sm sm:text-base">
               まずは相談だけでもお気軽にご相談ください。
             </p>
+          </div>
+
+          {/* 募集条件サマリー（主要SEOキーワード・基本条件の視認性向上） */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-4 text-left">
+            <div className="bg-white/90 rounded-2xl p-3 border border-rose-100 shadow-2xs">
+              <div className="text-[10px] font-bold text-[#85818A]">給料・支払い</div>
+              <div className="text-xs sm:text-[13px] font-extrabold text-[#D94B7A] mt-0.5">売上50%・即日日払い</div>
+            </div>
+            <div className="bg-white/90 rounded-2xl p-3 border border-rose-100 shadow-2xs">
+              <div className="text-[10px] font-bold text-[#85818A]">応募資格</div>
+              <div className="text-xs sm:text-[13px] font-extrabold text-[#35313A] mt-0.5">満20歳以上の女性</div>
+            </div>
+            <div className="bg-white/90 rounded-2xl p-3 border border-rose-100 shadow-2xs">
+              <div className="text-[10px] font-bold text-[#85818A]">シフト・出勤</div>
+              <div className="text-xs sm:text-[13px] font-extrabold text-[#35313A] mt-0.5">週1日〜自由シフト</div>
+            </div>
+            <div className="bg-white/90 rounded-2xl p-3 border border-rose-100 shadow-2xs">
+              <div className="text-[10px] font-bold text-[#85818A]">働きやすさ</div>
+              <div className="text-xs sm:text-[13px] font-extrabold text-[#35313A] mt-0.5">お酒不要・WEB顔出しなし</div>
+            </div>
           </div>
         </motion.div>
 
@@ -164,9 +187,13 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
               
               <div className="flex flex-col gap-2.5">
                 {randomArticles.map((art, index) => (
-                  <button
+                  <a
                     key={art.id}
-                    onClick={() => onArticleClick && onArticleClick(art.slug)}
+                    href={`/blog/${art.slug}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (onArticleClick) onArticleClick(art.slug);
+                    }}
                     className="w-full text-left font-sans text-xs md:text-sm text-on-surface bg-white hover:bg-secondary-container/10 p-2.5 sm:p-3 rounded-2xl border border-rose-100 hover:border-secondary-container/50 transition-all flex items-center justify-between gap-3 cursor-pointer group shadow-[0_2px_8px_-3px_rgba(210,84,123,0.06)] hover:shadow-[0_4px_12px_-2px_rgba(210,84,123,0.12)] hover:-translate-y-0.5"
                     id={`hero-col-item-${art.id}`}
                   >
@@ -204,20 +231,24 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
                         </span>
                         <LucideIcon name="ChevronRight" className="text-secondary/40 group-hover:text-secondary group-hover:translate-x-0.5 transition-all shrink-0" size={16} />
                       </div>
-                  </button>
+                  </a>
                 ))}
               </div>
               
               {onBlogClick && (
                 <div className="mt-4 text-center border-t border-rose-100/50 pt-4">
-                  <button
-                    onClick={onBlogClick}
+                  <a
+                    href="/blog"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onBlogClick();
+                    }}
                     className="inline-flex items-center gap-2 text-xs md:text-sm font-extrabold text-white bg-gradient-to-r from-secondary to-[#e2628b] hover:from-[#c2446c] hover:to-[#d2547b] px-6 py-2.5 rounded-full shadow-md shadow-rose-200/50 hover:shadow-lg transition-all cursor-pointer group"
                     id="hero-all-columns-link"
                   >
                     <span>すべてのコラムを見る</span>
                     <LucideIcon name="ChevronRight" className="group-hover:translate-x-1 transition-transform" size={14} />
-                  </button>
+                  </a>
                 </div>
               )}
             </div>

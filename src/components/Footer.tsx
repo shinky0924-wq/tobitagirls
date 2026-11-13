@@ -39,13 +39,13 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
 
   const navLinks = [
     { name: '飛田新地求人サイト比較', action: 'compare', target: '/compare' },
-    { name: '求人総合ガイド', action: 'section', target: '#hub' },
-    { name: 'お仕事コラム一覧', action: 'blog' },
+    { name: '求人総合ガイド', action: 'section', target: '/#hub' },
+    { name: 'お仕事コラム一覧', action: 'blog', target: '/blog' },
     { name: '運営者情報・お店のご案内', action: 'about', target: '/about' },
-    { name: '選ばれる理由', action: 'section', target: '#reasons' },
+    { name: '選ばれる理由', action: 'section', target: '/#reasons' },
     { name: 'よくある質問 FAQ（全119問）', action: 'faq', target: '/faq' },
-    { name: '女性の声・体験談', action: 'section', target: '#voice' },
-    { name: '応募・面接の流れ', action: 'section', target: '#flow' },
+    { name: '女性の声・体験談', action: 'section', target: '/#voice' },
+    { name: '応募・面接の流れ', action: 'section', target: '/#flow' },
   ];
 
   const targetCategoryLinks = [
@@ -57,6 +57,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
     { name: 'Wワーク・副業向け（会社バレ防止）', slug: 'double-work' },
     { name: '20代向け求人（学生・OL）', slug: 'age-20s' },
     { name: '30代・オトナ女子向け求人', slug: 'age-30s' },
+    { name: '40代・ミセス向け求人', slug: 'age-40s' },
   ];
 
   const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>, link: typeof navLinks[0]) => {
@@ -75,7 +76,8 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
       onChangeTab('faq');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (link.action === 'section' && link.target) {
-      const sectionId = link.target.startsWith('#') ? link.target.substring(1) : link.target;
+      const hashIndex = link.target.indexOf('#');
+      const sectionId = hashIndex !== -1 ? link.target.substring(hashIndex + 1) : link.target;
       onScrollToSection(sectionId);
     }
   };

@@ -43,6 +43,7 @@ const staticRoutes = [
   { path: '/compare/double-work', priority: '0.85', freq: 'weekly', img: '/images/tobita_wwork_privacy_1788153051081.jpg', title: '副業OL・Wワーク求人' },
   { path: '/compare/age-20s', priority: '0.85', freq: 'weekly', img: '/images/tobita_experienced_cast_1792411797671.jpg', title: '20代向け求人' },
   { path: '/compare/age-30s', priority: '0.85', freq: 'weekly', img: '/images/tobita_job_guide_tea_1788153000519.jpg', title: '30代向け求人' },
+  { path: '/compare/age-40s', priority: '0.85', freq: 'weekly', img: '/images/tobita_job_guide_tea_1788153000519.jpg', title: '40代向け求人' },
   { path: '/faq', priority: '0.85', freq: 'daily', img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地求人 FAQ よくある質問' },
   { path: '/blog', priority: '0.85', freq: 'daily', img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地求人コラム一覧' },
   { path: '/job', priority: '0.85', freq: 'weekly', img: '/images/tobita_job_guide_tea_1788153000519.jpg', title: 'お仕事内容と和室接客' },

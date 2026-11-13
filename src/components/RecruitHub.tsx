@@ -468,17 +468,13 @@ export default function RecruitHub({
             >
               <div className="flex flex-col flex-1">
                 {/* ① メイン画像バナー（16:9, 横長, 写真面積を拡大＆白い文字エリア高さを15〜20%縮小） */}
-                <div
-                  onClick={() => handleCardClick(cat)}
-                  className="relative aspect-video w-full overflow-hidden bg-[#FFF0F4] cursor-pointer group/banner select-none"
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      handleCardClick(cat);
-                    }
+                <a
+                  href={cat.path}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleCardClick(cat);
                   }}
+                  className="relative aspect-video w-full overflow-hidden bg-[#FFF0F4] cursor-pointer group/banner select-none block"
                   title={`「${cat.title}」の解説を見る`}
                 >
                   {/* 背景写真素材（明るいベージュ・アイボリー系） */}
@@ -521,16 +517,22 @@ export default function RecruitHub({
                       </p>
                     </div>
                   </div>
-                </div>
+                </a>
 
                 {/* カード内コンテンツエリア */}
                 <div className="p-4 sm:p-5 flex flex-col flex-1">
                   {/* カード下部の具体的タイトル */}
-                  <h4
-                    onClick={() => handleCardClick(cat)}
-                    className="font-display font-bold text-[16px] sm:text-[17px] text-[#333333] leading-snug mb-2.5 cursor-pointer hover:text-[#E90048] transition-colors"
-                  >
-                    {cat.questionTitle}
+                  <h4 className="font-display font-bold text-[16px] sm:text-[17px] text-[#333333] leading-snug mb-2.5">
+                    <a
+                      href={cat.path}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleCardClick(cat);
+                      }}
+                      className="hover:text-[#E90048] transition-colors cursor-pointer"
+                    >
+                      {cat.questionTitle}
+                    </a>
                   </h4>
 
                   {/* ② 説明文 (2〜3行程度に整理・初心者にも分かりやすい自然な日本語) */}
@@ -556,10 +558,11 @@ export default function RecruitHub({
                       おすすめ関連記事
                     </span>
                     {cat.featuredArticles.slice(0, 2).map((art) => (
-                      <button
-                        type="button"
+                      <a
                         key={art.slug}
-                        onClick={() => {
+                        href={`/blog/${art.slug}`}
+                        onClick={(e) => {
+                          e.preventDefault();
                           if (onNavigateToArticle) onNavigateToArticle(art.slug);
                           else onScrollToSection('jobs');
                         }}
@@ -574,7 +577,7 @@ export default function RecruitHub({
                           </span>
                         </div>
                         <LucideIcon name="ChevronRight" size={13} className="text-[#777777] group-hover/art:text-[#E90048] shrink-0 transition-transform group-hover/art:translate-x-0.5" />
-                      </button>
+                      </a>
                     ))}
                   </div>
                 </div>
@@ -582,14 +585,17 @@ export default function RecruitHub({
 
               {/* ⑤ 詳細ページへのボタン (指定された新文言・ピンク色 #E90048 を維持) */}
               <div className="p-4 sm:p-5 pt-0 mt-auto">
-                <button
-                  type="button"
-                  onClick={() => handleCardClick(cat)}
+                <a
+                  href={cat.path}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleCardClick(cat);
+                  }}
                   className="w-full h-11 bg-[#E90048] hover:bg-[#D10040] text-white font-bold text-[13.5px] sm:text-[14px] rounded-xl shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <span>{cat.buttonText}</span>
                   <LucideIcon name="ArrowRight" size={14} className="shrink-0" />
-                </button>
+                </a>
               </div>
             </motion.div>
           ))}
@@ -622,64 +628,80 @@ export default function RecruitHub({
                 {[
                   {
                     label: '未経験',
+                    href: '/compare/inexperienced',
                     onClick: () => onNavigateCompare ? onNavigateCompare('inexperienced') : onScrollToSection('compare')
                   },
                   {
                     label: '経験者',
+                    href: '/experienced',
                     onClick: () => onNavigateTopic ? onNavigateTopic('experienced') : (onNavigateCompare ? onNavigateCompare('high-income') : onScrollToSection('compare'))
                   },
                   {
                     label: '1日8~10万高収入',
+                    href: '/compare/high-income',
                     onClick: () => onNavigateCompare ? onNavigateCompare('high-income') : onScrollToSection('compare')
                   },
                   {
                     label: '週1日から',
+                    href: '/compare/weekly-1',
                     onClick: () => onNavigateCompare ? onNavigateCompare('weekly-1') : onScrollToSection('compare')
                   },
                   {
                     label: '出稼ぎ',
+                    href: '/compare/dormitory',
                     onClick: () => onNavigateCompare ? onNavigateCompare('dormitory') : onScrollToSection('compare')
                   },
                   {
                     label: '掛け持ち・Wワーク',
+                    href: '/compare/double-work',
                     onClick: () => onNavigateCompare ? onNavigateCompare('double-work') : onScrollToSection('compare')
                   },
                   {
                     label: '20代',
+                    href: '/compare/age-20s',
                     onClick: () => onNavigateCompare ? onNavigateCompare('age-20s') : onScrollToSection('compare')
                   },
                   {
                     label: '30代',
+                    href: '/compare/age-30s',
                     onClick: () => onNavigateCompare ? onNavigateCompare('age-30s') : onScrollToSection('compare')
                   },
                   {
                     label: '40代',
+                    href: '/compare/age-40s',
                     onClick: () => onNavigateCompare ? onNavigateCompare('age-40s') : onScrollToSection('compare')
                   },
                 ].map((tag) => (
-                  <button
+                  <a
                     key={tag.label}
-                    type="button"
-                    onClick={tag.onClick}
+                    href={tag.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      tag.onClick();
+                    }}
                     className="bg-[#FFFFFF] hover:bg-[#FFE2EB] text-[#B33F69] hover:text-[#E90048] border border-[#FFE2EB] hover:border-[#E90048]/30 px-3.5 py-1.5 rounded-full text-[12px] sm:text-[12.5px] lg:text-[13px] font-medium transition-all cursor-pointer shadow-2xs select-none inline-flex items-center justify-center"
                     title={`「${tag.label}」の求人条件を比較する`}
                   >
                     <span>{tag.label}</span>
-                  </button>
+                  </a>
                 ))}
               </div>
             </div>
 
             {/* 右側（約25%）：CTAボタン（周囲に十分な余白・メインピンク #E90048・角丸12px・白文字・右向き矢印） */}
             <div className="w-full lg:w-[26%] flex lg:justify-end lg:items-center shrink-0 pt-2 lg:pt-0">
-              <button
-                type="button"
-                onClick={() => onNavigateCompare ? onNavigateCompare() : onScrollToSection('compare')}
+              <a
+                href="/compare"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (onNavigateCompare) onNavigateCompare();
+                  else onScrollToSection('compare');
+                }}
                 className="w-full lg:w-auto bg-[#E90048] hover:bg-[#D10040] text-white font-bold text-[14px] lg:text-[15px] px-6 py-3.5 rounded-[12px] shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group"
                 id="recruit-hub-compare-btn"
               >
                 <span>自分に合う求人を見つける</span>
-              </button>
+              </a>
             </div>
 
           </div>

@@ -98,7 +98,7 @@ async function runPrerender() {
 
   const compareSlugs = [
     'inexperienced', 'high-income', 'weekly-1', 'short-term',
-    'dormitory', 'double-work', 'age-20s', 'age-30s'
+    'dormitory', 'double-work', 'age-20s', 'age-30s', 'age-40s'
   ];
   for (const slug of compareSlugs) {
     const compPage = injectSeoMetadata(template, `/compare/${slug}`);

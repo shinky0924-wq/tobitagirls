@@ -38,13 +38,16 @@ export default function GlossaryPage({ onNavigateHome, onCtaclick }: GlossaryPag
 
         {/* Breadcrumb Navigation */}
         <nav className="mb-6 flex items-center gap-2 text-xs text-zinc-500 font-sans" aria-label="パンくずリスト">
-          <button 
-            type="button"
-            onClick={onNavigateHome} 
+          <a 
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigateHome();
+            }} 
             className="hover:text-secondary underline cursor-pointer"
           >
             TOP
-          </button>
+          </a>
           <span>/</span>
           <span className="text-zinc-800 font-bold">飛田新地 用語集</span>
         </nav>
@@ -192,13 +195,16 @@ export default function GlossaryPage({ onNavigateHome, onCtaclick }: GlossaryPag
             >
               無料相談・質問してみる
             </button>
-            <button
-              type="button"
-              onClick={onNavigateHome}
-              className="w-full sm:w-auto px-6 py-3 rounded-full bg-white/20 text-white font-bold text-sm hover:bg-white/30 transition-all cursor-pointer"
+            <a
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigateHome();
+              }}
+              className="w-full sm:w-auto px-6 py-3 rounded-full bg-white/20 text-white font-bold text-sm hover:bg-white/30 transition-all cursor-pointer inline-flex items-center justify-center"
             >
               トップページに戻る
-            </button>
+            </a>
           </div>
         </div>
 

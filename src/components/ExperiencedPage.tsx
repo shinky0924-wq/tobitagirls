@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import LucideIcon from './LucideIcon';
 import { LINE_OFFICIAL_URL } from '../data';
+import { updatePageJsonLd } from '../utils/jsonLd';
 
 interface ExperiencedPageProps {
   onNavigateHome: () => void;
@@ -46,62 +47,45 @@ export default function ExperiencedPage({
     }
   };
 
-  // Structured Data (JSON-LD) for SEO
+  // Update #seo-jsonld Structured Data for SEO without duplicating SSR script
   useEffect(() => {
-    const existingScript = document.getElementById('experienced-schema');
-    if (existingScript) existingScript.remove();
-
-    try {
-      const script = document.createElement('script');
-      script.id = 'experienced-schema';
-      script.type = 'application/ld+json';
-
-      const schemaData = {
-        '@context': 'https://schema.org',
-        '@graph': [
-          {
-            '@type': 'BreadcrumbList',
-            '@id': 'https://tobitashinchi-recruit.com/experienced#breadcrumb',
-            'itemListElement': [
-              {
-                '@type': 'ListItem',
-                'position': 1,
-                'name': '飛田新地求人トップ',
-                'item': 'https://tobitashinchi-recruit.com/'
-              },
-              {
-                '@type': 'ListItem',
-                'position': 2,
-                'name': '経験者・他業種からの移籍',
-                'item': 'https://tobitashinchi-recruit.com/experienced'
-              }
-            ]
-          },
-          {
-            '@type': 'FAQPage',
-            '@id': 'https://tobitashinchi-recruit.com/experienced#faq',
-            'mainEntity': EXPERIENCED_FAQS.slice(0, 10).map((item) => ({
-              '@type': 'Question',
-              'name': item.q,
-              'acceptedAnswer': {
-                '@type': 'Answer',
-                'text': item.a
-              }
-            }))
-          }
-        ]
-      };
-
-      script.textContent = JSON.stringify(schemaData);
-      document.head.appendChild(script);
-    } catch (e) {
-      console.error('Error injecting JSON-LD schema:', e);
-    }
-
-    return () => {
-      const script = document.getElementById('experienced-schema');
-      if (script) script.remove();
+    const schemaData = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'BreadcrumbList',
+          '@id': 'https://tobitashinchi-recruit.com/experienced#breadcrumb',
+          'itemListElement': [
+            {
+              '@type': 'ListItem',
+              'position': 1,
+              'name': '飛田新地求人トップ',
+              'item': 'https://tobitashinchi-recruit.com/'
+            },
+            {
+              '@type': 'ListItem',
+              'position': 2,
+              'name': '経験者・他業種からの移籍',
+              'item': 'https://tobitashinchi-recruit.com/experienced'
+            }
+          ]
+        },
+        {
+          '@type': 'FAQPage',
+          '@id': 'https://tobitashinchi-recruit.com/experienced#faq',
+          'mainEntity': EXPERIENCED_FAQS.slice(0, 10).map((item) => ({
+            '@type': 'Question',
+            'name': item.q,
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': item.a
+            }
+          }))
+        }
+      ]
     };
+
+    updatePageJsonLd(schemaData);
   }, []);
 
   return (
@@ -112,14 +96,17 @@ export default function ExperiencedPage({
         <nav aria-label="Breadcrumb" className="flex items-center text-xs">
           <ol className="flex items-center gap-1.5 flex-wrap text-[#85818A]">
             <li className="flex items-center gap-1">
-              <button
-                type="button"
-                onClick={onNavigateHome}
+              <a
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigateHome();
+                }}
                 className="hover:text-[#D94B7A] font-bold flex items-center gap-1 text-[#35313A] hover:underline cursor-pointer"
               >
                 <LucideIcon name="Home" size={13} className="text-[#D94B7A]" />
                 <span>飛田新地求人（トップ）</span>
-              </button>
+              </a>
             </li>
             <li className="text-[#85818A]">/</li>
             <li className="font-bold text-[#D94B7A]" aria-current="page">
@@ -136,62 +123,86 @@ export default function ExperiencedPage({
             <LucideIcon name="Compass" size={13} className="text-[#D94B7A]" />
             ページ内目次:
           </span>
-          <button
-            type="button"
-            onClick={() => scrollToSection('relief')}
+          <a
+            href="#relief"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('relief');
+            }}
             className="px-3 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] whitespace-nowrap transition-colors cursor-pointer"
           >
             4つのストレス解放
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollToSection('comparison')}
+          </a>
+          <a
+            href="#comparison"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('comparison');
+            }}
             className="px-3 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] whitespace-nowrap transition-colors cursor-pointer"
           >
             他業種との決定的な違い
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollToSection('earning-system')}
+          </a>
+          <a
+            href="#earning-system"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('earning-system');
+            }}
             className="px-3 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] whitespace-nowrap transition-colors cursor-pointer"
           >
             高日給の理由
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollToSection('transfer-flow')}
+          </a>
+          <a
+            href="#transfer-flow"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('transfer-flow');
+            }}
             className="px-3 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] whitespace-nowrap transition-colors cursor-pointer"
           >
             移籍の流れ
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollToSection('checklist')}
+          </a>
+          <a
+            href="#checklist"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('checklist');
+            }}
             className="px-3 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] whitespace-nowrap transition-colors cursor-pointer"
           >
             移籍前チェック
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollToSection('columns')}
+          </a>
+          <a
+            href="#columns"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('columns');
+            }}
             className="px-3 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] whitespace-nowrap transition-colors cursor-pointer"
           >
             比較コラム
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollToSection('faq')}
+          </a>
+          <a
+            href="#faq"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('faq');
+            }}
             className="px-3 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] whitespace-nowrap transition-colors cursor-pointer"
           >
             よくある質問
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollToSection('line-cta')}
+          </a>
+          <a
+            href="#line-cta"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('line-cta');
+            }}
             className="px-3 py-1.5 rounded-full bg-[#06C755]/10 text-[#059669] hover:bg-[#06C755] hover:text-white border border-[#06C755]/30 whitespace-nowrap font-bold transition-colors cursor-pointer"
           >
             LINE相談
-          </button>
+          </a>
         </div>
       </div>
 
@@ -839,22 +850,29 @@ export default function ExperiencedPage({
             </div>
 
             {onNavigateBlog && (
-              <button
-                type="button"
-                onClick={() => onNavigateBlog()}
+              <a
+                href="/blog"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigateBlog();
+                }}
                 className="text-xs font-bold text-[#D94B7A] hover:underline flex items-center gap-1 cursor-pointer self-start sm:self-auto"
               >
                 <span>コラム一覧を見る</span>
                 <LucideIcon name="ChevronRight" size={14} />
-              </button>
+              </a>
             )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {FEATURED_EXPERIENCED_ARTICLES.map((article) => (
-              <div
+              <a
                 key={article.slug}
-                onClick={() => onNavigateBlog && onNavigateBlog(article.slug)}
+                href={`/blog/${article.slug}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigateBlog && onNavigateBlog(article.slug);
+                }}
                 className="bg-[#FFF9FB] rounded-2xl border border-[#F0E5EA] overflow-hidden hover:border-[#D94B7A]/50 transition-all cursor-pointer group flex flex-col justify-between"
               >
                 <div className="p-4 sm:p-5 space-y-3">
@@ -875,7 +893,7 @@ export default function ExperiencedPage({
                   <span>記事を読む</span>
                   <LucideIcon name="ChevronRight" size={13} />
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </section>
@@ -942,14 +960,17 @@ export default function ExperiencedPage({
 
           {onNavigateFaq && (
             <div className="text-center pt-2">
-              <button
-                type="button"
-                onClick={onNavigateFaq}
+              <a
+                href="/faq"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigateFaq();
+                }}
                 className="text-xs font-bold text-[#D94B7A] hover:underline inline-flex items-center gap-1 cursor-pointer"
               >
                 <span>よくある質問（FAQ全問）を見る</span>
                 <LucideIcon name="ChevronRight" size={14} />
-              </button>
+              </a>
             </div>
           )}
         </section>
@@ -1004,44 +1025,59 @@ export default function ExperiencedPage({
           <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
             {onNavigateTopic && (
               <>
-                <button
-                  type="button"
-                  onClick={() => onNavigateTopic('job')}
+                <a
+                  href="/job"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigateTopic('job');
+                  }}
                   className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] transition-colors cursor-pointer"
                 >
                   お仕事内容
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onNavigateTopic('salary')}
+                </a>
+                <a
+                  href="/salary"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigateTopic('salary');
+                  }}
                   className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] transition-colors cursor-pointer"
                 >
                   給料・待遇
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onNavigateTopic('beginner')}
+                </a>
+                <a
+                  href="/beginner"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigateTopic('beginner');
+                  }}
                   className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] transition-colors cursor-pointer"
                 >
                   未経験向けガイド
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onNavigateTopic('safety')}
+                </a>
+                <a
+                  href="/safety"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigateTopic('safety');
+                  }}
                   className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] transition-colors cursor-pointer"
                 >
                   安全・身バレ対策
-                </button>
+                </a>
               </>
             )}
             {onNavigateFaq && (
-              <button
-                type="button"
-                onClick={onNavigateFaq}
+              <a
+                href="/faq"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigateFaq();
+                }}
                 className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] transition-colors cursor-pointer"
               >
                 よくある質問
-              </button>
+              </a>
             )}
           </div>
         </section>

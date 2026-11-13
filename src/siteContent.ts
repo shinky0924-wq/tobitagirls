@@ -106,9 +106,9 @@ export function getStoredSiteContent(): SiteContent {
       }
     }
 
-    // Auto-migrate reasons: if containing old items like '飛田新地専門', reset to new DEFAULT_SITE_CONTENT.reasons
-    if (customContent.reasons && (customContent.reasons.items?.[0]?.title === '飛田新地専門' || customContent.reasons.subtitle === '選ばれる6つの理由')) {
-      customContent.reasons = { ...DEFAULT_SITE_CONTENT.reasons };
+    // Auto-migrate flow: if containing old items like 'LINE相談' or old subtitle, reset to new DEFAULT_SITE_CONTENT.flow
+    if (customContent.flow && (customContent.flow.subtitle !== 'WORKFLOW' || customContent.flow.items?.[0]?.title === 'LINE相談')) {
+      customContent.flow = { ...DEFAULT_SITE_CONTENT.flow };
       try {
         localStorage.setItem('custom_site_content', JSON.stringify(customContent));
       } catch (e) {

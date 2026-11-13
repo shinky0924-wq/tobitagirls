@@ -12,7 +12,7 @@ import Concerns from './components/Concerns';
 import Reasons from './components/Reasons';
 import Testimonials from './components/Testimonials';
 import Flow from './components/Flow';
-import ConsultationForm from './components/ConsultationForm';
+import LineCtaSection from './components/LineCtaSection';
 import Footer from './components/Footer';
 import BlogSection from './components/BlogSection';
 import RecruitHub from './components/RecruitHub';
@@ -28,6 +28,11 @@ import LucideIcon from './components/LucideIcon';
 import { getStoredArticles, BlogArticle, BLOG_ARTICLES, getValidArticleEyeCatch, mergeWithDefaultArticles } from './blogData';
 import { getStoredSiteContent, SiteContent } from './siteContent';
 import { getBlogArticlesFromFirestore, getSiteContentFromFirestore, saveBlogArticlesToFirestore, saveSiteContentToFirestore } from './firebase';
+import { captureInitialHomeJsonLd, restoreHomeJsonLd } from './utils/jsonLd';
+
+if (typeof window !== 'undefined') {
+  captureInitialHomeJsonLd();
+}
 
 const AdminPanel = lazy(() => import('./components/AdminPanel'));
 
@@ -202,8 +207,8 @@ export default function App() {
   useEffect(() => {
     if (typeof document === 'undefined') return;
 
-    let pageTitle = '【公式】飛田新地求人なら飛田ガールズ｜安心の料亭求人・高収入・身バレ完全防止';
-    let pageDesc = '【飛田新地求人公式】未経験歓迎・高収入（日給5万〜10万円即日全額日払い）。仕事内容、給料システム、20代・未経験の応募条件、面接・体験入店の流れ、個室マンション寮完備。女性サポートスタッフによる無料相談受付中。';
+    let pageTitle = '飛田新地求人｜未経験歓迎・高収入・求人情報を徹底解説｜飛田ガールズ';
+    let pageDesc = '【飛田新地求人公式】飛田新地で働いてみたい未経験の女性へ。仕事内容や給料の仕組み（即日日払い）、応募条件、面接・体験入店の流れ、お店選びや身バレ対策まで詳しく解説。24時間LINEで無料相談受付中です。';
     let canonicalUrl = 'https://tobitashinchi-recruit.com/';
 
     if (currentTab === 'cluster') {
@@ -249,8 +254,8 @@ export default function App() {
       pageDesc = '飛田新地求人のよくある質問と回答（全119問）。応募資格、面接、給料手渡し、個室寮、身バレ対策など、疑問や不安をテーマ別に完全解消。';
       canonicalUrl = selectedFaqCategory ? `https://tobitashinchi-recruit.com/faq/${selectedFaqCategory}` : 'https://tobitashinchi-recruit.com/faq';
     } else if (currentTab === 'recruit') {
-      pageTitle = '【公式】飛田新地求人なら飛田ガールズ｜安心の料亭求人・高収入・身バレ完全防止';
-      pageDesc = '【飛田新地求人公式】未経験歓迎・高収入（日給5万〜10万円即日全額日払い）。仕事内容、給料システム、20代・未経験の応募条件、面接・体験入店の流れ、個室マンション寮完備。女性サポートスタッフによる無料相談受付中。';
+      pageTitle = '飛田新地求人｜未経験歓迎・高収入・求人情報を徹底解説｜飛田ガールズ';
+      pageDesc = '【飛田新地求人公式】飛田新地で働いてみたい未経験の女性へ。仕事内容や給料の仕組み（即日日払い）、応募条件、面接・体験入店の流れ、お店選びや身バレ対策まで詳しく解説。24時間LINEで無料相談受付中です。';
       canonicalUrl = 'https://tobitashinchi-recruit.com/';
     } else if (currentTab === 'admin') {
       pageTitle = '管理パネル｜飛田ガールズ';
@@ -292,6 +297,10 @@ export default function App() {
       if (twDesc) twDesc.setAttribute('content', pageDesc);
       const twImg = document.querySelector('meta[name="twitter:image"]');
       if (twImg) twImg.setAttribute('content', 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg');
+
+      if (currentTab === 'recruit') {
+        restoreHomeJsonLd();
+      }
     }
   }, [currentTab, selectedSlug, clusterTopic, selectedCategorySlug, selectedFaqCategory]);
 
@@ -328,7 +337,6 @@ export default function App() {
     }
   }, [currentTab, pendingScrollTarget]);
 
-  const [injectedMessage, setInjectedMessage] = useState<string>('');
   const [blogArticles, setBlogArticles] = useState<BlogArticle[]>(() => getStoredArticles());
   const [siteContent, setSiteContent] = useState<SiteContent>(getStoredSiteContent());
   const [isAdminMode, setIsAdminMode] = useState(false);
@@ -410,13 +418,8 @@ export default function App() {
     handleScrollToSection('consultation');
   };
 
-  const handleInjectedScroll = (message: string) => {
-    setInjectedMessage(message);
+  const handleInjectedScroll = (_message?: string) => {
     handleScrollToSection('consultation');
-  };
-
-  const handleClearInjected = () => {
-    setInjectedMessage('');
   };
 
   const handleScrollToSimulator = () => {
@@ -509,22 +512,23 @@ export default function App() {
 
               {/* Testimonials Quote Cards - 女性のリアル体験談 */}
               <div id="voice">
-                <Testimonials />
+                <Testimonials 
+                  onNavigateFaq={() => {
+                    navigate('/faq');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                />
               </div>
 
 
-              {/* Onboarding steps list - お仕事までの流れ */}
+              {/* Onboarding steps list - お仕事までの流れ (WORKFLOW) */}
               <div id="flow">
                 <Flow content={siteContent.flow} />
               </div>
 
-              {/* Action interactive consultation panel */}
+              {/* LINE consultation CTA (まずは気軽に質問・相談) */}
               <div id="consultation">
-                <ConsultationForm 
-                  content={siteContent.consultation}
-                  initialMessage={injectedMessage} 
-                  onClearInitialMessage={handleClearInjected} 
-                />
+                <LineCtaSection />
               </div>
             </motion.div>
           ) : currentTab === 'blog' ? (

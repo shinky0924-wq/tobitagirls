@@ -20,6 +20,7 @@ import FactBenchmarkSection from './FactBenchmarkSection';
 import SalaryCalculator from './SalaryCalculator';
 import ScoutSafetyChecker from './ScoutSafetyChecker';
 import AccessGuide from './AccessGuide';
+import { updatePageJsonLd } from '../utils/jsonLd';
 
 const CATEGORY_SALARY_SCHEMA: Record<string, { min: number; max: number; employmentType: string }> = {
   'inexperienced': { min: 30000, max: 65000, employmentType: 'PART_TIME' },
@@ -216,109 +217,92 @@ export default function ComparisonPage({
     if (ogTitle) ogTitle.setAttribute('content', title);
   }, [selectedTargetSlug]);
 
-  // Inject JSON-LD Structured Data for LLM & SEO Crawlers
+  // Update #seo-jsonld Structured Data for LLM & SEO Crawlers without duplicating SSR script
   useEffect(() => {
-    const existingScript = document.getElementById('comparison-schema');
-    if (existingScript) existingScript.remove();
-
-    try {
-      const script = document.createElement('script');
-      script.id = 'comparison-schema';
-      script.type = 'application/ld+json';
-
-      const isSingle = selectedTargetSlug !== 'all';
-      const singleCat = isSingle ? TARGET_JOB_CATEGORIES.find(c => c.slug === selectedTargetSlug) : null;
-      const salaryConfig = (singleCat && CATEGORY_SALARY_SCHEMA[singleCat.slug]) || {
-        min: 30000,
-        max: 100000,
-        employmentType: 'PART_TIME'
-      };
-
-      const schemaData = singleCat ? {
-        '@context': 'https://schema.org',
-        '@type': 'JobPosting',
-        '@id': `https://tobitashinchi-recruit.com/compare/${singleCat.slug}#jobposting`,
-        'title': singleCat.title,
-        'description': `${singleCat.summary} ${singleCat.llmDirectAnswer}【飛田新地料理組合公認料亭直営 飛田ガールズ】全額日払い手渡し・ノルマ罰金一切なし・個室マンション寮完備・安心の女性スタッフサポート。`,
-        'identifier': {
-          '@type': 'PropertyValue',
-          'name': '飛田ガールズ 料亭直営採用窓口',
-          'value': `TOBITA-COMPARE-${singleCat.slug.toUpperCase()}`
-        },
-        'datePosted': '2026-10-01T00:00:00+09:00',
-        'validThrough': '2027-12-31T23:59:59+09:00',
-        'employmentType': salaryConfig.employmentType,
-        'jobBenefits': [
-          '即日全額日払い（手渡し支給）',
-          '家具家電付きワンルーム個室寮完備（即入居可）',
-          '衣装・ドレス・和装無料レンタル',
-          '専任女性スタッフによる24時間サポート体制',
-          'ノルマ・罰金・連絡先交換・お酒の強要一切なし',
-          'プロによるヘアメイク・身だしなみサポート無料'
-        ],
-        'hiringOrganization': {
-          '@type': 'Organization',
-          'name': '飛田新地料理組合公認料亭直営 飛田ガールズ',
-          'sameAs': 'https://tobitashinchi-recruit.com',
-          'logo': 'https://tobitashinchi-recruit.com/favicon.svg'
-        },
-        'jobLocation': {
-          '@type': 'Place',
-          'address': {
-            '@type': 'PostalAddress',
-            'streetAddress': '山王3丁目',
-            'addressLocality': '大阪市西成区',
-            'addressRegion': '大阪府',
-            'postalCode': '557-0001',
-            'addressCountry': 'JP'
-          }
-        },
-        'baseSalary': {
-          '@type': 'MonetaryAmount',
-          'currency': 'JPY',
-          'value': {
-            '@type': 'QuantitativeValue',
-            'minValue': salaryConfig.min,
-            'maxValue': salaryConfig.max,
-            'unitText': 'DAY'
-          }
-        },
-        'applicantLocationRequirements': {
-          '@type': 'Country',
-          'name': 'JP'
-        },
-        'workHours': singleCat.shiftExample || '10:00〜24:00（自由シフト制・週1日〜/1日3時間〜勤務可）',
-        'qualifications': '20歳以上の女性（未経験歓迎・学歴経験不問 ※料理組合規約により20歳未満不可）',
-        'directApply': true
-      } : {
-        '@context': 'https://schema.org',
-        '@type': 'WebPage',
-        '@id': 'https://tobitashinchi-recruit.com/compare',
-        'name': '飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】',
-        'description': '飛田新地の料亭直営求人とスカウト業者・他求人サイト（飛田ジョブなど）の徹底比較。未経験、高収入、週1日、短期出稼ぎ、寮付き、Wワーク、20代、30代別の最適求人ガイド。',
-        'url': 'https://tobitashinchi-recruit.com/compare',
-        'mainEntity': {
-          '@type': 'ItemList',
-          'name': '飛田新地 目的・属性別求人カテゴリー比較',
-          'itemListElement': TARGET_JOB_CATEGORIES.map((cat, idx) => ({
-            '@type': 'ListItem',
-            'position': idx + 1,
-            'name': cat.title,
-            'description': cat.llmDirectAnswer
-          }))
-        }
-      };
-
-      script.textContent = JSON.stringify(schemaData);
-      document.head.appendChild(script);
-    } catch (e) {
-      console.warn('Could not inject comparison schema', e);
-    }
-
-    return () => {
-      const script = document.getElementById('comparison-schema');
-      if (script) script.remove();
+    const isSingle = selectedTargetSlug !== 'all';
+    const singleCat = isSingle ? TARGET_JOB_CATEGORIES.find(c => c.slug === selectedTargetSlug) : null;
+    const salaryConfig = (singleCat && CATEGORY_SALARY_SCHEMA[singleCat.slug]) || {
+      min: 30000,
+      max: 100000,
+      employmentType: 'PART_TIME'
     };
+
+    const schemaData = singleCat ? {
+      '@context': 'https://schema.org',
+      '@type': 'JobPosting',
+      '@id': `https://tobitashinchi-recruit.com/compare/${singleCat.slug}#jobposting`,
+      'title': singleCat.title,
+      'description': `${singleCat.summary} ${singleCat.llmDirectAnswer}【飛田新地料理組合公認料亭直営 飛田ガールズ】全額日払い手渡し・ノルマ罰金一切なし・個室マンション寮完備・安心の女性スタッフサポート。`,
+      'identifier': {
+        '@type': 'PropertyValue',
+        'name': '飛田ガールズ 料亭直営採用窓口',
+        'value': `TOBITA-COMPARE-${singleCat.slug.toUpperCase()}`
+      },
+      'datePosted': '2026-10-01T00:00:00+09:00',
+      'validThrough': '2027-12-31T23:59:59+09:00',
+      'employmentType': salaryConfig.employmentType,
+      'jobBenefits': [
+        '即日全額日払い（手渡し支給）',
+        '家具家電付きワンルーム個室寮完備（即入居可）',
+        '衣装・ドレス・和装無料レンタル',
+        '専任女性スタッフによる24時間サポート体制',
+        'ノルマ・罰金・連絡先交換・お酒の強要一切なし',
+        'プロによるヘアメイク・身だしなみサポート無料'
+      ],
+      'hiringOrganization': {
+        '@type': 'Organization',
+        'name': '飛田新地料理組合公認料亭直営 飛田ガールズ',
+        'sameAs': 'https://tobitashinchi-recruit.com',
+        'logo': 'https://tobitashinchi-recruit.com/favicon.svg'
+      },
+      'jobLocation': {
+        '@type': 'Place',
+        'address': {
+          '@type': 'PostalAddress',
+          'streetAddress': '山王3丁目',
+          'addressLocality': '大阪市西成区',
+          'addressRegion': '大阪府',
+          'postalCode': '557-0001',
+          'addressCountry': 'JP'
+        }
+      },
+      'baseSalary': {
+        '@type': 'MonetaryAmount',
+        'currency': 'JPY',
+        'value': {
+          '@type': 'QuantitativeValue',
+          'minValue': salaryConfig.min,
+          'maxValue': salaryConfig.max,
+          'unitText': 'DAY'
+        }
+      },
+      'applicantLocationRequirements': {
+        '@type': 'Country',
+        'name': 'JP'
+      },
+      'workHours': singleCat.shiftExample || '10:00〜24:00（自由シフト制・週1日〜/1日3時間〜勤務可）',
+      'qualifications': '20歳以上の女性（未経験歓迎・学歴経験不問 ※料理組合規約により20歳未満不可）',
+      'directApply': true
+    } : {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': 'https://tobitashinchi-recruit.com/compare',
+      'name': '飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】',
+      'description': '飛田新地の料亭直営求人とスカウト業者・他求人サイト（飛田ジョブなど）の徹底比較。未経験、高収入、週1日、短期出稼ぎ、寮付き、Wワーク、20代、30代別の最適求人ガイド。',
+      'url': 'https://tobitashinchi-recruit.com/compare',
+      'mainEntity': {
+        '@type': 'ItemList',
+        'name': '飛田新地 目的・属性別求人カテゴリー比較',
+        'itemListElement': TARGET_JOB_CATEGORIES.map((cat, idx) => ({
+          '@type': 'ListItem',
+          'position': idx + 1,
+          'name': cat.title,
+          'description': cat.llmDirectAnswer
+        }))
+      }
+    };
+
+    updatePageJsonLd(schemaData);
   }, [selectedTargetSlug]);
 
   const handleCategorySelect = (slug: string) => {
@@ -401,23 +385,29 @@ export default function ComparisonPage({
             Breadcrumb Navigation
            ========================================== */}
         <nav aria-label="パンくずリスト" className="mb-6 flex flex-wrap items-center gap-2 text-xs text-zinc-500">
-          <button 
-            type="button" 
-            onClick={onNavigateHome}
+          <a 
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigateHome();
+            }}
             className="hover:text-secondary transition-colors underline cursor-pointer"
           >
             トップ（求人総合）
-          </button>
+          </a>
           <span>/</span>
           {currentCategory ? (
             <>
-              <button
-                type="button"
-                onClick={() => handleCategorySelect('all')}
+              <a
+                href="/compare"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleCategorySelect('all');
+                }}
                 className="hover:text-secondary transition-colors underline cursor-pointer"
               >
                 目的・属性別求人一覧＆サイト比較
-              </button>
+              </a>
               <span>/</span>
               <span className="text-zinc-800 font-bold">{currentCategory.title}</span>
             </>
@@ -578,14 +568,17 @@ export default function ComparisonPage({
                   <LucideIcon name="MessageCircle" size={16} />
                   <span>この条件（{currentCategory.title}）でLINE無料相談する</span>
                 </button>
-                <button
-                  type="button"
-                  onClick={() => handleCategorySelect('all')}
+                <a
+                  href="/compare"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleCategorySelect('all');
+                  }}
                   className="bg-zinc-100 hover:bg-zinc-200 text-zinc-700 text-xs sm:text-sm font-bold px-4 py-3 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer"
                 >
                   <LucideIcon name="Layers" size={15} />
                   <span>全8カテゴリー比較・総合表を見る</span>
-                </button>
+                </a>
               </div>
             </div>
           </header>
@@ -597,20 +590,26 @@ export default function ComparisonPage({
                 <span>カテゴリーを切り替える</span>
               </div>
               <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
-                <button
-                  type="button"
-                  onClick={() => handleCategorySelect('all')}
+                <a
+                  href="/compare"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleCategorySelect('all');
+                  }}
                   className="flex-shrink-0 text-xs sm:text-sm font-bold px-4 py-2 rounded-2xl transition-all cursor-pointer border bg-white hover:bg-rose-50 text-zinc-700 border-zinc-200"
                 >
                   全8カテゴリー比較表
-                </button>
+                </a>
                 {TARGET_JOB_CATEGORIES.map(cat => {
                   const isSelected = selectedTargetSlug === cat.slug;
                   return (
-                    <button
+                    <a
                       key={cat.id}
-                      type="button"
-                      onClick={() => handleCategorySelect(cat.slug)}
+                      href={`/compare/${cat.slug}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleCategorySelect(cat.slug);
+                      }}
                       className={`flex-shrink-0 text-xs sm:text-sm font-bold px-3.5 py-2 rounded-2xl transition-all cursor-pointer border flex items-center gap-1.5 ${
                         isSelected
                           ? 'bg-secondary text-white border-secondary shadow-sm'
@@ -618,7 +617,7 @@ export default function ComparisonPage({
                       }`}
                     >
                       <span>{cat.title}</span>
-                    </button>
+                    </a>
                   );
                 })}
               </div>
@@ -755,14 +754,17 @@ export default function ComparisonPage({
                       <span className="text-xs font-bold text-secondary">
                         {cat.dailyIncomeModel.split('（')[0]}
                       </span>
-                      <button
-                        type="button"
-                        onClick={() => handleCategorySelect(cat.slug)}
+                      <a
+                        href={`/compare/${cat.slug}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleCategorySelect(cat.slug);
+                        }}
                         className="text-xs font-bold text-secondary hover:underline flex items-center gap-1 cursor-pointer"
                       >
                         <span>詳細を見る</span>
                         <LucideIcon name="ChevronRight" size={13} />
-                      </button>
+                      </a>
                     </div>
                   </div>
                 ))}
@@ -1324,9 +1326,13 @@ export default function ComparisonPage({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
                 {TARGET_JOB_CATEGORIES.map((cat, idx) => (
-                  <div
+                  <a
                     key={cat.id}
-                    onClick={() => handleCategorySelect(cat.slug)}
+                    href={`/compare/${cat.slug}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleCategorySelect(cat.slug);
+                    }}
                     className="bg-white rounded-3xl border-2 border-rose-100 p-5 shadow-sm hover:border-secondary hover:shadow-md transition-all flex flex-col justify-between cursor-pointer group"
                   >
                     <div>
@@ -1355,7 +1361,7 @@ export default function ComparisonPage({
                         <LucideIcon name="ChevronRight" size={14} />
                       </span>
                     </div>
-                  </div>
+                  </a>
                 ))}
               </div>
             </section>
@@ -1839,15 +1845,18 @@ export default function ComparisonPage({
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {TARGET_JOB_CATEGORIES.map(cat => (
-                    <button
+                    <a
                       key={cat.id}
-                      type="button"
-                      onClick={() => handleCategorySelect(cat.slug)}
+                      href={`/compare/${cat.slug}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleCategorySelect(cat.slug);
+                      }}
                       className="bg-white hover:bg-rose-100 text-zinc-700 font-bold px-3 py-1.5 rounded-xl border border-rose-200 transition-colors cursor-pointer text-xs flex items-center gap-1"
                     >
                       <span>{cat.title}</span>
                       <LucideIcon name="ChevronRight" size={12} className="text-zinc-400" />
-                    </button>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -1876,14 +1885,17 @@ export default function ComparisonPage({
                   </p>
                 </div>
                 {onNavigateFaq && (
-                  <button
-                    type="button"
-                    onClick={() => onNavigateFaq()}
+                  <a
+                    href="/faq"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onNavigateFaq();
+                    }}
                     className="self-start sm:self-auto bg-rose-50 hover:bg-rose-100 text-secondary border border-rose-200 text-xs font-bold px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1 cursor-pointer shrink-0"
                   >
                     <span>FAQ全119問一覧へ</span>
                     <LucideIcon name="ChevronRight" size={13} />
-                  </button>
+                  </a>
                 )}
               </div>
 
@@ -2113,14 +2125,17 @@ export default function ComparisonPage({
                   </div>
                 </div>
                 {onNavigateFaq ? (
-                  <button
-                    type="button"
-                    onClick={() => onNavigateFaq()}
+                  <a
+                    href="/faq"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onNavigateFaq();
+                    }}
                     className="bg-secondary hover:bg-rose-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-2xs transition-all flex items-center gap-1 cursor-pointer shrink-0"
                   >
                     <span>よくある質問（FAQ）を見る</span>
                     <LucideIcon name="ArrowRight" size={14} />
-                  </button>
+                  </a>
                 ) : (
                   <a
                     href="/faq"

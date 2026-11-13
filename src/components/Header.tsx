@@ -64,6 +64,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
     // 総合ガイド is handled as interactive dropdown
     { name: '選ばれる6つの理由', action: 'section', target: '#reasons', icon: 'ShieldCheck' },
     { name: '女性のリアル体験談', action: 'section', target: '#voice', icon: 'MessageSquareHeart' },
+    { name: 'よくある質問', action: 'faq', icon: 'HelpCircle' },
     { name: 'お仕事までの流れ', action: 'section', target: '#flow', icon: 'GitMerge' },
   ];
 
@@ -76,12 +77,8 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
       onChangeTab('recruit');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (link.action === 'faq') {
-      if (currentTab === 'recruit') {
-        onScrollToSection('faq');
-      } else {
-        onChangeTab('faq');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      onChangeTab('faq');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (link.action === 'compare') {
       onChangeTab('compare');
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -157,7 +154,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
         <div className="flex justify-between items-center w-full px-3.5 sm:px-6 lg:px-8 max-w-[1240px] mx-auto">
           {/* Logo: 飛田ガールズ */}
           <a 
-            href="#" 
+            href="/" 
             onClick={(e) => {
               e.preventDefault();
               onChangeTab('recruit');
@@ -191,7 +188,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
           <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5" id="desktop-navigation">
             {/* 1. 求人トップ */}
             <a
-              href="#"
+              href="/"
               onClick={(e) => handleLinkClick(e, { action: 'recruit' })}
               className={`font-sans text-[13px] xl:text-[14px] px-2.5 xl:px-3 py-1.5 rounded-xl transition-all duration-200 whitespace-nowrap flex items-center gap-1.5 cursor-pointer ${
                 currentTab === 'recruit'
@@ -248,9 +245,10 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                           総合ガイド（全12カテゴリー）
                         </span>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => {
+                      <a
+                        href="/#recruit-hub"
+                        onClick={(e) => {
+                          e.preventDefault();
                           setGuideDropdownOpen(false);
                           if (currentTab !== 'recruit') onChangeTab('recruit');
                           onScrollToSection('recruit-hub');
@@ -259,16 +257,21 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                       >
                         <span>ガイド全体を見る</span>
                         <LucideIcon name="ArrowRight" size={12} />
-                      </button>
+                      </a>
                     </div>
 
                     {/* 2-Column Grid of 10 Subcategories */}
                     <div className="grid grid-cols-2 gap-1.5">
-                      {guideCategories.map((cat, idx) => (
-                        <button
+                      {guideCategories.map((cat) => {
+                        const catHref = cat.id === 'faq' ? '/faq' : cat.id === 'blog' ? '/blog' : `/${cat.id}`;
+                        return (
+                        <a
                           key={cat.id}
-                          type="button"
-                          onClick={() => handleGuideCategoryClick(cat.id)}
+                          href={catHref}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleGuideCategoryClick(cat.id);
+                          }}
                           className="w-full text-left p-2 rounded-xl hover:bg-rose-50/80 transition-all flex items-start gap-2.5 group cursor-pointer border border-transparent hover:border-rose-100"
                           id={`nav-guide-cat-${cat.id}`}
                         >
@@ -288,8 +291,9 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                               {cat.desc}
                             </span>
                           </div>
-                        </button>
-                      ))}
+                        </a>
+                        );
+                      })}
                     </div>
                   </motion.div>
                 )}
@@ -298,7 +302,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
 
             {/* 3. 選ばれる6つの理由 */}
             <a
-              href="#"
+              href="/#reasons"
               onClick={(e) => handleLinkClick(e, { action: 'section', target: '#reasons' })}
               className="font-sans text-[13px] xl:text-[14px] px-2.5 xl:px-3 py-1.5 rounded-xl transition-all duration-200 whitespace-nowrap flex items-center gap-1.5 cursor-pointer text-zinc-800 hover:text-rose-600 hover:bg-rose-50/70 font-bold"
               id="nav-link-reasons"
@@ -309,7 +313,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
 
             {/* 4. 女性のリアル体験談 */}
             <a
-              href="#"
+              href="/#voice"
               onClick={(e) => handleLinkClick(e, { action: 'section', target: '#voice' })}
               className="font-sans text-[13px] xl:text-[14px] px-2.5 xl:px-3 py-1.5 rounded-xl transition-all duration-200 whitespace-nowrap flex items-center gap-1.5 cursor-pointer text-zinc-800 hover:text-rose-600 hover:bg-rose-50/70 font-bold"
               id="nav-link-voice"
@@ -318,10 +322,24 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
               <span>女性のリアル体験談</span>
             </a>
 
+            {/* 5. よくある質問 */}
+            <a
+              href="/faq"
+              onClick={(e) => handleLinkClick(e, { action: 'faq' })}
+              className={`font-sans text-[13px] xl:text-[14px] px-2.5 xl:px-3 py-1.5 rounded-xl transition-all duration-200 whitespace-nowrap flex items-center gap-1.5 cursor-pointer ${
+                currentTab === 'faq'
+                  ? 'bg-rose-50 text-rose-700 font-extrabold border border-rose-200/70 shadow-2xs'
+                  : 'text-zinc-800 hover:text-rose-600 hover:bg-rose-50/70 font-bold'
+              }`}
+              id="nav-link-faq"
+            >
+              <LucideIcon name="HelpCircle" size={14} className={currentTab === 'faq' ? 'text-rose-600' : 'text-zinc-500'} />
+              <span>よくある質問</span>
+            </a>
 
             {/* 6. お仕事までの流れ */}
             <a
-              href="#"
+              href="/#flow"
               onClick={(e) => handleLinkClick(e, { action: 'section', target: '#flow' })}
               className="font-sans text-[13px] xl:text-[14px] px-2.5 xl:px-3 py-1.5 rounded-xl transition-all duration-200 whitespace-nowrap flex items-center gap-1.5 cursor-pointer text-zinc-800 hover:text-rose-600 hover:bg-rose-50/70 font-bold"
               id="nav-link-flow"
@@ -381,8 +399,8 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
               {/* Navigation Tree list */}
               <div className="flex flex-col space-y-1">
               {/* ├─ 求人トップ */}
-              <button
-                type="button"
+              <a
+                href="/"
                 onClick={(e) => handleLinkClick(e, { action: 'recruit' })}
                 className="w-full text-left px-3 py-2.5 rounded-xl border border-gray-100 hover:border-rose-200 hover:bg-rose-50/60 transition-all flex items-center justify-between group cursor-pointer bg-white"
                 id="mobile-link-top"
@@ -396,7 +414,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                   </span>
                 </div>
                 <LucideIcon name="ChevronRight" size={16} className="text-zinc-400 group-hover:text-rose-600" />
-              </button>
+              </a>
 
               {/* ├─ 総合ガイド (Expandable Tree) */}
               <div className="rounded-xl border border-rose-200/80 bg-rose-50/30 overflow-hidden">
@@ -435,11 +453,15 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                   <div className="p-2 space-y-1 bg-white/70">
                     {guideCategories.map((cat, i) => {
                       const isLast = i === guideCategories.length - 1;
+                      const catHref = cat.id === 'faq' ? '/faq' : cat.id === 'blog' ? '/blog' : `/${cat.id}`;
                       return (
-                        <button
+                        <a
                           key={cat.id}
-                          type="button"
-                          onClick={() => handleGuideCategoryClick(cat.id)}
+                          href={catHref}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleGuideCategoryClick(cat.id);
+                          }}
                           className="w-full text-left px-2.5 py-2 rounded-lg hover:bg-rose-50 transition-colors flex items-center justify-between group cursor-pointer border border-transparent hover:border-rose-100"
                           id={`mobile-guide-${cat.id}`}
                         >
@@ -457,7 +479,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                           <span className="text-[10px] text-zinc-400 group-hover:text-rose-600">
                             {cat.badge}
                           </span>
-                        </button>
+                        </a>
                       );
                     })}
                   </div>
@@ -465,8 +487,8 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
               </div>
 
               {/* ├─ 選ばれる6つの理由 */}
-              <button
-                type="button"
+              <a
+                href="/#reasons"
                 onClick={(e) => handleLinkClick(e, { action: 'section', target: '#reasons' })}
                 className="w-full text-left px-3 py-2.5 rounded-xl border border-gray-100 hover:border-rose-200 hover:bg-rose-50/60 transition-all flex items-center justify-between group cursor-pointer bg-white"
                 id="mobile-link-reasons"
@@ -480,11 +502,11 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                   </span>
                 </div>
                 <LucideIcon name="ChevronRight" size={16} className="text-zinc-400 group-hover:text-rose-600" />
-              </button>
+              </a>
 
               {/* ├─ 女性のリアル体験談 */}
-              <button
-                type="button"
+              <a
+                href="/#voice"
                 onClick={(e) => handleLinkClick(e, { action: 'section', target: '#voice' })}
                 className="w-full text-left px-3 py-2.5 rounded-xl border border-gray-100 hover:border-rose-200 hover:bg-rose-50/60 transition-all flex items-center justify-between group cursor-pointer bg-white"
                 id="mobile-link-voice"
@@ -498,12 +520,33 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                   </span>
                 </div>
                 <LucideIcon name="ChevronRight" size={16} className="text-zinc-400 group-hover:text-rose-600" />
-              </button>
+              </a>
 
+              {/* ├─ よくある質問 */}
+              <a
+                href="/faq"
+                onClick={(e) => handleLinkClick(e, { action: 'faq' })}
+                className={`w-full text-left px-3 py-2.5 rounded-xl border transition-all flex items-center justify-between group cursor-pointer ${
+                  currentTab === 'faq'
+                    ? 'border-rose-300 bg-rose-50/80 text-rose-700'
+                    : 'border-gray-100 hover:border-rose-200 hover:bg-rose-50/60 bg-white'
+                }`}
+                id="mobile-link-faq"
+              >
+                <div className="flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
+                    <LucideIcon name="HelpCircle" size={15} />
+                  </div>
+                  <span className="font-bold text-sm text-zinc-900 group-hover:text-rose-600">
+                    よくある質問
+                  </span>
+                </div>
+                <LucideIcon name="ChevronRight" size={16} className="text-zinc-400 group-hover:text-rose-600" />
+              </a>
 
               {/* └─ お仕事までの流れ */}
-              <button
-                type="button"
+              <a
+                href="/#flow"
                 onClick={(e) => handleLinkClick(e, { action: 'section', target: '#flow' })}
                 className="w-full text-left px-3 py-2.5 rounded-xl border border-gray-100 hover:border-rose-200 hover:bg-rose-50/60 transition-all flex items-center justify-between group cursor-pointer bg-white"
                 id="mobile-link-flow"
@@ -517,33 +560,33 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                   </span>
                 </div>
                 <LucideIcon name="ChevronRight" size={16} className="text-zinc-400 group-hover:text-rose-600" />
-              </button>
+              </a>
             </div>
 
             {/* Supplementary Links (コラム・比較・運営者情報) */}
             <div className="pt-2 border-t border-rose-100">
               <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                <button
-                  type="button"
+                <a
+                  href="/compare"
                   onClick={(e) => handleLinkClick(e, { action: 'compare' })}
-                  className="py-2 px-1 rounded-lg bg-gray-50 hover:bg-rose-50 text-zinc-600 hover:text-rose-600 font-bold border border-gray-100 transition-colors"
+                  className="py-2 px-1 rounded-lg bg-gray-50 hover:bg-rose-50 text-zinc-600 hover:text-rose-600 font-bold border border-gray-100 transition-colors block"
                 >
                   サイト比較
-                </button>
-                <button
-                  type="button"
+                </a>
+                <a
+                  href="/blog"
                   onClick={(e) => handleLinkClick(e, { action: 'blog' })}
-                  className="py-2 px-1 rounded-lg bg-gray-50 hover:bg-rose-50 text-zinc-600 hover:text-rose-600 font-bold border border-gray-100 transition-colors"
+                  className="py-2 px-1 rounded-lg bg-gray-50 hover:bg-rose-50 text-zinc-600 hover:text-rose-600 font-bold border border-gray-100 transition-colors block"
                 >
                   お仕事コラム
-                </button>
-                <button
-                  type="button"
+                </a>
+                <a
+                  href="/about"
                   onClick={(e) => handleLinkClick(e, { action: 'about' })}
-                  className="py-2 px-1 rounded-lg bg-gray-50 hover:bg-rose-50 text-zinc-600 hover:text-rose-600 font-bold border border-gray-100 transition-colors"
+                  className="py-2 px-1 rounded-lg bg-gray-50 hover:bg-rose-50 text-zinc-600 hover:text-rose-600 font-bold border border-gray-100 transition-colors block"
                 >
                   運営者情報
-                </button>
+                </a>
               </div>
             </div>
 

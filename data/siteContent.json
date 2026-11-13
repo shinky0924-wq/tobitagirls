@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026年11月11日",
+  "lastUpdated": "2026年11月13日",
   "hero": {
     "tagline": "24時間受付中 ・ 相談だけでもOK",
     "titleLine1": "飛田新地で",
@@ -134,23 +134,23 @@
   },
   "flow": {
     "title": "応募からお仕事開始までの流れ 🛤️",
-    "subtitle": "お仕事スタートまでの流れ",
+    "subtitle": "WORKFLOW",
     "items": [
       {
         "number": "01",
-        "title": "LINE相談"
+        "title": "LINE応募・相談"
       },
       {
         "number": "02",
-        "title": "ご希望の相談・確認"
+        "title": "面接・見学"
       },
       {
         "number": "03",
-        "title": "お店紹介"
+        "title": "条件確認・説明"
       },
       {
         "number": "04",
-        "title": "面接"
+        "title": "衣装合わせ・研修"
       },
       {
         "number": "05",

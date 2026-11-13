@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import LucideIcon from './LucideIcon';
 import { LINE_OFFICIAL_URL } from '../data';
+import { updatePageJsonLd } from '../utils/jsonLd';
 
 interface JobContentPageProps {
   onNavigateHome: () => void;
@@ -62,6 +63,45 @@ export default function JobContentPage({
     }
   ];
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    updatePageJsonLd({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'BreadcrumbList',
+          '@id': 'https://tobitashinchi-recruit.com/job#breadcrumb',
+          'itemListElement': [
+            {
+              '@type': 'ListItem',
+              'position': 1,
+              'name': '飛田新地求人トップ',
+              'item': 'https://tobitashinchi-recruit.com/'
+            },
+            {
+              '@type': 'ListItem',
+              'position': 2,
+              'name': 'お仕事内容',
+              'item': 'https://tobitashinchi-recruit.com/job'
+            }
+          ]
+        },
+        {
+          '@type': 'FAQPage',
+          '@id': 'https://tobitashinchi-recruit.com/job#faq',
+          'mainEntity': jobFaqs.map((item) => ({
+            '@type': 'Question',
+            'name': item.q,
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': item.a
+            }
+          }))
+        }
+      ]
+    });
+  }, []);
+
   return (
     <div className="bg-[#FFF8F9] min-h-screen text-[#66545A] pb-24 pt-4 sm:pt-6 font-sans antialiased selection:bg-[#E84B78]/20 selection:text-[#E84B78]">
       
@@ -70,14 +110,17 @@ export default function JobContentPage({
         <nav aria-label="Breadcrumb" className="flex items-center text-xs">
           <ol className="flex items-center gap-1.5 flex-wrap text-[#66545A]">
             <li className="flex items-center gap-1">
-              <button
-                type="button"
-                onClick={onNavigateHome}
+              <a
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigateHome();
+                }}
                 className="hover:text-[#E84B78] font-bold flex items-center gap-1 text-[#38242B] hover:underline cursor-pointer"
               >
                 <LucideIcon name="Home" size={13} className="text-[#E84B78]" />
                 <span>飛田新地求人（トップ）</span>
-              </button>
+              </a>
             </li>
             <li className="text-[#F5A2B8]">/</li>
             <li className="flex items-center gap-1 text-[#E84B78] font-bold" aria-current="page">

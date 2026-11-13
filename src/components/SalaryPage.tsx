@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import LucideIcon from './LucideIcon';
 import { LINE_OFFICIAL_URL } from '../data';
+import { updatePageJsonLd } from '../utils/jsonLd';
 
 interface SalaryPageProps {
   onNavigateHome: () => void;
@@ -525,6 +526,46 @@ export default function SalaryPage({
     };
   }, [daysPerWeek, hoursPerDay, paceMode, variationIndex]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    updatePageJsonLd({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'BreadcrumbList',
+          '@id': 'https://tobitashinchi-recruit.com/salary#breadcrumb',
+          'itemListElement': [
+            {
+              '@type': 'ListItem',
+              'position': 1,
+              'name': '飛田新地求人トップ',
+              'item': 'https://tobitashinchi-recruit.com/'
+            },
+            {
+              '@type': 'ListItem',
+              'position': 2,
+              'name': '給料・待遇',
+              'item': 'https://tobitashinchi-recruit.com/salary'
+            }
+          ]
+        },
+        {
+          '@type': 'WebApplication',
+          '@id': 'https://tobitashinchi-recruit.com/salary#salary-calculator',
+          'name': '飛田新地 お給料・日給月収シミュレーター',
+          'url': 'https://tobitashinchi-recruit.com/salary#simulator',
+          'applicationCategory': 'FinanceApplication',
+          'operatingSystem': 'All',
+          'offers': {
+            '@type': 'Offer',
+            'price': '0',
+            'priceCurrency': 'JPY'
+          }
+        }
+      ]
+    });
+  }, []);
+
   return (
     <div className="bg-[#FFF9FB] min-h-screen text-[#35313A] pb-28 pt-4 sm:pt-6 font-sans antialiased selection:bg-[#FCE8EF] selection:text-[#D94B7A]">
       
@@ -533,14 +574,17 @@ export default function SalaryPage({
         <nav aria-label="Breadcrumb" className="flex items-center text-xs">
           <ol className="flex items-center gap-1.5 flex-wrap text-[#85818A]">
             <li className="flex items-center gap-1">
-              <button
-                type="button"
-                onClick={onNavigateHome}
+              <a
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigateHome();
+                }}
                 className="hover:text-[#D94B7A] font-bold flex items-center gap-1 text-[#35313A] hover:underline cursor-pointer"
               >
                 <LucideIcon name="Home" size={13} className="text-[#D94B7A]" />
                 <span>飛田新地求人（トップ）</span>
-              </button>
+              </a>
             </li>
             <li className="text-[#F0E5EA]">/</li>
             <li className="flex items-center gap-1 text-[#D94B7A] font-bold" aria-current="page">
@@ -1482,8 +1526,12 @@ export default function SalaryPage({
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Article 1 */}
-            <div
-              onClick={() => onNavigateBlog && onNavigateBlog('tobitashinchi-salary-system-breakdown')}
+            <a
+              href="/blog/tobitashinchi-salary-system-breakdown"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigateBlog && onNavigateBlog('tobitashinchi-salary-system-breakdown');
+              }}
               className="p-5 rounded-2xl bg-[#FFF9FB] border border-[#F0E5EA] hover:border-[#D94B7A]/40 hover:bg-white transition-all cursor-pointer flex flex-col justify-between group shadow-2xs"
             >
               <div>
@@ -1501,11 +1549,15 @@ export default function SalaryPage({
                 <span>記事を読む</span>
                 <LucideIcon name="ChevronRight" size={14} />
               </div>
-            </div>
+            </a>
 
             {/* Article 2 */}
-            <div
-              onClick={() => onNavigateBlog && onNavigateBlog('tobitashinchi-housing-support')}
+            <a
+              href="/blog/tobitashinchi-housing-support"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigateBlog && onNavigateBlog('tobitashinchi-housing-support');
+              }}
               className="p-5 rounded-2xl bg-[#FFF9FB] border border-[#F0E5EA] hover:border-[#D94B7A]/40 hover:bg-white transition-all cursor-pointer flex flex-col justify-between group shadow-2xs"
             >
               <div>
@@ -1523,11 +1575,15 @@ export default function SalaryPage({
                 <span>記事を読む</span>
                 <LucideIcon name="ChevronRight" size={14} />
               </div>
-            </div>
+            </a>
 
             {/* Article 3 */}
-            <div
-              onClick={() => onNavigateBlog && onNavigateBlog('tobitashinchi-tax-guide')}
+            <a
+              href="/blog/tobitashinchi-tax-guide"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigateBlog && onNavigateBlog('tobitashinchi-tax-guide');
+              }}
               className="p-5 rounded-2xl bg-[#FFF9FB] border border-[#F0E5EA] hover:border-[#D94B7A]/40 hover:bg-white transition-all cursor-pointer flex flex-col justify-between group shadow-2xs"
             >
               <div>
@@ -1545,7 +1601,7 @@ export default function SalaryPage({
                 <span>記事を読む</span>
                 <LucideIcon name="ChevronRight" size={14} />
               </div>
-            </div>
+            </a>
           </div>
         </section>
 

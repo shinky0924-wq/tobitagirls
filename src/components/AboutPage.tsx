@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import LucideIcon from './LucideIcon';
+import { updatePageJsonLd } from '../utils/jsonLd';
 
 interface AboutPageProps {
   onNavigateHome: () => void;
@@ -30,6 +31,15 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
     if (ogUrl) ogUrl.setAttribute('content', canonicalUrl);
     const ogTitle = document.querySelector('meta[property="og:title"]');
     if (ogTitle) ogTitle.setAttribute('content', document.title);
+
+    updatePageJsonLd({
+      '@context': 'https://schema.org',
+      '@type': 'AboutPage',
+      '@id': 'https://tobitashinchi-recruit.com/about#webpage',
+      'url': canonicalUrl,
+      'name': document.title,
+      'description': desc,
+    });
   }, []);
 
   return (
@@ -37,13 +47,17 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-xs text-zinc-500 mb-6">
-          <button 
-            onClick={onNavigateHome}
+          <a 
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigateHome();
+            }}
             className="hover:text-rose-600 transition-colors flex items-center gap-1 cursor-pointer"
           >
             <LucideIcon name="Home" size={13} />
             <span>ホーム</span>
-          </button>
+          </a>
           <span>/</span>
           <span className="text-zinc-800 font-bold">当店について（料亭案内）</span>
         </div>
@@ -182,13 +196,17 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
               <LucideIcon name="MessageCircle" size={16} />
               <span>無料WEB相談・応募はこちら</span>
             </button>
-            <button
-              onClick={onNavigateBlog}
+            <a
+              href="/blog"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigateBlog();
+              }}
               className="w-full sm:w-auto bg-rose-700/60 hover:bg-rose-700 text-white font-bold px-6 py-3 rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer text-sm"
             >
               <LucideIcon name="BookOpen" size={16} />
               <span>お仕事コラムを読む</span>
-            </button>
+            </a>
           </div>
         </div>
       </div>

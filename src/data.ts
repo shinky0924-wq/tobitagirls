@@ -5,9 +5,12 @@
 
 import { ConcernItem, ReasonItem, FAQItem, TestimonialItem, JobFactItem, FlowStep } from './types';
 
-const tobitaCastOne = '/images/tobita_cast_one_real_1782374824918.jpg';
-const tobitaCastTwo = '/images/tobita_cast_two_real_1782374841336.jpg';
-const tobitaCastThree = '/images/tobita_cast_three_real_1782374857559.jpg';
+const tobitaCastMaiSelfie = '/images/tobita_cast_mai_selfie.jpg';
+const tobitaCastHinaSelfie = '/images/tobita_cast_hina_selfie.jpg';
+const tobitaCastYukiSelfie = '/images/tobita_cast_yuki_selfie.jpg';
+const tobitaCastOne = tobitaCastYukiSelfie;
+const tobitaCastTwo = tobitaCastMaiSelfie;
+const tobitaCastThree = tobitaCastHinaSelfie;
 const tobitaDreamHeroBanner = '/images/tobita_dream_hero_banner_1782557055526.jpg';
 const tobitaAdvisorAvatar = '/images/sakura_advisor_portrait_1788920514818.jpg';
 
