@@ -33,6 +33,12 @@ const FALLBACK_HOME_JSON_LD = {
       isPartOf: {
         '@id': 'https://tobitashinchi-recruit.com/#website',
       },
+      primaryImageOfPage: {
+        '@type': 'ImageObject',
+        url: 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg',
+        width: 1376,
+        height: 768,
+      },
       speakable: {
         '@type': 'SpeakableSpecification',
         cssSelector: [
@@ -52,7 +58,9 @@ const FALLBACK_HOME_JSON_LD = {
       url: 'https://tobitashinchi-recruit.com/',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://tobitashinchi-recruit.com/favicon.svg',
+        url: 'https://tobitashinchi-recruit.com/icon.png',
+        width: 384,
+        height: 384,
       },
     },
   ],

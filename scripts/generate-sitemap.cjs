@@ -31,7 +31,7 @@ function escapeXml(str) {
 }
 
 const staticRoutes = [
-  { path: '', priority: '1.0', freq: 'daily', img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地求人なら飛田ガールズ公式' },
+  { path: '', priority: '1.0', freq: 'daily', img: '/images/tobita_dream_hero_banner_1782557055526.jpg', title: '飛田新地求人なら飛田ガールズ公式' },
   { path: '/about', priority: '0.8', freq: 'weekly', img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '運営者情報・店舗体制' },
   { path: '/glossary', priority: '0.85', freq: 'weekly', img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地 用語集・用語辞典' },
   { path: '/compare', priority: '0.9', freq: 'daily', img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地求人サイト比較＆目的別ガイド' },

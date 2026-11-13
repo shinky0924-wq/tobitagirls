@@ -253,7 +253,7 @@ export default function ComparisonPage({
         '@type': 'Organization',
         'name': '飛田新地料理組合公認料亭直営 飛田ガールズ',
         'sameAs': 'https://tobitashinchi-recruit.com',
-        'logo': 'https://tobitashinchi-recruit.com/favicon.svg'
+        'logo': 'https://tobitashinchi-recruit.com/icon.png'
       },
       'jobLocation': {
         '@type': 'Place',

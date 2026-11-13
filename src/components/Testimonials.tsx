@@ -913,7 +913,7 @@ export default function Testimonials({ onNavigateFaq }: TestimonialsProps = {}) 
                 "@type": "Organization",
                 "name": "飛田新地求人 飛田ガールズ（料理組合公認料亭直営）",
                 "url": "https://tobitashinchi-recruit.com",
-                "logo": "https://tobitashinchi-recruit.com/favicon.svg"
+                "logo": "https://tobitashinchi-recruit.com/icon.png"
               }
             }))
           })

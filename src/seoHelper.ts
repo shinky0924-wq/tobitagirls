@@ -44,6 +44,7 @@ function buildHomeNoscript(): string {
     <main>
       <article>
         <h1>飛田新地求人・未経験歓迎の公式ガイド｜飛田新地で働いてみたい女性へ</h1>
+        <img src="https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg" alt="飛田新地のお仕事・料亭直営求人で夢を叶える場所" width="1376" height="768" />
         <p class="lead">当店では、仕事内容や給料の仕組み、未経験から働くまでの流れ、お店選びのポイントなど、求人を探すうえで知っておきたい情報をわかりやすくまとめています。まずは相談だけでもお気軽にご相談ください。</p>
 
         <section>
@@ -152,7 +153,9 @@ function buildHomeJsonLd(): string {
           'url': 'https://tobitashinchi-recruit.com/',
           'logo': {
             '@type': 'ImageObject',
-            'url': 'https://tobitashinchi-recruit.com/favicon.svg'
+            'url': 'https://tobitashinchi-recruit.com/icon.png',
+            'width': 384,
+            'height': 384
           }
         }
       },
@@ -164,6 +167,12 @@ function buildHomeJsonLd(): string {
         'description': DEFAULT_DESC,
         'isPartOf': {
           '@id': 'https://tobitashinchi-recruit.com/#website'
+        },
+        'primaryImageOfPage': {
+          '@type': 'ImageObject',
+          'url': DEFAULT_IMAGE,
+          'width': 1376,
+          'height': 768
         },
         'speakable': {
           '@type': 'SpeakableSpecification',
@@ -194,7 +203,7 @@ function buildHomeJsonLd(): string {
           '@type': 'Organization',
           'name': '飛田新地料理組合公認料亭直営 飛田ガールズ',
           'sameAs': 'https://tobitashinchi-recruit.com',
-          'logo': 'https://tobitashinchi-recruit.com/favicon.svg'
+          'logo': 'https://tobitashinchi-recruit.com/icon.png'
         },
         'jobLocation': {
           '@type': 'Place',
@@ -1105,7 +1114,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
                 "url": "https://tobitashinchi-recruit.com",
                 "logo": {
                   "@type": "ImageObject",
-                  "url": "https://tobitashinchi-recruit.com/favicon.svg"
+                  "url": "https://tobitashinchi-recruit.com/icon.png"
                 }
               },
               "mainEntityOfPage": {
@@ -1246,7 +1255,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
           '@id': 'https://tobitashinchi-recruit.com/#organization',
           'name': '飛田ガールズ（料理組合公認 料亭直営採用窓口）',
           'url': 'https://tobitashinchi-recruit.com/',
-          'logo': 'https://tobitashinchi-recruit.com/favicon.svg',
+          'logo': 'https://tobitashinchi-recruit.com/icon.png',
           'address': {
             '@type': 'PostalAddress',
             'streetAddress': '山王3丁目',
@@ -1408,7 +1417,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
           '@type': 'Organization',
           'name': '飛田新地料理組合公認料亭直営 飛田ガールズ',
           'sameAs': 'https://tobitashinchi-recruit.com',
-          'logo': 'https://tobitashinchi-recruit.com/favicon.svg'
+          'logo': 'https://tobitashinchi-recruit.com/icon.png'
         },
         'jobLocation': {
           '@type': 'Place',
@@ -1647,6 +1656,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
     { regex: /<meta\s+property=["']og:image:width["'][^>]*>/i, tag: `<meta property="og:image:width" content="1200" />` },
     { regex: /<meta\s+property=["']og:image:height["'][^>]*>/i, tag: `<meta property="og:image:height" content="630" />` },
     { regex: /<meta\s+property=["']og:image:alt["'][^>]*>/i, tag: `<meta property="og:image:alt" content="${escapeHtml(ogImageAlt)}" />` },
+    { regex: /<meta\s+name=["']thumbnail["'][^>]*>/i, tag: `<meta name="thumbnail" content="${escapeHtml(ogImageUrl)}" />` },
     { regex: /<meta\s+name=["']twitter:card["'][^>]*>/i, tag: `<meta name="twitter:card" content="${twitterCard}" />` },
     { regex: /<meta\s+name=["']twitter:title["'][^>]*>/i, tag: `<meta name="twitter:title" content="${escapeHtml(title)}" />` },
     { regex: /<meta\s+name=["']twitter:description["'][^>]*>/i, tag: `<meta name="twitter:description" content="${escapeHtml(description)}" />` },

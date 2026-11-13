@@ -241,7 +241,7 @@ export default function BlogSection({
             "url": "https://tobitashinchi-recruit.com",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://tobitashinchi-recruit.com/favicon.svg"
+              "url": "https://tobitashinchi-recruit.com/icon.png"
             }
           },
           "mainEntityOfPage": {
