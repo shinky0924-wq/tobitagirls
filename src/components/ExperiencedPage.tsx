@@ -18,6 +18,11 @@ interface ExperiencedPageProps {
   onInjectedScroll?: (msg: string) => void;
 }
 
+const HERO_IMAGE = '/images/experienced_hero_woman_1794551773329.jpg';
+const HERO_IMAGE_FALLBACK = '/assets/images/experienced_hero_woman_1794551773329.jpg';
+const WAITING_ROOM_IMAGE = '/images/experienced_waiting_environment_1794551772587.jpg';
+const WAITING_ROOM_FALLBACK = '/assets/images/experienced_waiting_environment_1794551772587.jpg';
+
 export default function ExperiencedPage({
   onNavigateHome,
   onNavigateTopic,
@@ -25,8 +30,9 @@ export default function ExperiencedPage({
   onNavigateFaq,
   onInjectedScroll,
 }: ExperiencedPageProps) {
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
-  const [activeCompareTab, setActiveCompareTab] = useState<'all' | 'cabaret' | 'soap' | 'delivery'>('all');
+  const [openFaqKey, setOpenFaqKey] = useState<string | null>('other-0');
+  const [heroImgFailed, setHeroImgFailed] = useState(false);
+  const [waitingImgFailed, setWaitingImgFailed] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -43,12 +49,14 @@ export default function ExperiencedPage({
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const yOffset = -76;
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
-  // Update #seo-jsonld Structured Data for SEO without duplicating SSR script
   useEffect(() => {
+    const allFaqs = FAQ_GROUPS.flatMap((group) => group.items);
     const schemaData = {
       '@context': 'https://schema.org',
       '@graph': [
@@ -60,41 +68,52 @@ export default function ExperiencedPage({
               '@type': 'ListItem',
               'position': 1,
               'name': '飛田新地求人トップ',
-              'item': 'https://tobitashinchi-recruit.com/'
+              'item': 'https://tobitashinchi-recruit.com/',
             },
             {
               '@type': 'ListItem',
               'position': 2,
-              'name': '経験者・他業種からの移籍',
-              'item': 'https://tobitashinchi-recruit.com/experienced'
-            }
-          ]
+              'name': '経験者・移籍求人',
+              'item': 'https://tobitashinchi-recruit.com/experienced',
+            },
+          ],
+        },
+        {
+          '@type': 'WebPage',
+          '@id': 'https://tobitashinchi-recruit.com/experienced#webpage',
+          'url': 'https://tobitashinchi-recruit.com/experienced',
+          'name': '飛田新地の経験者求人｜他業種・他店からの移籍、仕事内容・待遇を紹介',
+          'description':
+            'メンズエステ・ソープ・ヘルス・キャバクラなど、他業種から飛田新地への移籍を検討している女性や、飛田新地の他店から移籍を考えている女性へ。仕事内容や接客ルール、人間関係、報酬・待遇、立地など、移籍前に知っておきたい情報を紹介します。LINEでの事前相談も受付中です。',
+          'primaryImageOfPage': {
+            '@type': 'ImageObject',
+            'url': `https://tobitashinchi-recruit.com${HERO_IMAGE}`,
+          },
         },
         {
           '@type': 'FAQPage',
           '@id': 'https://tobitashinchi-recruit.com/experienced#faq',
-          'mainEntity': EXPERIENCED_FAQS.slice(0, 10).map((item) => ({
+          'mainEntity': allFaqs.map((item) => ({
             '@type': 'Question',
             'name': item.q,
             'acceptedAnswer': {
               '@type': 'Answer',
-              'text': item.a
-            }
-          }))
-        }
-      ]
+              'text': item.a,
+            },
+          })),
+        },
+      ],
     };
 
     updatePageJsonLd(schemaData);
   }, []);
 
   return (
-    <div className="bg-[#FFF9FB] min-h-screen text-[#35313A] pb-24 pt-4 sm:pt-6 font-sans antialiased selection:bg-[#FCE8EF] selection:text-[#D94B7A]">
-      
-      {/* 1. パンくずリスト */}
+    <div className="bg-[#FFF9FB] min-h-screen text-[#333333] pb-28 pt-4 sm:pt-6 font-sans antialiased selection:bg-[#FFF0F5] selection:text-[#C23B6B]">
+      {/* パンくずリスト */}
       <div className="max-w-[1140px] mx-auto px-4 sm:px-6 mb-4">
-        <nav aria-label="Breadcrumb" className="flex items-center text-xs">
-          <ol className="flex items-center gap-1.5 flex-wrap text-[#85818A]">
+        <nav aria-label="Breadcrumb" className="flex items-center text-xs sm:text-[13px]">
+          <ol className="flex items-center gap-1.5 flex-wrap text-[#999999]">
             <li className="flex items-center gap-1">
               <a
                 href="/"
@@ -102,750 +121,890 @@ export default function ExperiencedPage({
                   e.preventDefault();
                   onNavigateHome();
                 }}
-                className="hover:text-[#D94B7A] font-bold flex items-center gap-1 text-[#35313A] hover:underline cursor-pointer"
+                className="hover:text-[#C23B6B] font-semibold flex items-center gap-1 text-[#333333] hover:underline cursor-pointer"
               >
-                <LucideIcon name="Home" size={13} className="text-[#D94B7A]" />
+                <LucideIcon name="Home" size={13} className="text-[#C23B6B]" />
                 <span>飛田新地求人（トップ）</span>
               </a>
             </li>
-            <li className="text-[#85818A]">/</li>
-            <li className="font-bold text-[#D94B7A]" aria-current="page">
-              経験者・他業種からの移籍
+            <li aria-hidden="true" className="text-[#999999]">/</li>
+            <li className="font-bold text-[#C23B6B]" aria-current="page">
+              経験者・移籍求人
             </li>
           </ol>
         </nav>
       </div>
 
-      {/* クイック目次アンカーバー（スマホでも横スクロールで快適） */}
-      <div className="max-w-[1140px] mx-auto px-4 sm:px-6 mb-6">
-        <div className="flex items-center gap-2 overflow-x-auto py-1 scrollbar-none text-xs text-[#85818A]">
-          <span className="font-bold text-[#35313A] whitespace-nowrap text-[11px] flex items-center gap-1">
-            <LucideIcon name="Compass" size={13} className="text-[#D94B7A]" />
-            ページ内目次:
+      {/* ページ内目次アンカー */}
+      <div className="max-w-[1140px] mx-auto px-4 sm:px-6 mb-8">
+        <div className="flex items-center gap-2 overflow-x-auto py-1 scrollbar-none text-[13px] text-[#666666]">
+          <span className="font-bold text-[#333333] whitespace-nowrap flex items-center gap-1 shrink-0 pr-1">
+            <LucideIcon name="Compass" size={14} className="text-[#C23B6B]" />
+            <span>目次</span>
           </span>
-          <a
-            href="#relief"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('relief');
-            }}
-            className="px-3 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] whitespace-nowrap transition-colors cursor-pointer"
-          >
-            4つのストレス解放
-          </a>
-          <a
-            href="#comparison"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('comparison');
-            }}
-            className="px-3 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] whitespace-nowrap transition-colors cursor-pointer"
-          >
-            他業種との決定的な違い
-          </a>
-          <a
-            href="#earning-system"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('earning-system');
-            }}
-            className="px-3 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] whitespace-nowrap transition-colors cursor-pointer"
-          >
-            高日給の理由
-          </a>
-          <a
-            href="#transfer-flow"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('transfer-flow');
-            }}
-            className="px-3 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] whitespace-nowrap transition-colors cursor-pointer"
-          >
-            移籍の流れ
-          </a>
-          <a
-            href="#checklist"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('checklist');
-            }}
-            className="px-3 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] whitespace-nowrap transition-colors cursor-pointer"
-          >
-            移籍前チェック
-          </a>
-          <a
-            href="#columns"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('columns');
-            }}
-            className="px-3 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] whitespace-nowrap transition-colors cursor-pointer"
-          >
-            比較コラム
-          </a>
-          <a
-            href="#faq"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('faq');
-            }}
-            className="px-3 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] whitespace-nowrap transition-colors cursor-pointer"
-          >
-            よくある質問
-          </a>
-          <a
-            href="#line-cta"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('line-cta');
-            }}
-            className="px-3 py-1.5 rounded-full bg-[#06C755]/10 text-[#059669] hover:bg-[#06C755] hover:text-white border border-[#06C755]/30 whitespace-nowrap font-bold transition-colors cursor-pointer"
-          >
-            LINE相談
-          </a>
+          {TOC_ITEMS.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection(item.id);
+              }}
+              className="px-3 py-1.5 rounded-xl bg-white hover:bg-[#FFF0F5] hover:text-[#C23B6B] border border-[#F0DCE4] whitespace-nowrap shrink-0 transition-colors cursor-pointer"
+            >
+              {item.label}
+            </a>
+          ))}
         </div>
       </div>
 
-      <div className="max-w-[1140px] mx-auto px-4 sm:px-6 space-y-12 sm:space-y-16">
-
+      <div className="max-w-[1140px] mx-auto px-4 sm:px-6 space-y-16 sm:space-y-20">
         {/* =========================================================
-            SECTION 1: ファーストビュー全面改善
+            2. ファーストビュー
            ========================================================= */}
-        <section className="bg-white rounded-3xl p-6 sm:p-9 md:p-12 border border-[#F0E5EA] shadow-2xs">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            
-            {/* 左側テキスト */}
+        <section className="bg-white rounded-2xl p-6 sm:p-9 lg:p-11 border border-[#F0DCE4] shadow-[0_2px_12px_rgba(233,139,170,0.06)]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            {/* 左カラム（スマホでは最上部：見出し・説明・メリット・CTA） */}
             <div className="lg:col-span-7 space-y-5">
-              
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block">
-                  経験者・他業種からの移籍
-                </span>
-                <span className="text-xs text-[#85818A] font-medium">キャバクラ・ソープ・デリヘル経験者へ</span>
+              <div className="text-[13px] font-bold text-[#C23B6B] tracking-wide">
+                飛田新地・経験者専用求人
               </div>
 
-              {/* メインコピー（27〜30px） */}
-              <h1 className="text-[27px] sm:text-[30px] font-black text-[#35313A] leading-[1.3] tracking-tight">
-                営業LINEもお風呂洗いも、もう終わり。<br />
-                <span className="text-[#D94B7A]">あなたの経験を、一番ストレスのない場所で活かす。</span>
-              </h1>
+              <div className="space-y-2.5">
+                <h1 className="font-display font-bold text-[26px] sm:text-[32px] text-[#333333] leading-[1.3] tracking-tight text-balance">
+                  <span className="block text-[13px] sm:text-[14px] font-semibold text-[#666666] mb-2">
+                    飛田新地の経験者求人｜他業種・他店からの移籍を検討している方へ
+                  </span>
+                  今までの経験を活かして、
+                  <span className="text-[#C23B6B] block sm:inline">
+                    もっと自分に合った働き方へ。
+                  </span>
+                </h1>
 
-              {/* サブコピー */}
-              <p className="text-base sm:text-[16px] text-[#35313A] leading-relaxed font-normal">
-                キャバクラ・ソープ・デリヘル・他店からの移籍希望者が多数活躍中。ネット顔出しなし・営業連絡禁止・売上50%即日全額日払い（天引き0円）。培った接客スキルを活かし、初日から日給10万〜18万円超を目指せます。
-              </p>
-
-              {/* 注記 */}
-              <p className="text-[12px] sm:text-[13px] text-[#85818A] leading-relaxed">
-                ※他店在籍中の方も秘密厳守でご相談いただけます。外部スカウトや他店とのしがらみは一切ありません。
-              </p>
-
-              {/* スマホ表示用：写真 */}
-              <div className="lg:hidden my-4">
-                <div className="relative rounded-2xl overflow-hidden border border-[#F0E5EA] bg-[#FFF9FB] shadow-xs">
-                  <img
-                    src="/images/tobita_experienced_cast_1792411797671.jpg"
-                    alt="落ち着いた空間で働く経験者キャスト"
-                    className="w-full h-[220px] object-cover"
-                    loading="eager"
-                  />
-                  <div className="p-3 bg-white/95 border-t border-[#F0E5EA] text-[12px] text-[#85818A] flex items-center gap-1.5">
-                    <LucideIcon name="ShieldCheck" size={14} className="text-[#D94B7A] shrink-0" />
-                    <span>身バレ防止徹底・撮影禁止の料亭でストレスフリーに稼働</span>
-                  </div>
-                </div>
+                <p className="text-[15px] sm:text-[17px] font-bold text-[#333333] pt-1">
+                  他業種からの移籍も、飛田新地の他店からの移籍も。
+                </p>
               </div>
 
-              {/* 補足ポイント（3つの小さなバッジ） */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-[#FFF9FB] border border-[#F0E5EA]">
-                  <div className="w-7 h-7 rounded-lg bg-[#FCE8EF] text-[#D94B7A] flex items-center justify-center shrink-0">
-                    <LucideIcon name="PhoneOff" size={15} />
-                  </div>
-                  <span className="text-xs sm:text-[13px] font-bold text-[#35313A]">
-                    営業LINE・<br className="hidden sm:inline" />連絡一切なし
+              <div className="space-y-3 text-[14px] sm:text-[15.5px] text-[#666666] leading-[1.75]">
+                <p>
+                  メンズエステ・ソープ・ヘルス・キャバクラなど、これまでの接客経験を活かして新しい働き方を考えてみませんか？
+                  また、現在飛田新地で働いている方も、人間関係・待遇・立地など、今のお店に感じている不満を見直すきっかけにしてみてください。
+                </p>
+                <p>
+                  当店では、
+                  <span className="text-[#C23B6B] font-semibold">
+                    短時間中心の接客スタイルに加え、キスや粘膜接触のない接客ルール
                   </span>
-                </div>
+                  を採用しています。仕事内容だけでなく、働く環境や待遇も含めて、納得できる移籍先を探している方をお待ちしています。
+                </p>
+              </div>
 
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-[#FFF9FB] border border-[#F0E5EA]">
-                  <div className="w-7 h-7 rounded-lg bg-[#FCE8EF] text-[#D94B7A] flex items-center justify-center shrink-0">
-                    <LucideIcon name="CameraOff" size={15} />
-                  </div>
-                  <span className="text-xs sm:text-[13px] font-bold text-[#35313A]">
-                    Web写真・<br className="hidden sm:inline" />顔出し完全ゼロ
-                  </span>
+              {/* 3つのメリット表示 */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                <div className="flex items-center gap-2.5 p-3.5 rounded-xl bg-[#FFF9FB] border border-[#F0DCE4]">
+                  <LucideIcon name="Clock" size={18} className="text-[#C23B6B] shrink-0" strokeWidth={1.75} />
+                  <span className="text-[13.5px] font-bold text-[#333333]">短時間中心の接客</span>
                 </div>
-
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-[#FFF9FB] border border-[#F0E5EA]">
-                  <div className="w-7 h-7 rounded-lg bg-[#FCE8EF] text-[#D94B7A] flex items-center justify-center shrink-0">
-                    <LucideIcon name="Sparkles" size={15} />
-                  </div>
-                  <span className="text-xs sm:text-[13px] font-bold text-[#35313A]">
-                    お風呂掃除・<br className="hidden sm:inline" />重労働なし
-                  </span>
+                <div className="flex items-center gap-2.5 p-3.5 rounded-xl bg-[#FFF9FB] border border-[#F0DCE4]">
+                  <LucideIcon name="ShieldCheck" size={18} className="text-[#C23B6B] shrink-0" strokeWidth={1.75} />
+                  <span className="text-[13.5px] font-bold text-[#333333]">キス・粘膜接触なし</span>
+                </div>
+                <div className="flex items-center gap-2.5 p-3.5 rounded-xl bg-[#FFF9FB] border border-[#F0DCE4]">
+                  <LucideIcon name="HeartHandshake" size={18} className="text-[#C23B6B] shrink-0" strokeWidth={1.75} />
+                  <span className="text-[13.5px] font-bold text-[#333333]">人間関係・待遇・立地も重視</span>
                 </div>
               </div>
 
-              {/* LINEボタン */}
-              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              {/* LINE CTA */}
+              <div className="pt-2 space-y-2.5">
                 <a
                   href={LINE_OFFICIAL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleLineClick('【移籍・経験者ページからの相談】他業種からの移籍を検討しています。現在の待遇や日給の目安について相談したいです。');
+                    handleLineClick('【経験者・移籍の相談】仕事内容や接客ルール、待遇・職場の雰囲気について相談したいです。');
                   }}
-                  className="px-7 py-3.5 rounded-full bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-sm shadow-xs transition-all cursor-pointer flex items-center justify-center gap-2.5 text-center"
+                  className="w-full sm:w-auto px-7 py-4 rounded-xl bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-[15px] shadow-xs transition-colors cursor-pointer inline-flex items-center justify-center gap-2.5 whitespace-nowrap"
                 >
-                  <LucideIcon name="MessageCircle" size={18} />
-                  <span>移籍・待遇についてLINEで質問してみる</span>
+                  <LucideIcon name="MessageCircle" size={19} strokeWidth={2} />
+                  <span>LINEで移籍について相談する</span>
                 </a>
-                <span className="text-xs text-[#85818A] text-center sm:text-left">
-                  ※秘密厳守・まずは条件確認だけでもOK
-                </span>
-              </div>
-
-            </div>
-
-            {/* 右側（PC用：写真） */}
-            <div className="hidden lg:block lg:col-span-5">
-              <div className="relative rounded-3xl overflow-hidden border border-[#F0E5EA] bg-[#FFF9FB] shadow-xs">
-                <img
-                  src="/images/tobita_experienced_cast_1792411797671.jpg"
-                  alt="落ち着いた空間で働く経験者キャスト"
-                  className="w-full h-[360px] object-cover"
-                  loading="eager"
-                />
-                <div className="p-3.5 bg-white border-t border-[#F0E5EA] text-xs text-[#85818A] flex items-center gap-2">
-                  <LucideIcon name="ShieldCheck" size={16} className="text-[#D94B7A] shrink-0" />
-                  <span>ネット顔出し不要・街全体撮影禁止でプライバシーを完全保護</span>
-                </div>
+                <p className="text-[13px] text-[#666666] leading-relaxed">
+                  他業種からの移籍・飛田新地の他店からの移籍、どちらも相談OK。質問だけでも大丈夫です。
+                </p>
               </div>
             </div>
 
+            {/* 右カラム（スマホでは文章・CTAの下） */}
+            <div className="lg:col-span-5">
+              <div className="rounded-2xl overflow-hidden border border-[#F0DCE4] bg-[#FFF0F5]">
+                {!heroImgFailed ? (
+                  <div className="aspect-4/3 w-full overflow-hidden">
+                    <img
+                      src={HERO_IMAGE}
+                      alt="和モダンの落ち着いた室内で微笑む大人の女性"
+                      referrerPolicy="no-referrer"
+                      loading="eager"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (!target.dataset.triedFallback) {
+                          target.dataset.triedFallback = '1';
+                          target.src = HERO_IMAGE_FALLBACK;
+                        } else {
+                          setHeroImgFailed(true);
+                        }
+                      }}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="aspect-4/3 w-full bg-gradient-to-br from-[#FFF0F5] to-[#FCE8EF] flex flex-col items-center justify-center p-6 text-center text-[#C23B6B]">
+                    <LucideIcon name="Sparkles" size={32} strokeWidth={1.5} className="mb-2" />
+                    <p className="text-sm font-bold text-[#333333]">落ち着いた和モダンの環境</p>
+                  </div>
+                )}
+              </div>
+              <p className="text-[13px] text-[#666666] mt-2.5 text-center lg:text-left">
+                経験や希望に合わせて、働き方をご相談いただけます。
+              </p>
+            </div>
           </div>
         </section>
 
-
         {/* =========================================================
-            SECTION 2: ファーストビュー直下の数字カード（4つの事実）
+            3. 安心材料・基本情報（4カード）
            ========================================================= */}
-        <section className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
-          
-          <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#F0E5EA] shadow-2xs space-y-2">
-            <span className="text-xs text-[#85818A] block font-medium">移籍経験者の満足度</span>
-            <div className="text-[26px] sm:text-[30px] font-black text-[#D94B7A] font-display tracking-tight">
-              96<span className="text-base sm:text-lg font-bold text-[#35313A] ml-0.5">%以上</span>
+        <section aria-label="基本方針・安心材料" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {BASIC_INFO_CARDS.map((card, idx) => (
+            <div
+              key={idx}
+              className="bg-white p-5 sm:p-6 rounded-2xl border border-[#F0DCE4] shadow-[0_2px_8px_rgba(233,139,170,0.05)] space-y-2"
+            >
+              <div className="flex items-center gap-2 text-[13px] font-semibold text-[#C23B6B]">
+                <LucideIcon name={card.icon} size={17} strokeWidth={1.75} />
+                <span>{card.label}</span>
+              </div>
+              <h2 className="text-[16px] sm:text-[17px] font-bold text-[#333333] leading-snug">
+                {card.title}
+              </h2>
+              <p className="text-[14px] text-[#666666] leading-relaxed">
+                {card.desc}
+              </p>
             </div>
-            <p className="text-[13px] text-[#35313A] leading-relaxed pt-1 border-t border-[#F0E5EA]/70">
-              営業LINEの義務、写真公開のプレッシャー、お風呂洗いの重労働から解放されたと実感。
-            </p>
-          </div>
-
-          <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#F0E5EA] shadow-2xs space-y-2">
-            <span className="text-xs text-[#85818A] block font-medium">即戦力の日給水準</span>
-            <div className="text-[22px] sm:text-[26px] font-black text-[#D94B7A] font-display tracking-tight">
-              10万〜18<span className="text-xs sm:text-sm font-bold text-[#35313A] ml-0.5">万円</span>
-            </div>
-            <p className="text-[13px] text-[#35313A] leading-relaxed pt-1 border-t border-[#F0E5EA]/70">
-              培った接客マナーと愛嬌で初日から高回転。15〜20分の短時間接客で効率よく稼げます。
-            </p>
-          </div>
-
-          <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#F0E5EA] shadow-2xs space-y-2">
-            <span className="text-xs text-[#85818A] block font-medium">Web顔写真公開</span>
-            <div className="text-[26px] sm:text-[30px] font-black text-[#D94B7A] tracking-tight">
-              完全ゼロ
-            </div>
-            <p className="text-[13px] text-[#35313A] leading-relaxed pt-1 border-t border-[#F0E5EA]/70">
-              街全体が撮影禁止。WEBパネル写真やSNSへの顔出しは一切なく、過去の流出リスクも遮断。
-            </p>
-          </div>
-
-          <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#F0E5EA] shadow-2xs space-y-2">
-            <span className="text-xs text-[#85818A] block font-medium">雑費・待機料控除</span>
-            <div className="text-[26px] sm:text-[30px] font-black text-[#D94B7A] font-display tracking-tight">
-              完全0<span className="text-base sm:text-lg font-bold text-[#35313A] ml-0.5">円</span>
-            </div>
-            <p className="text-[13px] text-[#35313A] leading-relaxed pt-1 border-t border-[#F0E5EA]/70">
-              厚生費や罰金などの天引き一切なし。売上50%完全バックで、退勤時に全額現金手渡し。
-            </p>
-          </div>
-
+          ))}
         </section>
 
-
         {/* =========================================================
-            SECTION 3: 他業種から移籍した女性が驚く「4つのストレス解放」
+            4. 2種類の移籍希望者への案内
            ========================================================= */}
-        <section id="relief" className="bg-white rounded-3xl p-6 sm:p-9 md:p-10 border border-[#F0E5EA] shadow-2xs scroll-mt-20">
-          <div className="max-w-2xl mb-8">
-            <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block mb-2">
-              WHY SWITCH?
-            </span>
-            <h2 className="text-[21px] sm:text-[24px] font-black text-[#35313A] tracking-tight">
-              他業種から移籍した女性が驚く「4つのストレス解放」
+        <section id="transfer-guide" className="scroll-mt-20 space-y-8">
+          <div className="max-w-2xl space-y-2.5">
+            <h2 className="text-[22px] sm:text-[26px] font-bold text-[#333333] tracking-tight text-balance">
+              あなたの経験に合わせた移籍のご案内
             </h2>
-            <p className="text-xs sm:text-[14px] text-[#85818A] mt-2 leading-relaxed">
-              キャバクラやソープ、デリヘルで消耗していた女性たちが、飛田新地に来て口を揃える納得の理由です。
+            <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+              <span className="font-semibold text-[#333333]">あなたの経験に合わせて、移籍のポイントをご紹介。</span>
+              移籍を考える理由は人それぞれです。今の仕事やお店で感じている悩みに合わせて、知りたい情報を確認してください。
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-            
-            {/* 01 */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-[#FFF9FB] border border-[#F0E5EA] space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-black text-[#D94B7A] bg-white px-2.5 py-1 rounded-md border border-[#F0E5EA]">
-                  STRESS FREE 01
-                </span>
-                <div className="w-8 h-8 rounded-xl bg-[#FCE8EF] text-[#D94B7A] flex items-center justify-center">
-                  <LucideIcon name="PhoneOff" size={16} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* カードA：他業種からの移籍 */}
+            <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#F0DCE4] shadow-[0_2px_10px_rgba(233,139,170,0.05)] flex flex-col justify-between space-y-5">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[13px] font-bold text-[#C23B6B]">
+                    他業種経験者向け
+                  </span>
+                  <div className="w-10 h-10 rounded-xl bg-[#FFF0F5] text-[#C23B6B] flex items-center justify-center shrink-0">
+                    <LucideIcon name="Briefcase" size={20} strokeWidth={1.75} />
+                  </div>
                 </div>
+
+                <div>
+                  <h3 className="text-[18px] sm:text-[20px] font-bold text-[#333333] leading-snug mb-1.5">
+                    他業種から飛田新地への移籍を検討している方へ
+                  </h3>
+                  <p className="text-[13px] font-medium text-[#999999]">
+                    対象：メンズエステ・ソープ・ヘルス・キャバクラ経験者
+                  </p>
+                </div>
+
+                <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+                  今までの接客経験を活かしながら、接客時間や仕事内容、接客ルールが異なる新しい働き方を検討してみませんか？
+                </p>
+
+                <ul className="space-y-2 text-[14px] text-[#333333] pt-1">
+                  <li className="flex items-center gap-2">
+                    <LucideIcon name="Check" size={16} className="text-[#C23B6B] shrink-0" strokeWidth={2} />
+                    <span>接客スタイルの違い</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <LucideIcon name="Check" size={16} className="text-[#C23B6B] shrink-0" strokeWidth={2} />
+                    <span>短時間中心の接客</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <LucideIcon name="Check" size={16} className="text-[#C23B6B] shrink-0" strokeWidth={2} />
+                    <span>キス・粘膜接触なし</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <LucideIcon name="Check" size={16} className="text-[#C23B6B] shrink-0" strokeWidth={2} />
+                    <span>これまでの接客経験を活かせる</span>
+                  </li>
+                </ul>
               </div>
-              <h3 className="text-base sm:text-[18px] font-bold text-[#35313A]">
-                休日の営業LINE・連絡拘束からの解放
-              </h3>
-              <p className="text-sm sm:text-[15px] text-[#85818A] leading-relaxed">
-                キャバクラのように休みの日までお客さんへ営業LINEを送り続けたり、同伴やアフターに追われる拘束は一切ありません。料亭組合の規約で店外連絡が禁止されているため、退勤した瞬間に完全なオフとなりプライベートを満喫できます。
-              </p>
+
+              <button
+                type="button"
+                onClick={() => scrollToSection('comparison')}
+                className="w-full py-3 px-4 rounded-xl bg-[#FFF0F5] hover:bg-[#F5B5C9]/30 text-[#C23B6B] font-bold text-[14px] border border-[#F5B5C9] transition-colors cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap"
+              >
+                <span>他業種からの移籍について詳しく見る</span>
+                <LucideIcon name="ArrowDown" size={15} strokeWidth={2} />
+              </button>
             </div>
 
-            {/* 02 */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-[#FFF9FB] border border-[#F0E5EA] space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-black text-[#D94B7A] bg-white px-2.5 py-1 rounded-md border border-[#F0E5EA]">
-                  STRESS FREE 02
-                </span>
-                <div className="w-8 h-8 rounded-xl bg-[#FCE8EF] text-[#D94B7A] flex items-center justify-center">
-                  <LucideIcon name="CameraOff" size={16} />
+            {/* カードB：飛田新地の他店からの移籍 */}
+            <div className="bg-[#FFF0F5] rounded-2xl p-6 sm:p-7 border border-[#E98BAA]/60 shadow-[0_2px_10px_rgba(233,139,170,0.08)] flex flex-col justify-between space-y-5">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[13px] font-bold text-[#C23B6B]">
+                    飛田新地・他店経験者向け
+                  </span>
+                  <div className="w-10 h-10 rounded-xl bg-white text-[#C23B6B] flex items-center justify-center border border-[#F5B5C9] shrink-0">
+                    <LucideIcon name="Building2" size={20} strokeWidth={1.75} />
+                  </div>
                 </div>
-              </div>
-              <h3 className="text-base sm:text-[18px] font-bold text-[#35313A]">
-                Webパネル写真・ネット身バレへの恐怖からの解放
-              </h3>
-              <p className="text-sm sm:text-[15px] text-[#85818A] leading-relaxed">
-                風俗サイトやSNSに顔写真や動画、源氏名が掲載されることは永久にありません。街全体で撮影が禁止されており、来店順のフリー案内が基本のため、写真指名競争による精神的疲労もゼロです。本業や将来への影響を完全ガードします。
-              </p>
-            </div>
 
-            {/* 03 */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-[#FFF9FB] border border-[#F0E5EA] space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-black text-[#D94B7A] bg-white px-2.5 py-1 rounded-md border border-[#F0E5EA]">
-                  STRESS FREE 03
-                </span>
-                <div className="w-8 h-8 rounded-xl bg-[#FCE8EF] text-[#D94B7A] flex items-center justify-center">
-                  <LucideIcon name="Sparkles" size={16} />
+                <div>
+                  <h3 className="text-[18px] sm:text-[20px] font-bold text-[#333333] leading-snug mb-1.5">
+                    飛田新地の他店から移籍を検討している方へ
+                  </h3>
+                  <p className="text-[13px] font-medium text-[#666666]">
+                    対象：現在飛田新地の他店で勤務中の方・再スタートを考えている方
+                  </p>
                 </div>
-              </div>
-              <h3 className="text-base sm:text-[18px] font-bold text-[#35313A]">
-                お風呂掃除・過酷な肉体労働からの解放
-              </h3>
-              <p className="text-sm sm:text-[15px] text-[#85818A] leading-relaxed">
-                ソープランドのように重いお風呂掃除や介助で腰を痛めたり、塩素消毒で肌や髪が荒れる心配はありません。接客後のお部屋清掃やシーツ交換はすべて仲居さん（おばちゃん）が担当。女性は落ち着いた座敷で接客に専念できます。
-              </p>
-            </div>
 
-            {/* 04 */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-[#FFF9FB] border border-[#F0E5EA] space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-black text-[#D94B7A] bg-white px-2.5 py-1 rounded-md border border-[#F0E5EA]">
-                  STRESS FREE 04
-                </span>
-                <div className="w-8 h-8 rounded-xl bg-[#FCE8EF] text-[#D94B7A] flex items-center justify-center">
-                  <LucideIcon name="Coins" size={16} />
-                </div>
-              </div>
-              <h3 className="text-base sm:text-[18px] font-bold text-[#35313A]">
-                不透明な天引き・雑費引かれ物からの解放
-              </h3>
-              <p className="text-sm sm:text-[15px] text-[#85818A] leading-relaxed">
-                一般的な風俗店やキャバクラで引かれがちな「待機料」「厚生費」「パネル撮影代」「ヘアメイク代」「遅刻罰金」などは完全0円です。売上の50%がそのまま手取りとなり、退勤時にその日の稼ぎを全額現金手渡しで受け取れます。
-              </p>
-            </div>
+                <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+                  現在のお店の人間関係や待遇、立地に不満はありませんか？
+                  当店では、女性同士のいじめや派閥を作らない職場環境づくりを大切にしています。
+                </p>
 
+                <ul className="space-y-2 text-[14px] text-[#333333] pt-1">
+                  <li className="flex items-center gap-2">
+                    <LucideIcon name="Check" size={16} className="text-[#C23B6B] shrink-0" strokeWidth={2} />
+                    <span>いじめ・派閥を作らない環境づくり</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <LucideIcon name="Check" size={16} className="text-[#C23B6B] shrink-0" strokeWidth={2} />
+                    <span>報酬・待遇の比較</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <LucideIcon name="Check" size={16} className="text-[#C23B6B] shrink-0" strokeWidth={2} />
+                    <span>通いやすい立地</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <LucideIcon name="Check" size={16} className="text-[#C23B6B] shrink-0" strokeWidth={2} />
+                    <span>待機環境・職場の雰囲気</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => scrollToSection('merit-other-shop')}
+                className="w-full py-3 px-4 rounded-xl bg-white hover:bg-[#FFF9FB] text-[#C23B6B] font-bold text-[14px] border border-[#E98BAA] transition-colors cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap"
+              >
+                <span>他店からの移籍について詳しく見る</span>
+                <LucideIcon name="ArrowDown" size={15} strokeWidth={2} />
+              </button>
+            </div>
           </div>
         </section>
 
-
         {/* =========================================================
-            SECTION 4: 他業種との徹底比較表
+            5. 今の仕事で感じている4つの負担
            ========================================================= */}
-        <section id="comparison" className="bg-white rounded-3xl p-6 sm:p-9 md:p-10 border border-[#F0E5EA] shadow-2xs scroll-mt-20">
-          <div className="max-w-2xl mb-8">
-            <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block mb-2">
-              COMPARISON
-            </span>
-            <h2 className="text-[21px] sm:text-[24px] font-black text-[#35313A] tracking-tight">
-              他業種との決定的な違い・比較表
+        <section id="burdens" className="bg-white rounded-2xl p-6 sm:p-9 border border-[#F0DCE4] scroll-mt-20 space-y-6">
+          <div className="max-w-2xl space-y-2">
+            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+              今の仕事で感じている負担
             </h2>
-            <p className="text-xs sm:text-[14px] text-[#85818A] mt-2 leading-relaxed">
-              キャバクラ、ソープランド、デリヘルと飛田新地料亭の勤務条件を客観的に比較しました。
+            <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
+              今の仕事で、こんな負担を感じていませんか？
+            </p>
+            <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+              接客業は同じように見えても、仕事内容や負担のかかり方は業種によって異なります。
             </p>
           </div>
 
-          {/* PC・タブレット向けテーブル */}
-          <div className="hidden md:block overflow-x-auto">
-            <table className="w-full text-left text-xs sm:text-sm border-collapse">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {CURRENT_BURDENS.map((item, idx) => (
+              <div
+                key={idx}
+                className="p-5 sm:p-6 rounded-2xl bg-[#FFF9FB] border border-[#F0DCE4] space-y-2.5"
+              >
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-[#FFF0F5] text-[#C23B6B] flex items-center justify-center shrink-0">
+                    <LucideIcon name={item.icon} size={18} strokeWidth={1.75} />
+                  </div>
+                  <h3 className="text-[16px] sm:text-[17px] font-bold text-[#333333]">
+                    {item.title}
+                  </h3>
+                </div>
+                <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-[13px] text-[#999999] leading-relaxed">
+            ※仕事内容や業務の負担は業種や個々の店舗方針・契約条件によって異なるため、現在のお仕事状況と照らし合わせてご覧ください。
+          </p>
+        </section>
+
+        {/* =========================================================
+            6. 5業種の比較表
+           ========================================================= */}
+        <section id="comparison" className="bg-white rounded-2xl p-6 sm:p-9 border border-[#F0DCE4] scroll-mt-20 space-y-6">
+          <div className="max-w-2xl space-y-2">
+            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+              他業種との仕事内容・接客スタイル比較
+            </h2>
+            <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
+              他業種との違いを比較してみました
+            </p>
+            <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+              同じ接客業でも、接客時間・サービス内容・営業負担は大きく異なります。自分に合った働き方を考える参考にしてください。
+            </p>
+          </div>
+
+          {/* スマホ横スクロール案内 */}
+          <div className="flex items-center justify-between gap-2 text-[13px] font-semibold text-[#C23B6B] bg-[#FFF0F5] px-4 py-2.5 rounded-xl border border-[#F5B5C9]/60 lg:hidden">
+            <span className="flex items-center gap-1.5">
+              <LucideIcon name="ArrowLeftRight" size={16} strokeWidth={1.75} />
+              <span>左右にスクロールして5業種すべてを比較できます</span>
+            </span>
+          </div>
+
+          {/* 5業種比較テーブル（PC・スマホ共通、比較項目列を固定） */}
+          <div className="overflow-x-auto rounded-xl border border-[#F0DCE4]">
+            <table className="w-full min-w-[760px] text-left border-collapse text-[14px] sm:text-[15px]">
               <thead>
-                <tr className="border-b-2 border-[#F0E5EA]">
-                  <th className="p-3.5 font-bold text-[#85818A] w-1/5">比較項目</th>
-                  <th className="p-3.5 font-black text-[#D94B7A] bg-[#FCE8EF]/50 rounded-t-xl w-1/4">
-                    飛田新地（料亭直営）
+                <tr className="border-b border-[#F0DCE4] bg-[#FFF9FB]">
+                  <th className="sticky left-0 z-10 bg-[#FFF9FB] p-4 font-bold text-[#333333] border-r border-[#F0DCE4] w-[130px]">
+                    比較項目
                   </th>
-                  <th className="p-3.5 font-bold text-[#35313A] w-1/5">キャバクラ・ラウンジ</th>
-                  <th className="p-3.5 font-bold text-[#35313A] w-1/5">ソープランド</th>
-                  <th className="p-3.5 font-bold text-[#35313A] w-1/5">デリヘル・ヘルス</th>
+                  <th className="p-4 font-bold text-white bg-[#E98BAA] border-r border-[#F0DCE4] w-[150px]">
+                    飛田新地
+                  </th>
+                  <th className="p-4 font-bold text-[#333333] border-r border-[#F0DCE4]">
+                    メンズエステ
+                  </th>
+                  <th className="p-4 font-bold text-[#333333] border-r border-[#F0DCE4]">
+                    ソープ
+                  </th>
+                  <th className="p-4 font-bold text-[#333333] border-r border-[#F0DCE4]">
+                    ヘルス
+                  </th>
+                  <th className="p-4 font-bold text-[#333333]">
+                    キャバクラ
+                  </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F0E5EA]">
-                {COMPARISON_ROWS.map((row, idx) => (
-                  <tr key={idx} className="hover:bg-[#FFF9FB]/60 transition-colors">
-                    <td className="p-3.5 font-bold text-[#35313A] whitespace-nowrap">{row.item}</td>
-                    <td className="p-3.5 font-bold text-[#D94B7A] bg-[#FCE8EF]/30 font-medium">
-                      {row.tobita}
+              <tbody className="divide-y divide-[#F0DCE4] bg-white">
+                {FIVE_INDUSTRY_COMPARISON.map((row, idx) => (
+                  <tr key={idx}>
+                    <th
+                      scope="row"
+                      className="sticky left-0 z-10 bg-white p-4 font-bold text-[#333333] border-r border-[#F0DCE4] align-top whitespace-nowrap"
+                    >
+                      {row.item}
+                    </th>
+                    <td className="p-4 font-bold text-[#333333] bg-[#FFF0F5] border-r border-[#F0DCE4] align-top">
+                      <span className={row.highlightPink ? 'text-[#C23B6B]' : ''}>
+                        {row.tobita}
+                      </span>
                     </td>
-                    <td className="p-3.5 text-[#85818A]">{row.cabaret}</td>
-                    <td className="p-3.5 text-[#85818A]">{row.soap}</td>
-                    <td className="p-3.5 text-[#85818A]">{row.delivery}</td>
+                    <td className="p-4 text-[#666666] border-r border-[#F0DCE4] align-top">
+                      {row.esthe}
+                    </td>
+                    <td className="p-4 text-[#666666] border-r border-[#F0DCE4] align-top">
+                      {row.soap}
+                    </td>
+                    <td className="p-4 text-[#666666] border-r border-[#F0DCE4] align-top">
+                      {row.health}
+                    </td>
+                    <td className="p-4 text-[#666666] align-top">
+                      {row.cabaret}
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          {/* スマホ向けカード表示 */}
-          <div className="md:hidden space-y-4">
-            {COMPARISON_ROWS.map((row, idx) => (
-              <div key={idx} className="p-4 rounded-2xl bg-[#FFF9FB] border border-[#F0E5EA] space-y-2.5">
-                <div className="flex items-center justify-between pb-2 border-b border-[#F0E5EA]">
-                  <span className="text-xs font-bold text-[#85818A]">比較項目</span>
-                  <span className="text-sm font-bold text-[#35313A]">{row.item}</span>
-                </div>
+          {/* 比較表下の結論 */}
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#FFF0F5] border border-[#F5B5C9]/70 space-y-2">
+            <h3 className="text-[17px] sm:text-[18px] font-bold text-[#333333]">
+              働き方が変われば、接客で感じる負担も変わります。
+            </h3>
+            <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+              短時間中心の接客、キスや粘膜接触のない接客スタイルなど、今までとは違った働き方を検討してみませんか？
+            </p>
+          </div>
+        </section>
 
-                <div className="p-3 rounded-xl bg-white border border-[#D94B7A]/30 space-y-1">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-[#D94B7A]">
-                    <LucideIcon name="CheckCircle" size={13} />
-                    <span>飛田新地（当店）</span>
-                  </div>
-                  <p className="text-sm font-bold text-[#35313A]">{row.tobita}</p>
-                </div>
+        {/* =========================================================
+            7. 他業種から移籍するメリット（4カード）
+           ========================================================= */}
+        <section id="merit-other-industry" className="scroll-mt-20 space-y-6">
+          <div className="max-w-2xl space-y-2">
+            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+              他業種から移籍するメリット
+            </h2>
+            <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
+              これまでの接客経験を、新しい働き方に活かす
+            </p>
+          </div>
 
-                <div className="grid grid-cols-3 gap-2 text-[11px] text-[#85818A] pt-1">
-                  <div className="p-2 rounded-lg bg-white border border-[#F0E5EA]">
-                    <span className="block font-bold text-[#35313A] mb-0.5">キャバクラ</span>
-                    <span>{row.cabaret}</span>
-                  </div>
-                  <div className="p-2 rounded-lg bg-white border border-[#F0E5EA]">
-                    <span className="block font-bold text-[#35313A] mb-0.5">ソープ</span>
-                    <span>{row.soap}</span>
-                  </div>
-                  <div className="p-2 rounded-lg bg-white border border-[#F0E5EA]">
-                    <span className="block font-bold text-[#35313A] mb-0.5">デリヘル</span>
-                    <span>{row.delivery}</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {OTHER_INDUSTRY_MERITS.map((item, idx) => (
+              <div
+                key={idx}
+                className="bg-white p-5 sm:p-6 rounded-2xl border border-[#F0DCE4] shadow-[0_2px_8px_rgba(233,139,170,0.05)] space-y-3"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[13px] font-bold text-[#C23B6B] tabular-nums">
+                    0{idx + 1}
+                  </span>
+                  <div className="w-9 h-9 rounded-xl bg-[#FFF0F5] text-[#C23B6B] flex items-center justify-center">
+                    <LucideIcon name={item.icon} size={18} strokeWidth={1.75} />
                   </div>
                 </div>
+                <h3 className="text-[16px] font-bold text-[#333333]">
+                  {item.title}
+                </h3>
+                <p className="text-[14px] text-[#666666] leading-relaxed">
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>
-
-          <div className="mt-5 p-3.5 bg-zinc-50 rounded-xl border border-[#F0E5EA] text-xs text-[#85818A] leading-relaxed">
-            ※上記は一般的な他業種店舗との比較です。当店では売上50%完全バック・全額即日日払い手渡し・雑費天引き0円を厳格に順守しています。
-          </div>
         </section>
 
-
         {/* =========================================================
-            SECTION 5: 経験者が初日から日給10万〜18万円以上を稼げる理由
+            8. 飛田新地の他店から移籍するメリット（2列×2段）
            ========================================================= */}
-        <section id="earning-system" className="space-y-6 scroll-mt-20">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block">
-              EARNING POWER
-            </span>
-            <h2 className="text-[21px] sm:text-[24px] font-black text-[#35313A] tracking-tight">
-              経験者が初日から日給10万〜18万円を稼げる理由
+        <section id="merit-other-shop" className="bg-white rounded-2xl p-6 sm:p-9 border border-[#F0DCE4] scroll-mt-20 space-y-7">
+          <div className="max-w-2xl space-y-2">
+            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+              飛田新地の他店から移籍するメリット
             </h2>
-            <p className="text-xs sm:text-[14px] text-[#85818A] leading-relaxed">
-              なぜ他業種を経験した女性は、初日から圧倒的な高日給を叩き出せるのか？その仕組みを解説します。
+            <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
+              お店を変えることで、働く環境も見直してみませんか？
+            </p>
+            <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+              仕事内容だけでなく、人間関係・待遇・立地・待機環境も、お店選びでは大切なポイントです。
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-            
-            <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#F0E5EA] shadow-2xs space-y-2.5">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#D94B7A]">
-                <LucideIcon name="TrendingUp" size={15} />
-                <span>理由 01</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* カード① いじめ・派閥のない職場環境 */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#FFF9FB] border border-[#F0DCE4] space-y-3">
+              <div className="flex items-center gap-2.5 text-[13px] font-bold text-[#C23B6B]">
+                <LucideIcon name="Users" size={17} strokeWidth={1.75} />
+                <span>いじめ・派閥のない職場環境</span>
               </div>
-              <h3 className="text-base sm:text-[17px] font-bold text-[#35313A]">
-                ネット指名に頼らない圧倒的な客数と回転力
+              <h3 className="text-[17px] sm:text-[18px] font-bold text-[#333333] leading-snug">
+                人間関係に悩まず、落ち着いて働ける環境へ
               </h3>
-              <p className="text-sm sm:text-[15px] text-[#85818A] leading-relaxed">
-                飛田新地は毎日全国から多数のお客様が訪れる日本屈指の料亭街です。ネット指名がなくても、通りを歩くお客様が次々にご来店されるため、待機部屋で暇を持て余すことなく高稼働を維持できます。
+              <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+                女性同士のいじめや派閥を作らないことを大切にしています。誰かの顔色をうかがったり、仕事以外の人間関係に過度に気を遣ったりせず、落ち着いて働ける職場環境を目指しています。
               </p>
             </div>
 
-            <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#F0E5EA] shadow-2xs space-y-2.5">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#D94B7A]">
-                <LucideIcon name="Clock" size={15} />
-                <span>理由 02</span>
+            {/* カード② 待遇・報酬 */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#FFF9FB] border border-[#F0DCE4] space-y-3">
+              <div className="flex items-center gap-2.5 text-[13px] font-bold text-[#C23B6B]">
+                <LucideIcon name="Coins" size={17} strokeWidth={1.75} />
+                <span>待遇・報酬</span>
               </div>
-              <h3 className="text-base sm:text-[17px] font-bold text-[#35313A]">
-                1回15〜20分の短時間接客で疲れない
+              <h3 className="text-[17px] sm:text-[18px] font-bold text-[#333333] leading-snug">
+                報酬や条件にも納得して働きたい
               </h3>
-              <p className="text-sm sm:text-[15px] text-[#85818A] leading-relaxed">
-                60分や90分のロング接客と異なり、1回の接客時間が非常に短いため、体力的な負担が極めて少なく済みます。短時間で集中して接客できるため、1日15〜25本を無理なく重ねることが可能です。
+              <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+                報酬の仕組み（売上50%バック・退勤時全額日払い）、控除（待機料・厚生費・衣装代0円）、支払い条件、出勤条件など、働くうえで大切な情報を事前に確認できます。今のお店の条件と比較しながらご検討ください。
               </p>
             </div>
 
-            <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#F0E5EA] shadow-2xs space-y-2.5">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#D94B7A]">
-                <LucideIcon name="HeartHandshake" size={15} />
-                <span>理由 03</span>
+            {/* カード③ 立地の良さ（集客のしやすさ） */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#FFF9FB] border border-[#F0DCE4] space-y-3">
+              <div className="flex items-center gap-2.5 text-[13px] font-bold text-[#C23B6B]">
+                <LucideIcon name="MapPin" size={17} strokeWidth={1.75} />
+                <span>立地の良さ</span>
               </div>
-              <h3 className="text-base sm:text-[17px] font-bold text-[#35313A]">
-                仲居さん（おばちゃん）の呼び込み力
+              <h3 className="text-[17px] sm:text-[18px] font-bold text-[#333333] leading-snug">
+                立地の良さで、お客さんが上がりやすくなる
               </h3>
-              <p className="text-sm sm:text-[15px] text-[#85818A] leading-relaxed">
-                女の子が自ら客引きをする必要はありません。経験豊富な仲居さんが前を通るお客様へ声掛けを行い、お部屋へと案内してくれます。女の子は笑顔と挨拶だけでスムーズに接客に入れます。
+              <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+                飛田新地では、店舗がある通りによって人通りやお客様の入りやすさが変わります。当グループはメイン・青春通りにお店があり、人通りが多いためお客様が上がりやすい環境で働けます。
               </p>
             </div>
 
-            <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#F0E5EA] shadow-2xs space-y-2.5">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#D94B7A]">
-                <LucideIcon name="BadgePercent" size={15} />
-                <span>理由 04</span>
+            {/* カード④ 待機環境・職場の雰囲気 */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#FFF9FB] border border-[#F0DCE4] space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2.5 text-[13px] font-bold text-[#C23B6B]">
+                  <LucideIcon name="Coffee" size={17} strokeWidth={1.75} />
+                  <span>待機環境・職場の雰囲気</span>
+                </div>
+                <h3 className="text-[17px] sm:text-[18px] font-bold text-[#333333] leading-snug">
+                  仕事以外の時間も、快適に過ごせる環境へ
+                </h3>
+                <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+                  待機場所や設備、店舗の雰囲気など、接客以外の時間の過ごしやすさも大切にしています。冷暖房・Wi-Fi完備の清潔な和室・パウダースペースを整えており、実際の環境は見学時にもご確認いただけます。
+                </p>
               </div>
-              <h3 className="text-base sm:text-[17px] font-bold text-[#35313A]">
-                外国人手当（+2,500円/回）やチップは全額手渡し
-              </h3>
-              <p className="text-sm sm:text-[15px] text-[#85818A] leading-relaxed">
-                通常コース報酬（売上50%）に加え、外国人のお客様を担当された際は1回ごとに+2,500円の手当が上乗せ支給されます。お客様からいただいたチップもお店の天引きなく全額手渡しされます。
-              </p>
+              <div className="rounded-xl overflow-hidden border border-[#F0DCE4] bg-white">
+                {!waitingImgFailed ? (
+                  <div className="aspect-4/3 w-full overflow-hidden">
+                    <img
+                      src={WAITING_ROOM_IMAGE}
+                      alt="清潔感のある和モダンな待機・パウダールームのイメージ"
+                      referrerPolicy="no-referrer"
+                      loading="lazy"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (!target.dataset.triedFallback) {
+                          target.dataset.triedFallback = '1';
+                          target.src = WAITING_ROOM_FALLBACK;
+                        } else {
+                          setWaitingImgFailed(true);
+                        }
+                      }}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="aspect-4/3 w-full bg-[#FFF0F5] flex items-center justify-center text-[#C23B6B] text-sm font-bold">
+                    待機環境・パウダースペース
+                  </div>
+                )}
+                <p className="px-3.5 py-2 text-[12px] text-[#666666] bg-white border-t border-[#F0DCE4]">
+                  ※待機空間・設備の雰囲気をお伝えするイメージ写真です。実際の設備は店舗見学でご確認いただけます。
+                </p>
+              </div>
             </div>
+          </div>
 
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#FFF0F5] border border-[#F5B5C9]/70 space-y-1.5">
+            <p className="text-[16px] sm:text-[17px] font-bold text-[#333333]">
+              仕事内容だけで、お店を選ぶ必要はありません。
+            </p>
+            <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+              人間関係・待遇・立地・働く環境。今のお店に感じている不満を見直し、自分に合った環境を探してみませんか？
+            </p>
           </div>
         </section>
 
-
         {/* =========================================================
-            SECTION 6: 前の店に知られずスムーズに移籍する3ステップ
+            9. 当店の待遇・条件
            ========================================================= */}
-        <section id="transfer-flow" className="bg-white rounded-3xl p-6 sm:p-9 md:p-10 border border-[#F0E5EA] shadow-2xs scroll-mt-20">
-          <div className="max-w-2xl mb-8">
-            <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block mb-2">
-              SAFE TRANSFER STEPS
-            </span>
-            <h2 className="text-[21px] sm:text-[24px] font-black text-[#35313A] tracking-tight">
-              前の店に知られずスムーズに移籍する3ステップ
+        <section id="conditions" className="scroll-mt-20 space-y-6">
+          <div className="max-w-2xl space-y-2">
+            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+              当店の待遇・条件
             </h2>
-            <p className="text-xs sm:text-[14px] text-[#85818A] mt-2 leading-relaxed">
-              現在他店に在籍中の方も、秘密厳守で安心して移籍準備を進めていただけます。
+            <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
+              働くうえで大切な条件も、しっかり確認できます。
+            </p>
+            <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+              他業種経験者・他店経験者のどちらにも判断しやすいよう、当店の実際の募集条件を一覧にまとめました。
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-            
-            {/* STEP 1 */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-[#FFF9FB] border border-[#F0E5EA] flex flex-col justify-between relative space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-black text-white bg-[#D94B7A] px-2.5 py-0.5 rounded">
-                    STEP 1
-                  </span>
-                  <span className="text-xs text-[#85818A] font-medium">秘密厳守</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+            {STORE_CONDITIONS.map((cond, idx) => (
+              <div
+                key={idx}
+                className="bg-white p-5 sm:p-6 rounded-2xl border border-[#F0DCE4] shadow-[0_2px_8px_rgba(233,139,170,0.05)] space-y-2.5 flex flex-col"
+              >
+                <div className="flex items-center gap-2 text-[#C23B6B]">
+                  <LucideIcon name={cond.icon} size={17} strokeWidth={1.75} />
+                  <h3 className="text-[15px] font-bold text-[#333333]">{cond.title}</h3>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-[#FCE8EF] text-[#D94B7A] flex items-center justify-center">
-                  <LucideIcon name="MessageSquareLock" size={20} />
-                </div>
-                <h3 className="text-base sm:text-[18px] font-bold text-[#35313A]">
-                  LINEでの事前相談・条件確認
-                </h3>
-                <ul className="text-xs sm:text-[13px] text-[#85818A] space-y-1.5 leading-relaxed">
-                  <li className="flex items-start gap-1.5">
-                    <span className="text-[#D94B7A] font-bold">・</span>
-                    <span>現在の店舗に知られず匿名で相談OK</span>
-                  </li>
-                  <li className="flex items-start gap-1.5">
-                    <span className="text-[#D94B7A] font-bold">・</span>
-                    <span>希望の出勤ペースや日給目安の確認</span>
-                  </li>
-                  <li className="flex items-start gap-1.5">
-                    <span className="text-[#D94B7A] font-bold">・</span>
-                    <span>寮・交通費・身バレ対策の事前質問</span>
-                  </li>
-                </ul>
+                <p className="text-[14px] font-bold text-[#C23B6B] leading-snug">
+                  {cond.main}
+                </p>
+                <p className="text-[13.5px] text-[#666666] leading-relaxed">
+                  {cond.detail}
+                </p>
               </div>
-              <div className="p-3 bg-white rounded-xl border border-[#F0E5EA] text-[11px] text-[#85818A]">
-                前の店を辞める前のご相談も大歓迎です。強引な勧誘や引き抜きは一切行いません。
-              </div>
-            </div>
-
-            {/* STEP 2 */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-[#FFF9FB] border border-[#F0E5EA] flex flex-col justify-between relative space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-black text-white bg-[#D94B7A] px-2.5 py-0.5 rounded">
-                    STEP 2
-                  </span>
-                  <span className="text-xs text-[#85818A] font-medium">手ぶらOK</span>
-                </div>
-                <div className="w-10 h-10 rounded-xl bg-[#FCE8EF] text-[#D94B7A] flex items-center justify-center">
-                  <LucideIcon name="UserCheck" size={20} />
-                </div>
-                <h3 className="text-base sm:text-[18px] font-bold text-[#35313A]">
-                  即日面接＆体験入店（体入）
-                </h3>
-                <ul className="text-xs sm:text-[13px] text-[#85818A] space-y-1.5 leading-relaxed">
-                  <li className="flex items-start gap-1.5">
-                    <span className="text-[#D94B7A] font-bold">・</span>
-                    <span>履歴書不要・私服のまま手ぶらで来訪可能</span>
-                  </li>
-                  <li className="flex items-start gap-1.5">
-                    <span className="text-[#D94B7A] font-bold">・</span>
-                    <span>女性スタッフによる丁寧な店舗案内</span>
-                  </li>
-                  <li className="flex items-start gap-1.5">
-                    <span className="text-[#D94B7A] font-bold">・</span>
-                    <span>1日体験してみて合わなければ即日終了OK</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="p-3 bg-white rounded-xl border border-[#F0E5EA] text-[11px] text-[#85818A]">
-                体験入店の日給も退勤時に売上50%を全額現金手渡し。合わない場合の無理な引き止めはゼロです。
-              </div>
-            </div>
-
-            {/* STEP 3 */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-[#FFF9FB] border border-[#F0E5EA] flex flex-col justify-between relative space-y-4">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-black text-white bg-[#D94B7A] px-2.5 py-0.5 rounded">
-                    STEP 3
-                  </span>
-                  <span className="text-xs text-[#85818A] font-medium">即日スタート</span>
-                </div>
-                <div className="w-10 h-10 rounded-xl bg-[#FCE8EF] text-[#D94B7A] flex items-center justify-center">
-                  <LucideIcon name="Coins" size={20} />
-                </div>
-                <h3 className="text-base sm:text-[18px] font-bold text-[#35313A]">
-                  本入店・即日全額日払い
-                </h3>
-                <ul className="text-xs sm:text-[13px] text-[#85818A] space-y-1.5 leading-relaxed">
-                  <li className="flex items-start gap-1.5">
-                    <span className="text-[#D94B7A] font-bold">・</span>
-                    <span>完全自由シフト（週1日〜・短時間もOK）</span>
-                  </li>
-                  <li className="flex items-start gap-1.5">
-                    <span className="text-[#D94B7A] font-bold">・</span>
-                    <span>オートロック個室マンション寮の即日利用</span>
-                  </li>
-                  <li className="flex items-start gap-1.5">
-                    <span className="text-[#D94B7A] font-bold">・</span>
-                    <span>地方からの交通費は初日全額現金精算</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="p-3 bg-white rounded-xl border border-[#F0E5EA] text-[11px] text-[#85818A]">
-                経験者ならではの気配りを活かして、初日から日給10万円超を達成する方が多数いらっしゃいます。
-              </div>
-            </div>
-
+            ))}
           </div>
         </section>
 
+        {/* =========================================================
+            10. 他店との比較チェック
+           ========================================================= */}
+        <section id="shop-comparison" className="bg-white rounded-2xl p-6 sm:p-9 border border-[#F0DCE4] scroll-mt-20 space-y-6">
+          <div className="max-w-2xl space-y-2">
+            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+              今のお店と当店の比較
+            </h2>
+            <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
+              今のお店と、当店を比べてみてください。
+            </p>
+            <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+              飛田新地の他店で勤務中の方がご自身の状況を整理できるよう、当店の具体的な条件を並べています。現在のお店と比べてご判断ください。
+            </p>
+          </div>
+
+          <div className="overflow-x-auto rounded-xl border border-[#F0DCE4]">
+            <table className="w-full min-w-[580px] text-left border-collapse text-[14px] sm:text-[15px]">
+              <thead>
+                <tr className="border-b border-[#F0DCE4] bg-[#FFF9FB]">
+                  <th className="p-4 font-bold text-[#333333] w-1/4 border-r border-[#F0DCE4]">
+                    比較項目
+                  </th>
+                  <th className="p-4 font-bold text-[#666666] w-1/3 border-r border-[#F0DCE4]">
+                    今のお店（今の状況をチェック）
+                  </th>
+                  <th className="p-4 font-bold text-white bg-[#E98BAA] w-5/12">
+                    当店
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#F0DCE4] bg-white">
+                {OTHER_SHOP_COMPARISON.map((row, idx) => (
+                  <tr key={idx}>
+                    <th scope="row" className="p-4 font-bold text-[#333333] border-r border-[#F0DCE4] align-top">
+                      {row.item}
+                    </th>
+                    <td className="p-4 text-[#666666] border-r border-[#F0DCE4] align-top">
+                      {row.current}
+                    </td>
+                    <td className="p-4 font-semibold text-[#333333] bg-[#FFF0F5] align-top">
+                      {row.ours}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
 
         {/* =========================================================
-            SECTION 7: 移籍前に確認しておきたいチェックリスト
+            11. 立地の良さ（アクセス・地図）
            ========================================================= */}
-        <section id="checklist" className="space-y-6 scroll-mt-20">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block">
-              CHECKLIST
-            </span>
-            <h2 className="text-[21px] sm:text-[24px] font-black text-[#35313A] tracking-tight">
+        <section id="access" className="bg-white rounded-2xl p-6 sm:p-9 border border-[#F0DCE4] scroll-mt-20 space-y-7">
+          <div className="max-w-2xl space-y-2">
+            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+              立地の良さ・周辺環境
+            </h2>
+            <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
+              立地の良さで、お客さんが上がりやすくなる。
+            </p>
+            <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+              当グループはメイン・青春通りにお店があり、人通りが多いためお客様が上がりやすい立地環境です。店舗のあるエリアとあわせて、最寄り駅からの位置関係も事前にご確認いただけます。
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            {/* 左：店舗周辺アクセスマップ（イラスト見取り図） */}
+            <div className="lg:col-span-5 bg-[#FFF9FB] rounded-2xl border border-[#F0DCE4] p-5 flex flex-col justify-between space-y-4">
+              <div className="space-y-1">
+                <span className="text-[13px] font-bold text-[#C23B6B] block">店舗周辺エリア案内図</span>
+                <p className="text-[14px] font-bold text-[#333333]">
+                  所在地：大阪府大阪市西成区山王3丁目エリア
+                </p>
+                <p className="text-[13px] text-[#666666]">
+                  飛田新地料理組合加盟 料亭街（主要3駅より徒歩5〜10分圏内）
+                </p>
+              </div>
+
+              <div className="bg-white rounded-xl border border-[#F0DCE4] p-3">
+                <svg
+                  viewBox="0 0 360 230"
+                  role="img"
+                  aria-label="動物園前駅 徒歩5分、新今宮駅 徒歩7分、天王寺駅 徒歩10分から飛田新地料亭街へのアクセス案内図"
+                  className="w-full h-auto"
+                >
+                  <rect width="360" height="230" rx="10" fill="#FFF9FB" />
+                  {/* 大通りライン */}
+                  <line x1="25" y1="68" x2="335" y2="68" stroke="#E5D5DC" strokeWidth="4" />
+                  <line x1="150" y1="30" x2="150" y2="210" stroke="#E5D5DC" strokeWidth="4" />
+                  {/* ルート線 */}
+                  <path d="M 55 68 L 150 68 L 150 155 L 210 155" fill="none" stroke="#E98BAA" strokeWidth="2.5" strokeDasharray="5 4" />
+                  <path d="M 150 68 L 150 155 L 210 155" fill="none" stroke="#E98BAA" strokeWidth="2.5" strokeDasharray="5 4" />
+                  <path d="M 295 68 L 295 155 L 210 155" fill="none" stroke="#E98BAA" strokeWidth="2.5" strokeDasharray="5 4" />
+
+                  {/* 新今宮駅 */}
+                  <rect x="16" y="22" width="96" height="36" rx="8" fill="#FFFFFF" stroke="#E98BAA" strokeWidth="1.5" />
+                  <text x="64" y="38" textAnchor="middle" fontSize="11" fontWeight="700" fill="#333333">新今宮駅</text>
+                  <text x="64" y="51" textAnchor="middle" fontSize="10" fontWeight="700" fill="#C23B6B">JR・南海 徒歩7分</text>
+
+                  {/* 動物園前駅 */}
+                  <rect x="116" y="22" width="102" height="36" rx="8" fill="#FFFFFF" stroke="#C23B6B" strokeWidth="2" />
+                  <text x="167" y="38" textAnchor="middle" fontSize="11" fontWeight="700" fill="#333333">動物園前駅</text>
+                  <text x="167" y="51" textAnchor="middle" fontSize="10" fontWeight="700" fill="#C23B6B">最寄・徒歩5分</text>
+
+                  {/* 天王寺駅 */}
+                  <rect x="234" y="22" width="112" height="36" rx="8" fill="#FFFFFF" stroke="#E98BAA" strokeWidth="1.5" />
+                  <text x="290" y="38" textAnchor="middle" fontSize="11" fontWeight="700" fill="#333333">天王寺・阿部野橋</text>
+                  <text x="290" y="51" textAnchor="middle" fontSize="10" fontWeight="700" fill="#C23B6B">各線 徒歩10分</text>
+
+                  {/* 目印：ジャンジャン横丁 */}
+                  <rect x="60" y="96" width="80" height="24" rx="6" fill="#FFF0F5" stroke="#F0DCE4" />
+                  <text x="100" y="112" textAnchor="middle" fontSize="9.5" fill="#666666">ジャンジャン横丁</text>
+
+                  {/* 目印：ハルカス側 */}
+                  <rect x="242" y="96" width="98" height="24" rx="6" fill="#FFF0F5" stroke="#F0DCE4" />
+                  <text x="291" y="112" textAnchor="middle" fontSize="9.5" fill="#666666">あべのハルカス方面</text>
+
+                  {/* 目的地：飛田新地料亭街 */}
+                  <rect x="148" y="142" width="136" height="58" rx="10" fill="#FFF0F5" stroke="#C23B6B" strokeWidth="2" />
+                  <text x="216" y="164" textAnchor="middle" fontSize="12" fontWeight="700" fill="#C23B6B">飛田新地（山王エリア）</text>
+                  <text x="216" y="180" textAnchor="middle" fontSize="9.5" fill="#333333">メイン通り・青春通り 直営料亭</text>
+                  <text x="216" y="193" textAnchor="middle" fontSize="9" fill="#666666">※待ち合わせご案内OK</text>
+                </svg>
+              </div>
+
+              <p className="text-[13px] text-[#666666] leading-relaxed">
+                ※初めてお越しの方や見学・面談時は、動物園前駅・天王寺駅周辺での待ち合わせと女性スタッフによる道案内にも対応しています。
+              </p>
+            </div>
+
+            {/* 右：3駅アクセス詳細カード */}
+            <div className="lg:col-span-7 flex flex-col justify-between gap-4">
+              {ACCESS_STATIONS.map((st, idx) => (
+                <div
+                  key={idx}
+                  className="p-5 rounded-2xl bg-[#FFF9FB] border border-[#F0DCE4] space-y-1.5"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <LucideIcon name="Train" size={17} className="text-[#C23B6B] shrink-0" strokeWidth={1.75} />
+                      <h3 className="text-[16px] font-bold text-[#333333]">{st.station}</h3>
+                    </div>
+                    <span className="text-[14px] font-bold text-[#C23B6B] tabular-nums">
+                      {st.time}
+                    </span>
+                  </div>
+                  <p className="text-[13px] font-medium text-[#999999]">
+                    路線：{st.lines}
+                  </p>
+                  <p className="text-[14px] text-[#666666] leading-relaxed pt-0.5">
+                    {st.route}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================
+            12. 移籍までの流れ（3ステップ横並び）
+           ========================================================= */}
+        <section id="transfer-flow" className="bg-white rounded-2xl p-6 sm:p-9 border border-[#F0DCE4] scroll-mt-20 space-y-6">
+          <div className="max-w-2xl space-y-2">
+            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+              移籍までの流れ
+            </h2>
+            <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
+              今のお店を辞める前に、まずは相談から。
+            </p>
+            <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+              他業種からの移籍も、飛田新地の他店からの移籍も、まずは相談から始められます。
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {TRANSFER_STEPS.map((st, idx) => (
+              <div
+                key={idx}
+                className="p-5 sm:p-6 rounded-2xl bg-[#FFF9FB] border border-[#F0DCE4] flex flex-col justify-between space-y-4"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[13px] font-bold text-[#C23B6B] tabular-nums">
+                      STEP {idx + 1}
+                    </span>
+                    <LucideIcon name={st.icon} size={18} className="text-[#C23B6B]" strokeWidth={1.75} />
+                  </div>
+                  <h3 className="text-[17px] font-bold text-[#333333]">
+                    {st.title}
+                  </h3>
+                  <ul className="space-y-1.5 text-[14px] text-[#666666]">
+                    {st.points.map((pt, pIdx) => (
+                      <li key={pIdx} className="flex items-start gap-2">
+                        <span className="text-[#C23B6B] font-bold shrink-0">・</span>
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <p className="text-[13px] text-[#666666] pt-3 border-t border-[#F0DCE4] leading-relaxed">
+                  {st.note}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* =========================================================
+            13. 移籍前に確認したい4つのポイント
+           ========================================================= */}
+        <section id="check-points" className="scroll-mt-20 space-y-6">
+          <div className="max-w-2xl space-y-2">
+            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+              移籍前に確認したいポイント
+            </h2>
+            <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
               移籍前に確認しておきたい4つのポイント
-            </h2>
-            <p className="text-xs sm:text-[14px] text-[#85818A] leading-relaxed">
-              トラブルなく円満に環境を変え、安心して新生活を始めるための確認項目です。
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-            
-            <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#F0E5EA] shadow-2xs space-y-2.5">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#D94B7A]">
-                <LucideIcon name="ShieldAlert" size={15} />
-                <span>前店とのトラブル回避</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {PRE_TRANSFER_POINTS.map((pt, idx) => (
+              <div
+                key={idx}
+                className="bg-white p-5 sm:p-6 rounded-2xl border border-[#F0DCE4] shadow-[0_2px_8px_rgba(233,139,170,0.05)] space-y-2.5"
+              >
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-[#FFF0F5] text-[#C23B6B] flex items-center justify-center shrink-0">
+                    <LucideIcon name={pt.icon} size={18} strokeWidth={1.75} />
+                  </div>
+                  <h3 className="text-[16px] sm:text-[17px] font-bold text-[#333333]">
+                    {pt.title}
+                  </h3>
+                </div>
+                <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+                  {pt.desc}
+                </p>
               </div>
-              <h3 className="text-base sm:text-[17px] font-bold text-[#35313A]">
-                外部スカウトや他店とは一切無縁の直営独立環境
-              </h3>
-              <p className="text-sm sm:text-[15px] text-[#85818A] leading-relaxed">
-                飛田新地は料亭組合が統括する独自の伝統街であり、外部のスカウトや他地域の風俗グループとは一切提携していません。個人情報は厳重に施錠管理され、前の店にバレる心配はありません。
-              </p>
-            </div>
-
-            <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#F0E5EA] shadow-2xs space-y-2.5">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#D94B7A]">
-                <LucideIcon name="Home" size={15} />
-                <span>住まい・寮の利用</span>
-              </div>
-              <h3 className="text-base sm:text-[17px] font-bold text-[#35313A]">
-                家具家電付きオートロック個室マンション寮完備
-              </h3>
-              <p className="text-sm sm:text-[15px] text-[#85818A] leading-relaxed">
-                敷金・礼金0円で即日入居可能。テレビ・冷蔵庫・洗濯機・エアコン・Wi-Fi完備でカバン1つですぐに新生活を始められます。店舗徒歩圏内で防犯性も抜群です。
-              </p>
-            </div>
-
-            <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#F0E5EA] shadow-2xs space-y-2.5">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#D94B7A]">
-                <LucideIcon name="Train" size={15} />
-                <span>交通費サポート</span>
-              </div>
-              <h3 className="text-base sm:text-[17px] font-bold text-[#35313A]">
-                遠方・地方からの往復交通費を全額支給
-              </h3>
-              <p className="text-sm sm:text-[15px] text-[#85818A] leading-relaxed">
-                東京、名古屋、福岡、北海道など全国からの出稼ぎ・移籍希望者へ、新幹線・飛行機・夜行バスの実費往復交通費を全額支給いたします。領収書があれば初日稼働後に現金精算手渡し。
-              </p>
-            </div>
-
-            <div className="bg-white p-5 sm:p-6 rounded-2xl border border-[#F0E5EA] shadow-2xs space-y-2.5">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#D94B7A]">
-                <LucideIcon name="FileText" size={15} />
-                <span>税金・身バレ対策</span>
-              </div>
-              <h3 className="text-base sm:text-[17px] font-bold text-[#35313A]">
-                副業・昼職掛け持ちの住民税普通徴収手続きサポート
-              </h3>
-              <p className="text-sm sm:text-[15px] text-[#85818A] leading-relaxed">
-                昼職や本業の会社に副業が知られないよう、住民税を自分で納付する「普通徴収」のやり方や確定申告の基本ルールを専任スタッフが分かりやすくご案内します。
-              </p>
-            </div>
-
+            ))}
           </div>
         </section>
 
-
         {/* =========================================================
-            SECTION 8: 経験者向けおすすめコラム
+            14. 経験者向けのお役立ちコラム（6記事カード）
            ========================================================= */}
-        <section id="columns" className="bg-white rounded-3xl p-6 sm:p-9 md:p-10 border border-[#F0E5EA] shadow-2xs scroll-mt-20">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
-            <div>
-              <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block mb-2">
-                COLUMNS
-              </span>
-              <h2 className="text-[21px] sm:text-[24px] font-black text-[#35313A] tracking-tight">
-                他業種・移籍を検討中の方に役立つコラム
+        <section id="columns" className="bg-white rounded-2xl p-6 sm:p-9 border border-[#F0DCE4] scroll-mt-20 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div className="space-y-1.5">
+              <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+                経験者向けコラム
               </h2>
-              <p className="text-xs sm:text-[14px] text-[#85818A] mt-1 leading-relaxed">
-                キャバクラや風俗との詳しい違いや、移籍組のリアルな体験談をチェック。
+              <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
+                経験者のためのお役立ちコラム
+              </p>
+              <p className="text-[14px] text-[#666666]">
+                他業種からの移籍と、飛田新地の他店からの移籍の両方に役立つ記事をまとめました。
               </p>
             </div>
 
@@ -856,173 +1015,202 @@ export default function ExperiencedPage({
                   e.preventDefault();
                   onNavigateBlog();
                 }}
-                className="text-xs font-bold text-[#D94B7A] hover:underline flex items-center gap-1 cursor-pointer self-start sm:self-auto"
+                className="text-[14px] font-bold text-[#C23B6B] hover:underline flex items-center gap-1 cursor-pointer self-start sm:self-auto whitespace-nowrap"
               >
                 <span>コラム一覧を見る</span>
-                <LucideIcon name="ChevronRight" size={14} />
+                <LucideIcon name="ChevronRight" size={15} />
               </a>
             )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {FEATURED_EXPERIENCED_ARTICLES.map((article) => (
+          <div className="flex items-center gap-1.5 text-[13px] font-semibold text-[#C23B6B] md:hidden">
+            <LucideIcon name="ArrowLeftRight" size={15} strokeWidth={1.75} />
+            <span>横にスワイプして記事をチェックできます</span>
+          </div>
+
+          <div className="flex overflow-x-auto snap-x snap-mandatory gap-5 pb-2 md:grid md:grid-cols-3 md:overflow-visible">
+            {FEATURED_COLUMNS.map((article) => (
               <a
                 key={article.slug}
                 href={`/blog/${article.slug}`}
                 onClick={(e) => {
-                  e.preventDefault();
-                  onNavigateBlog && onNavigateBlog(article.slug);
+                  if (onNavigateBlog) {
+                    e.preventDefault();
+                    onNavigateBlog(article.slug);
+                  }
                 }}
-                className="bg-[#FFF9FB] rounded-2xl border border-[#F0E5EA] overflow-hidden hover:border-[#D94B7A]/50 transition-all cursor-pointer group flex flex-col justify-between"
+                className="min-w-[275px] max-w-[310px] md:min-w-0 md:max-w-none snap-start bg-[#FFF9FB] rounded-2xl border border-[#F0DCE4] overflow-hidden hover:border-[#E98BAA] transition-colors cursor-pointer group flex flex-col justify-between"
               >
-                <div className="p-4 sm:p-5 space-y-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold bg-[#FCE8EF] text-[#D94B7A] px-2 py-0.5 rounded">
-                      他業種比較
-                    </span>
-                    <span className="text-[11px] text-[#85818A]">{article.readTime}</span>
+                <div>
+                  <div className="aspect-4/3 w-full overflow-hidden bg-[#FFF0F5]">
+                    <img
+                      src={article.image}
+                      alt={article.title}
+                      referrerPolicy="no-referrer"
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
                   </div>
-                  <h3 className="text-sm sm:text-base font-bold text-[#35313A] leading-snug group-hover:text-[#D94B7A] transition-colors line-clamp-2">
-                    {article.title}
-                  </h3>
-                  <p className="text-xs text-[#85818A] leading-relaxed line-clamp-2">
-                    {article.summary}
-                  </p>
+                  <div className="p-5 space-y-2.5">
+                    <div className="flex items-center gap-2 text-[12px] text-[#999999]">
+                      <span className="font-semibold text-[#C23B6B]">{article.category}</span>
+                      <span aria-hidden="true">·</span>
+                      <span>{article.readTime}</span>
+                    </div>
+                    <h3 className="text-[16px] font-bold text-[#333333] leading-snug group-hover:text-[#C23B6B] transition-colors">
+                      {article.title}
+                    </h3>
+                    <p className="text-[13.5px] text-[#666666] leading-relaxed line-clamp-3">
+                      {article.summary}
+                    </p>
+                  </div>
                 </div>
-                <div className="px-4 sm:px-5 pb-4 pt-1 flex items-center text-xs font-bold text-[#D94B7A] gap-1 group-hover:underline">
+                <div className="px-5 pb-5 pt-1 flex items-center text-[14px] font-bold text-[#C23B6B] gap-1 group-hover:underline">
                   <span>記事を読む</span>
-                  <LucideIcon name="ChevronRight" size={13} />
+                  <LucideIcon name="ChevronRight" size={15} />
                 </div>
               </a>
             ))}
           </div>
         </section>
 
-
         {/* =========================================================
-            SECTION 9: 経験者・他業種移籍者からよくある質問（FAQ）
+            15. 経験者向けFAQ（カテゴリ別アコーディオン）
            ========================================================= */}
-        <section id="faq" className="space-y-6 scroll-mt-20">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block">
-              Q&A
-            </span>
-            <h2 className="text-[21px] sm:text-[24px] font-black text-[#35313A] tracking-tight">
-              経験者・他業種からの移籍に関するよくある質問
+        <section id="faq" className="scroll-mt-20 space-y-8">
+          <div className="max-w-2xl space-y-2">
+            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+              よくある質問
             </h2>
-            <p className="text-xs sm:text-[14px] text-[#85818A] leading-relaxed">
-              他店や他業種を経験された女性から特によくいただく10の疑問に、結論からお答えします。
+            <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
+              経験者・移籍希望者からよくある質問
+            </p>
+            <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+              他業種からの移籍・飛田新地の他店からの移籍について、多く寄せられる疑問にお答えします。
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl p-5 sm:p-8 border border-[#F0E5EA] shadow-2xs divide-y divide-[#F0E5EA]">
-            {EXPERIENCED_FAQS.map((faq, idx) => {
-              const isOpen = openFaqIndex === idx;
-              return (
-                <div key={idx} className="py-4 first:pt-0 last:pb-0">
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
-                    className="w-full text-left flex items-start justify-between gap-4 py-1 text-sm sm:text-base font-bold text-[#35313A] hover:text-[#D94B7A] cursor-pointer transition-colors"
-                  >
-                    <span className="flex items-start gap-2.5">
-                      <span className="text-[#D94B7A] font-mono font-bold shrink-0">Q.</span>
-                      <span>{faq.q}</span>
-                    </span>
-                    <LucideIcon
-                      name={isOpen ? 'ChevronUp' : 'ChevronDown'}
-                      size={18}
-                      className="text-[#85818A] shrink-0 mt-0.5"
-                    />
-                  </button>
-
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="pt-3 pb-1 pl-6 sm:pl-7 pr-2 text-xs sm:text-[14px] text-[#35313A] leading-relaxed">
-                          <div className="p-3.5 rounded-xl bg-[#FFF9FB] border border-[#F0E5EA]">
-                            <p className="font-medium">{faq.a}</p>
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+          <div className="space-y-6">
+            {FAQ_GROUPS.map((group) => (
+              <div
+                key={group.key}
+                className="bg-white rounded-2xl p-5 sm:p-7 border border-[#F0DCE4] space-y-4"
+              >
+                <h3 className="text-[17px] sm:text-[18px] font-bold text-[#333333] pb-2 border-b border-[#F0DCE4]">
+                  {group.heading}
+                </h3>
+                <div className="divide-y divide-[#F0DCE4]">
+                  {group.items.map((faq, idx) => {
+                    const key = `${group.key}-${idx}`;
+                    const isOpen = openFaqKey === key;
+                    return (
+                      <div key={key} className="py-3 first:pt-0 last:pb-0">
+                        <button
+                          type="button"
+                          onClick={() => setOpenFaqKey(isOpen ? null : key)}
+                          aria-expanded={isOpen}
+                          className="w-full min-h-[48px] text-left flex items-center justify-between gap-4 py-2 text-[14.5px] sm:text-[15.5px] font-bold text-[#333333] hover:text-[#C23B6B] cursor-pointer transition-colors"
+                        >
+                          <span className="flex items-start gap-2.5">
+                            <span className="text-[#C23B6B] font-bold shrink-0">Q.</span>
+                            <span>{faq.q}</span>
+                          </span>
+                          <LucideIcon
+                            name={isOpen ? 'ChevronUp' : 'ChevronDown'}
+                            size={18}
+                            className="text-[#999999] shrink-0"
+                          />
+                        </button>
+                        <AnimatePresence>
+                          {isOpen && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.18 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="pt-2 pb-2 pl-6 sm:pl-7 text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
+                                <div className="p-4 rounded-xl bg-[#FFF9FB] border border-[#F0DCE4]">
+                                  {faq.a}
+                                </div>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  })}
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
 
           {onNavigateFaq && (
-            <div className="text-center pt-2">
+            <div className="text-center">
               <a
                 href="/faq"
                 onClick={(e) => {
                   e.preventDefault();
                   onNavigateFaq();
                 }}
-                className="text-xs font-bold text-[#D94B7A] hover:underline inline-flex items-center gap-1 cursor-pointer"
+                className="text-[14px] font-bold text-[#C23B6B] hover:underline inline-flex items-center gap-1 cursor-pointer"
               >
-                <span>よくある質問（FAQ全問）を見る</span>
-                <LucideIcon name="ChevronRight" size={14} />
+                <span>よくある質問（全一覧）を見る</span>
+                <LucideIcon name="ChevronRight" size={15} />
               </a>
             </div>
           )}
         </section>
 
-
         {/* =========================================================
-            SECTION 10: LINE相談エリア
+            16. 最終CTA（背景薄いピンク）
            ========================================================= */}
-        <section id="line-cta" className="bg-gradient-to-b from-[#FFF9FB] to-white rounded-3xl p-6 sm:p-10 border-2 border-[#F0E5EA] text-center space-y-5 scroll-mt-20">
-          <div className="w-12 h-12 rounded-2xl bg-[#06C755]/15 text-[#06C755] flex items-center justify-center mx-auto">
-            <LucideIcon name="MessageCircle" size={24} />
-          </div>
-
-          <div className="max-w-xl mx-auto space-y-2">
-            <h2 className="text-[20px] sm:text-[23px] font-black text-[#35313A] tracking-tight">
-              他店からの移籍・条件相談も、秘密厳守でLINE相談できます
+        <section
+          id="line-cta"
+          className="bg-[#FFF0F5] rounded-2xl p-7 sm:p-11 border border-[#F5B5C9] text-center space-y-5 scroll-mt-20"
+        >
+          <div className="max-w-2xl mx-auto space-y-3">
+            <h2 className="text-[21px] sm:text-[26px] font-bold text-[#333333] tracking-tight">
+              今の働き方を変えたいと思ったら、まずは相談から。
             </h2>
-            <p className="text-xs sm:text-sm text-[#85818A] leading-relaxed pt-1">
-              前の店に知られたくない、今の給与や待遇と比較したいなど、気になることだけでも大歓迎です。<br />
-              専任女性スタッフが個別に対応し、他店との条件の違いを分かりやすくお答えします。
+            <p className="text-[14px] sm:text-[15.5px] text-[#666666] leading-relaxed">
+              他業種での経験がある方も、飛田新地で他店に勤務している方も。仕事内容・接客ルール・人間関係・報酬・待遇・立地など、気になることを一つずつ確認してみませんか？
+            </p>
+            <p className="text-[14px] sm:text-[15.5px] text-[#666666] leading-relaxed">
+              今すぐ移籍を決める必要はありません。まずは自分に合った働き方や環境を知ることから始めてみてください。
             </p>
           </div>
 
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="pt-2 flex flex-col items-center gap-3">
             <a
               href={LINE_OFFICIAL_URL}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => {
                 e.preventDefault();
-                handleLineClick('【移籍・経験者ページからの相談】他業種からの移籍を検討しています。現在の待遇や日給の目安について相談したいです。');
+                handleLineClick('【経験者・移籍ページからの相談】仕事内容・人間関係・待遇・立地などについて相談したいです。');
               }}
-              className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-sm shadow-md hover:shadow-lg transition-all cursor-pointer flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-[15px] shadow-xs transition-colors cursor-pointer inline-flex items-center justify-center gap-2.5 whitespace-nowrap"
             >
-              <LucideIcon name="MessageCircle" size={18} />
-              <span>移籍についてLINEで個別相談する</span>
+              <LucideIcon name="MessageCircle" size={19} strokeWidth={2} />
+              <span>LINEで移籍について相談する</span>
             </a>
-            <span className="text-xs font-bold text-[#D94B7A] bg-[#FCE8EF] px-3.5 py-1.5 rounded-full border border-[#F0E5EA]">
-              他店在籍中・相談のみでもOK
-            </span>
+
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[13px] font-semibold text-[#666666]">
+              <span>他業種・他店からの移籍相談OK</span>
+              <span aria-hidden="true">·</span>
+              <span>相談だけでもOK</span>
+            </div>
           </div>
         </section>
 
-
-        {/* =========================================================
-            SECTION 11: 関連ページへの内部リンク
-           ========================================================= */}
-        <section className="pt-4 border-t border-[#F0E5EA]">
-          <h3 className="text-xs font-bold text-[#85818A] mb-3 text-center">
-            関連する情報ページ
+        {/* 関連ページリンク */}
+        <section className="pt-4 border-t border-[#F0DCE4]">
+          <h3 className="text-[13px] font-bold text-[#999999] mb-3 text-center">
+            関連するガイドページ
           </h3>
-          <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
+          <div className="flex flex-wrap items-center justify-center gap-2.5 text-[13px]">
             {onNavigateTopic && (
               <>
                 <a
@@ -1031,7 +1219,7 @@ export default function ExperiencedPage({
                     e.preventDefault();
                     onNavigateTopic('job');
                   }}
-                  className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-white hover:bg-[#FFF0F5] hover:text-[#C23B6B] border border-[#F0DCE4] transition-colors cursor-pointer"
                 >
                   お仕事内容
                 </a>
@@ -1041,19 +1229,29 @@ export default function ExperiencedPage({
                     e.preventDefault();
                     onNavigateTopic('salary');
                   }}
-                  className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-white hover:bg-[#FFF0F5] hover:text-[#C23B6B] border border-[#F0DCE4] transition-colors cursor-pointer"
                 >
                   給料・待遇
                 </a>
                 <a
-                  href="/beginner"
+                  href="/workstyle"
                   onClick={(e) => {
                     e.preventDefault();
-                    onNavigateTopic('beginner');
+                    onNavigateTopic('workstyle');
                   }}
-                  className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-white hover:bg-[#FFF0F5] hover:text-[#C23B6B] border border-[#F0DCE4] transition-colors cursor-pointer"
                 >
-                  未経験向けガイド
+                  働き方
+                </a>
+                <a
+                  href="/flow"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigateTopic('flow');
+                  }}
+                  className="px-4 py-2 rounded-xl bg-white hover:bg-[#FFF0F5] hover:text-[#C23B6B] border border-[#F0DCE4] transition-colors cursor-pointer"
+                >
+                  面接・体験入店の流れ
                 </a>
                 <a
                   href="/safety"
@@ -1061,7 +1259,7 @@ export default function ExperiencedPage({
                     e.preventDefault();
                     onNavigateTopic('safety');
                   }}
-                  className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-white hover:bg-[#FFF0F5] hover:text-[#C23B6B] border border-[#F0DCE4] transition-colors cursor-pointer"
                 >
                   安全・身バレ対策
                 </a>
@@ -1074,141 +1272,501 @@ export default function ExperiencedPage({
                   e.preventDefault();
                   onNavigateFaq();
                 }}
-                className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#FCE8EF] hover:text-[#D94B7A] border border-[#F0E5EA] transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-white hover:bg-[#FFF0F5] hover:text-[#C23B6B] border border-[#F0DCE4] transition-colors cursor-pointer"
               >
                 よくある質問
               </a>
             )}
           </div>
         </section>
-
       </div>
     </div>
   );
 }
 
-// 他業種との詳細比較テーブルデータ
-const COMPARISON_ROWS = [
-  {
-    item: '営業LINE・店外連絡',
-    tobita: '完全禁止（店外一切不要）',
-    cabaret: '必須（休日もLINE連絡義務）',
-    soap: '店舗により指名営業あり',
-    delivery: '待機中の営業連絡あり'
-  },
-  {
-    item: '写真・ネット顔出し',
-    tobita: '完全非掲載（撮影禁止）',
-    cabaret: '宣材写真・SNS顔出し必須',
-    soap: 'Webパネル・雑誌掲載',
-    delivery: 'Web写真・動画掲載あり'
-  },
-  {
-    item: '肉体負担・お風呂洗い',
-    tobita: '座敷で短時間（重労働なし）',
-    cabaret: '立ち仕事・ヒール疲労',
-    soap: '重いお風呂洗い・介助業務',
-    delivery: '移動・長期待機による疲労'
-  },
-  {
-    item: 'お酒の飲酒',
-    tobita: '完全不要（ソフトドリンク可）',
-    cabaret: '必須（二日酔い・体調リスク）',
-    soap: '原則不要',
-    delivery: '原則不要'
-  },
-  {
-    item: '1回の接客時間',
-    tobita: '15〜20分の短時間集中',
-    cabaret: '60〜90分＋同伴アフター',
-    soap: '60〜120分の長時間',
-    delivery: '60〜90分＋長期待機'
-  },
-  {
-    item: '天引き・雑費控除',
-    tobita: '完全0円（一切引かれず）',
-    cabaret: 'ヘアメイク代・厚生費引かれ大',
-    soap: '待機料・システム料引かれあり',
-    delivery: '雑費・送迎費引かれあり'
-  },
-  {
-    item: '報酬支給・日払い',
-    tobita: '売上50%完全即日手渡し',
-    cabaret: '時給＋小歩合（締め日払い多）',
-    soap: '45〜50%（締め払い有）',
-    delivery: '40〜45%（雑費引後）'
-  },
-  {
-    item: '客引き・呼び込み',
-    tobita: '仲居さんが全担当（女の子0）',
-    cabaret: 'キャッチ・同伴ノルマあり',
-    soap: '店舗集客',
-    delivery: '店舗集客'
-  }
+const TOC_ITEMS = [
+  { id: 'transfer-guide', label: '移籍のご案内' },
+  { id: 'burdens', label: '今の仕事の負担' },
+  { id: 'comparison', label: '5業種比較' },
+  { id: 'merit-other-industry', label: '他業種からの移籍' },
+  { id: 'merit-other-shop', label: '他店からの移籍' },
+  { id: 'conditions', label: '待遇・条件' },
+  { id: 'shop-comparison', label: '他店比較チェック' },
+  { id: 'access', label: '立地の良さ' },
+  { id: 'transfer-flow', label: '移籍までの流れ' },
+  { id: 'columns', label: 'お役立ちコラム' },
+  { id: 'faq', label: 'よくある質問' },
 ];
 
-// 経験者向けFAQ（結論ファースト）
-const EXPERIENCED_FAQS = [
+const BASIC_INFO_CARDS: {
+  icon: 'Clock' | 'ShieldCheck' | 'MessageSquare' | 'HeartHandshake';
+  label: string;
+  title: string;
+  desc: string;
+}[] = [
   {
-    q: '過去に風俗やキャバクラで働いていたことを隠す必要はありますか？',
-    a: '隠す必要は全くありません。接客の基礎知識や気配りが身についている方は即戦力として初日から大活躍されています。もちろんご自身から話したくない場合は無理にお話しいただく必要もありません。'
+    icon: 'Clock',
+    label: '① 接客スタイル',
+    title: '短時間中心の接客',
+    desc: '1回15〜20分が基本の和室接客。長時間の施術や席付きとは異なるペースで働けます。',
   },
   {
-    q: '他店からの移籍で、前の店やスカウトとトラブルになりませんか？',
-    a: '一切トラブルになりません。飛田新地は料亭組合が統括する独立した伝統街であり、外部のスカウトや他地域の風俗店とは一切関係がありません。個人情報は施錠管理され、秘密は厳重に守られます。'
+    icon: 'ShieldCheck',
+    label: '② 接客ルール',
+    title: 'キス・粘膜接触なし',
+    desc: '当店の募集では、キスや粘膜接触を伴わない接客ルールを採用しています。',
   },
   {
-    q: '宣材写真やWebパネル指名は本当にないのですか？',
-    a: 'はい、一切ありません。街全体で写真・動画撮影が禁止されており、ホームページやSNSにキャストの顔写真・プロフィールが出ることはありません。ネット上に情報が残る心配もゼロです。'
+    icon: 'MessageSquare',
+    label: '③ 移籍相談',
+    title: '他業種・他店からの移籍相談OK',
+    desc: '今のお仕事を辞める前でも、匿名のまま仕事内容や条件のご相談が可能です。',
   },
   {
-    q: 'お風呂掃除や長時間の体力仕事は本当にありませんか？',
-    a: 'ありません。接客は落ち着いた和室で行われ、お部屋のシーツ交換や清掃はすべて仲居さん（おばちゃん）が担当します。ソープランドのようなお風呂介助や長時間の肉体労働はありません。'
+    icon: 'HeartHandshake',
+    label: '④ 働く環境',
+    title: '人間関係・待遇・立地も大切に',
+    desc: '派閥やいじめを作らない職場方針、明朗な待遇、メイン・青春通りの人通りが多い立地を整えています。',
   },
-  {
-    q: '営業LINEや電話番号交換を強要されることはありませんか？',
-    a: '絶対にありません。料亭組合の規約により、お客様との個人的な連絡先交換（LINE・電話番号・SNS）は厳しく禁止されています。休日に営業連絡を送るストレスは一切ありません。'
-  },
-  {
-    q: '他業種のような待機料や厚生費、罰金の天引きはありますか？',
-    a: '完全0円です。当店では待機料、厚生費、衣装レンタル代、遅刻罰金などの名目での天引きは一切行っていません。売上の50%がそのまま退勤時に現金で全額手渡されます。'
-  },
-  {
-    q: '地方や他地域からの移籍で交通費や寮は用意してもらえますか？',
-    a: 'はい、完備しています。全国からの移籍希望者へ往復交通費（新幹線・飛行機等）を全額支給し、敷金・礼金0円の家具家電付きオートロック個室寮に即日入居いただけます。'
-  },
-  {
-    q: '昼職や副業と掛け持ちしながら週末だけ移籍勤務できますか？',
-    a: 'もちろん可能です。完全自由出勤制のため、「金曜夜と土日だけ」「月数回だけ」といったシフトも柔軟に対応しています。本業に知られない住民税普通徴収手続きもサポートします。'
-  },
-  {
-    q: '30代・40代でも他店からの移籍で需要はありますか？',
-    a: '非常に高い需要があります。飛田新地には落ち着いた大人の女性や包容力のある女性を好まれるお客様が多数いらっしゃり、年齢を重ねた経験者キャストがトップクラスの売上を上げています。'
-  },
-  {
-    q: '1日の体験入店で手応えを見てから移籍を決めてもいいですか？',
-    a: 'はい、大歓迎です。まずは1日体験入店で飛田新地の客足や働きやすさを実感していただき、合わないと感じたらその日で終了しても全額日払いで受け取れます。'
-  }
 ];
 
-// 経験者向けおすすめコラム記事
-const FEATURED_EXPERIENCED_ARTICLES = [
+const CURRENT_BURDENS: {
+  icon: 'Clock' | 'ShieldAlert' | 'MessageSquareOff' | 'Sparkles';
+  title: string;
+  desc: string;
+}[] = [
   {
-    title: '【キャバクラ・風俗との違い】経験者が「飛田新地が一番楽」と口を揃える納得の理由',
-    slug: 'tobitashinchi-vs-other-night-jobs',
-    readTime: '4分で読める',
-    summary: 'お酒不要・営業LINEなし・お風呂洗いなし・売上50%即日手渡しの決定的なメリットを他業種と比較。'
+    icon: 'Clock',
+    title: '① 長時間の接客・施術',
+    desc: '長時間の接客や施術を続けることで、身体的にも精神的にも疲れてしまうことはありませんか？',
   },
   {
-    title: '【30代・40代の飛田新地求人】年齢を気にせず愛嬌と包容力でしっかり稼げる理由',
-    slug: 'tobitashinchi-mature-ladies-success',
-    readTime: '4分で読める',
-    summary: 'キャバクラ等で年齢の壁を感じた女性が、飛田新地に移籍して安定して高収入を得られる理由。'
+    icon: 'ShieldAlert',
+    title: '② 接触内容への抵抗',
+    desc: 'キスや身体的な接触など、仕事内容に対して精神的な負担や抵抗を感じていませんか？',
   },
   {
-    title: '【お仕事内容ガイド】出勤から退勤までのリアルな1日の流れと仲居さんの役割',
-    slug: 'tobita-job-guide',
-    readTime: '3分で読める',
-    summary: '呼び込みや清掃はすべて仲居さんが担当。女性は座敷で笑顔で手を振って接客するだけ。'
-  }
+    icon: 'MessageSquareOff',
+    title: '③ 営業連絡・売上へのプレッシャー',
+    desc: 'お客様への営業LINEや売上・指名を意識し続ける働き方に疲れていませんか？',
+  },
+  {
+    icon: 'Sparkles',
+    title: '④ 準備・片付け・その他の業務',
+    desc: '施術準備、入浴、清掃、接客以外の業務など、本来の接客以外にも負担を感じていませんか？',
+  },
+];
+
+const FIVE_INDUSTRY_COMPARISON = [
+  {
+    item: '主な接客',
+    tobita: '和室での接客',
+    esthe: 'エステ施術',
+    soap: '入浴を伴う接客',
+    health: '店舗形態による',
+    cabaret: '飲食・会話',
+    highlightPink: false,
+  },
+  {
+    item: '接客時間',
+    tobita: '短時間中心',
+    esthe: 'コース制',
+    soap: 'コース制',
+    health: 'コース制',
+    cabaret: '長時間になりやすい',
+    highlightPink: true,
+  },
+  {
+    item: '写メ日記・パネル掲載',
+    tobita: 'なし',
+    esthe: 'あり',
+    soap: 'あり',
+    health: 'あり',
+    cabaret: 'あり',
+    highlightPink: true,
+  },
+  {
+    item: '粘膜接触',
+    tobita: 'なし',
+    esthe: '通常は基本業務外',
+    soap: 'サービスによる',
+    health: 'サービスによる',
+    cabaret: '通常は基本業務外',
+    highlightPink: true,
+  },
+  {
+    item: '営業連絡',
+    tobita: 'なし',
+    esthe: '店舗ルールによる',
+    soap: '店舗ルールによる',
+    health: '店舗ルールによる',
+    cabaret: '同伴・営業連絡等がある場合も',
+    highlightPink: true,
+  },
+  {
+    item: '主な負担',
+    tobita: '体力面',
+    esthe: '施術・体力面',
+    soap: '入浴・接客内容',
+    health: '接客内容・店舗形態',
+    cabaret: '会話・営業・お酒',
+    highlightPink: false,
+  },
+];
+
+const OTHER_INDUSTRY_MERITS: {
+  icon: 'Award' | 'Clock' | 'ShieldCheck' | 'Compass';
+  title: string;
+  desc: string;
+}[] = [
+  {
+    icon: 'Award',
+    title: '接客経験を活かせる',
+    desc: 'お客様への対応やコミュニケーションなど、今まで身につけてきた経験を活かせます。',
+  },
+  {
+    icon: 'Clock',
+    title: '短時間中心の接客',
+    desc: '長時間の施術や接客を続ける働き方とは異なる、短時間中心の接客スタイルです。',
+  },
+  {
+    icon: 'ShieldCheck',
+    title: 'キス・粘膜接触なし',
+    desc: '今回の募集店舗では、キスや粘膜接触を伴わない接客を行っています。',
+  },
+  {
+    icon: 'Compass',
+    title: '新しい働き方を検討できる',
+    desc: '今の仕事を続けるか、環境を変えるか迷っている方も、まずは仕事内容や条件を比較するところから始められます。',
+  },
+];
+
+const STORE_CONDITIONS: {
+  icon: 'Coins' | 'Receipt' | 'Banknote' | 'Calendar' | 'Train' | 'Coffee' | 'Home' | 'ShieldCheck';
+  title: string;
+  main: string;
+  detail: string;
+}[] = [
+  {
+    icon: 'Coins',
+    title: '報酬・バック',
+    main: '売上50%バック',
+    detail: '15分5,000円 / 20分7,500円 / 30分10,000円 / 45分15,000円 / 60分20,000円。外国人対応手当+2,500円/回、チップは全額女性へお渡し。',
+  },
+  {
+    icon: 'Receipt',
+    title: '控除の有無と内容',
+    main: '雑費・待機料などの天引き0円',
+    detail: '待機料、厚生費、ロッカー代、衣装レンタル代、ノルマ罰金などの差し引きはありません。',
+  },
+  {
+    icon: 'Banknote',
+    title: '支払い日・支払い方法',
+    main: '退勤時の即日全額日払い',
+    detail: 'その日の勤務終了時に、現金手渡しにて全額をお受け取りいただけます。',
+  },
+  {
+    icon: 'Calendar',
+    title: '出勤日数・時間の条件',
+    main: '週1日〜・短時間相談OK（20歳以上）',
+    detail: '5つの時間帯（10〜16時 / 10〜17時 / 17〜24時 / 14〜24時 / 12〜24時）から希望を相談可。※満20歳以上の女性（要・住民票原本または日本国パスポート）',
+  },
+  {
+    icon: 'Train',
+    title: '交通費',
+    main: '遠方・出稼ぎ時の往復交通費支給',
+    detail: '地方や遠方からお越しの場合、新幹線・飛行機・高速バス等の実費往復交通費を支給します（領収書確認のうえ精算）。',
+  },
+  {
+    icon: 'Coffee',
+    title: '待機環境',
+    main: '冷暖房・Wi-Fi完備／仲居サポートあり',
+    detail: 'お部屋の清掃やシーツ交換・お呼び込みは仲居さんが担当。お酒不要・営業LINEなし、いじめや派閥を作らない環境づくりを実施。',
+  },
+  {
+    icon: 'Home',
+    title: 'その他の福利厚生',
+    main: '個室マンション寮・衣装・ヘアメイク無料',
+    detail: '家具家電付きオートロック個室寮（初期費用0円・即日入居相談可）、ドレス・着物・ヘアアイロン無料貸出、専任女性スタッフ常駐、Web顔写真非掲載。',
+  },
+  {
+    icon: 'ShieldCheck',
+    title: '接客ルール',
+    main: 'キスなし・粘膜接触なし',
+    detail: '短時間中心（15〜20分基本）の和室接客で、キスや粘膜接触を行わないルールを採用しています。',
+  },
+];
+
+const OTHER_SHOP_COMPARISON = [
+  {
+    item: '女性同士の人間関係',
+    current: '派閥や人間関係の気遣いが負担になっていませんか？',
+    ours: '女性同士のいじめ・派閥を作らない方針／専任女性スタッフが相談受付',
+  },
+  {
+    item: '報酬体系',
+    current: 'バック率やコース別の手取りに納得できていますか？',
+    ours: '売上50%バック（15分5,000円〜60分20,000円・外国人対応+2,500円・チップ全額お渡し）',
+  },
+  {
+    item: '控除・支払い',
+    current: '待機料・厚生費・雑費などが差し引かれていませんか？',
+    ours: '待機料・厚生費・衣装代などの天引き0円／退勤時に全額即日現金手渡し',
+  },
+  {
+    item: '出勤条件',
+    current: '週1日〜や希望時間帯で無理なくシフトを組めていますか？',
+    ours: '週1日〜・短時間勤務の相談OK（5つの勤務時間帯から希望を相談可能）',
+  },
+  {
+    item: '待機環境',
+    current: '待機スペースの居心地や清掃などの負担はありませんか？',
+    ours: '冷暖房・Wi-Fi完備／清掃や呼び込みは仲居さんが担当／衣装・コスメ無料貸出',
+  },
+  {
+    item: '立地・集客のしやすさ',
+    current: '通りの人通りが少なく、お客さんが上がりにくくありませんか？',
+    ours: 'メイン・青春通りにお店があり人通りが多く、お客様が上がりやすい立地（主要3駅徒歩5〜10分圏内）',
+  },
+  {
+    item: '接客ルール',
+    current: '接客内容・ルールや連絡の負担に違和感はありませんか？',
+    ours: '短時間中心・キスなし・粘膜接触なし／お酒不要・店外営業連絡なし',
+  },
+];
+
+const ACCESS_STATIONS = [
+  {
+    station: 'Osaka Metro「動物園前駅」（最寄り）',
+    lines: '御堂筋線・堺筋線',
+    time: '徒歩5分',
+    route: '1番または2番出口を出てすぐ、ジャンジャン横丁を抜けて飛田大門通りへ続く人通りの多い主要ルートです。',
+  },
+  {
+    station: 'JR・南海「新今宮駅」',
+    lines: 'JR大阪環状線・大和路線 / 南海本線・高野線',
+    time: '徒歩7分',
+    route: '通天閣口（東出口）から南東へ。なんば・関空・奈良・和歌山方面からもお客様が足を運びやすい主要駅です。',
+  },
+  {
+    station: '各線「天王寺駅」/ 近鉄「大阪阿部野橋駅」',
+    lines: 'JR各線 / Osaka Metro 御堂筋線・谷町線 / 近鉄南大阪線',
+    time: '徒歩10分',
+    route: 'あべのハルカス・キューズモール側から西へ平坦な大通り沿い。ターミナル駅周辺からも立ち寄りやすい立地です。',
+  },
+];
+
+const TRANSFER_STEPS: {
+  icon: 'MessageCircle' | 'FileSearch' | 'CheckCircle2';
+  title: string;
+  points: string[];
+  note: string;
+}[] = [
+  {
+    icon: 'MessageCircle',
+    title: 'LINEで事前相談',
+    points: [
+      '現在の経験業種',
+      '現在の働き方',
+      '希望する条件',
+      '気になっていること',
+      '移籍についての不安',
+    ],
+    note: '在籍中のまま匿名で相談でき、無理な勧誘は行いません。',
+  },
+  {
+    icon: 'FileSearch',
+    title: '条件・仕事内容の確認',
+    points: [
+      '実際の接客内容・接客上のルール',
+      '報酬・待遇・控除の有無',
+      '出勤条件・勤務時間帯',
+      '待機環境・設備の様子',
+      '立地・アクセス',
+    ],
+    note: '不明点や気になる点は、面接や見学の段階でも事前に確認できます。',
+  },
+  {
+    icon: 'CheckCircle2',
+    title: '納得してから判断',
+    points: [
+      '条件と職場環境を整理して比較',
+      '納得できた場合のみ次のステップへ',
+      '今のお店をすぐに辞める前提はありません',
+    ],
+    note: '相談や見学のあとに見送る場合も問題ありません。ご自身のペースで判断いただけます。',
+  },
+];
+
+const PRE_TRANSFER_POINTS: {
+  icon: 'ClipboardCheck' | 'Coins' | 'Lock' | 'CalendarCheck';
+  title: string;
+  desc: string;
+}[] = [
+  {
+    icon: 'ClipboardCheck',
+    title: '① 接客内容・ルール',
+    desc: '実際にどのような接客を行うのか、キスや粘膜接触の有無、禁止事項なども含めて具体的に確認できます。',
+  },
+  {
+    icon: 'Coins',
+    title: '② 報酬・待遇',
+    desc: '報酬の仕組み、控除、支払い条件、交通費など、働くうえで重要な条件を事前に確認します。',
+  },
+  {
+    icon: 'Lock',
+    title: '③ 待機環境・プライバシー',
+    desc: '待機場所、個人情報の取り扱い、身バレ対策など、プライバシー面の条件も確認できます。',
+  },
+  {
+    icon: 'CalendarCheck',
+    title: '④ 出勤・退店に関する条件',
+    desc: '出勤日数、時間、欠勤時の扱い、退店時の条件なども、事前に確認できるようにしています。',
+  },
+];
+
+const FEATURED_COLUMNS = [
+  {
+    title: 'メンズエステから飛田新地への移籍を考える前に知っておきたい違い',
+    slug: 'mens-esthe-to-tobitashinchi-transfer',
+    category: '他業種からの移籍',
+    readTime: '4分',
+    image: '/images/col_stressfree_rest_japanese_158_1793175561720.jpg',
+    summary:
+      '長時間の施術やSNS・予約連絡の負担との違いは？メンズエステ経験者が移籍前に知っておきたい接客時間やルールを整理しました。',
+  },
+  {
+    title: 'ソープ・ヘルス経験者が移籍前に確認したい仕事内容と接客ルール',
+    slug: 'soap-health-to-tobitashinchi-rules',
+    category: '他業種からの移籍',
+    readTime: '4分',
+    image: '/images/col_traditional_work_japanese_140_1793175503653.jpg',
+    summary:
+      '入浴介助の有無や、当店の「キスなし・粘膜接触なし」ルール、片付け分担など移籍前に比較しておきたい仕事内容の違いを解説。',
+  },
+  {
+    title: 'キャバクラ経験者が知っておきたい接客スタイルと働き方の違い',
+    slug: 'cabaret-to-tobitashinchi-workstyle',
+    category: '他業種からの移籍',
+    readTime: '4分',
+    image: '/images/col_mature_grace_japanese_139_1793175388580.jpg',
+    summary:
+      '営業LINEや同伴、お酒の席での疲労を見直したい方へ。培ったコミュニケーション力を活かせる働き方の違いを紹介。',
+  },
+  {
+    title: '飛田新地で他店から移籍する前に確認したい7つのポイント',
+    slug: 'tobitashinchi-shop-transfer-7-points',
+    category: '他店からの移籍',
+    readTime: '5分',
+    image: '/images/col_shop_compare_japanese_148_1793175523125.jpg',
+    summary:
+      '他店在籍中の方へ。今のお店を辞める前に比較・確認しておきたい人間関係、報酬・控除、立地、待機環境など7つの項目。',
+  },
+  {
+    title: '飛田新地の求人で待遇を比較するときに確認したいこと',
+    slug: 'tobitashinchi-treatment-comparison-guide',
+    category: '待遇・条件比較',
+    readTime: '4分',
+    image: '/images/col_privacy_safe_japanese_162_1793175321318.jpg',
+    summary:
+      '報酬計算の透明性、控除0円の明確さ、即日日払いのルール、交通費・寮の適用条件など比較時に見るべきポイントを解説。',
+  },
+  {
+    title: '飛田新地で働くなら人間関係も大切？お店選びのポイント',
+    slug: 'tobitashinchi-workplace-relationships-guide',
+    category: '職場環境・人間関係',
+    readTime: '4分',
+    image: '/images/col_mentor_support_japanese_143_1793175370437.jpg',
+    summary:
+      '女性同士のいじめや派閥を作らない方針、スタッフのサポート体制など、落ち着いて続けられる職場を見極めるための確認ポイント。',
+  },
+];
+
+const FAQ_GROUPS = [
+  {
+    key: 'other',
+    heading: '他業種からの移籍について',
+    items: [
+      {
+        q: 'メンズエステの経験しかありませんが大丈夫ですか？',
+        a: 'はい、大丈夫です。業種が異なっていても、丁寧な挨拶や気配りなど接客経験を活かせる部分は多くあります。仕事内容や条件を事前に確認していただけます。',
+      },
+      {
+        q: 'ソープやヘルスからの移籍でも大丈夫ですか？',
+        a: 'はい、可能です。これまでの経験を伺いながら、当店の実際の仕事内容や接客ルール、働き方の条件を丁寧にご案内します。',
+      },
+      {
+        q: 'キャバクラ経験は活かせますか？',
+        a: 'はい、活かせます。お客様への自然な会話やコミュニケーション、表情のつくり方など、これまでの経験を活かせる部分が多くあります。',
+      },
+      {
+        q: '飛田新地ではキスをする必要がありますか？',
+        a: 'いいえ、今回の募集店舗ではキスを伴う接客はありません。事前に接客ルールをご確認いただいたうえでご検討いただけます。',
+      },
+      {
+        q: '粘膜接触はありますか？',
+        a: 'いいえ、今回の募集店舗では粘膜接触を伴う接客はありません。店舗ごとの条件についてもご相談時に明確にお伝えしています。',
+      },
+      {
+        q: '接客時間はどれくらいですか？',
+        a: '1回15分〜20分を中心とした短時間中心の接客スタイルです。具体的なコース時間や条件については、事前にご確認いただけます。',
+      },
+    ],
+  },
+  {
+    key: 'shop',
+    heading: '飛田新地の他店からの移籍について',
+    items: [
+      {
+        q: '飛田新地の他店で働いていますが、移籍できますか？',
+        a: 'はい、移籍のご相談が可能です。他店での経験がある方も、仕事内容や条件、職場環境をご確認いただいたうえでご相談いただけます。',
+      },
+      {
+        q: '今のお店を辞める前に相談できますか？',
+        a: 'はい、可能です。先に今のお店を辞める必要はありません。比較や移籍を検討している段階でLINEからご相談いただけます。',
+      },
+      {
+        q: '移籍するか決めていなくても相談できますか？',
+        a: 'もちろんです。まずは待遇や仕事内容、立地、職場環境などを確認していただいてから、ご自身で納得して判断していただけます。',
+      },
+      {
+        q: '女性同士の派閥やいじめはありませんか？',
+        a: '当店では、女性同士のいじめや派閥を作らない職場環境づくりを大切にしています。落ち着いて働ける雰囲気を重視する方もご相談ください。',
+      },
+      {
+        q: '人間関係が苦手でも働けますか？',
+        a: 'はい。人間関係に過度なストレスを感じず、仕事以外の気遣いを減らして落ち着いて働ける環境づくりを心掛けています。',
+      },
+      {
+        q: '今のお店より待遇が良いか比較できますか？',
+        a: '当店の報酬（売上50%バック）、控除（待機料・厚生費など0円）、支払い条件（退勤時即日現金手渡し）など実際の条件をご案内しますので、現在のお店の条件と比較してご検討ください。',
+      },
+      {
+        q: '最寄り駅からどれくらいですか？',
+        a: 'Osaka Metro「動物園前駅」から徒歩5分、JR・南海「新今宮駅」から徒歩7分、各線「天王寺駅」から徒歩10分です。',
+      },
+      {
+        q: '移籍する際に必要な手続きはありますか？',
+        a: '面接・登録時には満20歳以上の年齢・国籍確認のため、本籍地記載の住民票原本（発行3ヶ月以内）または有効期限内の日本国パスポートと顔写真付き身分証をご提示いただきます。詳細は事前にご案内します。',
+      },
+      {
+        q: '相談したことが今のお店に知られませんか？',
+        a: 'ご相談内容や個人情報は秘密厳守のうえ適切に管理し、許可なく外部や他店へ共有することはいたしません。まずはLINE上でのお問い合わせのみでも確認可能です。',
+      },
+    ],
+  },
+  {
+    key: 'common',
+    heading: '共通の質問',
+    items: [
+      {
+        q: '報酬や支払い条件は事前に分かりますか？',
+        a: 'はい、事前にすべてご確認いただけます。売上50%バック、コース別の手取り金額、控除0円、退勤時の即日現金手渡しなど、実際の募集条件をご案内します。',
+      },
+      {
+        q: '30代・40代でも移籍できますか？',
+        a: '30代・40代の女性も落ち着いた雰囲気や経験を活かしてご活躍いただけます。',
+      },
+    ],
+  },
 ];

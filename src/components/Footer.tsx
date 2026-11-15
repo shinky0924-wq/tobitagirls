@@ -242,7 +242,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
               { id: 'flow', name: '🌸 面接・体入の流れ', path: '/flow' },
               { id: 'workstyle', name: '⏰ 自由な働き方', path: '/workstyle' },
               { id: 'shops', name: '🏮 お店選び・通り比較', path: '/shops' },
-              { id: 'dorm', name: '🏠 個室寮・出稼ぎ', path: '/dorm' },
+              { id: 'dorm', name: '🏠 個室寮・出稼ぎ', path: '/dekasegi' },
               { id: 'safety', name: '🤫 身バレ・安全管理', path: '/safety' },
               { id: 'faq', name: '💡 よくある質問 (119問)', path: '/faq' },
               { id: 'compare', name: '⚖️ 求人サイト比較', path: '/compare' },

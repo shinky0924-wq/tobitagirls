@@ -107,6 +107,7 @@ export default function App() {
     '/interview': 'flow',
     '/workstyle': 'workstyle',
     '/shops': 'shops',
+    '/dekasegi': 'dorm',
     '/dorm': 'dorm',
     '/safety': 'safety',
   };
@@ -202,13 +203,16 @@ export default function App() {
     if (selectedSlug && slugRedirectMap[selectedSlug]) {
       navigate(slugRedirectMap[selectedSlug], true);
     }
-  }, [selectedSlug]);
+    if (cleanPath === '/dorm') {
+      navigate('/dekasegi', true);
+    }
+  }, [selectedSlug, cleanPath]);
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
 
-    let pageTitle = '飛田新地求人｜未経験歓迎・高収入・求人情報を徹底解説｜飛田ガールズ';
-    let pageDesc = '【飛田新地求人公式】飛田新地で働いてみたい未経験の女性へ。仕事内容や給料の仕組み（即日日払い）、応募条件、面接・体験入店の流れ、お店選びや身バレ対策まで詳しく解説。24時間LINEで無料相談受付中です。';
+    let pageTitle = '飛田新地求人｜飛田ガールズ【公式・料亭直営】';
+    let pageDesc = '飛田新地で働くか迷っている女性へ。飛田ガールズは料亭直営の求人案内サイトです。仕事内容や接客方法、給料・全額日払いの仕組み、応募条件、身バレ対策まで詳しく解説。未経験の方も経験者の方も、応募前に知っておきたい情報を分かりやすく紹介しています。';
     let canonicalUrl = 'https://tobitashinchi-recruit.com/';
 
     if (currentTab === 'cluster') {
@@ -250,12 +254,12 @@ export default function App() {
         canonicalUrl = 'https://tobitashinchi-recruit.com/blog';
       }
     } else if (currentTab === 'faq') {
-      pageTitle = '飛田新地求人 FAQ（全119問・8大テーマ別Q&A）｜未経験・給料・身バレ・面接【公式】';
-      pageDesc = '飛田新地求人のよくある質問と回答（全119問）。応募資格、面接、給料手渡し、個室寮、身バレ対策など、疑問や不安をテーマ別に完全解消。';
+      pageTitle = '飛田新地求人のよくある質問｜仕事内容・給料・応募条件をQ&Aで解説';
+      pageDesc = '飛田新地で働く前に知っておきたい仕事内容・給料・応募条件・身バレ対策などの疑問をQ&A形式で分かりやすくまとめました。未経験・経験者どちらも確認できます。';
       canonicalUrl = selectedFaqCategory ? `https://tobitashinchi-recruit.com/faq/${selectedFaqCategory}` : 'https://tobitashinchi-recruit.com/faq';
     } else if (currentTab === 'recruit') {
-      pageTitle = '飛田新地求人｜未経験歓迎・高収入・求人情報を徹底解説｜飛田ガールズ';
-      pageDesc = '【飛田新地求人公式】飛田新地で働いてみたい未経験の女性へ。仕事内容や給料の仕組み（即日日払い）、応募条件、面接・体験入店の流れ、お店選びや身バレ対策まで詳しく解説。24時間LINEで無料相談受付中です。';
+      pageTitle = '飛田新地求人｜飛田ガールズ【公式・料亭直営】';
+      pageDesc = '飛田新地で働くか迷っている女性へ。飛田ガールズは料亭直営の求人案内サイトです。仕事内容や接客方法、給料・全額日払いの仕組み、応募条件、身バレ対策まで詳しく解説。未経験の方も経験者の方も、応募前に知っておきたい情報を分かりやすく紹介しています。';
       canonicalUrl = 'https://tobitashinchi-recruit.com/';
     } else if (currentTab === 'admin') {
       pageTitle = '管理パネル｜飛田ガールズ';
@@ -436,7 +440,7 @@ export default function App() {
         onCtaclick={handleScrollToForm} 
         onScrollToSection={handleScrollToSection}
         onNavigateTopic={(tid) => {
-          navigate(`/${tid}`);
+          navigate(TOPIC_CLUSTERS[tid]?.path || `/${tid}`);
           window.scrollTo(0, 0);
         }}
         isAdminMode={isAdminMode}
@@ -494,7 +498,7 @@ export default function App() {
                       }
                     }}
                     onNavigateTopic={(topicId) => {
-                      navigate(`/${topicId}`);
+                      navigate(TOPIC_CLUSTERS[topicId]?.path || `/${topicId}`);
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
                     onNavigateFaq={() => {
@@ -620,7 +624,7 @@ export default function App() {
             </motion.div>
           ) : currentTab === 'faq' ? (
             /* ==========================================
-               DEDICATED FAQ PAGE (8 THEMES, 119 QUESTIONS)
+               DEDICATED FAQ PAGE (12 CATEGORIES, 119 QUESTIONS)
                ========================================== */
             <motion.div
               key="faq-page"
@@ -633,6 +637,9 @@ export default function App() {
                 initialCategory={selectedFaqCategory}
                 onNavigateHome={() => {
                   navigate('/');
+                }}
+                onNavigatePath={(targetPath) => {
+                  navigate(targetPath);
                 }}
                 onCtaclick={handleScrollToForm}
               />
@@ -654,7 +661,7 @@ export default function App() {
                   navigate('/');
                 }}
                 onNavigateTopic={(tid) => {
-                  navigate(`/${tid}`);
+                  navigate(TOPIC_CLUSTERS[tid]?.path || `/${tid}`);
                 }}
                 onNavigateBlog={(slug) => {
                   if (slug) {
@@ -710,7 +717,7 @@ export default function App() {
           }
         }}
         onNavigateTopic={(tid) => {
-          navigate(`/${tid}`);
+          navigate(TOPIC_CLUSTERS[tid]?.path || `/${tid}`);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
         onScrollToSection={handleScrollToSection}
@@ -725,6 +732,8 @@ export default function App() {
           isSalaryPage={currentTab === 'cluster' && clusterTopic === 'salary'}
           isBeginnerPage={currentTab === 'cluster' && clusterTopic === 'beginner'}
           isExperiencedPage={currentTab === 'cluster' && clusterTopic === 'experienced'}
+          isWorkstylePage={currentTab === 'cluster' && clusterTopic === 'workstyle'}
+          isShopsPage={currentTab === 'cluster' && clusterTopic === 'shops'}
         />
       )}
 

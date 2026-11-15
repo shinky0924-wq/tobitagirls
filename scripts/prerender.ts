@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { injectSeoMetadata } from '../src/seoHelper';
+import { renderRouteMarkdown } from '../src/markdownRenderer';
 
 async function runPrerender() {
   const distDir = path.join(process.cwd(), 'dist');
@@ -24,21 +25,31 @@ async function runPrerender() {
     }
   }
 
-  console.log(`[Prerender] Starting full pre-rendering using injectSeoMetadata for ${articles.length} articles and all routes...`);
+  console.log(`[Prerender] Starting full pre-rendering (HTML + static Markdown .md) for ${articles.length} articles and all routes...`);
 
-  const writeHtml = (filePath: string, htmlContent: string) => {
+  const writeFileEnsureDir = (filePath: string, content: string) => {
     const dir = path.dirname(filePath);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
-    fs.writeFileSync(filePath, htmlContent, 'utf-8');
+    fs.writeFileSync(filePath, content, 'utf-8');
   };
 
   let count = 0;
+  let mdCount = 0;
+
+  const emitMarkdown = (routePath: string, outMdRelPath: string) => {
+    const { markdown, status } = renderRouteMarkdown(routePath);
+    if (status === 200) {
+      writeFileEnsureDir(path.join(distDir, outMdRelPath), markdown);
+      mdCount++;
+    }
+  };
 
   // 1. Top page
   const home = injectSeoMetadata(template, '/');
-  writeHtml(path.join(distDir, 'index.html'), home.html);
+  writeFileEnsureDir(path.join(distDir, 'index.html'), home.html);
+  emitMarkdown('/', 'index.md');
   count++;
 
   // 2. Pre-render every blog article
@@ -46,54 +57,63 @@ async function runPrerender() {
     if (!article.slug) continue;
     const url = `/blog/${article.slug}`;
     const { html } = injectSeoMetadata(template, url);
-    writeHtml(path.join(distDir, 'blog', article.slug, 'index.html'), html);
-    writeHtml(path.join(distDir, 'blog', `${article.slug}.html`), html);
+    writeFileEnsureDir(path.join(distDir, 'blog', article.slug, 'index.html'), html);
+    writeFileEnsureDir(path.join(distDir, 'blog', `${article.slug}.html`), html);
+    emitMarkdown(url, path.join('blog', `${article.slug}.md`));
     count++;
   }
 
   // 3. Pre-render Blog Index
   const blogList = injectSeoMetadata(template, '/blog');
-  writeHtml(path.join(distDir, 'blog', 'index.html'), blogList.html);
-  writeHtml(path.join(distDir, 'blog.html'), blogList.html);
+  writeFileEnsureDir(path.join(distDir, 'blog', 'index.html'), blogList.html);
+  writeFileEnsureDir(path.join(distDir, 'blog.html'), blogList.html);
+  emitMarkdown('/blog', 'blog.md');
   count++;
 
-  // 4. Pre-render About and Company
+  // 4. Pre-render About, Glossary, and Company
   const about = injectSeoMetadata(template, '/about');
-  writeHtml(path.join(distDir, 'about', 'index.html'), about.html);
-  writeHtml(path.join(distDir, 'about.html'), about.html);
+  writeFileEnsureDir(path.join(distDir, 'about', 'index.html'), about.html);
+  writeFileEnsureDir(path.join(distDir, 'about.html'), about.html);
+  emitMarkdown('/about', 'about.md');
   count++;
 
   const glossary = injectSeoMetadata(template, '/glossary');
-  writeHtml(path.join(distDir, 'glossary', 'index.html'), glossary.html);
-  writeHtml(path.join(distDir, 'glossary.html'), glossary.html);
+  writeFileEnsureDir(path.join(distDir, 'glossary', 'index.html'), glossary.html);
+  writeFileEnsureDir(path.join(distDir, 'glossary.html'), glossary.html);
+  emitMarkdown('/glossary', 'glossary.md');
   count++;
 
   const company = injectSeoMetadata(template, '/company');
-  writeHtml(path.join(distDir, 'company', 'index.html'), company.html);
-  writeHtml(path.join(distDir, 'company.html'), company.html);
+  writeFileEnsureDir(path.join(distDir, 'company', 'index.html'), company.html);
+  writeFileEnsureDir(path.join(distDir, 'company.html'), company.html);
   count++;
 
-  // 5. Pre-render FAQ Index & all 8 Category pages
+  // 5. Pre-render FAQ Index, all 12 Category pages, and legacy category slugs
   const faq = injectSeoMetadata(template, '/faq');
-  writeHtml(path.join(distDir, 'faq', 'index.html'), faq.html);
-  writeHtml(path.join(distDir, 'faq.html'), faq.html);
+  writeFileEnsureDir(path.join(distDir, 'faq', 'index.html'), faq.html);
+  writeFileEnsureDir(path.join(distDir, 'faq.html'), faq.html);
+  emitMarkdown('/faq', 'faq.md');
   count++;
 
   const faqCategories = [
-    'recruit', 'salary', 'beginner', 'hours',
-    'privacy', 'dorm', 'wwork', 'leaving'
+    'qualification', 'beginner', 'experienced', 'job',
+    'salary', 'hours', 'interview', 'privacy',
+    'environment', 'access', 'sidejob', 'support',
+    'recruit', 'dorm', 'wwork', 'leaving'
   ];
   for (const cat of faqCategories) {
     const faqCatPage = injectSeoMetadata(template, `/faq/${cat}`);
-    writeHtml(path.join(distDir, 'faq', cat, 'index.html'), faqCatPage.html);
-    writeHtml(path.join(distDir, 'faq', `${cat}.html`), faqCatPage.html);
+    writeFileEnsureDir(path.join(distDir, 'faq', cat, 'index.html'), faqCatPage.html);
+    writeFileEnsureDir(path.join(distDir, 'faq', `${cat}.html`), faqCatPage.html);
+    emitMarkdown(`/faq/${cat}`, path.join('faq', `${cat}.md`));
     count++;
   }
 
-  // 6. Pre-render Compare Main & all 8 Category pages
+  // 6. Pre-render Compare Main & all 9 Category pages
   const compare = injectSeoMetadata(template, '/compare');
-  writeHtml(path.join(distDir, 'compare', 'index.html'), compare.html);
-  writeHtml(path.join(distDir, 'compare.html'), compare.html);
+  writeFileEnsureDir(path.join(distDir, 'compare', 'index.html'), compare.html);
+  writeFileEnsureDir(path.join(distDir, 'compare.html'), compare.html);
+  emitMarkdown('/compare', 'compare.md');
   count++;
 
   const compareSlugs = [
@@ -102,8 +122,9 @@ async function runPrerender() {
   ];
   for (const slug of compareSlugs) {
     const compPage = injectSeoMetadata(template, `/compare/${slug}`);
-    writeHtml(path.join(distDir, 'compare', slug, 'index.html'), compPage.html);
-    writeHtml(path.join(distDir, 'compare', `${slug}.html`), compPage.html);
+    writeFileEnsureDir(path.join(distDir, 'compare', slug, 'index.html'), compPage.html);
+    writeFileEnsureDir(path.join(distDir, 'compare', `${slug}.html`), compPage.html);
+    emitMarkdown(`/compare/${slug}`, path.join('compare', `${slug}.md`));
     count++;
   }
 
@@ -111,12 +132,13 @@ async function runPrerender() {
   const topics = [
     'job', 'salary', 'beginner', 'experienced',
     'requirements', 'flow', 'interview', 'workstyle',
-    'shops', 'dorm', 'safety'
+    'shops', 'dekasegi', 'safety'
   ];
   for (const t of topics) {
     const topicPage = injectSeoMetadata(template, `/${t}`);
-    writeHtml(path.join(distDir, t, 'index.html'), topicPage.html);
-    writeHtml(path.join(distDir, `${t}.html`), topicPage.html);
+    writeFileEnsureDir(path.join(distDir, t, 'index.html'), topicPage.html);
+    writeFileEnsureDir(path.join(distDir, `${t}.html`), topicPage.html);
+    emitMarkdown(`/${t}`, `${t}.md`);
     count++;
   }
 
@@ -133,6 +155,7 @@ async function runPrerender() {
     '/target-jobs': '/compare',
     '/categories': '/compare',
     '/company': '/about',
+    '/dorm': '/dekasegi',
   };
 
   for (const [fromPath, toPath] of Object.entries(legacyRedirects)) {
@@ -152,8 +175,8 @@ async function runPrerender() {
 </body>
 </html>`;
     const cleanFrom = fromPath.replace(/^\//, '');
-    writeHtml(path.join(distDir, cleanFrom, 'index.html'), redirectHtml);
-    writeHtml(path.join(distDir, `${cleanFrom}.html`), redirectHtml);
+    writeFileEnsureDir(path.join(distDir, cleanFrom, 'index.html'), redirectHtml);
+    writeFileEnsureDir(path.join(distDir, `${cleanFrom}.html`), redirectHtml);
     count++;
   }
 
@@ -163,17 +186,15 @@ async function runPrerender() {
     fs.copyFileSync(rootRedirects, path.join(distDir, '_redirects'));
   }
 
-  // 10. Ensure sitemap and robots in dist
-  const sitemapSrc = path.join(process.cwd(), 'public', 'sitemap.xml');
-  if (fs.existsSync(sitemapSrc)) {
-    fs.copyFileSync(sitemapSrc, path.join(distDir, 'sitemap.xml'));
-  }
-  const robotsSrc = path.join(process.cwd(), 'public', 'robots.txt');
-  if (fs.existsSync(robotsSrc)) {
-    fs.copyFileSync(robotsSrc, path.join(distDir, 'robots.txt'));
+  // 10. Ensure sitemap, robots, RSS feed, and llms files in dist
+  for (const staticFile of ['sitemap.xml', 'robots.txt', 'feed.xml', 'llms.txt', 'llms-full.txt']) {
+    const srcPath = path.join(process.cwd(), 'public', staticFile);
+    if (fs.existsSync(srcPath)) {
+      fs.copyFileSync(srcPath, path.join(distDir, staticFile));
+    }
   }
 
-  console.log(`[Prerender] Successfully generated pre-rendered static HTML for ${count} paths!`);
+  console.log(`[Prerender] Successfully generated pre-rendered static HTML (${count} paths) and Markdown (${mdCount} .md files)!`);
 }
 
 runPrerender().catch(err => {

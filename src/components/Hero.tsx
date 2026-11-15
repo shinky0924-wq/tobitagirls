@@ -56,11 +56,8 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
           transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
           id="hero-title"
         >
-          <span className="block text-xs sm:text-sm font-sans font-bold text-[#D94B7A] tracking-wide mb-2">
-            飛田新地求人・未経験歓迎の公式ガイド
-          </span>
-          飛田新地で<br className="block md:hidden" />
-          <span className="text-secondary bg-clip-text">働いてみたい女性へ。</span>
+          <span className="block text-on-surface">飛田新地で働くことを</span>
+          <span className="block text-secondary">考えている女性へ。</span>
         </motion.h1>
 
         {/* Sub description */}
@@ -71,50 +68,25 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
           transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
           id="hero-description"
         >
-          <div className="space-y-4 text-xs sm:text-sm md:text-base text-zinc-700 leading-relaxed bg-white/80 backdrop-blur-xs p-5 sm:p-7 rounded-3xl border border-rose-100/90 shadow-xs">
-            <p className="font-medium text-zinc-800 leading-relaxed text-left sm:text-center">
+          <div className="space-y-4 text-xs sm:text-sm md:text-base text-zinc-700 leading-relaxed">
+            <p className="font-medium text-zinc-800 leading-relaxed">
               当店では、仕事内容や給料の仕組み、未経験から働くまでの流れ、お店選びのポイントなど、求人を探すうえで知っておきたい情報をわかりやすくまとめています。
             </p>
 
-            <div className="py-2.5 px-4 sm:px-6 bg-rose-50/80 rounded-2xl border border-rose-100 inline-flex flex-col items-start sm:items-center gap-1.5 shadow-2xs">
-              <span className="text-secondary font-bold text-xs sm:text-sm">
-                ・「未経験でも大丈夫？」
-              </span>
-              <span className="text-secondary font-bold text-xs sm:text-sm">
-                ・「実際どんな仕事をするの？」
-              </span>
-              <span className="text-secondary font-bold text-xs sm:text-sm">
-                ・「身バレや人間関係が心配……」
-              </span>
+            <div className="space-y-1.5">
+              <div className="inline-flex flex-col items-start gap-1 text-secondary font-bold text-xs sm:text-sm md:text-base">
+                <span>・「未経験でも大丈夫？」</span>
+                <span>・「実際どんな仕事をするの？」</span>
+                <span>・「身バレや人間関係が心配……」</span>
+              </div>
+              <p className="font-medium text-zinc-800 pt-1">
+                そんな疑問や不安にも、丁寧にお答えします。
+              </p>
             </div>
 
-            <p className="font-medium text-zinc-800">
-              そんな疑問や不安にも、丁寧にお答えします。
-            </p>
-
-            <p className="text-secondary font-extrabold text-sm sm:text-base">
+            <p className="text-secondary font-extrabold text-sm sm:text-base md:text-lg">
               まずは相談だけでもお気軽にご相談ください。
             </p>
-          </div>
-
-          {/* 募集条件サマリー（主要SEOキーワード・基本条件の視認性向上） */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-4 text-left">
-            <div className="bg-white/90 rounded-2xl p-3 border border-rose-100 shadow-2xs">
-              <div className="text-[10px] font-bold text-[#85818A]">給料・支払い</div>
-              <div className="text-xs sm:text-[13px] font-extrabold text-[#D94B7A] mt-0.5">売上50%・即日日払い</div>
-            </div>
-            <div className="bg-white/90 rounded-2xl p-3 border border-rose-100 shadow-2xs">
-              <div className="text-[10px] font-bold text-[#85818A]">応募資格</div>
-              <div className="text-xs sm:text-[13px] font-extrabold text-[#35313A] mt-0.5">満20歳以上の女性</div>
-            </div>
-            <div className="bg-white/90 rounded-2xl p-3 border border-rose-100 shadow-2xs">
-              <div className="text-[10px] font-bold text-[#85818A]">シフト・出勤</div>
-              <div className="text-xs sm:text-[13px] font-extrabold text-[#35313A] mt-0.5">週1日〜自由シフト</div>
-            </div>
-            <div className="bg-white/90 rounded-2xl p-3 border border-rose-100 shadow-2xs">
-              <div className="text-[10px] font-bold text-[#85818A]">働きやすさ</div>
-              <div className="text-xs sm:text-[13px] font-extrabold text-[#35313A] mt-0.5">お酒不要・WEB顔出しなし</div>
-            </div>
           </div>
         </motion.div>
 

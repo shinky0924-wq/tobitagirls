@@ -285,21 +285,44 @@ export default function ComparisonPage({
       'directApply': true
     } : {
       '@context': 'https://schema.org',
-      '@type': 'WebPage',
-      '@id': 'https://tobitashinchi-recruit.com/compare',
-      'name': '飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】',
-      'description': '飛田新地の料亭直営求人とスカウト業者・他求人サイト（飛田ジョブなど）の徹底比較。未経験、高収入、週1日、短期出稼ぎ、寮付き、Wワーク、20代、30代別の最適求人ガイド。',
-      'url': 'https://tobitashinchi-recruit.com/compare',
-      'mainEntity': {
-        '@type': 'ItemList',
-        'name': '飛田新地 目的・属性別求人カテゴリー比較',
-        'itemListElement': TARGET_JOB_CATEGORIES.map((cat, idx) => ({
-          '@type': 'ListItem',
-          'position': idx + 1,
-          'name': cat.title,
-          'description': cat.llmDirectAnswer
-        }))
-      }
+      '@graph': [
+        {
+          '@type': 'WebPage',
+          '@id': 'https://tobitashinchi-recruit.com/compare',
+          'name': '飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】',
+          'description': '飛田新地の料亭直営求人とスカウト業者・他求人サイト（飛田ジョブなど）の徹底比較。未経験、高収入、週1日、短期出稼ぎ、寮付き、Wワーク、20代、30代別の最適求人ガイド。',
+          'url': 'https://tobitashinchi-recruit.com/compare',
+          'dateModified': '2026-11-14',
+          'inLanguage': 'ja-JP',
+          'mainEntity': {
+            '@type': 'ItemList',
+            'name': '飛田新地 目的・属性別求人カテゴリー比較',
+            'itemListElement': TARGET_JOB_CATEGORIES.map((cat, idx) => ({
+              '@type': 'ListItem',
+              'position': idx + 1,
+              'name': cat.title,
+              'description': cat.llmDirectAnswer
+            }))
+          }
+        },
+        {
+          '@type': 'Dataset',
+          '@id': 'https://tobitashinchi-recruit.com/compare#dataset',
+          'name': '飛田新地の求人条件・他業種との違い比較データ',
+          'description': '飛田新地の料亭直営求人と他業種・他応募ルートについて、給与バック率、全額日払いの有無、お酒・ノルマの有無、身バレへの配慮などをまとめた比較データです。',
+          'url': 'https://tobitashinchi-recruit.com/compare',
+          'dateModified': '2026-11-14',
+          'inLanguage': 'ja-JP',
+          'isAccessibleForFree': true,
+          'keywords': ['飛田新地', '求人比較', '給料・日払い', '未経験', '身バレ対策'],
+          'creator': {
+            '@type': 'Organization',
+            '@id': 'https://tobitashinchi-recruit.com/#organization',
+            'name': '飛田ガールズ（料亭直営求人・女性採用サポート）',
+            'url': 'https://tobitashinchi-recruit.com/'
+          }
+        }
+      ]
     };
 
     updatePageJsonLd(schemaData);

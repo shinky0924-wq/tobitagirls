@@ -9,6 +9,16 @@ const path = require('path');
 const HOST = 'tobitashinchi-recruit.com';
 const DOMAIN = `https://${HOST}`;
 const TODAY = new Date().toISOString().split('T')[0];
+const DEFAULT_STATIC_LASTMOD = '2026-11-14';
+
+function formatLastMod(dateStr) {
+  if (!dateStr || typeof dateStr !== 'string') return DEFAULT_STATIC_LASTMOD;
+  const normalized = dateStr.replace(/\./g, '-').trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(normalized)) {
+    return normalized;
+  }
+  return DEFAULT_STATIC_LASTMOD;
+}
 
 // Load blog articles
 const articlesPath = path.join(__dirname, '..', 'data', 'blogArticles.json');
@@ -31,31 +41,43 @@ function escapeXml(str) {
 }
 
 const staticRoutes = [
-  { path: '', priority: '1.0', freq: 'daily', img: '/images/tobita_dream_hero_banner_1782557055526.jpg', title: '飛田新地求人なら飛田ガールズ公式' },
-  { path: '/about', priority: '0.8', freq: 'weekly', img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '運営者情報・店舗体制' },
-  { path: '/glossary', priority: '0.85', freq: 'weekly', img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地 用語集・用語辞典' },
-  { path: '/compare', priority: '0.9', freq: 'daily', img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地求人サイト比較＆目的別ガイド' },
-  { path: '/compare/inexperienced', priority: '0.85', freq: 'weekly', img: '/images/tobita_beginner_support_1788153037569.jpg', title: '未経験向け求人' },
-  { path: '/compare/high-income', priority: '0.85', freq: 'weekly', img: '/images/tobita_salary_calculator_1788153012478.jpg', title: '高収入重視求人' },
-  { path: '/compare/weekly-1', priority: '0.85', freq: 'weekly', img: '/images/tobita_shift_schedule_1788153063163.jpg', title: '週1日・マイペース求人' },
-  { path: '/compare/short-term', priority: '0.85', freq: 'weekly', img: '/images/tobita_trial_interview_1788153091611.jpg', title: '短期出稼ぎ・集中求人' },
-  { path: '/compare/dormitory', priority: '0.85', freq: 'weekly', img: '/images/tobita_luxury_room_1788153103866.jpg', title: '個室寮完備求人' },
-  { path: '/compare/double-work', priority: '0.85', freq: 'weekly', img: '/images/tobita_wwork_privacy_1788153051081.jpg', title: '副業OL・Wワーク求人' },
-  { path: '/compare/age-20s', priority: '0.85', freq: 'weekly', img: '/images/tobita_experienced_cast_1792411797671.jpg', title: '20代向け求人' },
-  { path: '/compare/age-30s', priority: '0.85', freq: 'weekly', img: '/images/tobita_job_guide_tea_1788153000519.jpg', title: '30代向け求人' },
-  { path: '/compare/age-40s', priority: '0.85', freq: 'weekly', img: '/images/tobita_job_guide_tea_1788153000519.jpg', title: '40代向け求人' },
-  { path: '/faq', priority: '0.85', freq: 'daily', img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地求人 FAQ よくある質問' },
-  { path: '/blog', priority: '0.85', freq: 'daily', img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地求人コラム一覧' },
-  { path: '/job', priority: '0.85', freq: 'weekly', img: '/images/tobita_job_guide_tea_1788153000519.jpg', title: 'お仕事内容と和室接客' },
-  { path: '/salary', priority: '0.85', freq: 'weekly', img: '/images/tobita_salary_calculator_1788153012478.jpg', title: '給料システムと即日日払い' },
-  { path: '/beginner', priority: '0.85', freq: 'weekly', img: '/images/tobita_beginner_support_1788153037569.jpg', title: '未経験スタート完全マニュアル' },
-  { path: '/experienced', priority: '0.85', freq: 'weekly', img: '/images/tobita_experienced_cast_1792411797671.jpg', title: '経験者・移籍優遇制度' },
-  { path: '/requirements', priority: '0.85', freq: 'weekly', img: '/images/tobita_interview_flow_1788153075249.jpg', title: '募集要項と応募条件' },
-  { path: '/flow', priority: '0.85', freq: 'weekly', img: '/images/tobita_trial_interview_1788153091611.jpg', title: '面接・体入の流れ' },
-  { path: '/workstyle', priority: '0.85', freq: 'weekly', img: '/images/tobita_shift_schedule_1788153063163.jpg', title: '自由出勤・シフト制度' },
-  { path: '/shops', priority: '0.85', freq: 'weekly', img: '/images/tobita_shops_comparison_1792412702580.jpg', title: 'お店選びと通り比較' },
-  { path: '/dorm', priority: '0.85', freq: 'weekly', img: '/images/tobita_luxury_room_1788153103866.jpg', title: '家具家電付き個室マンション寮' },
-  { path: '/safety', priority: '0.85', freq: 'weekly', img: '/images/tobita_wwork_privacy_1788153051081.jpg', title: '身バレ対策と安心の防犯体制' },
+  { path: '', priority: '1.0', freq: 'daily', lastmod: TODAY, img: '/images/tobita_dream_hero_banner_1782557055526.jpg', title: '飛田新地求人｜飛田ガールズ【公式・料亭直営】' },
+  { path: '/about', priority: '0.8', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '運営者情報・店舗体制' },
+  { path: '/glossary', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地 用語集・用語辞典' },
+  { path: '/compare', priority: '0.9', freq: 'daily', lastmod: TODAY, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地求人サイト比較＆目的別ガイド' },
+  { path: '/compare/inexperienced', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_beginner_support_1788153037569.jpg', title: '未経験向け求人' },
+  { path: '/compare/high-income', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_salary_calculator_1788153012478.jpg', title: '高収入重視求人' },
+  { path: '/compare/weekly-1', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_shift_schedule_1788153063163.jpg', title: '週1日・マイペース求人' },
+  { path: '/compare/short-term', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_trial_interview_1788153091611.jpg', title: '短期出稼ぎ・集中求人' },
+  { path: '/compare/dormitory', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_luxury_room_1788153103866.jpg', title: '個室寮完備求人' },
+  { path: '/compare/double-work', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_wwork_privacy_1788153051081.jpg', title: '副業OL・Wワーク求人' },
+  { path: '/compare/age-20s', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_experienced_cast_1792411797671.jpg', title: '20代向け求人' },
+  { path: '/compare/age-30s', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_job_guide_tea_1788153000519.jpg', title: '30代向け求人' },
+  { path: '/compare/age-40s', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_job_guide_tea_1788153000519.jpg', title: '40代向け求人' },
+  { path: '/faq', priority: '0.85', freq: 'daily', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地求人FAQ｜よくある質問（119問）' },
+  { path: '/faq/qualification', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '応募条件・年齢・資格に関するFAQ' },
+  { path: '/faq/beginner', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '未経験・初心者向けFAQ' },
+  { path: '/faq/experienced', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '経験者・移籍・他業種比較FAQ' },
+  { path: '/faq/job', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '仕事内容・接客に関するFAQ' },
+  { path: '/faq/salary', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '給料・日払い・費用に関するFAQ' },
+  { path: '/faq/hours', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '出勤・シフト・営業時間に関するFAQ' },
+  { path: '/faq/interview', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '面接・体験入店・応募方法に関するFAQ' },
+  { path: '/faq/privacy', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '身バレ対策・プライバシー・税金に関するFAQ' },
+  { path: '/faq/environment', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '店舗環境・設備・寮・人間関係に関するFAQ' },
+  { path: '/faq/access', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: 'アクセス・場所・送迎・交通費に関するFAQ' },
+  { path: '/faq/sidejob', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '副業・Wワーク・掛け持ちに関するFAQ' },
+  { path: '/faq/support', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '不安・トラブル・退店・相談に関するFAQ' },
+  { path: '/blog', priority: '0.85', freq: 'daily', lastmod: TODAY, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地求人コラム一覧' },
+  { path: '/job', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_job_guide_tea_1788153000519.jpg', title: 'お仕事内容と和室接客' },
+  { path: '/salary', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_salary_calculator_1788153012478.jpg', title: '給料システムと即日日払い' },
+  { path: '/beginner', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_beginner_support_1788153037569.jpg', title: '未経験スタート完全マニュアル' },
+  { path: '/experienced', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/experienced_hero_woman_1794551773329.jpg', title: '飛田新地の経験者求人｜他業種・他店からの移籍' },
+  { path: '/requirements', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_interview_flow_1788153075249.jpg', title: '募集要項と応募条件' },
+  { path: '/flow', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_trial_interview_1788153091611.jpg', title: '面接・体入の流れ' },
+  { path: '/workstyle', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/workstyle_hero_morning_1794549297942.jpg', title: '飛田新地の勤務時間・シフト・働き方｜飛田ガールズ' },
+  { path: '/shops', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/shops_hero_street_1794559557935.jpg', title: '飛田新地のお店選びガイド｜通りの特徴・求人の見分け方｜飛田ガールズ' },
+  { path: '/dekasegi', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_luxury_room_1788153103866.jpg', title: '個室寮完備・地方出稼ぎ完全サポート' },
+  { path: '/safety', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_wwork_privacy_1788153051081.jpg', title: '身バレ対策と安心の防犯体制' },
 ];
 
 let xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -68,7 +90,7 @@ for (const r of staticRoutes) {
   const locUrl = r.path === '' ? `${DOMAIN}/` : `${DOMAIN}${r.path}`;
   xml += `  <url>
     <loc>${locUrl}</loc>
-    <lastmod>${TODAY}</lastmod>
+    <lastmod>${r.lastmod}</lastmod>
     <changefreq>${r.freq}</changefreq>
     <priority>${r.priority}</priority>
     <image:image>
@@ -79,16 +101,17 @@ for (const r of staticRoutes) {
 `;
 }
 
-// Add all 179 blog articles with images
+// Add all blog articles with accurate publishedAt/updatedAt lastmod
 for (const a of articles) {
   if (!a.slug) continue;
   const imgUrl = a.eyeCatch && a.eyeCatch.startsWith('http') 
     ? a.eyeCatch 
     : `${DOMAIN}${a.eyeCatch || '/images/col_beginner_guide_art_1787803245812.jpg'}`;
+  const articleLastMod = formatLastMod(a.updatedAt || a.publishedAt);
 
   xml += `  <url>
     <loc>${DOMAIN}/blog/${a.slug}</loc>
-    <lastmod>${TODAY}</lastmod>
+    <lastmod>${articleLastMod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>

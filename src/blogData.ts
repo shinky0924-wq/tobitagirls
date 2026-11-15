@@ -251,7 +251,7 @@ export function mergeWithDefaultArticles(incomingArticles: BlogArticle[]): { mer
   return { merged, hasChanges };
 }
 
-const BLOG_DATA_VERSION = '20261019_our_shop_unified_v11';
+const BLOG_DATA_VERSION = '20261113_experienced_transfer_articles_v12';
 
 export function getStoredArticles(): BlogArticle[] {
   if (typeof window === 'undefined') return BLOG_ARTICLES;

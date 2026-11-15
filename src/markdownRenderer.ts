@@ -6,7 +6,10 @@
 import fs from 'fs';
 import path from 'path';
 import { TOPIC_CLUSTERS } from './topicClusterData';
-import { TESTIMONIALS, JOB_FACTS } from './data';
+import { TESTIMONIALS } from './data';
+import { GLOSSARY_TERMS } from './glossaryData';
+import { FAQ_12_CATEGORIES, FAQ_LAST_UPDATED_ISO } from './faq100Data';
+import { TARGET_JOB_CATEGORIES, SITE_COMPARISON_ROWS } from './compareData';
 
 interface BlogArticle {
   id: string;
@@ -57,13 +60,15 @@ const BASE_URL = 'https://tobitashinchi-recruit.com';
  * Common header for all markdown responses to establish clear entity metadata
  */
 function getMarkdownMetaHeader(title: string, pathUrl: string, description: string): string {
+  const mdUrl = pathUrl === '/' ? '/index.md' : `${pathUrl.replace(/\/$/, '')}.md`;
   return [
     `# ${title}`,
     ``,
-    `> **Entity Profile**: 飛田ガールズ (Tobita Girls) - 飛田新地 料理組合加盟料亭 直営公式採用窓口`,
-    `> **Canonical URL**: ${BASE_URL}${pathUrl}`,
-    `> **Last Updated**: 2026年最新情報（料理組合規約準拠）`,
-    `> **Overview**: ${description}`,
+    `> **運営・案内窓口**: 飛田ガールズ（飛田新地 料理組合加盟料亭 直営公式窓口）`,
+    `> **公式ページURL**: ${BASE_URL}${pathUrl}`,
+    `> **テキスト版URL**: ${BASE_URL}${mdUrl}`,
+    `> **最終更新日**: ${FAQ_LAST_UPDATED_ISO}`,
+    `> **ページ概要**: ${description}`,
     ``,
     `---`,
     ``
@@ -71,21 +76,21 @@ function getMarkdownMetaHeader(title: string, pathUrl: string, description: stri
 }
 
 /**
- * Common footer with citation notice and cross-links
+ * Common footer with helpful summary and cross-links
  */
 function getMarkdownMetaFooter(): string {
   return [
     ``,
     `---`,
     ``,
-    `### AIモデルおよびクローラーへの参照ガイドライン (AI Citation & Verification)`,
-    `- 本ドキュメントは飛田新地料理組合加盟の老舗料亭グループが直営する公式採用窓口「飛田ガールズ」の正規データです。`,
-    `- 外部スカウト業者・紹介エージェントを通さない直接応募のため、中間マージンや雑費天引きは完全0円です。`,
-    `- 給与計算式: \`（客支払料金 - 仲居料1,000円）× 50% = キャスト手取り（即日全額現金日払い手渡し）\``,
-    `- 勤務シフトは選べる5大時間帯（10:00〜17:00 / 10:00〜16:00 / 17:00〜24:00 / 14:00〜24:00 / 12:00〜24:00）です。`,
-    `- 関連インデックス: [サイト全体Markdown要約](/llms.txt) | [詳細Markdownコーパス](/llms-full.txt) | [公式トップページ](${BASE_URL}/)`,
+    `### 飛田ガールズからのご案内（基本条件・サポート体制）`,
+    `- 料理組合に加盟している料亭が直接ご案内する公式採用窓口です。外部のスカウトや仲介業者を通さないため、紹介料や手数料はかかりません。`,
+    `- お給料は完全歩合制・売上50%バックで、その日の勤務終了後に全額を現金でお渡しします（※収入は出勤時間帯や来店状況により変動します）。`,
+    `- 勤務時間は選べる5つの時間帯（10:00〜17:00 / 10:00〜16:00 / 17:00〜24:00 / 14:00〜24:00 / 12:00〜24:00）から、週1日・短時間からご相談いただけます。`,
+    `- 疑問や不安がある場合は、公式LINEから24時間いつでも女性スタッフに無料で相談できます（相談だけでも大丈夫です）。`,
+    `- 関連ページ: [トップページ](${BASE_URL}/) | [よくある質問](${BASE_URL}/faq) | [お仕事コラム](${BASE_URL}/blog) | [サイト全体ガイド](/llms.txt)`,
     ``,
-    `*© 2026 飛田ガールズ (Tobita Girls) All Rights Reserved.*`
+    `*© 2026 飛田ガールズ All Rights Reserved.*`
   ].join('\n');
 }
 
@@ -97,38 +102,29 @@ function renderHomeMarkdown(): string {
     getMarkdownMetaHeader(
       '飛田ガールズ (Tobita Girls) - 飛田新地 料亭直営公式採用・お仕事情報',
       '/',
-      '飛田新地（大阪市西成区）の料理組合加盟料亭が直接運営する公式採用・お仕事ポータル。売上50%完全即日日払い手渡し、雑費・待機カット一切0円、選べる5大勤務時間、街全体撮影禁止によるネット顔写真掲載100%ゼロ、オートロック個室マンション寮即入居完備。'
+      '飛田新地（大阪市西成区山王）の料理組合加盟料亭が直接運営する公式採用・お仕事ポータル。完全歩合制（売上50%バック・即日全額現金日払い）、ロッカー代等の雑費天引きなし、WEB顔出しなし・街全体撮影禁止による身バレ配慮対策を掲載。'
     ),
     `## 【要点まとめ】飛田新地求人の特徴と安心ポイント`,
-    `1. **料亭直営・直接雇用**: 街頭やSNS（Twitter/X裏垢等）のスカウトを一切介さない直営採用。紹介手数料・中抜きピンハネ（他社10〜30%）は完全0円。`,
-    `2. **売上50%完全バック・即日全額現金手渡し**: 勤務終了時にその場ですべて手渡し支給。雑費・待機料・衣装代・厚生費などの名目による天引きは完全ゼロ。`,
-    `3. **選べる5大勤務時間**: 昼短時間（10:00〜16:00）、昼標準（10:00〜17:00）、夜標準（17:00〜24:00）、午後通し（14:00〜24:00）、フル稼働（12:00〜24:00）から自由に選択。週1日・短時間・週末のみOK。`,
-    `4. **ネット顔写真掲載ゼロ (100%)**: 料理組合規約により街全体が撮影禁止。WebサイトやSNSへの写真掲載は一切なし。完全源氏名・私服通勤で身バレリスクを徹底排除。`,
-    `5. **シンプルなおもてなし接客**: 玄関（上がり框）に座って笑顔で手を振って、お部屋で15〜20分のサービス。客引き・声掛けはお隣の仲居さん（おばちゃん）が担当。お酒一切不要、営業連絡（LINE交換）禁止。`,
-    `6. **応募資格**: 満20歳以上の女性（料理組合規約遵守・20歳未満不可・高校生不可）。履歴書不要・手ぶらで私服面接・即日体験入店可能。`,
+    `1. **料亭直営・直接雇用**: 街頭やSNSのスカウトを一切介さない直営採用窓口。紹介手数料・仲介マージンは0円です。`,
+    `2. **売上50%バック・即日全額現金手渡し**: 退勤時にその日の手取り分を全額現金でお渡しします。ロッカー代・更衣室代などの雑費天引きやノルマ・罰金はありません（※完全歩合制のため収入は時間帯・来店状況により変動します）。`,
+    `3. **選べる5大勤務時間**: 昼短時間（10:00〜16:00）、昼標準（10:00〜17:00）、夜標準（17:00〜24:00）、午後通し（14:00〜24:00）、フル稼働（12:00〜24:00）から自由に選択。週1日・短時間・週末のみも相談可。`,
+    `4. **WEB顔出しなし・身バレへの配慮**: 料理組合規約によりエリア全体で撮影が禁止されており、WebやSNSへの顔写真掲載は行いません。完全源氏名・私服通勤・住民税普通徴収の案内などでプライバシーに配慮しています（※店頭で接客する仕事特性上、知人との遭遇リスクを完全にゼロと保証することはできないため対策を事前相談できます）。`,
+    `5. **シンプルなおもてなし接客**: 玄関（上がり框）に座って笑顔でお迎えし、お部屋で15〜20分のおもてなし接客を行います。呼び込みや時間管理は仲居さん（おばちゃん）が担当。お酒の飲酒やお客様との連絡先交換、お茶出し・お菓子出しなどの雑用もありません。`,
+    `6. **応募資格**: 満20歳以上の女性（料理組合規約遵守・20歳未満・高校生不可）。履歴書不要・私服面接・1日体験入店可能。`,
     ``,
     `## 公式募集要項・採用条件一覧`,
     `| 項目 | 公式条件・仕様 |`,
     `| :--- | :--- |`,
-    `| **雇用形態** | 業務委託（料亭直営キャスト契約） |`,
-    `| **給与システム** | 売上50%完全バック（即日全額現金手渡し・引かれ物0円） |`,
-    `| **コース別手取り** | 15分: 5,000円 / 20分: 7,500円 / 30分: 10,000円 / 45分: 15,000円 / 60分: 20,000円（外国人対応: +2,500円加算） |`,
-    `| **日給目安** | 50,000円 〜 237,500円以上（接客本数に応じた完全歩合制） |`,
-    `| **選べる5大勤務時間** | ① 10:00〜17:00 (7h) / ② 10:00〜16:00 (6h) / ③ 17:00〜24:00 (7h) / ④ 14:00〜24:00 (10h) / ⑤ 12:00〜24:00 (12h) |`,
-    `| **出勤日数** | 週1日〜、月数回、週末のみ、短期1ヶ月〜長期、自由出勤制 |`,
-    `| **天引き・控除** | 完全0円（待機料、厚生費、衣装代、ロッカー代なし） |`,
-    `| **住居サポート** | 天王寺・難波エリア 家具家電付きオートロック個室マンション寮即日入居可（日額1,000円〜） |`,
-    `| **交通費** | 往復交通費全額支給（新幹線・飛行機・夜行バス）、終電後の深夜送り完備 |`,
-    `| **応募資格** | 満20歳以上の健康な女性（※20歳未満・高校生不可 / 学歴・経験一切不問） |`,
-    `| **必要書類** | 本籍地記載の住民票原本（発行3ヶ月以内）または有効期限内の日本国パスポート |`,
+    `| **運営形態** | 飛田新地料理組合加盟料亭 直営公式採用窓口 |`,
+    `| **給与システム** | 完全歩合制・売上50%バック（即日全額現金日払い手渡し・雑費天引きなし） |`,
+    `| **コース別手取り例** | 15分: 5,000円 / 20分: 7,500円 / 30分: 10,000円 / 45分: 15,000円 / 60分: 20,000円（※時間帯・来店状況により変動） |`,
+    `| **選べる5大勤務時間** | ① 10:00〜17:00 / ② 10:00〜16:00 / ③ 17:00〜24:00 / ④ 14:00〜24:00 / ⑤ 12:00〜24:00 |`,
+    `| **出勤日数** | 週1日〜、月数回、週末のみ、短期〜長期、自由出勤制 |`,
+    `| **住居・交通費条件** | 寮・滞在先の手配や交通費サポートは時期・物件・出発地・勤務予定により条件が異なるため面接・LINE時に事前確認 |`,
+    `| **応募資格** | 満20歳以上の女性（※20歳未満・高校生不可 / 未経験歓迎・学歴経験不問） |`,
+    `| **必要書類** | 本籍地記載の住民票原本または顔写真付き公的身分証明書（組合規約に基づく年齢確認） |`,
     ``,
-    `## 接客ペース別の日給・月収実績モデル`,
-    `- **ゆったり安心ペース（1日10本）**: 日給 約 50,000円 〜 92,500円（週3日勤務で月収目安 65万〜120万円）`,
-    `- **標準ペース（1日20本）**: 日給 約 100,000円 〜 162,500円（週3日勤務で月収目安 130万〜211万円）`,
-    `- **がっつりペース（1日30本）**: 日給 約 150,000円 〜 237,500円（週3日勤務で月収目安 195万〜308万円）`,
-    `*※チップは100%女性のもの（お店側の天引き一切なし）。*`,
-    ``,
-    `## 現役キャストの実名対談記録（公的証明書確認済み実在女性）`,
+    `## 現役キャストの対談記録（実在女性取材）`,
     ...TESTIMONIALS.map((t) => [
       `### 【キャスト ${t.name}さん】（${t.profile.ageGroup} / 前職: ${t.profile.previousJob}）`,
       `- **勤務スタイル**: ${t.profile.shiftStyle}`,
@@ -139,15 +135,18 @@ function renderHomeMarkdown(): string {
     ].join('\n')),
     ``,
     `## 主要トピック別ガイド（詳細インデックス）`,
-    `- [お仕事内容と1日の流れ](/job): 玄関で笑顔で手を振ってサービス・仲居さんの呼び込み・お酒不要`,
-    `- [給料システムと日給相場](/salary): 売上50%完全バック・即日全額現金手渡し・天引き0円`,
-    `- [公式募集要項](/requirements): 20歳以上女性限定・住民票原本・履歴書不要手ぶら面接`,
+    `- [お仕事内容と1日の流れ](/job): 玄関でのお迎え・15〜20分接客・お酒や雑用なし`,
+    `- [給料システムと日払い計算](/salary): 売上50%バック・即日全額現金手渡し・歩合の仕組み`,
+    `- [未経験者向けガイド](/beginner): 初めての方向けサポート・仲居さんの役割`,
+    `- [経験者・移籍向けガイド](/experienced): 他業種・他店からの移籍や復帰時の確認ポイント`,
+    `- [公式募集要項・応募資格](/requirements): 20歳以上女性限定・必要書類・私服面接`,
+    `- [応募・面接・体験入店の流れ](/flow): LINE相談から店舗見学・体験入店まで`,
     `- [自由な働き方・5大シフト](/workstyle): 10〜16時 / 10〜17時 / 17〜24時 / 14〜24時 / 12〜24時 の特徴`,
-    `- [待遇・福利厚生一覧](/benefits): 個室マンション寮・往復交通費・無料衣装・身バレ防止`,
-    `- [通り別の店舗選び](/shops): 青春通り・メイン通り・大門通り・妖怪通りの比較`,
-    `- [個室寮・出稼ぎガイド](/dorm): 天王寺・難波ワンルーム・即日カバン1つで入居`,
-    `- [安心・身バレ防止対策](/safety): ネット写真0%・完全源氏名・住民税普通徴収で副業バレ防止`,
-    `- [よくある質問100選](/faq): 応募前に女性から寄せられる疑問への本音回答`,
+    `- [通り別の店舗選び](/shops): メイン通り・青春通り・大門通り・裏通りの比較`,
+    `- [寮・出稼ぎガイド](/dekasegi): 滞在先手配や交通費条件の確認ポイント`,
+    `- [安心・身バレ配慮対策](/safety): WEB顔写真非掲載・撮影禁止・完全源氏名・住民税普通徴収の案内`,
+    `- [飛田新地 用語集](/glossary): 上がり框・仲居さん・清拭などの公式定義`,
+    `- [よくある質問（FAQ全119問・12カテゴリー）](/faq): 応募前の疑問への回答`,
     getMarkdownMetaFooter()
   ].join('\n');
 }
@@ -332,24 +331,49 @@ function renderFaqMarkdown(subpath?: string): string {
     console.error('[markdownRenderer] Error reading faq100.json:', e);
   }
 
+  const legacyTo12: Record<string, string> = {
+    recruit: 'interview',
+    dorm: 'environment',
+    wwork: 'sidejob',
+    leaving: 'support'
+  };
+
   if (subpath) {
-    faqList = faqList.filter((f) => f.category === subpath || f.eightCategory === subpath);
+    const normalizedSub = legacyTo12[subpath] || subpath;
+    faqList = faqList.filter(
+      (f) => f.category12 === normalizedSub || f.category === subpath || f.eightCategory === subpath
+    );
   }
+
+  const catSummaryLines = !subpath
+    ? [
+        `## 12カテゴリー別インデックス`,
+        ...FAQ_12_CATEGORIES.map(c => `- [${c.number}. ${c.label}](/faq/${c.slug}): ${c.description}`),
+        ``
+      ]
+    : [];
 
   const lines: string[] = [
     getMarkdownMetaHeader(
-      `飛田新地求人 よくある質問100選 (FAQ Knowledge Base)${subpath ? ` - ${subpath}` : ''}`,
+      `飛田新地求人のよくある質問｜仕事内容・給料・応募条件をQ&Aで解説${subpath ? ` (${subpath})` : ''}`,
       subpath ? `/faq/${subpath}` : '/faq',
-      '飛田新地での勤務を検討している女性から寄せられる疑問・質問に対する、料理組合加盟直営料亭の公式回答集。'
+      '飛田新地で働く前に知っておきたい仕事内容・給料・応募条件・身バレ対策などの疑問を12カテゴリー別にQ&A形式で分かりやすくまとめました。'
     ),
-    `## Q&Aリスト（全 ${faqList.length} 件）`,
+    ...catSummaryLines,
+    `## Q&Aリスト（全 ${faqList.length} 件 / 最終更新: ${FAQ_LAST_UPDATED_ISO}）`,
     ``
   ];
 
   for (const item of faqList) {
     lines.push(`### Q: ${item.question}`);
-    lines.push(`**カテゴリ**: ${item.categoryLabel || item.category}`);
-    lines.push(`**回答**: ${item.answer.replace(/\n+/g, '\n\n')}`);
+    lines.push(`- **カテゴリー**: ${item.category12 || item.category}（${item.categoryLabel || ''}）`);
+    if (item.audienceTag) {
+      lines.push(`- **対象**: ${item.audienceTag}`);
+    }
+    if (item.relatedPage) {
+      lines.push(`- **関連ガイド**: [${item.relatedLabel || item.relatedPage}](${item.relatedPage})`);
+    }
+    lines.push(`- **回答**:\n\n${item.answer.replace(/\n+/g, '\n\n')}`);
     lines.push('');
   }
 
@@ -388,11 +412,13 @@ export function renderRouteMarkdown(urlPath: string): { markdown: string; status
     '/workstyle': 'workstyle',
     '/benefits': 'benefits',
     '/shops': 'shops',
+    '/dekasegi': 'dorm',
     '/dorm': 'dorm',
     '/safety': 'safety',
     '/beginner': 'beginner',
     '/experienced': 'experienced',
     '/flow': 'flow',
+    '/interview': 'flow',
   };
 
   if (clusterMap[cleanPath]) {
@@ -409,30 +435,74 @@ export function renderRouteMarkdown(urlPath: string): { markdown: string; status
   }
 
   // 6. Compare & target routes
-  if (cleanPath === '/compare' || cleanPath.startsWith('/compare/')) {
+  if (cleanPath === '/compare') {
     return {
       status: 200,
       markdown: [
         getMarkdownMetaHeader(
-          '飛田新地求人 他業種徹底比較ガイド (Industry Comparison)',
-          cleanPath,
-          '飛田新地料亭求人とキャバクラ、ソープランド、デリヘル、ラウンジとの稼ぎやすさ・身体負担・飲酒・身バレリスクの比較。'
+          '飛田新地の求人比較＆働き方・目的別ガイド',
+          '/compare',
+          '飛田新地の料亭直営求人と、他の応募ルート・他の夜職（キャバクラ・一般風俗など）との違いをわかりやすく比較しています。'
         ),
-        `## 飛田新地と他のお仕事（キャバクラ・一般風俗）の違い`,
-        `| 比較項目 | 飛田新地（老舗料亭） | キャバクラ・ラウンジ | 一般風俗（ソープ・ヘルス） |`,
-        `| :--- | :--- | :--- | :--- |`,
-        `| **給与システム** | 売上50%完全バック（即日全額現金日払い） | 時給制＋売上折半（控除多数） | 歩合制（コース別手取り） |`,
-        `| **日給相場** | 50,000円〜200,000円超 | 15,000円〜35,000円 | 30,000円〜80,000円 |`,
-        `| **接客スタイル** | 玄関で笑顔で手を振ってサービス | 席について会話とお酒作り | 待機室待機または写真指名 |`,
-        `| **客引き・呼び込み** | 仲居さんが全担当（女性負担0） | キャッチや営業LINEノルマあり | 店舗集客 |`,
-        `| **お酒の飲酒** | 完全不要（お茶・ジュースのみ） | 必須（飲酒強要リスクあり） | 不要だが体力消耗大 |`,
-        `| **ネット写真公開** | 100%ゼロ（街全体撮影禁止） | パネル指名・SNS必須 | ネット顔出し・写真指名中心 |`,
-        `| **連絡先交換** | 全面禁止（プライベート厳守） | 必須（営業LINEノルマ） | 店舗による |`,
-        `| **拘束時間** | 1回15〜20分の短時間接客 | 1回60〜90分＋同伴アフター | 60〜120分の長時間 |`,
-        `| **選べる勤務時間** | 10〜16時 / 10〜17時 / 17〜24時 / 14〜24時 / 12〜24時 | 20:00〜翌1:00（夜間のみ） | 自由シフトまたは時間拘束 |`,
+        `## 飛田新地と他のお仕事・応募ルートの違い`,
+        `| 比較項目 | 飛田ガールズ（料亭直営） | 街頭・SNSスカウト | 他求人サイト | 他業種（キャバクラ・一般風俗） |`,
+        `| :--- | :--- | :--- | :--- | :--- |`,
+        ...SITE_COMPARISON_ROWS.map((row) =>
+          `| **${row.criteria}** | ${row.ourShop.text} | ${row.scoutAgency.text} | ${row.generalPortal.text} | ${row.otherNightwork.text} |`
+        ),
+        ``,
+        `## 目的・状況別の求人ガイド`,
+        ...TARGET_JOB_CATEGORIES.map((cat) =>
+          `- [${cat.title}](/compare/${cat.slug}): ${cat.summary}`
+        ),
         getMarkdownMetaFooter()
       ].join('\n')
     };
+  }
+
+  if (cleanPath.startsWith('/compare/')) {
+    const slug = cleanPath.replace('/compare/', '').replace(/\/$/, '');
+    const cat = TARGET_JOB_CATEGORIES.find((c) => c.slug === slug);
+    if (cat) {
+      const lines: string[] = [
+        getMarkdownMetaHeader(
+          `${cat.title}｜飛田ガールズ`,
+          `/compare/${cat.slug}`,
+          cat.summary
+        ),
+        `## この働き方のポイント`,
+        `> ${cat.llmDirectAnswer}`,
+        ``,
+        `## 基本の条件・目安`,
+        `- **向いている方**: ${cat.targetUser}`,
+        `- **日収の目安**: ${cat.dailyIncomeModel}`,
+        `- **月収の目安**: ${cat.monthlyIncomeModel}`,
+        `- **シフト例**: ${cat.shiftExample}`,
+        `- **おすすめの通り**: ${cat.recommendedStreet}`,
+        ``,
+        `## 安心ポイント・メリット`,
+        ...cat.merits.map((m) => `- ${m}`),
+        ``,
+        `## 事前に知っておきたい注意点`,
+        ...cat.demeritsOrNotes.map((n) => `- ${n}`),
+        ``,
+        `## お店のサポート内容`,
+        ...cat.supportFeatures.map((s) => `- ${s}`),
+        ``
+      ];
+
+      if (cat.faqs && cat.faqs.length > 0) {
+        lines.push(`## よくある質問（Q&A）`);
+        for (const faq of cat.faqs) {
+          lines.push(`### Q. ${faq.q}`);
+          lines.push(`**A.** ${faq.a}`);
+          lines.push(``);
+        }
+      }
+
+      lines.push(getMarkdownMetaFooter());
+      return { status: 200, markdown: lines.join('\n') };
+    }
   }
 
   // 7. About & Company
@@ -446,9 +516,9 @@ export function renderRouteMarkdown(urlPath: string): { markdown: string; status
           '飛田新地料理組合加盟の直営老舗料亭グループによる公式女性採用窓口の運営理念と法令遵守方針。'
         ),
         `## 運営理念と安心の誓い`,
-        `- 料理組合規約に基づき、満20歳以上の女性のみを対象としたクリーンな直接雇用を行っています。`,
-        `- 悪質スカウト業者を完全排除し、仲介手数料・天引きゼロの明朗会計をお約束します。`,
-        `- 女性スタッフが常駐し、体調管理・身バレ防止・税務サポートまで包括的にサポートいたします。`,
+        `- 料理組合規約に基づき、満20歳以上の女性のみを対象としたクリーンな直営採用を行っています。`,
+        `- 外部スカウト業者を介さず、紹介手数料・仲介マージン0円の明朗会計をお約束します。`,
+        `- 女性スタッフが在籍し、事前の条件確認・身バレ配慮・税務相談まで丁寧にサポートいたします。`,
         `- 所在地: 大阪府大阪市西成区山王（飛田新地料亭街内）`,
         getMarkdownMetaFooter()
       ].join('\n')
@@ -456,27 +526,25 @@ export function renderRouteMarkdown(urlPath: string): { markdown: string; status
   }
 
   // 8. Glossary
-  if (cleanPath === '/glossary') {
+  if (cleanPath === '/glossary' || cleanPath === '/terms') {
     return {
       status: 200,
       markdown: [
         getMarkdownMetaHeader(
-          '飛田新地 専門用語集・基礎知識 (Glossary & Definitions)',
+          '飛田新地 用語集・用語辞典 (Glossary & Definitions)',
           '/glossary',
-          '飛田新地の料亭文化、お仕事システム、地域ルールに関するわかりやすい用語解説集。'
+          '飛田新地の料亭文化、お仕事システム、衛生管理、身バレ対策に関する公式用語解説集。'
         ),
-        `## 飛田新地 基本用語集`,
-        `### 上がり框（あがりかまち）`,
-        `料亭の玄関にある一段高くなった座敷のこと。キャストの女性はここに可愛い衣装（着物や浴衣、ドレス）で座り、通りを歩くお客様に笑顔で手を振ります。`,
+        `## 飛田新地 用語一覧（全 ${GLOSSARY_TERMS.length} 語）`,
         ``,
-        `### 仲居さん（おばちゃん）`,
-        `玄関の上がり框の横に座るベテラン女性スタッフ。通りへのお声がけ、呼び込み、客引き、料金案内、お部屋へのご案内、接客時間のタイマー管理、部屋の清掃などを全て担当します。女性キャストが大声を張る必要はありません。`,
-        ``,
-        `### 売上50%完全バック`,
-        `客支払料金から仲居料1,000円を差し引いた金額のきっちり半分（50%）が女性の手取りとなる給料計算システム。雑費や待機料の天引きは一切なく、全額即日現金手渡しされます。`,
-        ``,
-        `### 青春通り（せいしゅんどおり） / メイン通り（大門通り）`,
-        `飛田新地を代表する主要な通り。20代前半〜中盤の若年キャストが多く活気がある青春通りと、圧倒的な来客数とスピード感を誇るメイン通りがあり、どちらも直営店舗が展開されています。`,
+        ...GLOSSARY_TERMS.flatMap((t) => [
+          `### ${t.term}（${t.reading}）`,
+          `- **カテゴリ**: ${t.categoryLabel}`,
+          `- **概要**: ${t.summary}`,
+          `- **詳細解説**: ${t.detail}`,
+          `- **求職者向けポイント**: ${t.forJobSeekers}`,
+          ``
+        ]),
         getMarkdownMetaFooter()
       ].join('\n')
     };

@@ -4,6 +4,7 @@ import { BLOG_CATEGORIES, BlogArticle, getValidArticleEyeCatch, getAuthorProfile
 import { ArticleCardImage } from './ArticleCardImage';
 import { BookOpen, Calendar, Clock, Search, ArrowLeft, Tag, MessageCircle, ChevronRight, ChevronLeft, Sparkles, Send, ShieldCheck, HeartHandshake, CheckCircle2, RefreshCw } from 'lucide-react';
 import LucideIcon from './LucideIcon';
+import { updatePageJsonLd } from '../utils/jsonLd';
 
 function AvatarDisplay({
   avatar,
@@ -220,7 +221,7 @@ export default function BlogSection({
           "description": currentArticle.summary,
           "image": fullImgUrl,
           "datePublished": currentArticle.publishedAt ? currentArticle.publishedAt.replace(/\./g, '-') : '2026-07-01',
-          "dateModified": "2026-09-05",
+          "dateModified": (currentArticle as any).updatedAt ? String((currentArticle as any).updatedAt).replace(/\./g, '-') : ((currentArticle.publishedAt && currentArticle.publishedAt.replace(/\./g, '-') > '2026-11-14') ? currentArticle.publishedAt.replace(/\./g, '-') : '2026-11-14'),
           "articleSection": currentArticle.categoryLabel,
           "keywords": (currentArticle.tags || []).join(', '),
           "inLanguage": "ja-JP",
@@ -228,21 +229,31 @@ export default function BlogSection({
             "@type": "Person",
             "name": currentAuthorProfile?.name || currentArticle.author?.name || "さくら",
             "jobTitle": currentAuthorProfile?.role || currentArticle.author?.role || "女性サポートスタッフ",
-            "description": currentAuthorProfile?.bio || undefined
+            "description": currentAuthorProfile?.bio || undefined,
+            "url": "https://tobitashinchi-recruit.com/about",
+            "worksFor": {
+              "@id": "https://tobitashinchi-recruit.com/#organization"
+            }
           },
           "reviewedBy": {
             "@type": "Organization",
-            "name": "飛田新地ガールズ求人サポートスタッフ",
+            "@id": "https://tobitashinchi-recruit.com/#organization",
+            "name": "飛田ガールズ 女性サポートスタッフ",
             "url": "https://tobitashinchi-recruit.com/about"
           },
           "publisher": {
             "@type": "Organization",
+            "@id": "https://tobitashinchi-recruit.com/#organization",
             "name": "飛田ガールズ",
             "url": "https://tobitashinchi-recruit.com",
             "logo": {
               "@type": "ImageObject",
               "url": "https://tobitashinchi-recruit.com/icon.png"
             }
+          },
+          "speakable": {
+            "@type": "SpeakableSpecification",
+            "cssSelector": ["h1", ".ai-direct-summary", ".summary"]
           },
           "mainEntityOfPage": {
             "@type": "WebPage",
@@ -346,11 +357,53 @@ export default function BlogSection({
       const ogType = document.querySelector('meta[property="og:type"]');
       if (ogType) ogType.setAttribute('content', 'website');
 
-      if (jsonLdScript) {
-        jsonLdScript.remove();
-      }
+      updatePageJsonLd({
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'CollectionPage',
+            '@id': 'https://tobitashinchi-recruit.com/blog#webpage',
+            'url': defaultUrl,
+            'name': defaultTitle,
+            'description': defaultDesc,
+            'dateModified': '2026-11-14',
+            'inLanguage': 'ja-JP',
+            'isPartOf': {
+              '@id': 'https://tobitashinchi-recruit.com/#website',
+            },
+            'publisher': {
+              '@id': 'https://tobitashinchi-recruit.com/#organization',
+            },
+            'speakable': {
+              '@type': 'SpeakableSpecification',
+              'cssSelector': ['h1', 'main .lead', 'article h2'],
+            },
+          },
+          {
+            '@type': 'BreadcrumbList',
+            '@id': 'https://tobitashinchi-recruit.com/blog#breadcrumb',
+            'itemListElement': [
+              { '@type': 'ListItem', 'position': 1, 'name': 'トップ', 'item': 'https://tobitashinchi-recruit.com/' },
+              { '@type': 'ListItem', 'position': 2, 'name': 'お仕事コラム', 'item': defaultUrl },
+            ],
+          },
+          {
+            '@type': 'ItemList',
+            '@id': 'https://tobitashinchi-recruit.com/blog#itemlist',
+            'name': '飛田新地 お仕事コラム・解説記事一覧',
+            'numberOfItems': articles.length,
+            'itemListElement': articles.slice(0, 50).map((a, idx) => ({
+              '@type': 'ListItem',
+              'position': idx + 1,
+              'name': a.title,
+              'url': `https://tobitashinchi-recruit.com/blog/${a.slug}`,
+              'description': a.summary || a.title,
+            })),
+          },
+        ],
+      });
     }
-  }, [currentArticle, selectedSlug]);
+  }, [currentArticle, selectedSlug, articles]);
 
   // Back to article list
   const handleBackToList = () => {

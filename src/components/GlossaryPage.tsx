@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'motion/react';
 import LucideIcon from './LucideIcon';
 import { GLOSSARY_TERMS, GLOSSARY_CATEGORIES, GlossaryTerm } from '../glossaryData';
+import { updatePageJsonLd } from '../utils/jsonLd';
+import { FAQ_LAST_UPDATED_ISO } from '../faq100Data';
 
 interface GlossaryPageProps {
   onNavigateHome: () => void;
@@ -31,6 +33,88 @@ export default function GlossaryPage({ onNavigateHome, onCtaclick }: GlossaryPag
       );
     });
   }, [selectedCategory, searchQuery]);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const prevTitle = document.title;
+    const pageTitle = '飛田新地 用語集・用語辞典｜上がり框・仲居・清拭・通り別の意味を解説【公式】';
+    const pageDesc = '飛田新地求人の専門用語辞典。上がり框、仲居さん、清拭（シャワーなしルール）、通り別の違い、給料計算（50%バック）など、働く前に知っておきたい用語を料亭直営スタッフが分かりやすく解説。';
+    document.title = pageTitle;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', pageDesc);
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', pageTitle);
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute('content', pageDesc);
+
+    updatePageJsonLd({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebPage',
+          '@id': 'https://tobitashinchi-recruit.com/glossary#webpage',
+          url: 'https://tobitashinchi-recruit.com/glossary',
+          name: pageTitle,
+          description: pageDesc,
+          dateModified: FAQ_LAST_UPDATED_ISO,
+          inLanguage: 'ja-JP',
+          isPartOf: {
+            '@type': 'WebSite',
+            '@id': 'https://tobitashinchi-recruit.com/#website',
+            name: '飛田ガールズ',
+            url: 'https://tobitashinchi-recruit.com/'
+          },
+          publisher: {
+            '@type': 'Organization',
+            '@id': 'https://tobitashinchi-recruit.com/#organization',
+            name: '飛田ガールズ（料理組合公認 料亭直営採用窓口）',
+            url: 'https://tobitashinchi-recruit.com/'
+          },
+          speakable: {
+            '@type': 'SpeakableSpecification',
+            cssSelector: ['#glossary-hero-heading', '#glossary-lead', '#glossary-terms-list']
+          }
+        },
+        {
+          '@type': 'BreadcrumbList',
+          '@id': 'https://tobitashinchi-recruit.com/glossary#breadcrumb',
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: '飛田新地求人トップ',
+              item: 'https://tobitashinchi-recruit.com/'
+            },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: '飛田新地 用語集・用語辞典',
+              item: 'https://tobitashinchi-recruit.com/glossary'
+            }
+          ]
+        },
+        {
+          '@type': 'DefinedTermSet',
+          '@id': 'https://tobitashinchi-recruit.com/glossary#definedtermset',
+          name: '飛田新地 用語集・用語辞典',
+          description: '飛田新地料亭求人に関する専門用語・ルール・システム・文化の公式定義集。',
+          url: 'https://tobitashinchi-recruit.com/glossary',
+          dateModified: FAQ_LAST_UPDATED_ISO,
+          hasDefinedTerm: GLOSSARY_TERMS.map(term => ({
+            '@type': 'DefinedTerm',
+            '@id': `https://tobitashinchi-recruit.com/glossary#${term.id}`,
+            name: term.term,
+            description: `${term.summary} ${term.detail}`,
+            inDefinedTermSet: 'https://tobitashinchi-recruit.com/glossary#definedtermset'
+          }))
+        }
+      ]
+    });
+
+    return () => {
+      document.title = prevTitle;
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-rose-50/40 via-white to-rose-50/20 pt-20 pb-16">
@@ -58,10 +142,16 @@ export default function GlossaryPage({ onNavigateHome, onCtaclick }: GlossaryPag
             <LucideIcon name="BookOpen" size={14} />
             <span>初めてでもすぐわかる安心用語辞典</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-on-surface tracking-tight font-display mb-3">
+          <h1
+            id="glossary-hero-heading"
+            className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-on-surface tracking-tight font-display mb-3"
+          >
             飛田新地 用語集・用語辞典
           </h1>
-          <p className="text-xs sm:text-sm text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
+          <p
+            id="glossary-lead"
+            className="text-xs sm:text-sm text-on-surface-variant max-w-2xl mx-auto leading-relaxed"
+          >
             「上がり框」「仲居さん」「清拭」「通り別の違い」など、飛田新地でのお仕事探しや面接前に知っておきたい専門用語・ルールを、料亭直営スタッフが分かりやすく丁寧に解説します。
           </p>
         </div>
@@ -128,7 +218,7 @@ export default function GlossaryPage({ onNavigateHome, onCtaclick }: GlossaryPag
         </div>
 
         {/* Glossary Terms List */}
-        <div className="space-y-4">
+        <div id="glossary-terms-list" className="space-y-4">
           {filteredTerms.length === 0 ? (
             <div className="bg-white rounded-2xl p-8 text-center border border-rose-100 text-zinc-500 text-xs sm:text-sm">
               <LucideIcon name="AlertCircle" size={24} className="mx-auto text-zinc-300 mb-2" />

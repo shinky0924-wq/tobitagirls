@@ -15,9 +15,12 @@ import SalaryPage from './SalaryPage';
 import BeginnerPage from './BeginnerPage';
 import ExperiencedPage from './ExperiencedPage';
 import FlowPage from './FlowPage';
+import WorkstylePage from './WorkstylePage';
+import ShopsPage from './ShopsPage';
 import { getStoredSiteContent } from '../siteContent';
 import { LINE_OFFICIAL_URL } from '../data';
 import { updatePageJsonLd } from '../utils/jsonLd';
+import { FAQ_LAST_UPDATED_ISO } from '../faq100Data';
 
 interface TopicClusterPageProps {
   topicId: string;
@@ -108,6 +111,34 @@ export default function TopicClusterPage({
     );
   }
 
+  // If topic is 'workstyle' (or /workstyle), render the dedicated comprehensive WorkstylePage
+  if (topicId === 'workstyle') {
+    return (
+      <WorkstylePage
+        onNavigateHome={onNavigateHome}
+        onNavigateTopic={onNavigateTopic}
+        onNavigateBlog={onNavigateBlog}
+        onNavigateFaq={onNavigateFaq}
+        onCtaclick={onCtaclick}
+        onInjectedScroll={onInjectedScroll}
+      />
+    );
+  }
+
+  // If topic is 'shops' (or /shops), render the dedicated comprehensive ShopsPage
+  if (topicId === 'shops') {
+    return (
+      <ShopsPage
+        onNavigateHome={onNavigateHome}
+        onNavigateTopic={onNavigateTopic}
+        onNavigateBlog={onNavigateBlog}
+        onNavigateFaq={onNavigateFaq}
+        onCtaclick={onCtaclick}
+        onInjectedScroll={onInjectedScroll}
+      />
+    );
+  }
+
   const data: TopicClusterData = TOPIC_CLUSTERS[topicId] || TOPIC_CLUSTERS.job;
   const siteContent = getStoredSiteContent();
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
@@ -116,11 +147,36 @@ export default function TopicClusterPage({
     window.scrollTo(0, 0);
   }, [topicId]);
 
-  // Update #seo-jsonld Structured Data (BreadcrumbList + FAQPage) without duplicating SSR script
+  // Update #seo-jsonld Structured Data (WebPage + BreadcrumbList + FAQPage) without duplicating SSR script
   useEffect(() => {
     const schemaData = {
       '@context': 'https://schema.org',
       '@graph': [
+        {
+          '@type': 'WebPage',
+          '@id': `https://tobitashinchi-recruit.com${data.path}#webpage`,
+          'url': `https://tobitashinchi-recruit.com${data.path}`,
+          'name': data.seoTitle,
+          'description': data.metaDescription,
+          'dateModified': FAQ_LAST_UPDATED_ISO,
+          'inLanguage': 'ja-JP',
+          'isPartOf': {
+            '@type': 'WebSite',
+            '@id': 'https://tobitashinchi-recruit.com/#website',
+            'name': '飛田ガールズ',
+            'url': 'https://tobitashinchi-recruit.com/'
+          },
+          'publisher': {
+            '@type': 'Organization',
+            '@id': 'https://tobitashinchi-recruit.com/#organization',
+            'name': '飛田ガールズ（料亭直営求人・女性採用サポート）',
+            'url': 'https://tobitashinchi-recruit.com/'
+          },
+          'speakable': {
+            '@type': 'SpeakableSpecification',
+            'cssSelector': ['h1', '#points-section', '#details-section', '#faq-section']
+          }
+        },
         {
           '@type': 'BreadcrumbList',
           '@id': `https://tobitashinchi-recruit.com${data.path}#breadcrumb`,
@@ -142,6 +198,7 @@ export default function TopicClusterPage({
         {
           '@type': 'FAQPage',
           '@id': `https://tobitashinchi-recruit.com${data.path}#faq`,
+          'dateModified': FAQ_LAST_UPDATED_ISO,
           'mainEntity': (data.faqs || []).map((item) => ({
             '@type': 'Question',
             'name': item.q,

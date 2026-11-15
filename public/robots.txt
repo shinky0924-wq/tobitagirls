@@ -12,20 +12,61 @@ Allow: /
 User-agent: OAI-SearchBot
 Allow: /
 
+User-agent: ChatGPT-User
+Allow: /
+
 # Perplexity AI
 User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
 Allow: /
 
 # Anthropic Claude
 User-agent: ClaudeBot
 Allow: /
 
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
 # Google AI
 User-agent: Google-Extended
 Allow: /
 
+User-agent: GoogleOther
+Allow: /
+
+# Apple Intelligence / Siri Search
+User-agent: Applebot-Extended
+Allow: /
+
+# Meta AI
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# Amazon Alexa / AI Search
+User-agent: Amazonbot
+Allow: /
+
+# Cohere AI
+User-agent: Cohere-ai
+Allow: /
+
+# DuckDuckGo AI Search
+User-agent: DuckAssistBot
+Allow: /
+
+# Mistral AI
+User-agent: MistralAI-User
+Allow: /
+
 Sitemap: https://tobitashinchi-recruit.com/sitemap.xml
 
-# LLM & AI Search Index (Web Standards)
+# Official Site Guide & Feeds
 # https://tobitashinchi-recruit.com/llms.txt
 # https://tobitashinchi-recruit.com/llms-full.txt
+# https://tobitashinchi-recruit.com/feed.xml
+# Text (Markdown) pages supported (e.g. /index.md, /faq.md, /dekasegi.md)

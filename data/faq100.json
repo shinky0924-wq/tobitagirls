@@ -4,7 +4,7 @@
     "category": "recruit",
     "categoryLabel": "求人・応募・面接",
     "question": "未経験でも応募できますか？夜職の経験が一切ありません。",
-    "answer": "はい、全く問題ありません！現在在籍している女性の約9割が、夜職や水商売の経験が一切ない完全未経験からのスタートです。接客の流れ、お茶の出し方、挨拶のマナーなどは、面接時および勤務前に女性スタッフがマンツーマンで優しくレクチャーします。難しい営業連絡や指名取りもないため、未経験から最も始めやすい環境です。",
+    "answer": "はい、未経験でもご応募いただけます。在籍キャストの約9割が夜職や接客の経験がない状態からスタートしています。\n\n勤務前には、ご来店時の挨拶や笑顔での対応、衛生面の準備、個室へのご案内手順などを女性スタッフが個別で丁寧にお伝えします。\n・営業連絡（お客様とのLINE交換）や指名取りのノルマは不要です\n・お隣の仲居さんが呼び込みや時間管理をサポートするため、未経験でも無理なく始められます",
     "isPopular": true,
     "keywords": [
       "未経験",
@@ -12,7 +12,16 @@
       "初めて",
       "経験なし",
       "水商売"
-    ]
+    ],
+    "category12": "beginner",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "未経験者向けガイドを見る",
+    "relatedIds": [
+      "faq-job-3",
+      "faq-job-9"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-2",
@@ -27,7 +36,16 @@
       "OL",
       "年齢",
       "若い"
-    ]
+    ],
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "募集要項・応募条件を見る",
+    "relatedIds": [
+      "faq-rec-3",
+      "faq-rec-5"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-3",
@@ -41,7 +59,16 @@
       "アラサー",
       "大人",
       "年齢層"
-    ]
+    ],
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "募集要項・応募条件を見る",
+    "relatedIds": [
+      "faq-rec-2",
+      "faq-rec-4"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-4",
@@ -56,7 +83,16 @@
       "アラフォー",
       "年齢制限",
       "熟女"
-    ]
+    ],
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/shops",
+    "relatedLabel": "通りの特徴・お店選びを見る",
+    "relatedIds": [
+      "faq-rec-3",
+      "faq-rec-5"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-5",
@@ -70,14 +106,23 @@
       "何歳から",
       "応募資格",
       "20歳以上"
-    ]
+    ],
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "応募資格・必要書類を見る",
+    "relatedIds": [
+      "faq-rec-6",
+      "faq-rec-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-6",
     "category": "recruit",
     "categoryLabel": "求人・応募・面接",
     "question": "18歳は成人ですが、なぜ飛田新地は「20歳以上」なのですか？",
-    "answer": "2022年4月の民法改正で成人年齢が18歳に引き下げられましたが、飛田新地は伝統ある料理組合加盟の普通料理店（料亭）として、未成年を巡るトラブルを未然に防ぎ、働く女性の社会的・法的安全を最優先にするため、料理組合の自主規制規約により例外なく「20歳以上」に完全統一しています。そのため面接時には厳格な生年月日・年齢確認を行っています。",
+    "answer": "2022年4月の民法改正で成人年齢が18歳に引き下げられましたが、飛田新地は伝統ある料理組合加盟の普通料理店（料亭）として、未成年を巡るトラブルを未然に防ぎ、働く女性の社会的・法的安全を最優先にするため、料理組合の自主規制規約により例外なく「20歳以上」に完全統一しています。\n\nそのため面接時には厳格な生年月日・年齢確認を行っています。",
     "isPopular": false,
     "keywords": [
       "18歳",
@@ -85,7 +130,16 @@
       "民法改正",
       "成人年齢",
       "理由"
-    ]
+    ],
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "応募資格・年齢条件の理由を見る",
+    "relatedIds": [
+      "faq-rec-5",
+      "faq-rec-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-7",
@@ -100,7 +154,16 @@
       "住民票",
       "免許証",
       "マイナンバー"
-    ]
+    ],
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "面接時の必要書類を確認する",
+    "relatedIds": [
+      "faq-rec-8",
+      "faq-priv-9"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-8",
@@ -115,7 +178,16 @@
       "手ぶら",
       "職歴",
       "学歴"
-    ]
+    ],
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "面接・体験入店の流れを見る",
+    "relatedIds": [
+      "faq-rec-7",
+      "faq-rec-9"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-9",
@@ -129,7 +201,16 @@
       "質問",
       "何を聞かれる",
       "面談"
-    ]
+    ],
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "面接で話す内容を見る",
+    "relatedIds": [
+      "faq-rec-8",
+      "faq-rec-10"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-10",
@@ -143,7 +224,16 @@
       "不採用",
       "合格率",
       "受かる"
-    ]
+    ],
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "面接・採用基準を見る",
+    "relatedIds": [
+      "faq-rec-5",
+      "faq-rec-9"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-11",
@@ -157,7 +247,16 @@
       "二人",
       "グループ応募",
       "同伴面接"
-    ]
+    ],
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "面接の流れを見る",
+    "relatedIds": [
+      "faq-rec-13",
+      "faq-rec-16"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-12",
@@ -171,7 +270,16 @@
       "即日採用",
       "当日",
       "スピード採用"
-    ]
+    ],
+    "category12": "interview",
+    "audienceTag": "全員共通",
+    "relatedPage": "/flow",
+    "relatedLabel": "応募から勤務開始の流れを見る",
+    "relatedIds": [
+      "faq-rec-7",
+      "faq-rec-13"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-13",
@@ -186,7 +294,16 @@
       "お試し",
       "合わない",
       "辞める"
-    ]
+    ],
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "体験入店の詳細を見る",
+    "relatedIds": [
+      "faq-rec-14",
+      "faq-trouble-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-14",
@@ -200,21 +317,39 @@
       "即日手渡し",
       "日払い",
       "体験入店日給"
-    ]
+    ],
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "体入当日の流れと日払いを見る",
+    "relatedIds": [
+      "faq-rec-13",
+      "faq-sal-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-15",
     "category": "recruit",
     "categoryLabel": "求人・応募・面接",
     "question": "応募から採用・勤務開始までの具体的な流れは？",
-    "answer": "①LINE等でお問い合わせ（匿名・相談のみでもOK）→ ②希望日時に面接・店内見学（私服でOK）→ ③仕事内容やお茶出しの事前レクチャー（15分〜30分程度）→ ④体験入店または本入店スタート（数時間〜）→ ⑤お仕事終了後に給与全額手渡し、という非常にシンプルなステップです。",
+    "answer": "ご応募から勤務開始までは、以下の5ステップで進みます。\n\n・① 公式LINEでお問い合わせ（匿名の質問・相談だけでも可能です）\n・② 希望日時に面接・店内見学（履歴書不要・私服でお越しいただけます）\n・③ 仕事内容や衛生ルール・挨拶の事前説明（15〜30分程度）\n・④ 体験入店または本入店スタート\n・⑤ 勤務終了後、当日の手取り額を全額日払いでお渡し\n\n※体験入店当日のご案内可否は空き状況によるため、希望日がある場合は事前にお知らせください。",
     "isPopular": false,
     "keywords": [
       "応募の流れ",
       "採用フロー",
       "手順",
       "ステップ"
-    ]
+    ],
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "応募〜初日までの手順を見る",
+    "relatedIds": [
+      "faq-rec-12",
+      "faq-rec-13"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-16",
@@ -228,14 +363,23 @@
       "私服",
       "格好",
       "着ていく服"
-    ]
+    ],
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "面接時の服装・持ち物を見る",
+    "relatedIds": [
+      "faq-rec-7",
+      "faq-rec-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-1",
     "category": "salary",
     "categoryLabel": "給料・日払い・稼ぎ",
     "question": "日給は平均していくらくらい稼げますか？",
-    "answer": "一般的な出勤（6〜8時間）の場合、日給3万円〜8万円前後が平均的な相場です。忙しい週末や給料日後、繁忙期などには、1日で10万円〜15万円以上を持ち帰る女性も珍しくありません。客足が途切れにくい飛田新地ならではの圧倒的な高収入が魅力です。",
+    "answer": "飛田新地は接客本数に応じた完全歩合制（売上50%バック＋外国人対応手当+2,500円/回）のため、日給は出勤時間帯・曜日・接客本数によって変動します。\n\n■ 15分コース（手取り5,000円）で試算した目安：\n・10本の場合：50,000円（〜外国人対応含む場合92,500円）\n・20本の場合：100,000円\n\n平日・昼時間帯と週末・夜時間帯では来店状況が異なるため、ご希望の目標額に合わせて働きやすい曜日や時間帯をご相談いただけます。",
     "isPopular": true,
     "keywords": [
       "日給",
@@ -243,7 +387,16 @@
       "いくら",
       "日当",
       "相場"
-    ]
+    ],
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給料・手取り計算を見る",
+    "relatedIds": [
+      "faq-sal-6",
+      "faq-sal-4"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-2",
@@ -257,7 +410,16 @@
       "締め日",
       "振込日",
       "支払日"
-    ]
+    ],
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "日払いの仕組みを見る",
+    "relatedIds": [
+      "faq-sal-3",
+      "faq-sal-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-3",
@@ -271,28 +433,46 @@
       "全額日払い",
       "手渡し",
       "即日"
-    ]
+    ],
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "全額日払いの仕組みを見る",
+    "relatedIds": [
+      "faq-sal-2",
+      "faq-sal-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-4",
     "category": "salary",
     "categoryLabel": "給料・日払い・稼ぎ",
     "question": "1日5万円稼ぐことは本当に可能ですか？",
-    "answer": "はい、十分に可能です。1組あたり15分〜20分の接客で約7,000円〜10,000円前後のバックが発生するため、5〜7本前後の接客で5万円を達成できます。昼から夜までの通常シフトであれば、平日の落ち着いた日でも5万円前後を達成するキャストが多数派です。",
+    "answer": "はい、計算上十分に目指せる金額です。当店の給与システムは売上50%完全バック（15分コース手取り5,000円 / 20分コース7,500円 / 30分コース10,000円）で、控除・雑費は0円です。\n\n例えば15分コースなら10本、20分コースなら7本前後の接客で手取り5万円に達します。ただし完全歩合制のため、実際の収入は当日の来店状況や稼働時間によって変動します。",
     "isPopular": true,
     "keywords": [
       "1日5万円",
       "5万可能",
       "本数",
       "達成"
-    ]
+    ],
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給料の計算例を見る",
+    "relatedIds": [
+      "faq-sal-1",
+      "faq-sal-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-5",
     "category": "salary",
     "categoryLabel": "給料・日払い・稼ぎ",
     "question": "1日で10万円以上稼ぐにはどうすればいいですか？",
-    "answer": "当店では標準ペース（20本/日）で日給 約100,000円〜162,500円、週末や連休などの繁忙期にがっつり（30本/日）稼働することで日給 約150,000円〜237,500円が実現します。ベテラン仲居さんの巧みな呼び込みと店舗の抜群の集客力があるため、未経験スタートの初週から10万円超えを達成する女性も多数在籍しています。",
+    "answer": "完全歩合制（売上50%バック）のため、15分コース（手取り5,000円）換算で20本、または20分コース（7,500円）や30分コース（10,000円）を組み合わせることで1日10万円以上の計算になります。\n\n来店数が増えやすい週末や連休、ピーク時間帯を含む長めのシフト（12:00〜24:00や14:00〜24:00など）を選ぶことで本数を伸ばしやすい傾向があります。ただし収入は当日の客足により変動し、金額を固定保証するものではありません。",
     "isPopular": true,
     "keywords": [
       "10万円",
@@ -300,14 +480,23 @@
       "稼ぎ方",
       "週末",
       "高収入"
-    ]
+    ],
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給料・計算シミュレーターを見る",
+    "relatedIds": [
+      "faq-sal-4",
+      "faq-sal-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-6",
     "category": "salary",
     "categoryLabel": "給料・日払い・稼ぎ",
     "question": "給料の計算方法は？バック率（歩合率）はどう計算されますか？",
-    "answer": "飛田新地の当店では【売上50%完全バック（全額即日日払い）＋外国人対応手当（+2,500円/回）】で完全明朗計算されます。例えば、15分コースで手取り5,000円、20分コースで手取り7,500円、30分コースで手取り10,000円、45分コースで手取り15,000円、60分コースで手取り20,000円となります。さらに外国人のお客様対応時は+2,500円が加算されます。当店の常連さんは女性にチップを渡すことも多く、チップはお店の天引き等なくすべて女性のもの（全額手渡し）になります。",
+    "answer": "飛田新地の当店では【売上50%完全バック（全額即日日払い）＋外国人対応手当（+2,500円/回）】で完全明朗計算されます。\n\n例えば、15分コースで手取り5,000円、20分コースで手取り7,500円、30分コースで手取り10,000円、45分コースで手取り15,000円、60分コースで手取り20,000円となります。さらに外国人のお客様対応時は+2,500円が加算されます。当店の常連さんは女性にチップを渡すことも多く、チップはお店の天引き等なくすべて女性のもの（全額手渡し）になります。",
     "isPopular": true,
     "keywords": [
       "給料の計算方法",
@@ -317,7 +506,16 @@
       "取り分",
       "手当",
       "手取り"
-    ]
+    ],
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給料システムの詳細を見る",
+    "relatedIds": [
+      "faq-sal-7",
+      "faq-sal-14"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-7",
@@ -332,7 +530,16 @@
       "引かれる",
       "引かれ物",
       "控除"
-    ]
+    ],
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "控除ゼロ・待遇を見る",
+    "relatedIds": [
+      "faq-sal-6",
+      "faq-sal-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-8",
@@ -346,29 +553,47 @@
       "ペナルティ",
       "ノルマ",
       "遅刻罰金"
-    ]
+    ],
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "ノルマ・罰金なしを見る",
+    "relatedIds": [
+      "faq-sal-7",
+      "faq-sal-9"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-9",
     "category": "salary",
     "categoryLabel": "給料・日払い・稼ぎ",
     "question": "万が一、お客様が全然つかなかったらお給料は0円（ボウズ）になりますか？",
-    "answer": "いいえ、当店では未経験者や出勤初期の女性が安心して待機できるよう、充実した【保証給制度（時給保証・日給保証）】をご用意しています。万が一お客様の入りが芳しくない時間帯でも0円になる心配はなく、最低保証額が必ず支給されます。",
+    "answer": "飛田新地は固定の時給制や日給保証制ではなく、接客した売上に応じた【完全歩合制（売上50%バック）】です。\n\nそのため「最低保証額が必ず支給される」という時給・日給保証制度はありませんが、待機カットやノルマ罰金・更衣室代などの天引きも一切0円のため、働いてマイナスになることはありません。待機時間だけで終わらないよう、客足の多い曜日や時間帯の選び方もスタッフがアドバイスしています。",
     "isPopular": true,
     "keywords": [
       "ボウズ",
       "0円",
-      "保証給",
+      "歩合制",
       "最低保証",
-      "つかない"
-    ]
+      "待機カットなし"
+    ],
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給料・歩合制の詳細を見る",
+    "relatedIds": [
+      "faq-sal-6",
+      "faq-sal-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-10",
     "category": "salary",
     "categoryLabel": "給料・日払い・稼ぎ",
     "question": "月収はトータルでどれくらい稼げますか？",
-    "answer": "出勤頻度によって異なりますが、週2〜3日のマイペース勤務で月収40万〜70万円、週4〜5日のレギュラー勤務で月収80万〜150万円以上が標準的です。数ヶ月の短期間で300万円〜500万円以上の貯金を作って目標達成される女性も大勢いらっしゃいます。",
+    "answer": "月収は出勤日数・時間帯・当日の来店状況によって大きく異なりますが、1日5万円前後の稼働を基準とした試算例は以下の通りです。\n\n・週2日（月8日）の場合の試算例：5万円 × 8日 ＝ 約40万円\n・週4日（月16日）の場合の試算例：5万円 × 16日 ＝ 約80万円\n\n上記はあくまで試算の一例であり、選択する時間帯や週末稼働の割合によって増減します。",
     "isPopular": false,
     "keywords": [
       "月収",
@@ -376,14 +601,23 @@
       "いくら稼げる",
       "年間",
       "貯金"
-    ]
+    ],
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "稼働ペース別計算例を見る",
+    "relatedIds": [
+      "faq-sal-1",
+      "faq-sal-5"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-11",
     "category": "salary",
     "categoryLabel": "給料・日払い・稼ぎ",
     "question": "交通費の支給や補助はありますか？",
-    "answer": "はい、規定に応じた交通費の支給制度がございます。また、遠方からの出勤者への交通費補助や、夜遅くなった場合の深夜無料送り（大阪市内・近郊）もご用意していますので、移動費の自己負担を最小限に抑えられます。",
+    "answer": "近郊から通われる方向けの通勤交通費補助や、夜間退勤時の送り対応については、お住まいのエリアや勤務店舗・勤務条件によって規定が異なります。\n\n【要確認】定期的な通勤交通費の上限額、支給条件、深夜送迎の対象エリアや利用可否については、ご応募・ご相談時にお住まいの最寄りエリアをお知らせのうえ、必ず最新の規定をご確認ください。",
     "isPopular": false,
     "keywords": [
       "交通費",
@@ -391,7 +625,16 @@
       "補助",
       "電車代",
       "送り"
-    ]
+    ],
+    "category12": "access",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "アクセス・交通費案内を見る",
+    "relatedIds": [
+      "faq-dorm-5",
+      "faq-shift-14"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-sal-12",
@@ -406,21 +649,39 @@
       "税理士",
       "節税",
       "経費"
-    ]
+    ],
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "副業・確定申告対策を見る",
+    "relatedIds": [
+      "faq-priv-3",
+      "faq-priv-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-13",
     "category": "salary",
     "categoryLabel": "給料・日払い・稼ぎ",
     "question": "現金手渡しではなく、銀行振込にしてもらうことは可能ですか？",
-    "answer": "原則は防犯と即時性を考慮した現金手渡しですが、ご自身の口座管理の都合等で銀行振込をご希望される場合は、ご相談いただければ柔軟に対応可能です。振込名義人もプライバシーに配慮した一般的な名義で行います。",
+    "answer": "原則として、当日の稼ぎをその場で受け取れる【現金手渡し（全額即日日払い）】で運用しています。\n\n【要確認】口座管理のご事情等による銀行振込への切り替え可否、振込手数料や振込名義の対応については、店舗ごとの経理運用により異なるため、面接時に事前にご確認ください。",
     "isPopular": false,
     "keywords": [
       "振込",
       "銀行振込",
       "手渡し以外",
       "振込名義"
-    ]
+    ],
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給与受取方法を見る",
+    "relatedIds": [
+      "faq-sal-3",
+      "faq-sal-16"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-sal-14",
@@ -434,35 +695,62 @@
       "お心付け",
       "プレゼント",
       "自分のもの"
-    ]
+    ],
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給料・チップの扱いを見る",
+    "relatedIds": [
+      "faq-sal-6",
+      "faq-sal-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-15",
     "category": "salary",
     "categoryLabel": "給料・日払い・稼ぎ",
     "question": "入店祝い金は本当にもらえますか？条件はありますか？",
-    "answer": "はい、本当にもらえます！入店祝い金（最大10万円等）は、一定の出勤日数や継続勤務の条件を満たした時点で確実に支給されます。「祝い金ありと書いてあるのに難癖をつけて払わない」といった悪質な店舗とは一切異なり、支給条件を面接時に明確にご説明・書面提示いたします。",
+    "answer": "入店祝い金や各種キャンペーン手当は、実施時期や対象となる出勤日数・継続条件が変更になる場合があります。\n\n【要確認】現在の入店祝い金制度の有無、支給金額、達成条件（必要出勤日数・支給タイミング）については、応募時の誤解を防ぐためLINEまたは面談時に最新条件をご提示いたしますので事前にご確認ください。",
     "isPopular": false,
     "keywords": [
       "入店祝い金",
       "お祝い金",
       "支給条件",
       "ボーナス"
-    ]
+    ],
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "待遇・支給条件を見る",
+    "relatedIds": [
+      "faq-sal-7",
+      "faq-rec-14"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-sal-16",
     "category": "salary",
     "categoryLabel": "給料・日払い・稼ぎ",
     "question": "給与明細は発行してもらえますか？",
-    "answer": "はい、希望される方には日々の接客本数・売上・支給額が正確に記載された日次明細書を発行しております。ご自身の売上管理や確定申告用の記録としてもご活用いただけます（不要な方は発行なしも可能）。",
+    "answer": "ご希望される方には、当日の稼働実績や支給額をご確認いただけるよう配慮しています。\n\n【要確認】書面・メモ等の明細発行形式や、確定申告向けに保存可能な記録の提供方法については店舗によって運用が異なるため、ご希望がある場合は入店前にスタッフへご確認ください。",
     "isPopular": false,
     "keywords": [
       "給与明細",
       "明細書",
       "発行",
       "レシート"
-    ]
+    ],
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給与管理・明細を見る",
+    "relatedIds": [
+      "faq-sal-12",
+      "faq-sal-3"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-shift-1",
@@ -477,7 +765,16 @@
       "週末だけ",
       "シフト",
       "単発"
-    ]
+    ],
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "働き方・シフト例を見る",
+    "relatedIds": [
+      "faq-shift-2",
+      "faq-shift-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-2",
@@ -492,7 +789,16 @@
       "不定期",
       "たまに",
       "自由"
-    ]
+    ],
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "働き方・シフト例を見る",
+    "relatedIds": [
+      "faq-shift-1",
+      "faq-shift-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-3",
@@ -507,7 +813,16 @@
       "ゴールデンウィーク",
       "年末年始",
       "1週間"
-    ]
+    ],
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "短期勤務・シフトを見る",
+    "relatedIds": [
+      "faq-dorm-6",
+      "faq-shift-15"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-4",
@@ -522,7 +837,16 @@
       "副業",
       "掛け持ち",
       "兼業"
-    ]
+    ],
+    "category12": "sidejob",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "Wワーク・副業の働き方を見る",
+    "relatedIds": [
+      "faq-shift-5",
+      "faq-priv-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-5",
@@ -537,7 +861,16 @@
       "会社員",
       "事務職",
       "平日夜"
-    ]
+    ],
+    "category12": "sidejob",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "昼職掛け持ちのシフトを見る",
+    "relatedIds": [
+      "faq-shift-4",
+      "faq-priv-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-6",
@@ -552,14 +885,23 @@
       "専門学生",
       "大学",
       "テスト期間"
-    ]
+    ],
+    "category12": "sidejob",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "学生向けの働き方を見る",
+    "relatedIds": [
+      "faq-shift-4",
+      "faq-rec-5"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-7",
     "category": "shift",
     "categoryLabel": "働き方・シフト",
     "question": "主婦や子育て中のママ（シングルマザー）でも働けますか？",
-    "answer": "はい、多数のママさん・シングルマザーが活躍しています。お子様が保育園や学校に行っている昼間の時間帯（12時〜17時）だけ勤務して夕方には帰宅する働き方が人気です。また、提携託児所の手当や家族向けマンション寮のサポートも用意しています。",
+    "answer": "はい、主婦の方や子育て中の方も多く在籍しています。お子様が園や学校に行っている昼間の時間帯（10:00〜16:00や10:00〜17:00など）だけ勤務して夕方には帰宅する働き方が選ばれています。\n\n【要確認】託児所補助や家族向け住居の空き状況については条件・時期により異なるため、ご希望がある場合は事前にご相談ください。",
     "isPopular": false,
     "keywords": [
       "主婦",
@@ -567,7 +909,16 @@
       "子持ち",
       "シングルマザー",
       "シンママ"
-    ]
+    ],
+    "category12": "sidejob",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "昼時間帯の働き方を見る",
+    "relatedIds": [
+      "faq-shift-10",
+      "faq-dorm-9"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-shift-8",
@@ -581,7 +932,16 @@
       "営業時間",
       "何時から何時まで",
       "短時間"
-    ]
+    ],
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "選べる5つの時間帯を見る",
+    "relatedIds": [
+      "faq-shift-10",
+      "faq-shift-13"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-9",
@@ -595,7 +955,16 @@
       "週末出勤",
       "土曜日",
       "日曜日"
-    ]
+    ],
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "週末・土日シフトを見る",
+    "relatedIds": [
+      "faq-shift-1",
+      "faq-shift-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-10",
@@ -610,7 +979,16 @@
       "昼間だけ",
       "夕方上がり",
       "短時間"
-    ]
+    ],
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "昼シフトの詳細を見る",
+    "relatedIds": [
+      "faq-shift-8",
+      "faq-shift-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-11",
@@ -624,7 +1002,16 @@
       "シフト制",
       "自己申告",
       "固定シフト"
-    ]
+    ],
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "自由シフト制を見る",
+    "relatedIds": [
+      "faq-shift-1",
+      "faq-shift-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-12",
@@ -639,7 +1026,16 @@
       "体調不良",
       "休む",
       "ペナルティなし"
-    ]
+    ],
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "欠勤・お休み対応を見る",
+    "relatedIds": [
+      "faq-trouble-5",
+      "faq-job-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-13",
@@ -653,14 +1049,23 @@
       "終電退勤",
       "終電",
       "帰宅時間"
-    ]
+    ],
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "勤務時間帯と帰宅を見る",
+    "relatedIds": [
+      "faq-shift-14",
+      "faq-shift-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-14",
     "category": "shift",
     "categoryLabel": "働き方・シフト",
     "question": "夜遅くなった場合の深夜無料送迎（送り）はありますか？",
-    "answer": "はい、深夜まで出勤された女性のために、大阪市内全域および近郊都市（堺市、東大阪市、尼崎方面等）への安心の深夜無料送迎車を毎日運行しています。夜道を歩く必要がなく、ご自宅や最寄り駅まで安全にお送りします。",
+    "answer": "終電後の帰宅に配慮した送りサポートをご案内できる場合がありますが、運行時間帯や対応可能エリアには限りがあります。\n\n【要確認】深夜送迎の有無、対象エリア（大阪市内・近郊など）、利用条件（自己負担の有無や便数）については店舗・シフト状況によって異なるため、事前にお住まいの最寄り駅をお知らせのうえご確認ください。",
     "isPopular": false,
     "keywords": [
       "深夜送り",
@@ -668,7 +1073,16 @@
       "無料送り",
       "帰り道",
       "車で送る"
-    ]
+    ],
+    "category12": "access",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "勤務時間・帰宅案内を見る",
+    "relatedIds": [
+      "faq-shift-13",
+      "faq-sal-11"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-shift-15",
@@ -683,14 +1097,23 @@
       "休業",
       "復帰",
       "旅行"
-    ]
+    ],
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "長期休暇・復帰を見る",
+    "relatedIds": [
+      "faq-shift-11",
+      "faq-trouble-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-1",
     "category": "privacy",
     "categoryLabel": "不安・身バレ対策",
     "question": "身バレしませんか？知り合いや家族に知られるのが一番怖いです。",
-    "answer": "身バレのリスクは、他のあらゆるナイトワーク（キャバクラ、ガールズバー、ソープ、デリヘル等）と比較しても圧倒的に低いです。飛田新地は敷地内での写真・動画撮影が組合規約で厳格に禁止されており、ネット広告やSNSへの顔写真掲載が一切ないため、Web上に画像や痕跡が残る心配がありません。",
+    "answer": "飛田新地はWebやSNSにキャストの顔写真を公開しない仕組みのため、他のナイトワークと比べて身バレのリスクを抑えやすい環境です。ただし、知人と遭遇する可能性などを「100%ゼロ」と保証できるものではありません。\n\n■ 当店で行っている主な対策\n・求人サイトやSNSへの顔写真・全身写真の非掲載\n・飛田新地料理組合による街全体での写真・動画撮影禁止と巡回\n・本名を使わない源氏名での勤務、自宅への郵送物なし\n\n■ 想定されるリスクとご自身での注意点\n・通退勤時や店頭で偶然知り合いと顔を合わせる可能性\n・ご自身のSNS投稿や、副業時の確定申告方法の誤りによる発覚\n\nご希望に応じて、普段と雰囲気を変えるメイクやウィッグの活用、生活圏から離れた店舗選びなどもご相談いただけます。",
     "isPopular": true,
     "keywords": [
       "身バレ",
@@ -698,14 +1121,23 @@
       "知り合い",
       "友達",
       "プライバシー"
-    ]
+    ],
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "身バレ対策の詳細を見る",
+    "relatedIds": [
+      "faq-priv-4",
+      "faq-priv-5"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-2",
     "category": "privacy",
     "categoryLabel": "不安・身バレ対策",
     "question": "家族や親と同居していますが、バレずに働けますか？",
-    "answer": "はい、同居のご家族にバレずに働いている女性がたくさんいます。当店から自宅宛に郵便物や書類を送ることは一切ありません。また、お給料も手渡しの日払いですので、銀行口座の入出金履歴から店名や金額がご家族に見られることもありません。",
+    "answer": "はい、同居のご家族がいる方でもプライバシーに配慮して働ける環境を整えています。\n\n・店舗からご自宅宛に契約書類・明細・DMなどの郵便物を送ることはありません\n・店舗からのご連絡は原則ご自身のスマホ（LINE等）に行い、自宅の固定電話へ連絡することはありません\n・お給料は現金手渡しのため、通帳や振込履歴から店名が知られにくくなります\n・衣装は店舗で保管・管理できるため、自宅に持ち帰る必要がありません\n\n※なお、出勤時のご家族への説明や通退勤時の持ち物管理はご自身でのご配慮もあわせて必要となります。",
     "isPopular": true,
     "keywords": [
       "家族バレ",
@@ -713,7 +1145,16 @@
       "同居",
       "郵便物なし",
       "手渡し"
-    ]
+    ],
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "家族・同居のプライバシー対策を見る",
+    "relatedIds": [
+      "faq-priv-8",
+      "faq-sal-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-3",
@@ -728,14 +1169,23 @@
       "住民税",
       "普通徴収",
       "副業禁止"
-    ]
+    ],
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "会社バレ・住民税対策を見る",
+    "relatedIds": [
+      "faq-priv-7",
+      "faq-sal-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-4",
     "category": "privacy",
     "categoryLabel": "不安・身バレ対策",
     "question": "顔写真がネットの求人サイトやSNSに掲載されることはありますか？",
-    "answer": "いいえ、絶対にありません！飛田新地の料亭では、女の子の顔写真や体型がわかる画像をネット求人サイト、公式ブログ、SNS、街頭看板などに掲載することは一切禁止されています。デジタルタトゥーとして将来に写真が残るリスクはゼロです。",
+    "answer": "いいえ、当店および飛田新地の正規料亭では、求人サイト・SNS・ネット案内所・店頭看板等にキャストの顔写真やパネル写真を掲載することは行っておりません。\n\nWeb上に画像が公開される仕組みがないため、ネット検索や画像保存による流出リスクを抑えて勤務できます。",
     "isPopular": true,
     "keywords": [
       "写真掲載",
@@ -743,14 +1193,23 @@
       "顔出し",
       "デジタルタトゥー",
       "画像流出"
-    ]
+    ],
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "ネット写真非公開の方針を見る",
+    "relatedIds": [
+      "faq-priv-5",
+      "faq-priv-1"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-5",
     "category": "privacy",
     "categoryLabel": "不安・身バレ対策",
     "question": "SNS（X/Instagram/TikTok/YouTube）にお店の動画や写真が載ることは？",
-    "answer": "飛田新地料理組合の厳しい巡視ルールにより、街並みや店舗、働く女性に対する一般人のカメラ・スマホ撮影は固く禁止されています。不審な撮影者がいた場合は即座に警備員やスタッフが駆けつけてデータの消去や退去措置を行いますので安心です。",
+    "answer": "飛田新地料理組合の規約により、街並み・店舗外観・働く女性に対する通行人や来客の撮影（スマホ・カメラ・動画撮影）は固く禁止されており、街の巡回スタッフや店舗スタッフが注意・対応を行っています。\n\nまた、店舗側が宣伝目的でキャストの顔写真や動画をSNSに投稿することもありません。ただし、街の規約違反を完全に防ぎきるために、店頭でも不審な動きがあればすぐにスタッフへ合図していただくようお願いしています。",
     "isPopular": true,
     "keywords": [
       "SNS流出",
@@ -758,7 +1217,16 @@
       "TikTok",
       "YouTube",
       "盗撮防止"
-    ]
+    ],
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "撮影禁止ルールを見る",
+    "relatedIds": [
+      "faq-priv-4",
+      "faq-priv-1"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-6",
@@ -773,7 +1241,16 @@
       "お仕事名",
       "ニックネーム",
       "名前"
-    ]
+    ],
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "源氏名・個人情報保護を見る",
+    "relatedIds": [
+      "faq-priv-10",
+      "faq-rec-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-7",
@@ -787,14 +1264,23 @@
       "会社にバレる",
       "マイナンバーカード",
       "通知"
-    ]
+    ],
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "マイナンバーと税金対策を見る",
+    "relatedIds": [
+      "faq-priv-3",
+      "faq-sal-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-8",
     "category": "privacy",
     "categoryLabel": "不安・身バレ対策",
     "question": "自宅に契約書類やDM、郵便物が届くことはありますか？",
-    "answer": "一切ありません。当店から女の子のご自宅住所宛にDM、手紙、契約書の控えなどを郵送することは100%ありません。すべての手続きや確認は店舗内または公式LINE上のみで完結します。",
+    "answer": "いいえ、店舗からご自宅宛にDM・手紙・給与明細・契約書類などの郵送物を送ることはありません。\n\nご連絡やシフト調整はすべてご自身のスマートフォン（公式LINEなど）を通じて行い、必要な確認事項は店舗内で完結させています。",
     "isPopular": false,
     "keywords": [
       "郵便物",
@@ -802,42 +1288,69 @@
       "手紙",
       "郵送",
       "自宅に届く"
-    ]
+    ],
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "郵便物・連絡ルールを見る",
+    "relatedIds": [
+      "faq-priv-2",
+      "faq-priv-10"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-9",
     "category": "privacy",
     "categoryLabel": "不安・身バレ対策",
     "question": "提出した住民票の記録から親や市役所に働いていることが知られますか？",
-    "answer": "知られることは一切ありません。住民票の提出は、店舗側が「20歳以上であること」および「日本国籍であること」を警察や行政の法令に則って厳格に確認するためだけに使用します。市役所や親御様に確認連絡が行くことはありません。",
+    "answer": "店舗側が提出いただいた住民票をもとに市役所や親御様へ連絡を入れることはありません。住民票は「満20歳以上であること」および日本国籍を有することを法令・組合規約に沿って確認するためだけに利用します。\n\nただし、住民票の交付請求時に発行記録やコンビニ交付等の履歴をご自身で管理する点、また確定申告時の住民税の徴収方法（普通徴収の選択）についてはご自身での手続きが必要です。",
     "isPopular": false,
     "keywords": [
       "住民票",
       "市役所",
       "親に連絡",
       "確認連絡"
-    ]
+    ],
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "必要書類の用途を見る",
+    "relatedIds": [
+      "faq-rec-7",
+      "faq-priv-10"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-10",
     "category": "privacy",
     "categoryLabel": "不安・身バレ対策",
     "question": "提出した身分証や個人情報のセキュリティ・管理体制はどうなっていますか？",
-    "answer": "提出いただいた身分証明書のコピーや個人情報は、店舗責任者のみが解錠できる厳重な金庫および暗号化された保管庫にて安全に保管されます。第三者への開示や目的外の利用は法令に従い固く禁じられており、退店時には厳重に破棄・消去されます。",
+    "answer": "ご提出いただく本人確認書類や個人情報は、法令に基づく本人確認の目的のみに使用し、責任者管理のもと施錠保管するなど第三者へ開示しない体制で取り扱っています。\n\n退店後の保管期間や廃棄方法の具体的な運用については、入店前の説明時またはLINEにてお気軽にお問い合わせください。",
     "isPopular": false,
     "keywords": [
       "個人情報管理",
       "セキュリティ",
       "身分証コピー",
       "金庫保管"
-    ]
+    ],
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "個人情報管理を見る",
+    "relatedIds": [
+      "faq-priv-9",
+      "faq-priv-15"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-priv-11",
     "category": "privacy",
     "categoryLabel": "不安・身バレ対策",
     "question": "店頭に座っているとき、外を歩いている知人に見つかる心配は？",
-    "answer": "店頭には暖簾（のれん）や目隠しスクリーン、間接照明などの工夫が施されており、外から顔が丸見えにならないよう配慮されています。また、メイクや髪型、カラコン、ウィッグなどで普段の印象を大きく変えることも可能です。地元から離れたエリアで出勤される方がほとんどです。",
+    "answer": "店頭には暖簾（のれん）や間接照明があり、外から顔立ちがそのまま丸見えになりにくい工夫がされています。また、メイク・髪型・カラコン・ウィッグで普段の印象を変えることも可能です。\n\nただし、店頭に座るお仕事である以上、通りを歩く知り合いと偶然目が合うリスクを100%ゼロにはできません。普段よく利用する生活圏と離れたエリアを選ぶなどの対策も含め、事前にご相談ください。",
     "isPopular": false,
     "keywords": [
       "店頭待機",
@@ -845,7 +1358,16 @@
       "のれん",
       "目隠し",
       "メイクで変装"
-    ]
+    ],
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "身バレリスク対策を見る",
+    "relatedIds": [
+      "faq-priv-12",
+      "faq-priv-16"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-12",
@@ -860,14 +1382,23 @@
       "お断り",
       "ブロック",
       "遭遇"
-    ]
+    ],
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "来店時・知り合い対策を見る",
+    "relatedIds": [
+      "faq-priv-11",
+      "faq-job-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-13",
     "category": "privacy",
     "categoryLabel": "不安・身バレ対策",
     "question": "賃貸マンションの入居審査やクレジットカード作成のためのアリバイ対策はできますか？",
-    "answer": "はい、可能です！提携している水商売専門の不動産会社や一般企業のアリバイ会社をご紹介可能です。昼職として通用する勤務証明や在籍確認に対応できますので、引っ越し時の賃貸審査もスムーズに通過できます。",
+    "answer": "お部屋探しや在籍確認など生活面でお困りの点がある場合は、状況をお伺いのうえ相談に応じることは可能です。\n\n【要確認】賃貸審査向けの専門不動産会社の紹介や、いわゆるアリバイ対策の可否・具体的な条件については、時期や外部紹介先の規定により異なるため、必ず個別にご相談のうえ最新状況をご確認ください。",
     "isPopular": false,
     "keywords": [
       "アリバイ",
@@ -875,7 +1406,16 @@
       "賃貸審査",
       "不動産",
       "カード審査"
-    ]
+    ],
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "生活サポート相談を見る",
+    "relatedIds": [
+      "faq-priv-3",
+      "faq-dorm-1"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-priv-14",
@@ -890,42 +1430,69 @@
       "待機中",
       "控え室",
       "自由時間"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "待機時間・控え室の過ごし方を見る",
+    "relatedIds": [
+      "faq-beauty-9",
+      "faq-job-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-15",
     "category": "privacy",
     "categoryLabel": "不安・身バレ対策",
     "question": "辞めた後（退店後）に個人情報が流出したり残ったりしませんか？",
-    "answer": "一切ございません。退店後は規定の法定保管期間経過後、お預かりした書類やデータはシュレッダー裁断および完全消去により確実に抹消処分いたします。退店後に勧誘の連絡を入れることもありません。",
+    "answer": "退店後にこちらから勧誘の電話や連絡を入れることはありません。お預かりした確認書類等は目的外に利用せず、退店後は店舗規定および法令に基づく必要な保管期間を経たうえで適切に廃棄処理いたします。\n\n【要確認】書類の具体的な保管期間や廃棄タイミングの詳細については、面接・入店時の確認の際にお尋ねください。",
     "isPopular": false,
     "keywords": [
       "退店後",
       "個人情報破棄",
       "データ削除",
       "流出なし"
-    ]
+    ],
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "退店後の個人情報処理を見る",
+    "relatedIds": [
+      "faq-priv-10",
+      "faq-trouble-1"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-priv-16",
     "category": "privacy",
     "categoryLabel": "不安・身バレ対策",
     "question": "地元が大阪ですが、大阪在住でもバレずに働けますか？",
-    "answer": "はい、大阪府内在住の女性も多数在籍しています。普段生活している生活圏（キタ、ミナミ、北摂など）とエリアを分けたり、通りの選定や髪型・メイクのアレンジを工夫することで、近隣の方でも問題なく身バレを防いで勤務されています。",
+    "answer": "はい、大阪府内にお住まいの女性も多数在籍しています。\n\n普段の生活圏（勤務先や学校、よく遊びに行くエリア）との兼ね合いや、通退勤の時間帯・最寄り駅の選び方、メイクや髪型のアレンジなどを工夫することで、身バレリスクを抑えながら働くことが可能です。ただし生活圏が近い場合は偶然の遭遇リスクもゼロではないため、不安な点は事前にご相談ください。",
     "isPopular": false,
     "keywords": [
       "大阪在住",
       "地元",
       "近所",
       "エリア分け"
-    ]
+    ],
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "地元・生活圏との配慮を見る",
+    "relatedIds": [
+      "faq-priv-11",
+      "faq-priv-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-1",
     "category": "job",
     "categoryLabel": "お仕事内容・接客",
     "question": "お酒は飲まないといけませんか？お酒が全く飲めない下戸でも働けますか？",
-    "answer": "お酒は一切飲む必要ありません！料亭のおもてなしでお出しするのは日本茶、緑茶、烏龍茶、コーヒー、ジュースなどのソフトドリンクです。キャバクラのようにお客様と乾杯して飲酒を強要されることは100%ありませんので、お酒が飲めない方や苦手な方も安心です。",
+    "answer": "いいえ、お酒を飲む必要はありません。飛田新地の料亭はキャバクラやスナックのように飲酒を伴う接客の場ではないため、お酒が飲めない方や弱い方でも問題なく働けます。\n\nまた、配膳などの雑用も行っていません。翌日の予定や体調にお酒が残る心配なく、マイペースに勤務できます。",
     "isPopular": true,
     "keywords": [
       "お酒",
@@ -933,7 +1500,16 @@
       "下戸",
       "ノンアルコール",
       "飲酒なし"
-    ]
+    ],
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・接客ルールを見る",
+    "relatedIds": [
+      "faq-job-3",
+      "faq-job-4"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-2",
@@ -948,22 +1524,40 @@
       "泥酔客",
       "緊急ボタン",
       "安心"
-    ]
+    ],
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "安全・防犯対策を見る",
+    "relatedIds": [
+      "faq-job-13",
+      "faq-trouble-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-3",
     "category": "job",
     "categoryLabel": "お仕事内容・接客",
     "question": "具体的な接客の流れはどうなっていますか？",
-    "answer": "①店頭（玄関）に座り、前を通るお客様に笑顔で手を振る（仲居さんが呼び込みを担当） → ②入店されたら2階の個室へご案内 → ③お茶やお菓子をお出しして15分〜20分のサービス → ④終了後、玄関でお見送り、という非常にシンプルで分かりやすい流れです。",
+    "answer": "1組あたりの接客は、以下のシンプルな流れで行います。\n\n・① 玄関（上がり框）に座り、通りを歩くお客様に笑顔で挨拶や手を振る（呼び込みは仲居さんが担当します）\n・② 入店が決まったら、2階の和室（個室）へご案内する\n・③ 接客前の衛生準備（アルコールでの拭き上げ、スキン装着の徹底）\n・④ コース時間（15〜20分など）でおもてなし・粘膜接触を伴わない接客を行う\n・⑤ 時間になったら笑顔でお見送りし、飴ちゃんをお渡しする（お部屋の片付けやリネン交換は仲居さんが担当します）",
     "isPopular": true,
     "keywords": [
       "接客の流れ",
       "仕事内容",
       "おもてなし",
-      "お茶出し",
+      "衛生管理",
       "2階個室"
-    ]
+    ],
+    "category12": "job",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容の詳しい流れを見る",
+    "relatedIds": [
+      "faq-job-8",
+      "faq-job-16"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-4",
@@ -978,7 +1572,16 @@
       "営業連絡なし",
       "プライベート",
       "店外営業"
-    ]
+    ],
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・禁止事項を見る",
+    "relatedIds": [
+      "faq-job-5",
+      "faq-job-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-5",
@@ -992,7 +1595,16 @@
       "アフターなし",
       "店外デート",
       "直帰"
-    ]
+    ],
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容を見る",
+    "relatedIds": [
+      "faq-job-4",
+      "faq-job-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-6",
@@ -1007,7 +1619,16 @@
       "人間関係",
       "平等",
       "ギスギスなし"
-    ]
+    ],
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・店舗ルールを見る",
+    "relatedIds": [
+      "faq-job-4",
+      "faq-trouble-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-7",
@@ -1022,7 +1643,16 @@
       "タンポン",
       "体調",
       "生理痛"
-    ]
+    ],
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・体調配慮を見る",
+    "relatedIds": [
+      "faq-shift-12",
+      "faq-trouble-5"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-8",
@@ -1037,7 +1667,16 @@
       "15分",
       "20分",
       "短時間"
-    ]
+    ],
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・接客時間を見る",
+    "relatedIds": [
+      "faq-job-3",
+      "faq-sal-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-9",
@@ -1052,7 +1691,16 @@
       "聞き上手",
       "愛想",
       "トーク力不要"
-    ]
+    ],
+    "category12": "beginner",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "未経験者向けガイドを見る",
+    "relatedIds": [
+      "faq-rec-1",
+      "faq-job-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-10",
@@ -1067,7 +1715,16 @@
       "紳士的",
       "サラリーマン",
       "観光客"
-    ]
+    ],
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・客層を見る",
+    "relatedIds": [
+      "faq-job-2",
+      "faq-job-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-11",
@@ -1081,7 +1738,16 @@
       "呼び込み",
       "声かけ不要",
       "仲居さんにお任せ"
-    ]
+    ],
+    "category12": "beginner",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "未経験者向けガイドを見る",
+    "relatedIds": [
+      "faq-job-12",
+      "faq-job-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-12",
@@ -1096,7 +1762,16 @@
       "優しい",
       "守ってくれる",
       "仲居"
-    ]
+    ],
+    "category12": "beginner",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "仲居さんのサポートを見る",
+    "relatedIds": [
+      "faq-job-11",
+      "faq-trouble-4"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-13",
@@ -1111,14 +1786,23 @@
       "安全規約",
       "中断",
       "安心"
-    ]
+    ],
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "安全・衛生対策を見る",
+    "relatedIds": [
+      "faq-job-2",
+      "faq-job-14"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-14",
     "category": "job",
     "categoryLabel": "お仕事内容・接客",
     "question": "衛生面（性病予防・感染症対策）はどうなっていますか？",
-    "answer": "衛生管理は徹底されており、ゴム（コンドーム）の完全着用が絶対の義務となっています。また、提携クリニックでの定期的な性病検査（無料または店舗全額補助）も完備しており、女性が常に安心して健康にお仕事できる体制を整えています。",
+    "answer": "衛生管理を徹底するため、接客前のアルコール拭き上げや手洗い・うがい、スキン（コンドーム）の完全着用と粘膜接触を伴わない接客ルールを全キャストに徹底しています。\n\nまた、定期的な健康チェックを推奨しています。\n\n【要確認】提携クリニックの有無や検査費用の店舗補助範囲・自己負担の有無については、店舗および時期の運用によって異なるため、面接前またはLINE相談時に最新の案内をご確認ください。",
     "isPopular": false,
     "keywords": [
       "衛生面",
@@ -1126,7 +1810,16 @@
       "感染症",
       "クリニック提携",
       "ゴム着用"
-    ]
+    ],
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "衛生・健康管理を見る",
+    "relatedIds": [
+      "faq-job-13",
+      "faq-job-16"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-job-15",
@@ -1141,14 +1834,23 @@
       "禁煙",
       "煙草の煙",
       "匂い"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "店舗環境・設備を見る",
+    "relatedIds": [
+      "faq-job-16",
+      "faq-job-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-16",
     "category": "job",
     "categoryLabel": "お仕事内容・接客",
     "question": "お風呂やシャワー、アメニティの設備は綺麗ですか？",
-    "answer": "はい、各店舗・各フロアには清潔で広々としたシャワールームが完備されています。シャンプー、コンディショナー、ボディソープ、クレンジング、化粧水、ドライヤーやヘアアイロンなどのアメニティも全て無料で自由に使えます。",
+    "answer": "2階の接客個室にお風呂やシャワー設備はありません。そのため一般的なソープやヘルスのように入浴介助やシャワー掃除といった重労働は一切なく、温かいおしぼりやアルコールでの拭き上げ（清拭）による衛生ケアを行っています。\n\n控え室や化粧室にはドライヤー・ヘアアイロン・基本的なアメニティ類を用意していますが、シャワールームや設備の仕様・貸出備品の内容は店舗ごとに異なるため、見学・面接時にあわせてご確認ください。",
     "isPopular": false,
     "keywords": [
       "シャワー",
@@ -1156,14 +1858,23 @@
       "アメニティ",
       "清潔",
       "ドライヤー"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・清拭ルールを見る",
+    "relatedIds": [
+      "faq-job-3",
+      "faq-job-14"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-1",
     "category": "dorm",
     "categoryLabel": "住まい・寮・出稼ぎ",
     "question": "寮（マンション寮）には応募後すぐに入居できますか？",
-    "answer": "はい、即日入居可能です！当店では審査や面倒な手続きなしですぐに入居できる即生活可能な家具・家電付き個室マンション寮を多数ご用意しています。キャリーケース1つで面接に来て、その日の夜からすぐに新生活を始められます。",
+    "answer": "空き状況や必要書類の確認が整えば、早めに入居いただけるよう調整しています。\n\n【要確認】「当日中の即日入居」が可能かどうかは、その日の空室状況・到着時刻・本人確認書類の有無によって異なります。ご希望の入居日がお決まりの方は、事前にお問い合わせのうえ空き状況をご確認ください。",
     "isPopular": true,
     "keywords": [
       "即日入居",
@@ -1171,14 +1882,23 @@
       "寮完備",
       "家具家電付き",
       "即日"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮・出稼ぎページを見る",
+    "relatedIds": [
+      "faq-dorm-2",
+      "faq-dorm-4"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-2",
     "category": "dorm",
     "categoryLabel": "住まい・寮・出稼ぎ",
     "question": "寮費はいくらですか？一般的な賃貸より安いですか？",
-    "answer": "周辺の一般的な賃貸相場（月6万〜8万円）に比べ、当店専用寮は格安で利用可能です（1日あたり1,000円〜2,000円程度、光熱費・高速Wi-Fi代込み）。敷金・礼金も0円のため、初期費用と固定費を大幅に浮かせて全額貯金に回せます。",
+    "answer": "周辺の一般賃貸と比べて初期費用や固定費を抑えて利用いただけるよう案内していますが、利用料金はお部屋の種類や時期・出勤条件によって異なります。\n\n【要確認】最新の1日あたり・月額の寮費、光熱費・Wi-Fi代・退去時清掃費の負担有無については、ご希望の滞在期間をお知らせのうえ、必ず事前にお見積り・確定金額をご確認ください。",
     "isPopular": true,
     "keywords": [
       "寮費",
@@ -1186,14 +1906,23 @@
       "格安",
       "光熱費込み",
       "初期費用ゼロ"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮費・費用案内を見る",
+    "relatedIds": [
+      "faq-dorm-1",
+      "faq-dorm-4"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-3",
     "category": "dorm",
     "categoryLabel": "住まい・寮・出稼ぎ",
     "question": "寮にはどんな家具や家電が備え付けられていますか？",
-    "answer": "エアコン、液晶テレビ、冷蔵庫、全自動洗濯機、電子レンジ、ベッド（寝具一式）、電気ケトル、ドライヤー、高速Wi-Fi、オートロックインターホンなどが標準完備されています。ご自身で購入して持ち込む必要は一切ありません。",
+    "answer": "お部屋には生活に必要な家具・家電類が備え付けられているため、少ない荷物で滞在を始めやすい環境です。\n\n【要確認】実際の設備ラインナップ（洗濯機・冷蔵庫・電子レンジ・テレビ・Wi-Fi・オートロック・寝具類など）や消耗品の用意範囲は物件・部屋ごとに異なる場合があるため、ご案内時に該当物件の設備一覧をご提示いたします。",
     "isPopular": false,
     "keywords": [
       "寮設備",
@@ -1201,28 +1930,46 @@
       "洗濯機",
       "テレビ",
       "Wi-Fi"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮の設備一覧を見る",
+    "relatedIds": [
+      "faq-dorm-1",
+      "faq-dorm-2"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-4",
     "category": "dorm",
     "categoryLabel": "住まい・寮・出稼ぎ",
     "question": "入居時の初期費用（敷金・礼金・仲介手数料）はかかりますか？",
-    "answer": "初期費用は【完全0円】です！敷金、礼金、不動産仲介手数料、鍵交換代、火災保険料などは全てお店が全額負担します。手持ちのお金がピンチな状態でも安心してご入居いただけます。",
+    "answer": "通常の賃貸物件でかかる高額な不動産仲介手数料や敷金・礼金といった初期コストを抑えて利用できるよう案内しています。\n\n【要確認】入寮時のデポジット（保証金）や退去時の清掃費が一切不要か、一部負担があるかは物件や契約形態によって異なるため、入寮前に書面・LINE等で確定条件をご確認ください。",
     "isPopular": true,
     "keywords": [
       "初期費用0円",
       "敷金礼金ゼロ",
       "仲介手数料なし",
       "費用不要"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮の初期費用を見る",
+    "relatedIds": [
+      "faq-dorm-2",
+      "faq-dorm-13"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-5",
     "category": "dorm",
     "categoryLabel": "住まい・寮・出稼ぎ",
     "question": "地方からの出稼ぎ希望ですが、交通費は支給されますか？",
-    "answer": "はい、全国各地（北海道、東北、北陸、関東、東海、中国、四国、九州、沖縄）からの出稼ぎを熱烈歓迎しています！新幹線代や飛行機代などの領収書をご提示いただければ、規定に基づき交通費を全額または上限付きで支給いたします。",
+    "answer": "遠方からお越しの方に向けて、交通費支給のサポート相談を受け付けています。\n\n【要確認】対象となる交通機関（新幹線・飛行機・高速バス）、支給上限額、全額支給か一部支給かの条件（最低稼働日数・領収書の提出方法・支給タイミング）については、出発地と滞在予定日数に応じて個別にご案内いたしますので、チケット手配前に必ずご確認ください。",
     "isPopular": true,
     "keywords": [
       "出稼ぎ",
@@ -1230,14 +1977,23 @@
       "新幹線代",
       "飛行機代",
       "地方から"
-    ]
+    ],
+    "category12": "access",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "出稼ぎ・交通費条件を見る",
+    "relatedIds": [
+      "faq-dorm-6",
+      "faq-sal-11"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-6",
     "category": "dorm",
     "categoryLabel": "住まい・寮・出稼ぎ",
     "question": "出稼ぎの期間はどれくらいから可能ですか？短期でもいい？",
-    "answer": "3日間〜1週間程度の超短期出稼ぎから、大型連休（GW・お盆・年末年始）のみ、1〜3ヶ月のまとまった期間まで、ご自身のスケジュールに合わせて自由にお選びいただけます。短期間でまとまった現金を稼いで地元に帰る女性も大勢います。",
+    "answer": "数日〜1週間程度の短期滞在から、1ヶ月以上のまとまった期間の滞在までご相談いただけます。\n\n【要確認】寮を利用できる最低利用日数や、GW・お盆・年末年始など繁忙期の受け入れ枠については空き状況により変動するため、ご希望の日程をお知らせのうえ事前にご確認ください。",
     "isPopular": true,
     "keywords": [
       "出稼ぎ期間",
@@ -1245,14 +2001,23 @@
       "1週間",
       "大型連休",
       "短期滞在"
-    ]
+    ],
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮・出稼ぎページを見る",
+    "relatedIds": [
+      "faq-shift-3",
+      "faq-dorm-5"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-7",
     "category": "dorm",
     "categoryLabel": "住まい・寮・出稼ぎ",
     "question": "ペット（犬や猫）と一緒に住める寮はありますか？",
-    "answer": "はい、愛犬や愛猫と一緒に暮らせるペット相談可能な個室マンション寮もご用意しております。ペットホテルに預けたり里子に出すことなく、大切な家族と一緒に大阪での新生活をスタートできます。",
+    "answer": "ペットとの暮らしについてご希望がある場合、相談のうえ可能な物件を確認してご案内いたします。\n\n【要確認】ペット可物件は室数に限りがあり、動物の種類・頭数・追加費用の有無などの条件も物件ごとに異なるため、必ず事前にご相談いただき空き状況をご確認ください。",
     "isPopular": false,
     "keywords": [
       "ペット可",
@@ -1260,56 +2025,92 @@
       "猫",
       "ペット同伴寮",
       "動物"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮・入居相談を見る",
+    "relatedIds": [
+      "faq-dorm-1",
+      "faq-dorm-8"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-8",
     "category": "dorm",
     "categoryLabel": "住まい・寮・出稼ぎ",
     "question": "シングルマザーで子供と一緒に住める家族寮はありますか？",
-    "answer": "はい、お子様と一緒に暮らせる広めの2DK・2LDKファミリータイプ寮をご用意しています。お部屋探しが難しいシングルマザーの方でも審査なしで即入居でき、安心して子育てとお仕事を両立していただけます。",
+    "answer": "お子様連れでの滞在をご希望される場合は、状況をお伺いしたうえで対応可能な住居があるか確認いたします。\n\n【要確認】家族向けの2DK・2LDK等の物件は常時空きがあるとは限らないため、人数・年齢・希望期間をお知らせのうえ事前に受け入れ可否をご確認ください。",
     "isPopular": false,
     "keywords": [
       "家族寮",
       "子供と一緒に",
       "シングルマザー寮",
       "ファミリータイプ"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮・子育て相談を見る",
+    "relatedIds": [
+      "faq-dorm-9",
+      "faq-shift-7"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-9",
     "category": "dorm",
     "categoryLabel": "住まい・寮・出稼ぎ",
     "question": "託児所や保育園の提携・補助はありますか？",
-    "answer": "はい、24時間対応の提携託児所があり、勤務時間中にお子様を安全にお預かりいただけます。また、託児所利用料の一部または全額を店舗が負担する補助手当制度もございますので、育児中の女性も負担なく働けます。",
+    "answer": "お子様がいらっしゃる方のシフト調整（昼間のみの勤務など）には柔軟に対応しています。\n\n【要確認】24時間託児所との提携状況や、託児費用の店舗補助制度の有無・補助上限については、利用時期や店舗条件によって異なるため、事前に必ず最新条件をご確認ください。",
     "isPopular": false,
     "keywords": [
       "託児所提携",
       "24時間託児所",
       "保育園",
       "託児所手当"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "育児・託児相談を見る",
+    "relatedIds": [
+      "faq-dorm-8",
+      "faq-shift-7"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-10",
     "category": "dorm",
     "categoryLabel": "住まい・寮・出稼ぎ",
     "question": "引っ越しの手伝いや、荷物を先に寮へ郵送することはできますか？",
-    "answer": "はい、可能です！出稼ぎや引っ越しの荷物を事前に寮へ郵送していただき、スタッフが代理で受け取ってお部屋へ運び込んでおくことも可能です。また、荷物が多い場合はスタッフが車でお迎え・運搬のお手伝いをします。",
+    "answer": "遠方からの荷物送付や受け取りについて、入居予定が決まった段階で相談のうえ調整することが可能です。\n\n【要確認】事前の荷物受け取り可否、受取先の住所、スタッフによる駅送迎や運搬サポートの有無については、到着日時と荷物の量に応じて事前確認が必要です。",
     "isPopular": false,
     "keywords": [
       "荷物郵送",
       "引っ越し手伝い",
       "運搬サポート",
       "事前受け取り"
-    ]
+    ],
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "出稼ぎ・事前相談を見る",
+    "relatedIds": [
+      "faq-dorm-1",
+      "faq-dorm-5"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-11",
     "category": "dorm",
     "categoryLabel": "住まい・寮・出稼ぎ",
     "question": "寮の周辺環境（買い物の便利さや治安）はどうですか？",
-    "answer": "寮は難波・天王寺エリア至近の好立地にあり、徒歩圏内にコンビニ、スーパー、ドラッグストア、商業施設が揃っており生活は非常に便利です。オートロックや防犯カメラ付きの女性向けセキュリティ物件ですので治安面も安心です。",
+    "answer": "ご案内する住居は、難波・天王寺など生活利便施設が揃うエリアのアクセスしやすい立地を中心に選定しています。また物件の防犯仕様（オートロックやモニター付きインターホン等）にも配慮しています。\n\n【要確認】実際に空きのある具体的な駅徒歩分数や建物設備は物件ごとに異なるため、入寮確定前に詳細をご案内いたします。",
     "isPopular": false,
     "keywords": [
       "周辺環境",
@@ -1317,7 +2118,16 @@
       "買い物便利",
       "天王寺",
       "難波"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮・周辺環境を見る",
+    "relatedIds": [
+      "faq-dorm-1",
+      "faq-dorm-12"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-12",
@@ -1331,7 +2141,16 @@
       "友人宿泊",
       "寮のルール",
       "防犯セキュリティ"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮の利用ルールを見る",
+    "relatedIds": [
+      "faq-dorm-11",
+      "faq-dorm-1"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-dorm-13",
@@ -1345,21 +2164,39 @@
       "違約金なし",
       "退去費用ゼロ",
       "スムーズ退寮"
-    ]
+    ],
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮・退寮条件を見る",
+    "relatedIds": [
+      "faq-trouble-1",
+      "faq-trouble-2"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-dorm-14",
     "category": "dorm",
     "categoryLabel": "住まい・寮・出稼ぎ",
     "question": "寮ではなく、提携ビジネスホテルに滞在して働くことはできますか？",
-    "answer": "はい、プライバシーを最重視される女性向けに、提携ビジネスホテル宿泊プランもご用意しています。ホテルの宿泊費はお店が補助・負担しますので、誰にも干渉されず完全なプライベート空間で快適に過ごせます。",
+    "answer": "寮以外の滞在方法（ビジネスホテル等）をご希望される場合は、ご希望期間やご予算に合わせて相談に応じることができます。\n\n【要確認】提携ホテルの有無や宿泊費の店舗補助条件（全額・一部補助や最低出勤日数の条件など）は時期や稼働予定によって異なるため、手配前に必ず確定条件をご確認ください。",
     "isPopular": false,
     "keywords": [
       "ホテル滞在",
       "提携ホテル",
       "ビジネスホテル",
       "完全個室"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "滞在先・出稼ぎ案内を見る",
+    "relatedIds": [
+      "faq-dorm-1",
+      "faq-dorm-6"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-beauty-1",
@@ -1374,7 +2211,16 @@
       "着物",
       "ドレス",
       "自前購入不要"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "衣装・身支度サポートを見る",
+    "relatedIds": [
+      "faq-beauty-11",
+      "faq-beauty-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-2",
@@ -1388,7 +2234,16 @@
       "無料セット",
       "ヘアセット",
       "メイク代ゼロ"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "ヘアメイク案内を見る",
+    "relatedIds": [
+      "faq-beauty-1",
+      "faq-beauty-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-3",
@@ -1403,7 +2258,16 @@
       "太っている",
       "グラマー",
       "体型カバー"
-    ]
+    ],
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "募集要項を見る",
+    "relatedIds": [
+      "faq-beauty-4",
+      "faq-beauty-1"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-4",
@@ -1417,7 +2281,16 @@
       "低身長",
       "高身長",
       "サイズ"
-    ]
+    ],
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "募集要項を見る",
+    "relatedIds": [
+      "faq-beauty-3",
+      "faq-beauty-1"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-5",
@@ -1432,7 +2305,16 @@
       "入れ墨",
       "ファンデーションテープ",
       "タトゥー隠し"
-    ]
+    ],
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "募集要項・身だしなみを見る",
+    "relatedIds": [
+      "faq-beauty-6",
+      "faq-beauty-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-6",
@@ -1447,7 +2329,16 @@
       "金髪",
       "ピアス",
       "派手髪"
-    ]
+    ],
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "募集要項を見る",
+    "relatedIds": [
+      "faq-beauty-5",
+      "faq-beauty-2"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-7",
@@ -1461,7 +2352,16 @@
       "眼鏡",
       "コンタクト",
       "視力"
-    ]
+    ],
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・身だしなみを見る",
+    "relatedIds": [
+      "faq-beauty-9",
+      "faq-beauty-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-8",
@@ -1476,7 +2376,16 @@
       "コンプレックス",
       "照明効果",
       "メイク"
-    ]
+    ],
+    "category12": "beginner",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "未経験者向けガイドを見る",
+    "relatedIds": [
+      "faq-beauty-2",
+      "faq-priv-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-9",
@@ -1490,14 +2399,23 @@
       "必要なもの",
       "仕事道具",
       "手ぶら出勤"
-    ]
+    ],
+    "category12": "job",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "初日出勤の持ち物を見る",
+    "relatedIds": [
+      "faq-beauty-1",
+      "faq-rec-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-10",
     "category": "beauty",
     "categoryLabel": "美容・衣装・準備",
     "question": "提携の美容サロンやクリニックの割引優待はありますか？",
-    "answer": "はい、在籍キャスト限定の特別特典として、提携のネイルサロン、まつ毛エクステサロン、美容クリニック（医療脱毛・アートメイク等）の割引優待制度をご利用いただけます。お仕事しながらお得に自分磨きができます。",
+    "answer": "美容や身だしなみに関する相談は女性スタッフも承っております。\n\n【要確認】提携ネイルサロン・美容クリニック等の割引優待制度の有無や対象メニュー・利用条件については時期により変更されるため、現在の利用可否を入店前またはLINEにてご確認ください。",
     "isPopular": false,
     "keywords": [
       "美容割引",
@@ -1505,7 +2423,16 @@
       "ネイル割引",
       "エステ",
       "自分磨き"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/beginner",
+    "relatedLabel": "店舗サポート案内を見る",
+    "relatedIds": [
+      "faq-beauty-2",
+      "faq-beauty-1"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-beauty-11",
@@ -1520,7 +2447,16 @@
       "着物",
       "コスプレ",
       "季節の衣装"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/beginner",
+    "relatedLabel": "衣装バリエーションを見る",
+    "relatedIds": [
+      "faq-beauty-1",
+      "faq-beauty-4"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-12",
@@ -1535,7 +2471,16 @@
       "パンプス",
       "スリッパ",
       "素足"
-    ]
+    ],
+    "category12": "environment",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/job",
+    "relatedLabel": "店内環境・備品を見る",
+    "relatedIds": [
+      "faq-beauty-1",
+      "faq-beauty-9"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-1",
@@ -1550,7 +2495,16 @@
       "引き止めなし",
       "辞める",
       "退職"
-    ]
+    ],
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "退店・サポート方針を見る",
+    "relatedIds": [
+      "faq-trouble-2",
+      "faq-trouble-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-2",
@@ -1564,7 +2518,16 @@
       "ペナルティ請求なし",
       "解約金ゼロ",
       "退職金なし"
-    ]
+    ],
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "退店ルールを見る",
+    "relatedIds": [
+      "faq-trouble-1",
+      "faq-sal-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-3",
@@ -1578,7 +2541,16 @@
       "合わない",
       "やめてもいい",
       "体験入店のみ"
-    ]
+    ],
+    "category12": "support",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "体験入店後の判断を見る",
+    "relatedIds": [
+      "faq-rec-13",
+      "faq-trouble-1"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-4",
@@ -1593,7 +2565,16 @@
       "怒鳴られない",
       "アットホーム",
       "優しいスタッフ"
-    ]
+    ],
+    "category12": "beginner",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "未経験者向けサポートを見る",
+    "relatedIds": [
+      "faq-job-12",
+      "faq-trouble-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-5",
@@ -1607,7 +2588,16 @@
       "急な休み",
       "体調不良",
       "安心休養"
-    ]
+    ],
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "体調管理・お休み連絡を見る",
+    "relatedIds": [
+      "faq-shift-12",
+      "faq-job-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-6",
@@ -1622,7 +2612,16 @@
       "派閥なし",
       "キャスト同士",
       "ストレスフリー"
-    ]
+    ],
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/shops",
+    "relatedLabel": "職場環境・お店選びを見る",
+    "relatedIds": [
+      "faq-job-6",
+      "faq-trouble-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-7",
@@ -1636,7 +2635,16 @@
       "責任転嫁なし",
       "スタッフが対応",
       "女性を守る"
-    ]
+    ],
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "安全対策・店舗対応を見る",
+    "relatedIds": [
+      "faq-job-2",
+      "faq-trouble-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-8",
@@ -1651,7 +2659,16 @@
       "生活再建",
       "相談",
       "秘密厳守"
-    ]
+    ],
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "日払い・相談窓口を見る",
+    "relatedIds": [
+      "faq-sal-3",
+      "faq-trouble-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-9",
@@ -1665,14 +2682,23 @@
       "休業",
       "母体安全",
       "退店サポート"
-    ]
+    ],
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "体調・休業サポートを見る",
+    "relatedIds": [
+      "faq-trouble-5",
+      "faq-trouble-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-10",
     "category": "trouble",
     "categoryLabel": "退職・トラブル対策",
     "question": "路上スカウトやSNSスカウトを通した方が条件が良いですか？",
-    "answer": "いいえ、絶対にスカウトを通してはいけません！スカウト経由で応募すると、あなたのお給料から毎月仲介料（紹介料）がピンハネされたり、危険な裏店舗へ送られる被害が多発しています。当料亭直営窓口から直接ご応募いただくのが、手取りが最も多く100%安全です。",
+    "answer": "いいえ、料亭直営窓口から直接ご応募いただくことを強くおすすめします。飛田新地料理組合の規約上、路上やSNSでのスカウト行為は禁止されており、非公認の仲介業者を通すと紹介料や手数料トラブルにつながるリスクがあります。\n\n直営窓口からのご応募であれば仲介マージンや紹介料の天引きは一切なく、売上50%バックの条件そのままにお仕事できます。",
     "isPopular": true,
     "keywords": [
       "スカウト注意",
@@ -1680,7 +2706,16 @@
       "裏垢スカウト",
       "直営が安全",
       "求人詐欺"
-    ]
+    ],
+    "category12": "interview",
+    "audienceTag": "全員共通",
+    "relatedPage": "/shops",
+    "relatedLabel": "直営店とスカウトの違いを見る",
+    "relatedIds": [
+      "faq-sal-7",
+      "faq-trouble-14"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-11",
@@ -1694,7 +2729,16 @@
       "24時間LINE",
       "サポート担当",
       "悩み相談"
-    ]
+    ],
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/about",
+    "relatedLabel": "運営体制・サポート担当を見る",
+    "relatedIds": [
+      "faq-trouble-7",
+      "faq-trouble-14"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-12",
@@ -1708,7 +2752,16 @@
       "ブランク復帰",
       "過去に勤務",
       "経験者優遇"
-    ]
+    ],
+    "category12": "experienced",
+    "audienceTag": "経験者向け",
+    "relatedPage": "/experienced",
+    "relatedLabel": "経験者・移籍ガイドを見る",
+    "relatedIds": [
+      "faq-trouble-13",
+      "faq-rec-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-13",
@@ -1722,20 +2775,38 @@
       "他店から",
       "秘密移籍",
       "トラブルなし"
-    ]
+    ],
+    "category12": "experienced",
+    "audienceTag": "経験者向け",
+    "relatedPage": "/experienced",
+    "relatedLabel": "他店・他業種からの移籍案内を見る",
+    "relatedIds": [
+      "faq-trouble-12",
+      "faq-trouble-1"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-14",
     "category": "trouble",
     "categoryLabel": "退職・トラブル対策",
     "question": "まだ働くか決めておらず、質問や相談だけでもLINEしていいですか？",
-    "answer": "もちろん大歓迎です！「まずは気になるところだけ質問したい」「時給や寮の写真を教えてほしい」といったご相談だけでも100%歓迎しています。無理に面接を強要することは絶対にありませんので、気兼ねなくLINEを飛ばしてくださいね。",
+    "answer": "はい、質問や相談だけでも大歓迎です。「まずは疑問だけ解消したい」「自分の年齢やシフト希望に合うお店があるか聞きたい」「寮の空き状況や費用を確認したい」といったご相談だけでも問題ありません。\n\n無理に面接や入店を勧めることは一切ありませんので、気になることがあればお気軽にLINEから話しかけてください。",
     "isPopular": true,
     "keywords": [
       "相談だけ",
       "質問のみ",
       "LINE相談歓迎",
       "無理な勧誘なし"
-    ]
+    ],
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "LINE相談・応募方法を見る",
+    "relatedIds": [
+      "faq-rec-15",
+      "faq-trouble-11"
+    ],
+    "needsVerification": false
   }
 ]

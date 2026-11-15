@@ -263,7 +263,7 @@ export default function RecruitHub({
     },
     {
       id: "dorm",
-      path: "/dorm",
+      path: "/dekasegi",
       number: "09",
       emoji: "🏠",
       title: "寮・出稼ぎ",

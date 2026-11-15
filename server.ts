@@ -47,11 +47,18 @@ function isAiBotOrMarkdownRequest(req: express.Request): boolean {
     'oai-searchbot',
     'chatgpt-user',
     'perplexitybot',
+    'perplexity-user',
     'claudebot',
+    'claude-user',
+    'claude-searchbot',
     'claude-web',
     'anthropic-ai',
     'google-extended',
     'applebot-extended',
+    'duckassistbot',
+    'amazonbot',
+    'mistralai-user',
+    'youbot',
     'ccbot',
     'diffbot',
     'bytespider',
@@ -116,23 +123,73 @@ async function startServer() {
     return res.status(404).send('Sitemap not found');
   });
 
-  // Markdown Auto-Delivery (Content Negotiation) for AI Bots & ?format=md / Accept: text/markdown
+  // Dedicated RSS feed route (/feed.xml and /rss.xml) with dynamic fallback if static file isn't built yet
+  app.get(['/feed.xml', '/rss.xml'], (_req, res) => {
+    const feedPath = path.join(process.cwd(), 'public', 'feed.xml');
+    if (fs.existsSync(feedPath)) {
+      res.setHeader('Content-Type', 'application/rss+xml; charset=utf-8');
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+      return res.sendFile(feedPath);
+    }
+    try {
+      let articles: any[] = [];
+      if (fs.existsSync(ARTICLES_FILE)) {
+        articles = JSON.parse(fs.readFileSync(ARTICLES_FILE, 'utf-8'));
+      }
+      const esc = (s: string) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+      const sorted = [...articles].filter((a) => a.slug && a.title).slice(0, 50);
+      const itemsXml = sorted.map((a) => `    <item>
+      <title>${esc(a.title)}</title>
+      <link>https://tobitashinchi-recruit.com/blog/${esc(a.slug)}</link>
+      <guid isPermaLink="true">https://tobitashinchi-recruit.com/blog/${esc(a.slug)}</guid>
+      <description>${esc(a.summary || a.title)}</description>
+    </item>`).join('\n');
+      const rssXml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>飛田新地求人｜飛田ガールズ【公式・料亭直営】</title>
+    <link>https://tobitashinchi-recruit.com/</link>
+    <atom:link href="https://tobitashinchi-recruit.com/feed.xml" rel="self" type="application/rss+xml" />
+    <description>飛田新地で働くか迷っている女性へ。飛田ガールズは料亭直営の求人案内サイトです。仕事内容や接客方法、給料・全額日払いの仕組み、応募条件、身バレ対策まで詳しく解説。</description>
+    <language>ja</language>
+${itemsXml}
+  </channel>
+</rss>\n`;
+      res.setHeader('Content-Type', 'application/rss+xml; charset=utf-8');
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+      return res.send(rssXml);
+    } catch (_err) {
+      return res.status(404).send('Feed not found');
+    }
+  });
+
+  // Markdown Auto-Delivery (Direct .md URLs & Content Negotiation for AI Bots / ?format=md / Accept: text/markdown)
   app.use((req, res, next) => {
-    if (req.path.startsWith('/api') || req.path === '/sitemap.xml' || req.path === '/robots.txt') {
+    if (req.path.startsWith('/api') || req.path === '/sitemap.xml' || req.path === '/robots.txt' || req.path === '/feed.xml' || req.path === '/rss.xml') {
       return next();
     }
-    // Skip static assets
+    // Skip static non-markdown assets
     if (/\.(png|jpe?g|gif|webp|svg|css|js|map|ico|woff2?|xml|txt|json)$/i.test(req.path)) {
       return next();
     }
 
-    if (isAiBotOrMarkdownRequest(req)) {
-      const { markdown, status } = renderRouteMarkdown(req.path);
+    const isDirectMdRequest = /\.md$/i.test(req.path);
+    if (isDirectMdRequest || isAiBotOrMarkdownRequest(req)) {
+      let targetRoutePath = req.path;
+      if (isDirectMdRequest) {
+        targetRoutePath = req.path.replace(/\.md$/i, '');
+        if (targetRoutePath === '/index' || targetRoutePath === '') {
+          targetRoutePath = '/';
+        }
+      }
+      const { markdown, status } = renderRouteMarkdown(targetRoutePath);
+      const canonicalRoute = targetRoutePath === '/' ? '/' : targetRoutePath.replace(/\/$/, '');
       res.status(status);
       res.setHeader('Content-Type', 'text/markdown; charset=utf-8');
       res.setHeader('Vary', 'Accept, User-Agent');
       res.setHeader('X-Content-Type-Options', 'nosniff');
       res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Link', `<https://tobitashinchi-recruit.com${canonicalRoute}>; rel="canonical"`);
       res.setHeader('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
       return res.send(markdown);
     }
@@ -332,6 +389,15 @@ ${customTopic ? `【指定テーマ】: ${customTopic}` : ''}
     }
   });
 
+  const setMarkdownAlternateHeader = (res: express.Response, reqPath: string, status: number) => {
+    if (status === 200) {
+      const cleanReqPath = reqPath.split('?')[0].replace(/\/$/, '') || '/';
+      const mdPath = cleanReqPath === '/' ? '/index.md' : `${cleanReqPath}.md`;
+      res.setHeader('Link', `<https://tobitashinchi-recruit.com${mdPath}>; rel="alternate"; type="text/markdown"`);
+      res.setHeader('Vary', 'Accept, User-Agent');
+    }
+  };
+
   // Vite middleware & dynamic SSR SEO HTML serving
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
@@ -353,6 +419,8 @@ ${customTopic ? `【指定テーマ】: ${customTopic}` : ''}
         const { html, status } = injectSeoMetadata(template, url);
         if (status === 404) {
           res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+        } else {
+          setMarkdownAlternateHeader(res, req.path, status);
         }
         res.status(status).set({ 'Content-Type': 'text/html; charset=utf-8' }).send(html);
       } catch (e) {
@@ -371,12 +439,15 @@ ${customTopic ? `【指定テーマ】: ${customTopic}` : ''}
         const directHtml = path.join(distPath, `${cleanPath}.html`);
 
         if (cleanPath === '/' && fs.existsSync(indexPath)) {
+          setMarkdownAlternateHeader(res, '/', 200);
           return res.status(200).sendFile(indexPath);
         }
         if (cleanPath !== '/' && fs.existsSync(nestedIndex)) {
+          setMarkdownAlternateHeader(res, cleanPath, 200);
           return res.status(200).sendFile(nestedIndex);
         }
         if (cleanPath !== '/' && fs.existsSync(directHtml)) {
+          setMarkdownAlternateHeader(res, cleanPath, 200);
           return res.status(200).sendFile(directHtml);
         }
 
@@ -387,6 +458,8 @@ ${customTopic ? `【指定テーマ】: ${customTopic}` : ''}
         const { html, status } = injectSeoMetadata(template, req.originalUrl);
         if (status === 404) {
           res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+        } else {
+          setMarkdownAlternateHeader(res, req.path, status);
         }
         res.status(status).set({ 'Content-Type': 'text/html; charset=utf-8' }).send(html);
       } catch (e) {
