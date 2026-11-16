@@ -9,7 +9,7 @@ import { getStoredSiteContent } from '../siteContent';
 
 interface FooterProps {
   currentTab: string;
-  onChangeTab: (tab: 'recruit' | 'blog' | 'admin' | 'about' | 'compare' | 'faq' | 'cluster' | 'glossary') => void;
+  onChangeTab: (tab: 'recruit' | 'blog' | 'admin' | 'about' | 'compare' | 'site-compare' | 'faq' | 'cluster' | 'glossary') => void;
   onScrollToSection: (sectionId: string) => void;
   onOpenAdmin: () => void;
   onNavigateCompare?: (categorySlug?: string) => void;
@@ -21,7 +21,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
   const [showAdminLink, setShowAdminLink] = useState(false);
   const [activeModal, setActiveModal] = useState<'policy' | 'company' | null>(null);
   const siteContent = getStoredSiteContent();
-  const lastUpdated = siteContent.lastUpdated || '2026年10月19日';
+  const lastUpdated = siteContent.lastUpdated || '2026年11月15日';
 
   useEffect(() => {
     try {
@@ -38,7 +38,8 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
   }, []);
 
   const navLinks = [
-    { name: '飛田新地求人サイト比較', action: 'compare', target: '/compare' },
+    { name: '飛田新地求人サイト徹底比較', action: 'site-compare', target: '/site-compare' },
+    { name: '目的・働き方別求人ガイド', action: 'compare', target: '/compare' },
     { name: '求人総合ガイド', action: 'section', target: '/#hub' },
     { name: 'お仕事コラム一覧', action: 'blog', target: '/blog' },
     { name: '運営者情報・お店のご案内', action: 'about', target: '/about' },
@@ -63,7 +64,10 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
   const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>, link: typeof navLinks[0]) => {
     e.preventDefault();
 
-    if (link.action === 'compare') {
+    if (link.action === 'site-compare') {
+      onChangeTab('site-compare');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (link.action === 'compare') {
       onChangeTab('compare');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (link.action === 'blog') {
@@ -130,10 +134,10 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
 
           {/* Col 2: Navigation Links */}
           <div className="space-y-4">
-            <h5 className="font-display font-bold text-on-surface text-sm uppercase tracking-wider flex items-center gap-1.5">
+            <h2 className="font-display font-bold text-on-surface text-sm uppercase tracking-wider flex items-center gap-1.5">
               <LucideIcon name="Layers" size={15} className="text-secondary" />
               <span>サイト内リンク</span>
-            </h5>
+            </h2>
             <ul className="space-y-2 font-sans text-xs md:text-sm">
               {navLinks.map((link) => (
                 <li key={link.name}>
@@ -151,7 +155,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
 
           {/* Col 3: 目的・属性別求人比較 */}
           <div className="space-y-4">
-            <h5 className="font-display font-bold text-on-surface text-sm uppercase tracking-wider">
+            <h2 className="font-display font-bold text-on-surface text-sm uppercase tracking-wider">
               <a
                 href="/compare"
                 onClick={(e) => handleCategoryLinkClick(e)}
@@ -162,7 +166,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
                 <span className="group-hover:underline">目的・属性別求人</span>
                 <LucideIcon name="ChevronRight" size={13} className="text-zinc-400 group-hover:text-secondary transition-transform group-hover:translate-x-0.5" />
               </a>
-            </h5>
+            </h2>
             <ul className="space-y-2 font-sans text-xs md:text-sm">
               {targetCategoryLinks.map((cat) => (
                 <li key={cat.slug}>
@@ -180,10 +184,10 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
 
           {/* Col 4: E-E-A-T & Editorial / Compliance Info */}
           <div className="space-y-4">
-            <h5 className="font-display font-bold text-on-surface text-sm uppercase tracking-wider flex items-center gap-1.5">
+            <h2 className="font-display font-bold text-on-surface text-sm uppercase tracking-wider flex items-center gap-1.5">
               <LucideIcon name="ShieldCheck" size={15} className="text-secondary" />
               <span>求人掲載基準・運営方針</span>
-            </h5>
+            </h2>
             <p className="font-sans text-xs text-on-surface-variant leading-relaxed">
               当サイト「飛田ガールズ」は、外部の紹介所や仲介業者ではなく、飛田新地の料理組合加盟料亭が直接運営する公式求人窓口です。お店スタッフによる直接採用のため不当な紹介手数料や天引きは一切なく、売上50%バック即日日払い、完全なプライバシー保護・身バレ防止を徹底しております。
             </p>
@@ -228,9 +232,9 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
         <div className="py-6 border-t border-rose-100/60 mb-8">
           <div className="flex items-center gap-2 mb-3">
             <LucideIcon name="Compass" size={15} className="text-secondary" />
-            <h5 className="font-display font-bold text-on-surface text-xs uppercase tracking-wider">
+            <h2 className="font-display font-bold text-on-surface text-xs uppercase tracking-wider">
               飛田新地求人 総合ガイド（全12テーマ）
-            </h5>
+            </h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 text-xs">
             {[
@@ -245,7 +249,8 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
               { id: 'dorm', name: '🏠 個室寮・出稼ぎ', path: '/dekasegi' },
               { id: 'safety', name: '🤫 身バレ・安全管理', path: '/safety' },
               { id: 'faq', name: '💡 よくある質問 (119問)', path: '/faq' },
-              { id: 'compare', name: '⚖️ 求人サイト比較', path: '/compare' },
+              { id: 'compare', name: '🎯 目的・働き方別求人', path: '/compare' },
+              { id: 'site-compare', name: '⚖️ 飛田新地求人サイト徹底比較', path: '/site-compare' },
               { id: 'glossary', name: '📖 専門用語集', path: '/glossary' },
               { id: 'blog', name: '📚 お仕事コラム (100本超)', path: '/blog' },
             ].map((topic) => (
@@ -259,6 +264,9 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   } else if (topic.id === 'blog') {
                     onChangeTab('blog');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  } else if (topic.id === 'site-compare') {
+                    onChangeTab('site-compare');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   } else if (topic.id === 'compare') {
                     onChangeTab('compare');

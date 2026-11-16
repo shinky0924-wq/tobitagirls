@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { FAQ_100_LIST, FAQ_12_CATEGORIES, FAQ_LAST_UPDATED_ISO } from '../src/faq100Data';
-import { TARGET_JOB_CATEGORIES } from '../src/compareData';
+import { TARGET_JOB_CATEGORIES, INDUSTRY_COMPARISONS, SITE_COMPARISON_ROWS } from '../src/compareData';
 import { GLOSSARY_TERMS } from '../src/glossaryData';
 
 const DOMAIN = 'https://tobitashinchi-recruit.com';
@@ -78,10 +78,16 @@ function generateRssFeed(articles: ArticleItem[]): string {
       category: 'よくある質問',
     },
     {
-      title: '飛田新地の求人比較＆働き方・目的別ガイド｜飛田ガールズ',
+      title: '飛田新地求人サイト徹底比較｜飛田ガールズ',
+      link: `${DOMAIN}/site-compare`,
+      description: '飛田新地 vs 他業種（ソープ・デリヘル・キャバクラ）や、料亭直営公式・スカウト・他求人サイトの応募方法の違いをわかりやすく比較しています。',
+      category: '求人サイト徹底比較',
+    },
+    {
+      title: '目的・働き方別求人ガイド｜飛田ガールズ',
       link: `${DOMAIN}/compare`,
-      description: '料亭直営の条件や、他のお仕事・応募方法との違い、目的別の働き方ガイドをまとめています。',
-      category: '比較・目的別ガイド',
+      description: '未経験・高収入・週1日・Wワークなど、あなたに最適な働き方と料亭直営の条件をわかりやすくまとめています。',
+      category: '目的・働き方別ガイド',
     },
     {
       title: '飛田新地 用語集・用語辞典｜飛田ガールズ',
@@ -220,7 +226,8 @@ WebサイトやSNSへの顔写真掲載は行わず、街全体で写真・動�
 - [お店選び・通り別の特徴](${DOMAIN}/shops) ([テキスト版](/shops.md))
 - [寮・出稼ぎ・交通費サポート](${DOMAIN}/dekasegi) ([テキスト版](/dekasegi.md))
 - [身バレ・安全・衛生対策](${DOMAIN}/safety) ([テキスト版](/safety.md))
-- [他業種・求人比較ガイド](${DOMAIN}/compare) ([テキスト版](/compare.md))
+- [飛田新地求人サイト徹底比較（他業種・応募方法）](${DOMAIN}/site-compare) ([テキスト版](/site-compare.md))
+- [目的・働き方別求人ガイド](${DOMAIN}/compare) ([テキスト版](/compare.md))
 - [飛田新地 用語集・用語辞典](${DOMAIN}/glossary) ([テキスト版](/glossary.md))
 - [お仕事コラム一覧（全${articleCount}記事）](${DOMAIN}/blog) ([テキスト版](/blog.md))
 
@@ -378,7 +385,9 @@ ${articlesSection}
 - お店選び・通りの違い: ${DOMAIN}/shops (${DOMAIN}/shops.md)
 - 寮・出稼ぎ・交通費: ${DOMAIN}/dekasegi (${DOMAIN}/dekasegi.md)
 - 身バレ・安全対策: ${DOMAIN}/safety (${DOMAIN}/safety.md)
-- 他業種・求人比較: ${DOMAIN}/compare (${DOMAIN}/compare.md)
+- 飛田新地求人サイト徹底比較（他業種・応募方法）: ${DOMAIN}/site-compare (${DOMAIN}/site-compare.md)
+- 目的・働き方別求人ガイド: ${DOMAIN}/compare (${DOMAIN}/compare.md)
+- 応募方法・他業種比較一覧: ${SITE_COMPARISON_ROWS.length}項目 / 他業種比較: ${INDUSTRY_COMPARISONS.length}業種 (${DOMAIN}/site-compare)
 - 用語集: ${DOMAIN}/glossary (${DOMAIN}/glossary.md)
 - よくある質問: ${DOMAIN}/faq (${DOMAIN}/faq.md)
 - コラム一覧: ${DOMAIN}/blog (${DOMAIN}/blog.md)

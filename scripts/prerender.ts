@@ -109,7 +109,13 @@ async function runPrerender() {
     count++;
   }
 
-  // 6. Pre-render Compare Main & all 9 Category pages
+  // 6. Pre-render Site Compare, Compare Main & all 9 Category pages
+  const siteCompare = injectSeoMetadata(template, '/site-compare');
+  writeFileEnsureDir(path.join(distDir, 'site-compare', 'index.html'), siteCompare.html);
+  writeFileEnsureDir(path.join(distDir, 'site-compare.html'), siteCompare.html);
+  emitMarkdown('/site-compare', 'site-compare.md');
+  count++;
+
   const compare = injectSeoMetadata(template, '/compare');
   writeFileEnsureDir(path.join(distDir, 'compare', 'index.html'), compare.html);
   writeFileEnsureDir(path.join(distDir, 'compare.html'), compare.html);

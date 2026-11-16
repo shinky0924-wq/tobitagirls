@@ -9,7 +9,7 @@ import { TOPIC_CLUSTERS } from './topicClusterData';
 import { TESTIMONIALS } from './data';
 import { GLOSSARY_TERMS } from './glossaryData';
 import { FAQ_12_CATEGORIES, FAQ_LAST_UPDATED_ISO } from './faq100Data';
-import { TARGET_JOB_CATEGORIES, SITE_COMPARISON_ROWS } from './compareData';
+import { TARGET_JOB_CATEGORIES, SITE_COMPARISON_ROWS, INDUSTRY_COMPARISONS, TOBITA_PROS_CONS } from './compareData';
 
 interface BlogArticle {
   id: string;
@@ -88,7 +88,7 @@ function getMarkdownMetaFooter(): string {
     `- お給料は完全歩合制・売上50%バックで、その日の勤務終了後に全額を現金でお渡しします（※収入は出勤時間帯や来店状況により変動します）。`,
     `- 勤務時間は選べる5つの時間帯（10:00〜17:00 / 10:00〜16:00 / 17:00〜24:00 / 14:00〜24:00 / 12:00〜24:00）から、週1日・短時間からご相談いただけます。`,
     `- 疑問や不安がある場合は、公式LINEから24時間いつでも女性スタッフに無料で相談できます（相談だけでも大丈夫です）。`,
-    `- 関連ページ: [トップページ](${BASE_URL}/) | [よくある質問](${BASE_URL}/faq) | [お仕事コラム](${BASE_URL}/blog) | [サイト全体ガイド](/llms.txt)`,
+    `- 関連ページ: [飛田新地求人トップ（飛田ガールズ）](${BASE_URL}/) | [よくある質問](${BASE_URL}/faq) | [お仕事コラム](${BASE_URL}/blog) | [サイト全体ガイド](/llms.txt)`,
     ``,
     `*© 2026 飛田ガールズ All Rights Reserved.*`
   ].join('\n');
@@ -434,27 +434,62 @@ export function renderRouteMarkdown(urlPath: string): { markdown: string; status
     return { status: 200, markdown: renderFaqMarkdown(sub) };
   }
 
-  // 6. Compare & target routes
-  if (cleanPath === '/compare') {
+  // 6. Site Compare & Target Guide routes
+  if (cleanPath === '/site-compare' || cleanPath === '/site-comparison') {
     return {
       status: 200,
       markdown: [
         getMarkdownMetaHeader(
-          '飛田新地の求人比較＆働き方・目的別ガイド',
-          '/compare',
-          '飛田新地の料亭直営求人と、他の応募ルート・他の夜職（キャバクラ・一般風俗など）との違いをわかりやすく比較しています。'
+          '飛田新地求人サイト徹底比較｜料亭直営・スカウト・他業種との違い【公式】',
+          '/site-compare',
+          '飛田新地料亭直営公式求人「飛田ガールズ」と街頭・SNSスカウト業者、他求人サイト、他業種ナイトワーク（ソープ・デリヘル・キャバクラ）を報酬・日払い・お酒・身バレ対策で徹底比較。'
         ),
-        `## 飛田新地と他のお仕事・応募ルートの違い`,
-        `| 比較項目 | 飛田ガールズ（料亭直営） | 街頭・SNSスカウト | 他求人サイト | 他業種（キャバクラ・一般風俗） |`,
+        `## 飛田新地 vs 他業種（ソープ・デリヘル・キャバクラ）比較`,
+        `| 業種・お仕事形態 | 1回の接客時間 | お酒・営業連絡 | 日給目安・支払い | 身体への負担・入浴 |`,
+        `| :--- | :--- | :--- | :--- | :--- |`,
+        ...INDUSTRY_COMPARISONS.map((item, idx) =>
+          `| **${item.industry}**${idx === 0 ? '（当サイト）' : ''}（${item.workStyle}） | ${item.timePerCustomer} | お酒: ${item.alcohol} / 営業LINE: ${item.salesLineContact} | ${item.dailyIncome} | ${item.showerLabor} |`
+        ),
+        ``,
+        `## 飛田新地求人サイト・応募方法 徹底比較`,
+        `| 比較項目 | 【公式】飛田ガールズ（料亭直営） | SNS・街頭スカウト業者 | 他求人サイト（飛田ジョブなど） | 他業種ナイトワーク（ソープ等） |`,
         `| :--- | :--- | :--- | :--- | :--- |`,
         ...SITE_COMPARISON_ROWS.map((row) =>
           `| **${row.criteria}** | ${row.ourShop.text} | ${row.scoutAgency.text} | ${row.generalPortal.text} | ${row.otherNightwork.text} |`
         ),
         ``,
+        `### 【警告】街頭やSNS裏垢（X/旧Twitter）のスカウト業者経由は絶対にNG！`,
+        `スカウトを通すと、あなたの売上から毎月10〜30%が「紹介料」として永久に天引きされます。また個人情報の流出や退職時の脅迫トラブルも後を絶ちません。飛田新地は**料理組合公認の料亭直営公式採用（飛田ガールズ）**から応募することで、仲介手数料ゼロ・売上完全50%日払いが保証されます。`,
+        ``,
+        `## 関連ガイド`,
+        `- [目的・働き方別求人ガイド（あなたに最適な働き方が必ず見つかる）](/compare)`,
+        getMarkdownMetaFooter()
+      ].join('\n')
+    };
+  }
+
+  if (cleanPath === '/compare') {
+    return {
+      status: 200,
+      markdown: [
+        getMarkdownMetaHeader(
+          '目的・働き方別求人ガイド｜あなたに最適な働き方が必ず見つかる。',
+          '/compare',
+          '「未経験や週1、30代でも稼げる？」の疑問を解消。料亭直営の条件・メリットデメリット・ターゲット別の働き方・給料計算・安心サポートをわかりやすく解説。'
+        ),
+        `## 飛田新地で働くメリット（5大特長）`,
+        ...TOBITA_PROS_CONS.merits.map((m) => `- **${m.title}**: ${m.desc}`),
+        ``,
+        `## 知っておくべきデメリット・注意点`,
+        ...TOBITA_PROS_CONS.demeritsAndNotes.map((d) => `- **${d.title}**: ${d.desc}`),
+        ``,
         `## 目的・状況別の求人ガイド`,
         ...TARGET_JOB_CATEGORIES.map((cat) =>
           `- [${cat.title}](/compare/${cat.slug}): ${cat.summary}`
         ),
+        ``,
+        `## 他業種・応募方法の比較`,
+        `- [飛田新地求人サイト徹底比較](/site-compare): ソープ・デリヘル・キャバクラ・スカウト・他求人サイトとの違いを比較`,
         getMarkdownMetaFooter()
       ].join('\n')
     };

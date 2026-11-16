@@ -56,8 +56,8 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
           transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
           id="hero-title"
         >
-          <span className="block text-on-surface">飛田新地で働くことを</span>
-          <span className="block text-secondary">考えている女性へ。</span>
+          <span className="block text-on-surface">飛田新地の求人案内</span>
+          <span className="block text-secondary">働くことを考えている女性へ。</span>
         </motion.h1>
 
         {/* Sub description */}
@@ -152,10 +152,10 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
                 <span>PICK UP</span>
               </div>
               
-              <h3 className="font-sans font-extrabold text-sm md:text-base text-secondary mb-4 flex items-center gap-2 border-b border-rose-100 pb-3">
+              <h2 className="font-sans font-extrabold text-sm md:text-base text-secondary mb-4 flex items-center gap-2 border-b border-rose-100 pb-3">
                 <span className="bg-secondary text-white text-[9px] tracking-wider px-2 py-0.5 rounded-md font-black">RECOMMEND</span>
                 <span className="bg-gradient-to-r from-secondary to-[#a13762] bg-clip-text text-transparent font-black">人気のお仕事コラム（おすすめ5選）</span>
-              </h3>
+              </h2>
               
               <div className="flex flex-col gap-2.5">
                 {randomArticles.map((art, index) => (

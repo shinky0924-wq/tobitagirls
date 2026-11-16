@@ -1,7 +1,7 @@
 # 飛田新地求人｜飛田ガールズ【公式・料亭直営】
 
 > 飛田新地で働くか迷っている女性へ。飛田ガールズは料亭直営の求人案内サイトです。仕事内容や接客方法、給料・全額日払いの仕組み、応募条件、身バレ対策まで詳しく解説。未経験の方も経験者の方も、応募前に知っておきたい情報を分かりやすく紹介しています。
-> 最終更新日: 2026-11-14
+> 最終更新日: 2026-11-15
 
 ## 飛田ガールズについて
 - **サイト名**: 飛田ガールズ（料理組合加盟料亭 直営公式採用窓口）
@@ -84,7 +84,8 @@ WebサイトやSNSへの顔写真掲載は行わず、街全体で写真・動�
 - [お店選び・通り別の特徴](https://tobitashinchi-recruit.com/shops) ([テキスト版](/shops.md))
 - [寮・出稼ぎ・交通費サポート](https://tobitashinchi-recruit.com/dekasegi) ([テキスト版](/dekasegi.md))
 - [身バレ・安全・衛生対策](https://tobitashinchi-recruit.com/safety) ([テキスト版](/safety.md))
-- [他業種・求人比較ガイド](https://tobitashinchi-recruit.com/compare) ([テキスト版](/compare.md))
+- [飛田新地求人サイト徹底比較（他業種・応募方法）](https://tobitashinchi-recruit.com/site-compare) ([テキスト版](/site-compare.md))
+- [目的・働き方別求人ガイド](https://tobitashinchi-recruit.com/compare) ([テキスト版](/compare.md))
 - [飛田新地 用語集・用語辞典](https://tobitashinchi-recruit.com/glossary) ([テキスト版](/glossary.md))
 - [お仕事コラム一覧（全185記事）](https://tobitashinchi-recruit.com/blog) ([テキスト版](/blog.md))
 

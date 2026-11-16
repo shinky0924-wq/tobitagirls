@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://tobitashinchi-recruit.com/</loc>
-    <lastmod>2026-11-15</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -13,7 +13,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/about</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -23,7 +23,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/glossary</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -32,18 +32,28 @@
     </image:image>
   </url>
   <url>
-    <loc>https://tobitashinchi-recruit.com/compare</loc>
-    <lastmod>2026-11-15</lastmod>
+    <loc>https://tobitashinchi-recruit.com/site-compare</loc>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/col_beginner_guide_art_1787803245812.jpg</image:loc>
-      <image:title>飛田新地求人サイト比較＆目的別ガイド</image:title>
+      <image:title>飛田新地求人サイト徹底比較</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare</loc>
+    <lastmod>2026-11-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_beginner_guide_art_1787803245812.jpg</image:loc>
+      <image:title>目的・働き方別求人ガイド</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/inexperienced</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -53,7 +63,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/high-income</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -63,7 +73,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/weekly-1</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -73,7 +83,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/short-term</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -83,7 +93,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/dormitory</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -93,7 +103,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/double-work</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -103,7 +113,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/age-20s</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -113,7 +123,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/age-30s</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -123,7 +133,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/age-40s</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -133,7 +143,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -143,7 +153,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/qualification</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -153,7 +163,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/beginner</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -163,7 +173,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/experienced</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -173,7 +183,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/job</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -183,7 +193,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/salary</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -193,7 +203,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/hours</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -203,7 +213,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/interview</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -213,7 +223,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/privacy</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -223,7 +233,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/environment</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -233,7 +243,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/access</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -243,7 +253,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/sidejob</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -253,7 +263,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/support</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -263,7 +273,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog</loc>
-    <lastmod>2026-11-15</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -273,7 +283,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/job</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -283,7 +293,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/salary</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -293,7 +303,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/beginner</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -303,7 +313,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/experienced</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -313,7 +323,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/requirements</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -323,7 +333,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/flow</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -333,7 +343,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/workstyle</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -343,7 +353,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/shops</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -353,7 +363,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/dekasegi</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -363,7 +373,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/safety</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>

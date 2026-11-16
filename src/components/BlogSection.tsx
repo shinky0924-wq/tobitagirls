@@ -65,6 +65,7 @@ interface BlogSectionProps {
   onInjectedScroll: (message: string) => void;
   onSimulatorClick: () => void;
   onNavigateAbout?: () => void;
+  onNavigateHome?: () => void;
 }
 
 export default function BlogSection({
@@ -75,7 +76,8 @@ export default function BlogSection({
   onCtaclick,
   onInjectedScroll,
   onSimulatorClick,
-  onNavigateAbout
+  onNavigateAbout,
+  onNavigateHome
 }: BlogSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory || 'all');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -267,7 +269,7 @@ export default function BlogSection({
             {
               "@type": "ListItem",
               "position": 1,
-              "name": "トップ",
+              "name": "飛田新地求人トップ",
               "item": "https://tobitashinchi-recruit.com/"
             },
             {
@@ -366,7 +368,7 @@ export default function BlogSection({
             'url': defaultUrl,
             'name': defaultTitle,
             'description': defaultDesc,
-            'dateModified': '2026-11-14',
+            'dateModified': '2026-11-15',
             'inLanguage': 'ja-JP',
             'isPartOf': {
               '@id': 'https://tobitashinchi-recruit.com/#website',
@@ -383,7 +385,7 @@ export default function BlogSection({
             '@type': 'BreadcrumbList',
             '@id': 'https://tobitashinchi-recruit.com/blog#breadcrumb',
             'itemListElement': [
-              { '@type': 'ListItem', 'position': 1, 'name': 'トップ', 'item': 'https://tobitashinchi-recruit.com/' },
+              { '@type': 'ListItem', 'position': 1, 'name': '飛田新地求人トップ', 'item': 'https://tobitashinchi-recruit.com/' },
               { '@type': 'ListItem', 'position': 2, 'name': 'お仕事コラム', 'item': defaultUrl },
             ],
           },
@@ -582,6 +584,24 @@ export default function BlogSection({
             transition={{ duration: 0.3 }}
             id="blog-list"
           >
+            {/* Breadcrumb Navigation */}
+            <nav aria-label="パンくずリスト" className="mb-6 flex flex-wrap items-center gap-2 text-xs text-on-surface-variant">
+              <a
+                href="/"
+                onClick={(e) => {
+                  if (onNavigateHome) {
+                    e.preventDefault();
+                    onNavigateHome();
+                  }
+                }}
+                className="hover:text-secondary underline transition-colors"
+              >
+                飛田新地求人トップ（飛田ガールズ）
+              </a>
+              <span>/</span>
+              <span className="text-[#2c1a1e] font-bold">お仕事コラム一覧</span>
+            </nav>
+
             {/* Header / Intro */}
             <div className="text-center max-w-3xl mx-auto mb-10">
               <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-rose-100 text-secondary mb-3">
@@ -713,9 +733,9 @@ export default function BlogSection({
                           </span>
                         </div>
 
-                        <h3 className="text-lg font-bold text-[#2c1a1e] leading-snug group-hover:text-secondary transition-colors line-clamp-2">
+                        <h2 className="text-lg font-bold text-[#2c1a1e] leading-snug group-hover:text-secondary transition-colors line-clamp-2">
                           {article.title}
-                        </h3>
+                        </h2>
 
                         <p className="mt-3 text-sm text-on-surface-variant line-clamp-3 leading-relaxed">
                           {article.summary}
@@ -880,7 +900,35 @@ export default function BlogSection({
             transition={{ duration: 0.3 }}
             className="max-w-3xl mx-auto"
           >
-            {/* Back Navigation */}
+            {/* Breadcrumb & Back Navigation */}
+            <nav aria-label="パンくずリスト" className="mb-4 flex flex-wrap items-center gap-2 text-xs text-on-surface-variant">
+              <a
+                href="/"
+                onClick={(e) => {
+                  if (onNavigateHome) {
+                    e.preventDefault();
+                    onNavigateHome();
+                  }
+                }}
+                className="hover:text-secondary underline transition-colors"
+              >
+                飛田新地求人トップ（飛田ガールズ）
+              </a>
+              <span>/</span>
+              <a
+                href="/blog"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleBackToList();
+                }}
+                className="hover:text-secondary underline transition-colors"
+              >
+                お仕事コラム一覧
+              </a>
+              <span>/</span>
+              <span className="text-[#2c1a1e] font-bold line-clamp-1">{currentArticle!.title}</span>
+            </nav>
+
             <button
               onClick={handleBackToList}
               className="group mb-8 inline-flex items-center gap-2 text-sm font-medium text-on-surface hover:text-secondary transition-colors cursor-pointer py-2"

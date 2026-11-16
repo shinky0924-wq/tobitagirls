@@ -69,8 +69,8 @@ export interface FAQ100Item {
   eightCategoryLabel: string;
 }
 
-export const FAQ_LAST_UPDATED = '2026年11月14日';
-export const FAQ_LAST_UPDATED_ISO = '2026-11-14';
+export const FAQ_LAST_UPDATED = '2026年11月15日';
+export const FAQ_LAST_UPDATED_ISO = '2026-11-15';
 
 export const FAQ_12_CATEGORIES: FAQ12CategoryDef[] = [
   {

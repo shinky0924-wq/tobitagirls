@@ -43,7 +43,7 @@ function buildHomeNoscript(): string {
 
     <main>
       <article>
-        <h1>飛田新地で働くことを考えている女性へ。</h1>
+        <h1>飛田新地の求人案内｜働くことを考えている女性へ。</h1>
         <img src="https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg" alt="飛田新地のお仕事・料亭直営求人で夢を叶える場所" width="1376" height="768" />
         <p class="lead">当店では、仕事内容や給料の仕組み、未経験から働くまでの流れ、お店選びのポイントなど、求人を探すうえで知っておきたい情報をわかりやすくまとめています。まずは相談だけでもお気軽にご相談ください。</p>
 
@@ -95,7 +95,7 @@ function buildHomeNoscript(): string {
             <li><h3><a href="/faq">よくある質問｜応募前の不安を解消するQ&A</a></h3><p>未経験・給料・身バレなど全119問のQ&A。</p></li>
             <li><h3><a href="/blog">お仕事コラム｜働く前に知りたい体験談とノウハウ</a></h3><p>100本以上の解説記事・実例コラム。</p></li>
           </ol>
-          <p><a href="/compare">飛田新地求人サイト比較＆目的別求人ガイドを見る</a> / <a href="/glossary">用語集を見る</a> / <a href="/about">運営者情報を見る</a></p>
+          <p><a href="/site-compare">飛田新地求人サイト徹底比較を見る</a> / <a href="/compare">目的・働き方別求人ガイドを見る</a> / <a href="/glossary">用語集を見る</a> / <a href="/about">運営者情報を見る</a></p>
         </section>
 
         <section id="section-reasons">
@@ -244,8 +244,8 @@ function buildHomeJsonLd(): string {
           'currency': 'JPY',
           'value': {
             '@type': 'QuantitativeValue',
-            'minValue': 5000,
-            'maxValue': 20000,
+            'minValue': 30000,
+            'maxValue': 100000,
             'unitText': 'DAY'
           }
         },
@@ -287,6 +287,87 @@ function buildHomeJsonLd(): string {
   }, null, 2);
 }
 
+function buildSiteCompareNoscript(): string {
+  const rowsHtml = SITE_COMPARISON_ROWS.map(r => `
+    <tr>
+      <th>${escapeHtml(r.criteria)}</th>
+      <td><strong>${escapeHtml(r.ourShop.text)}</strong></td>
+      <td>${escapeHtml(r.scoutAgency.text)}</td>
+      <td>${escapeHtml(r.generalPortal.text)}</td>
+      <td>${escapeHtml(r.otherNightwork.text)}</td>
+    </tr>
+  `).join('');
+
+  return `
+    <header>
+      <p>飛田新地求人サイト徹底比較｜料亭直営・スカウト・他業種との違い【公式】</p>
+      <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ <a href="/compare">目的・働き方別求人ガイド</a> ／ 24時間受付中・相談無料・完全秘密厳守</p>
+    </header>
+
+    <main>
+      <article>
+        <h1>飛田新地求人サイト徹底比較</h1>
+        <p class="lead">飛田新地での働き方と他のナイトワーク業種（ソープ・デリヘル・キャバクラ）の違いや、料亭直営公式窓口（飛田ガールズ）・スカウト業者・他求人サイトの応募ルートごとの違いを分かりやすく比較しています。</p>
+
+        <section id="industry-comparison">
+          <h2>飛田新地 vs 他業種（ソープ・デリヘル・キャバクラ）比較</h2>
+          <table border="1">
+            <thead>
+              <tr>
+                <th>業種・お仕事形態</th>
+                <th>1回の接客時間</th>
+                <th>お酒・営業連絡</th>
+                <th>日給目安・支払い</th>
+                <th>身体への負担・入浴</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${INDUSTRY_COMPARISONS.map((item, i) => `
+                <tr>
+                  <td><strong>${escapeHtml(item.industry)}</strong>${i === 0 ? '（当サイト）' : ''}<br><small>${escapeHtml(item.workStyle)}</small></td>
+                  <td>${escapeHtml(item.timePerCustomer)}</td>
+                  <td>お酒: ${escapeHtml(item.alcohol)}<br>営業LINE: ${escapeHtml(item.salesLineContact)}</td>
+                  <td>${escapeHtml(item.dailyIncome)}</td>
+                  <td>${escapeHtml(item.showerLabor)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </section>
+
+        <section id="site-comparison-matrix">
+          <h2>飛田新地求人サイト・応募方法 徹底比較</h2>
+          <p>飛田新地で働く際の4つの応募ルート（料亭直営公式採用・スカウト業者・他求人サイト（飛田ジョブなど）・他業種ナイトワーク）を主要8項目で徹底比較した一覧表です。</p>
+          <table border="1">
+            <thead>
+              <tr>
+                <th>比較項目</th>
+                <th>【公式】飛田ガールズ（料亭直営）</th>
+                <th>SNS・街頭スカウト業者</th>
+                <th>他求人サイト（飛田ジョブなど）</th>
+                <th>他業種ナイトワーク（ソープ等）</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rowsHtml}
+            </tbody>
+          </table>
+          <div>
+            <h3>【警告】街頭やSNS裏垢（X/旧Twitter）のスカウト業者経由は絶対にNG！</h3>
+            <p>スカウトを通すと、あなたの売上から毎月10〜30%が「紹介料」として永久に天引きされます。また個人情報の流出や退職時の脅迫トラブルも後を絶ちません。飛田新地は<strong>料理組合公認の料亭直営公式採用（飛田ガールズ）</strong>から応募することで、仲介手数料ゼロ・売上完全50%日払いが保証されます。</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>希望や条件に合わせて働き方を選びませんか？</h2>
+          <p>未経験・高収入・週1日・短期出稼ぎ・Wワークなど、目的に合わせた詳しい条件やサポート内容もご確認いただけます。</p>
+          <p><a href="/compare">あなたに最適な働き方・目的別求人を見る</a> ／ <a href="/">飛田新地求人トップ（飛田ガールズ）</a></p>
+        </section>
+      </article>
+    </main>
+  `;
+}
+
 function buildCompareNoscript(slug?: string): string {
   if (slug) {
     const cat = TARGET_JOB_CATEGORIES.find(c => c.slug === slug);
@@ -297,7 +378,7 @@ function buildCompareNoscript(slug?: string): string {
       return `
         <header>
           <p>飛田新地求人比較＆目的別求人ガイド【公式】飛田ガールズ</p>
-          <p>24時間受付中・相談無料・完全秘密厳守</p>
+          <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ 24時間受付中・相談無料・完全秘密厳守</p>
         </header>
 
         <main>
@@ -347,26 +428,16 @@ function buildCompareNoscript(slug?: string): string {
   }
 
   // Default: Main /compare
-  const rowsHtml = SITE_COMPARISON_ROWS.map(r => `
-    <tr>
-      <th>${escapeHtml(r.criteria)}</th>
-      <td><strong>${escapeHtml(r.ourShop.text)}</strong></td>
-      <td>${escapeHtml(r.scoutAgency.text)}</td>
-      <td>${escapeHtml(r.generalPortal.text)}</td>
-      <td>${escapeHtml(r.otherNightwork.text)}</td>
-    </tr>
-  `).join('');
-
   return `
     <header>
-      <p>飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】｜未経験・高収入・Wワーク【公式】</p>
-      <p>24時間受付中・相談無料・完全秘密厳守</p>
+      <p>目的・働き方別求人ガイド｜あなたに最適な働き方が必ず見つかる。【公式】</p>
+      <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ <a href="/site-compare">飛田新地求人サイト徹底比較</a> ／ 24時間受付中・相談無料・完全秘密厳守</p>
     </header>
 
     <main>
       <article>
-        <h1>飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】｜未経験・高収入・Wワーク【公式】</h1>
-        <p class="lead">飛田新地の料亭直営公式求人「飛田ガールズ」と、街頭・SNSスカウト業者、他求人サイト（飛田ジョブなど）、一般ナイトワーク（ソープ・ヘルス等）の4者を徹底比較。安心の料理組合公認料亭直営で即日全額日払い（売上50%手渡し）・身バレ完全防止・お酒不要・仲介手数料0円の理由を詳しく解説します。</p>
+        <h1>あなたに最適な働き方が必ず見つかる。</h1>
+        <p class="lead">「未経験や週1、30代でも本当に稼げる？」「自分のペースに合う働き方は？」などの疑問を解消。仲介ピンハネのない料理組合公認の料亭直営公式採用だからこそできる、あなたの希望に合わせた安心の働き方をわかりやすく解説します。</p>
 
         <section id="objective-pros-cons">
           <h2>飛田新地で働くメリットと事前に知っておきたい注意点</h2>
@@ -383,32 +454,6 @@ function buildCompareNoscript(slug?: string): string {
               ${TOBITA_PROS_CONS.demeritsAndNotes.map(d => `<li><strong>${escapeHtml(d.title)}：</strong>${escapeHtml(d.desc)}</li>`).join('')}
             </ul>
           </div>
-        </section>
-
-        <section id="industry-comparison">
-          <h2>飛田新地 vs 他業種ナイトワーク（ソープ・デリヘル・キャバクラ）比較</h2>
-          <table border="1">
-            <thead>
-              <tr>
-                <th>業種・形態</th>
-                <th>接客時間</th>
-                <th>お酒・営業連絡</th>
-                <th>日給相場・支払い</th>
-                <th>身体への負担・入浴</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${INDUSTRY_COMPARISONS.map(item => `
-                <tr>
-                  <td><strong>${escapeHtml(item.industry)}</strong><br><small>${escapeHtml(item.workStyle)}</small></td>
-                  <td>${escapeHtml(item.timePerCustomer)}</td>
-                  <td>お酒: ${escapeHtml(item.alcohol)}<br>営業LINE: ${escapeHtml(item.salesLineContact)}</td>
-                  <td>${escapeHtml(item.dailyIncome)}</td>
-                  <td>${escapeHtml(item.showerLabor)}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
         </section>
 
         <section id="speakable-stats">
@@ -440,25 +485,6 @@ function buildCompareNoscript(slug?: string): string {
               </ul>
             </article>
           `).join('')}
-        </section>
-
-        <section>
-          <h2>求人サイト・応募方法の4者徹底比較表</h2>
-          <p>飛田新地で働く際の4つの応募ルート（料亭直営公式採用・スカウト業者・他求人サイト（飛田ジョブなど）・他業種ナイトワーク）を主要8項目で徹底比較した一覧表です。</p>
-          <table border="1">
-            <thead>
-              <tr>
-                <th>比較項目</th>
-                <th>【公式】飛田ガールズ<br>（料亭直営採用）</th>
-                <th>街頭・SNSスカウト業者<br>（非公認仲介）</th>
-                <th>他求人サイト<br>（飛田ジョブなど）</th>
-                <th>他業種ナイトワーク<br>（ソープ・ヘルス等）</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${rowsHtml}
-            </tbody>
-          </table>
         </section>
 
         <section id="workstyle-diagnostic">
@@ -686,7 +712,7 @@ function buildFaqNoscript(categorySlug?: string): string {
     return `
       <header>
         <p>【${escapeHtml(cat.label)}】飛田新地求人のよくある質問（全${items.length}問）｜飛田ガールズ</p>
-        <p>更新日：${escapeHtml(FAQ_LAST_UPDATED)} ／ 24時間LINE相談受付中</p>
+        <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ 更新日：${escapeHtml(FAQ_LAST_UPDATED)} ／ 24時間LINE相談受付中</p>
       </header>
       <main>
         <article>
@@ -737,7 +763,7 @@ function buildFaqNoscript(categorySlug?: string): string {
   return `
     <header>
       <p>飛田新地求人のよくある質問｜仕事内容・給料・応募条件をQ&amp;Aで解説</p>
-      <p>全${FAQ_100_LIST.length}問・12カテゴリー整理 ／ 最終更新日：${escapeHtml(FAQ_LAST_UPDATED)}</p>
+      <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ 全${FAQ_100_LIST.length}問・12カテゴリー整理 ／ 最終更新日：${escapeHtml(FAQ_LAST_UPDATED)}</p>
     </header>
     <main>
       <article>
@@ -780,7 +806,7 @@ function buildGlossaryNoscript(): string {
   return `
     <header>
       <p>飛田新地 用語集・用語辞典｜上がり框・仲居・清拭・通り別の意味を徹底解説【公式】</p>
-      <p>料亭直営公式採用ポータル「飛田ガールズ」</p>
+      <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ 料亭直営公式採用ポータル</p>
     </header>
     <main>
       <article>
@@ -805,7 +831,7 @@ function buildAboutNoscript(): string {
   return `
     <header>
       <p>飛田ガールズについて｜運営者情報・料亭直営体制・安心の情報発信について【公式】</p>
-      <p>24時間受付中・相談無料・完全秘密厳守</p>
+      <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ 24時間受付中・相談無料・完全秘密厳守</p>
     </header>
     <main>
       <article>
@@ -869,7 +895,7 @@ function buildBlogIndexNoscript(articles: any[] = []): string {
   return `
     <header>
       <p>飛田新地お仕事コラム・給与・面接ガイド一覧｜飛田ガールズ【公式】</p>
-      <p>24時間受付中・相談無料・完全秘密厳守</p>
+      <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ 24時間受付中・相談無料・完全秘密厳守</p>
     </header>
     <main>
       <article>
@@ -902,7 +928,7 @@ function buildBlogArticleNoscript(article: any): string {
   return `
     <header>
       <p>飛田新地求人サイト「飛田ガールズ」</p>
-      <p><a href="/blog">お仕事コラム一覧に戻る</a></p>
+      <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ <a href="/blog">お仕事コラム一覧に戻る</a></p>
     </header>
     <main>
       <article>
@@ -977,7 +1003,7 @@ function buildTopicNoscript(topic: string): string {
   return `
     <header>
       <p>飛田新地求人【公式】飛田ガールズ 専門解説ガイド</p>
-      <p>24時間受付中・相談無料・完全秘密厳守</p>
+      <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ 24時間受付中・相談無料・完全秘密厳守</p>
     </header>
 
     <main>
@@ -1147,7 +1173,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
                 {
                   "@type": "ListItem",
                   "position": 1,
-                  "name": "トップ",
+                  "name": "飛田新地求人トップ",
                   "item": "https://tobitashinchi-recruit.com/"
                 },
                 {
@@ -1245,7 +1271,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
           '@type': 'BreadcrumbList',
           '@id': 'https://tobitashinchi-recruit.com/blog#breadcrumb',
           'itemListElement': [
-            { '@type': 'ListItem', 'position': 1, 'name': 'トップ', 'item': 'https://tobitashinchi-recruit.com/' },
+            { '@type': 'ListItem', 'position': 1, 'name': '飛田新地求人トップ', 'item': 'https://tobitashinchi-recruit.com/' },
             { '@type': 'ListItem', 'position': 2, 'name': 'お仕事コラム', 'item': 'https://tobitashinchi-recruit.com/blog' }
           ]
         },
@@ -1389,9 +1415,78 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
         }
       ]
     }, null, 2);
+  } else if (cleanPath === '/site-compare' || cleanPath === '/site-compare/' || cleanPath === '/site-comparison' || cleanPath === '/site-comparison/') {
+    title = '飛田新地求人サイト徹底比較｜料亭直営・スカウト・他業種との違い【公式】';
+    description = '飛田新地料亭直営公式求人「飛田ガールズ」と街頭・SNSスカウト業者、他求人サイト、他業種ナイトワーク（ソープ・デリヘル・キャバクラ）を報酬・日払い・お酒・身バレ対策で徹底比較。';
+    canonicalUrl = 'https://tobitashinchi-recruit.com/site-compare';
+    ogImageUrl = DEFAULT_IMAGE;
+    ogImageAlt = '飛田新地求人サイト徹底比較';
+    customNoscript = buildSiteCompareNoscript();
+    customJsonLd = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebPage',
+          '@id': 'https://tobitashinchi-recruit.com/site-compare#webpage',
+          'url': 'https://tobitashinchi-recruit.com/site-compare',
+          'name': title,
+          'description': description,
+          'dateModified': FAQ_LAST_UPDATED_ISO,
+          'inLanguage': 'ja-JP',
+          'isPartOf': {
+            '@type': 'WebSite',
+            '@id': 'https://tobitashinchi-recruit.com/#website',
+            'name': '飛田ガールズ',
+            'url': 'https://tobitashinchi-recruit.com/'
+          },
+          'publisher': {
+            '@id': 'https://tobitashinchi-recruit.com/#organization'
+          },
+          'speakable': {
+            '@type': 'SpeakableSpecification',
+            'cssSelector': ['h1', '#industry-comparison', '#site-comparison-matrix']
+          }
+        },
+        {
+          '@type': 'BreadcrumbList',
+          '@id': 'https://tobitashinchi-recruit.com/site-compare#breadcrumb',
+          'itemListElement': [
+            {
+              '@type': 'ListItem',
+              'position': 1,
+              'name': '飛田新地求人トップ',
+              'item': 'https://tobitashinchi-recruit.com/'
+            },
+            {
+              '@type': 'ListItem',
+              'position': 2,
+              'name': '飛田新地求人サイト徹底比較',
+              'item': 'https://tobitashinchi-recruit.com/site-compare'
+            }
+          ]
+        },
+        {
+          '@type': 'Dataset',
+          '@id': 'https://tobitashinchi-recruit.com/site-compare#dataset',
+          'name': '飛田新地求人サイト・応募方法・他業種比較データ',
+          'description': '飛田新地の料亭直営求人と他業種（ソープ・デリヘル・キャバクラ）・他応募ルート（スカウト・他求人サイト）について、接客時間・日給目安・お酒や営業連絡の有無・身バレ対策を比較したデータです。',
+          'url': 'https://tobitashinchi-recruit.com/site-compare',
+          'dateModified': FAQ_LAST_UPDATED_ISO,
+          'inLanguage': 'ja-JP',
+          'isAccessibleForFree': true,
+          'keywords': ['飛田新地求人サイト徹底比較', '他業種比較', '応募方法', 'スカウト注意', '料亭直営'],
+          'creator': {
+            '@type': 'Organization',
+            '@id': 'https://tobitashinchi-recruit.com/#organization',
+            'name': '飛田ガールズ（料亭直営求人・女性採用サポート）',
+            'url': 'https://tobitashinchi-recruit.com/'
+          }
+        }
+      ]
+    }, null, 2);
   } else if (cleanPath === '/compare' || cleanPath === '/compare/') {
-    title = '飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】｜未経験・高収入・Wワーク【公式】';
-    description = '飛田新地料亭直営公式求人と街頭スカウト業者・他求人サイト（飛田ジョブなど）の4者徹底比較。安心の料亭直営で即日全額日払い・身バレ完全防止。';
+    title = '目的・働き方別求人ガイド｜あなたに最適な働き方が必ず見つかる。【公式】';
+    description = '「未経験や週1、30代でも稼げる？」の疑問を解消。料亭直営の条件・メリットデメリット・ターゲット別の働き方・給料計算・安心サポートをわかりやすく解説。';
     canonicalUrl = 'https://tobitashinchi-recruit.com/compare';
     ogImageUrl = DEFAULT_IMAGE;
     customNoscript = buildCompareNoscript();
@@ -1402,8 +1497,8 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
           '@type': 'WebPage',
           '@id': 'https://tobitashinchi-recruit.com/compare#webpage',
           'url': 'https://tobitashinchi-recruit.com/compare',
-          'name': '飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】｜未経験・高収入・Wワーク【公式】',
-          'description': '飛田新地料亭直営公式求人と街頭スカウト業者・他求人サイト（飛田ジョブなど）の4者徹底比較。安心の料亭直営で即日全額日払い・身バレ完全防止。',
+          'name': '目的・働き方別求人ガイド｜あなたに最適な働き方が必ず見つかる。【公式】',
+          'description': '「未経験や週1、30代でも稼げる？」の疑問を解消。料亭直営の条件・メリットデメリット・ターゲット別の働き方・給料計算・安心サポートをわかりやすく解説。',
           'dateModified': FAQ_LAST_UPDATED_ISO,
           'inLanguage': 'ja-JP',
           'isPartOf': {
@@ -1432,21 +1527,22 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
           }
         },
         {
-          '@type': 'Dataset',
-          '@id': 'https://tobitashinchi-recruit.com/compare#dataset',
-          'name': '飛田新地の求人条件・他業種との違い比較データ',
-          'description': '飛田新地の料亭直営求人と他業種・他応募ルートについて、給与バック率、全額日払いの有無、お酒・ノルマの有無、身バレへの配慮などをまとめた比較データです。',
-          'url': 'https://tobitashinchi-recruit.com/compare',
-          'dateModified': FAQ_LAST_UPDATED_ISO,
-          'inLanguage': 'ja-JP',
-          'isAccessibleForFree': true,
-          'keywords': ['飛田新地', '求人比較', '給料・日払い', '未経験', '身バレ対策'],
-          'creator': {
-            '@type': 'Organization',
-            '@id': 'https://tobitashinchi-recruit.com/#organization',
-            'name': '飛田ガールズ（料亭直営求人・女性採用サポート）',
-            'url': 'https://tobitashinchi-recruit.com/'
-          }
+          '@type': 'BreadcrumbList',
+          '@id': 'https://tobitashinchi-recruit.com/compare#breadcrumb',
+          'itemListElement': [
+            {
+              '@type': 'ListItem',
+              'position': 1,
+              'name': '飛田新地求人トップ',
+              'item': 'https://tobitashinchi-recruit.com/'
+            },
+            {
+              '@type': 'ListItem',
+              'position': 2,
+              'name': '目的・働き方別求人ガイド',
+              'item': 'https://tobitashinchi-recruit.com/compare'
+            }
+          ]
         },
         {
           '@type': 'FAQPage',
@@ -1772,7 +1868,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
             {
               '@type': 'ListItem',
               'position': 1,
-              'name': 'トップ',
+              'name': '飛田新地求人トップ',
               'item': 'https://tobitashinchi-recruit.com/'
             },
             {

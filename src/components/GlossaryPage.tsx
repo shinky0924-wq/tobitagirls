@@ -130,7 +130,7 @@ export default function GlossaryPage({ onNavigateHome, onCtaclick }: GlossaryPag
             }} 
             className="hover:text-secondary underline cursor-pointer"
           >
-            TOP
+            飛田新地求人トップ（飛田ガールズ）
           </a>
           <span>/</span>
           <span className="text-zinc-800 font-bold">飛田新地 用語集</span>
@@ -293,7 +293,7 @@ export default function GlossaryPage({ onNavigateHome, onCtaclick }: GlossaryPag
               }}
               className="w-full sm:w-auto px-6 py-3 rounded-full bg-white/20 text-white font-bold text-sm hover:bg-white/30 transition-all cursor-pointer inline-flex items-center justify-center"
             >
-              トップページに戻る
+              飛田新地求人トップ（飛田ガールズ）へ
             </a>
           </div>
         </div>

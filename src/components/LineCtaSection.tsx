@@ -21,10 +21,10 @@ export default function LineCtaSection() {
               まずは気軽に質問・相談
             </span>
             
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] leading-snug">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] leading-snug">
               応募するか迷っている方も、<br className="hidden sm:inline" />
               まずはお気軽にご相談ください
-            </h3>
+            </h2>
             
             <p className="text-xs sm:text-sm text-[#66545A] leading-relaxed">
               「未経験だけど自分にできる？」「今月だけ少し稼ぎたい」「身バレ対策を詳しく知りたい」など、どんな些細な疑問やご相談も大歓迎です。女性スタッフが親身に対応いたします。

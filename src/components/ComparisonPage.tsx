@@ -10,7 +10,6 @@ import {
   TARGET_JOB_CATEGORIES, 
   TargetJobCategory,
   ComparisonRow,
-  INDUSTRY_COMPARISONS,
   TOBITA_PROS_CONS
 } from '../compareData';
 import { CONSULTANT_AVATAR_URL } from '../data';
@@ -126,6 +125,7 @@ interface ComparisonPageProps {
   onInjectedScroll?: (message: string) => void;
   initialCategorySlug?: string | null;
   onSelectCategorySlug?: (slug: string) => void;
+  onNavigateSiteCompare?: () => void;
 }
 
 export default function ComparisonPage({
@@ -135,7 +135,8 @@ export default function ComparisonPage({
   onCtaclick,
   onInjectedScroll,
   initialCategorySlug,
-  onSelectCategorySlug
+  onSelectCategorySlug,
+  onNavigateSiteCompare
 }: ComparisonPageProps) {
   const [selectedTargetSlug, setSelectedTargetSlug] = useState<string>(
     initialCategorySlug || 'all'
@@ -181,8 +182,8 @@ export default function ComparisonPage({
 
   // Dynamically update document title, description and canonical URL based on selected category
   useEffect(() => {
-    let title = '飛田新地求人サイト比較＆目的・属性別求人ガイド【2026年最新】｜飛田ガールズ';
-    let description = '飛田新地料亭直営公式求人と街頭スカウト業者・他求人サイト（飛田ジョブなど）の4者徹底比較。安心の料亭直営で即日全額日払い・身バレ完全防止。';
+    let title = '目的・働き方別求人ガイド｜あなたに最適な働き方が必ず見つかる【飛田ガールズ】';
+    let description = '未経験・高収入・週1日・短期出稼ぎ・寮付き・Wワーク・年齢別など、あなたの希望に合う飛田新地の働き方と条件を分かりやすくご案内します。';
     let canonicalUrl = 'https://tobitashinchi-recruit.com/compare';
 
     if (selectedTargetSlug && selectedTargetSlug !== 'all') {
@@ -289,10 +290,10 @@ export default function ComparisonPage({
         {
           '@type': 'WebPage',
           '@id': 'https://tobitashinchi-recruit.com/compare',
-          'name': '飛田新地求人サイト比較＆目的別求人ガイド【2026年最新】',
-          'description': '飛田新地の料亭直営求人とスカウト業者・他求人サイト（飛田ジョブなど）の徹底比較。未経験、高収入、週1日、短期出稼ぎ、寮付き、Wワーク、20代、30代別の最適求人ガイド。',
+          'name': '目的・働き方別求人ガイド｜あなたに最適な働き方が必ず見つかる',
+          'description': '未経験、高収入、週1日、短期出稼ぎ、寮付き、Wワーク、20代・30代・40代別の最適求人ガイド。',
           'url': 'https://tobitashinchi-recruit.com/compare',
-          'dateModified': '2026-11-14',
+          'dateModified': '2026-11-15',
           'inLanguage': 'ja-JP',
           'mainEntity': {
             '@type': 'ItemList',
@@ -416,7 +417,7 @@ export default function ComparisonPage({
             }}
             className="hover:text-secondary transition-colors underline cursor-pointer"
           >
-            トップ（求人総合）
+            飛田新地求人トップ（飛田ガールズ）
           </a>
           <span>/</span>
           {currentCategory ? (
@@ -435,7 +436,7 @@ export default function ComparisonPage({
               <span className="text-zinc-800 font-bold">{currentCategory.title}</span>
             </>
           ) : (
-            <span className="text-zinc-800 font-bold">飛田新地求人サイト比較＆目的別求人</span>
+            <span className="text-zinc-800 font-bold">目的・働き方別求人ガイド</span>
           )}
         </nav>
 
@@ -933,21 +934,20 @@ export default function ComparisonPage({
             <header className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
               <div className="inline-flex items-center gap-2 bg-rose-100 text-secondary text-xs sm:text-sm font-black px-4 py-1.5 rounded-full mb-4 shadow-xs">
                 <LucideIcon name="Scale" size={16} />
-                <span>2026年最新版｜飛田新地求人サイト比較＆目的別ガイド</span>
+                <span>2026年最新版｜目的・働き方別求人ガイド</span>
               </div>
 
               <h1 className="font-display font-extrabold text-2xl sm:text-3xl md:text-4xl text-on-surface leading-tight mb-4">
-                飛田新地求人サイト徹底比較<br />
-                <span className="text-secondary">あなたに最適な働き方</span>が必ず見つかる。
+                あなたに最適な働き方が必ず見つかる。
               </h1>
 
               <p className="font-sans text-xs sm:text-sm md:text-base text-zinc-600 leading-relaxed max-w-2xl mx-auto mb-6">
-                「スカウト業者と何が違うの？」「未経験や週1、30代でも本当に稼げる？」などの疑問を解消。
-                仲介ピンハネのない料理組合公認の料亭直営公式採用だからこそできる、あなたの希望に合わせた安心の働き方をわかりやすく比較・解説します。
+                「未経験や週1、30代でも本当に稼げる？」「自分のペースに合う働き方は？」などの疑問を解消。
+                仲介ピンハネのない料理組合公認の料亭直営公式採用だからこそできる、あなたの希望に合わせた安心の働き方をわかりやすく解説します。
               </p>
 
               {/* Key Trust Signals */}
-              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[11px] sm:text-xs">
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[11px] sm:text-xs mb-4">
                 <span className="bg-white border border-rose-200 text-zinc-700 px-3 py-1 rounded-full font-bold shadow-2xs flex items-center gap-1">
                   <LucideIcon name="ShieldCheck" size={14} className="text-secondary" />
                   料理組合公認・料亭直営
@@ -964,6 +964,23 @@ export default function ComparisonPage({
                   <LucideIcon name="Ban" size={14} className="text-secondary" />
                   お酒・連絡先交換一切不要
                 </span>
+              </div>
+
+              <div>
+                <a
+                  href="/site-compare"
+                  onClick={(e) => {
+                    if (onNavigateSiteCompare) {
+                      e.preventDefault();
+                      onNavigateSiteCompare();
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-secondary hover:underline"
+                >
+                  <span>他業種や応募方法の違いは「飛田新地求人サイト徹底比較」へ</span>
+                  <LucideIcon name="ChevronRight" size={14} />
+                </a>
               </div>
             </header>
 
@@ -1039,185 +1056,8 @@ export default function ComparisonPage({
               </div>
             </section>
 
-            {/* INDUSTRY COMPARISON: 飛田新地 vs 他ナイトワーク（ソープ・デリヘル・キャバクラ） */}
-            <section className="mb-16 md:mb-20" id="industry-comparison">
-              <div className="flex items-center justify-between gap-3 mb-6">
-                <div>
-                  <div className="text-xs font-extrabold text-secondary tracking-wider mb-1 flex items-center gap-1.5">
-                    <LucideIcon name="Layers" size={14} />
-                    <span>INDUSTRY COMPARISON</span>
-                  </div>
-                  <h2 className="font-display font-black text-xl sm:text-2xl md:text-3xl text-on-surface">
-                    飛田新地 vs 他業種（ソープ・デリヘル・キャバクラ）比較
-                  </h2>
-                </div>
-                <span className="hidden sm:inline-block text-xs bg-rose-50 text-secondary border border-rose-200 px-3 py-1 rounded-full font-semibold">
-                  ※横スクロールで全体確認
-                </span>
-              </div>
-
-              <div className="bg-white rounded-3xl border border-rose-100 shadow-md overflow-hidden">
-                <div className="overflow-x-auto scrollbar-thin">
-                  <table className="w-full text-left border-collapse min-w-[850px]">
-                    <thead>
-                      <tr className="border-b border-rose-100 bg-rose-50/40">
-                        <th className="p-4 text-xs font-bold text-zinc-600 w-[180px]">業種・お仕事形態</th>
-                        <th className="p-4 text-xs font-bold text-zinc-600">1回の接客時間</th>
-                        <th className="p-4 text-xs font-bold text-zinc-600">お酒・営業連絡</th>
-                        <th className="p-4 text-xs font-bold text-zinc-600">日給目安・支払い</th>
-                        <th className="p-4 text-xs font-bold text-zinc-600">身体への負担・入浴</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-rose-50 text-xs sm:text-sm">
-                      {INDUSTRY_COMPARISONS.map((item, i) => {
-                        const isTobita = i === 0;
-                        return (
-                          <tr key={i} className={isTobita ? 'bg-rose-50/30' : 'hover:bg-zinc-50/60'}>
-                            <td className="p-4 font-bold text-zinc-900">
-                              <div className="flex items-center gap-1.5 mb-1">
-                                <span>{item.industry}</span>
-                                {isTobita && (
-                                  <span className="text-[10px] bg-secondary text-white px-2 py-0.5 rounded-full font-bold">
-                                    当サイト
-                                  </span>
-                                )}
-                              </div>
-                              <span className="text-[11px] text-zinc-500 font-normal block">
-                                {item.workStyle}
-                              </span>
-                            </td>
-                            <td className="p-4 text-zinc-700">
-                              <span className={`font-bold ${isTobita ? 'text-secondary' : ''}`}>
-                                {item.timePerCustomer}
-                              </span>
-                            </td>
-                            <td className="p-4 text-zinc-700">
-                              <div>お酒: <span className="font-semibold">{item.alcohol}</span></div>
-                              <div className="mt-0.5 text-zinc-500 text-xs">営業LINE: {item.salesLineContact}</div>
-                            </td>
-                            <td className="p-4 text-zinc-700">
-                              <span className="font-bold text-zinc-900 block">{item.dailyIncome}</span>
-                            </td>
-                            <td className="p-4 text-zinc-700">
-                              <span className="leading-relaxed">{item.showerLabor}</span>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </section>
-
             {/* OBJECTIVE STATS BENCHMARK & DECISION MATRIX */}
             <FactBenchmarkSection onCtaclick={onCtaclick} />
-
-            {/* SECTION 1: 飛田新地求人サイト・応募方法 4者徹底比較表 */}
-            <section className="mb-16 md:mb-24" id="site-comparison-matrix">
-              <div className="flex items-center justify-between gap-3 mb-6">
-                <div>
-                  <div className="text-xs font-extrabold text-secondary tracking-wider mb-1 flex items-center gap-1.5">
-                    <LucideIcon name="Table" size={14} />
-                    <span>応募方法の違いを比較</span>
-                  </div>
-                  <h2 className="font-display font-black text-xl sm:text-2xl md:text-3xl text-on-surface">
-                    飛田新地求人サイト・応募方法 徹底比較
-                  </h2>
-                </div>
-                <span className="hidden sm:inline-block text-xs bg-rose-50 text-secondary border border-rose-200 px-3 py-1 rounded-full font-semibold">
-                  ※横スクロールで全体確認
-                </span>
-              </div>
-
-              <div className="bg-white rounded-3xl border border-rose-100 shadow-md overflow-hidden">
-                <div className="overflow-x-auto scrollbar-thin">
-                  <table className="w-full text-left border-collapse min-w-[900px]">
-                    <thead>
-                      <tr className="border-b border-rose-100">
-                        <th className="p-4 bg-zinc-50 font-bold text-xs sm:text-sm text-zinc-600 w-[16%] min-w-[130px] sticky left-0 z-10 border-r border-rose-100/60">
-                          比較項目
-                        </th>
-                        <th className="p-4 bg-rose-500 text-white font-extrabold text-xs sm:text-sm w-[28%] min-w-[220px] shadow-xs border-r border-rose-600/40">
-                          <div className="flex items-center gap-1.5">
-                            <LucideIcon name="Award" size={16} className="text-yellow-300 flex-shrink-0" />
-                            <span>【公式】飛田ガールズ（料亭直営）</span>
-                          </div>
-                        </th>
-                        <th className="p-4 bg-zinc-100 font-bold text-xs sm:text-sm text-zinc-700 w-[18.66%] min-w-[180px] border-r border-zinc-200/60">
-                          SNS・街頭スカウト業者
-                        </th>
-                        <th className="p-4 bg-zinc-50 font-bold text-xs sm:text-sm text-zinc-700 w-[18.66%] min-w-[180px] border-r border-zinc-200/60">
-                          他求人サイト（飛田ジョブなど）
-                        </th>
-                        <th className="p-4 bg-zinc-100 font-bold text-xs sm:text-sm text-zinc-700 w-[18.66%] min-w-[180px]">
-                          他業種ナイトワーク（ソープ等）
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-rose-50 text-xs sm:text-sm">
-                      {SITE_COMPARISON_ROWS.map((row, idx) => (
-                        <tr 
-                          key={row.criteria} 
-                          className={idx % 2 === 0 ? 'bg-white hover:bg-rose-50/30' : 'bg-zinc-50/40 hover:bg-rose-50/30'}
-                        >
-                          <td className="p-4 font-bold text-zinc-800 bg-inherit sticky left-0 z-10 border-r border-rose-100/60 min-w-[130px]">
-                            {row.criteria}
-                          </td>
-                          <td className="p-4 bg-rose-50/40 border-r border-rose-200/60 font-semibold text-[#3c2a2e] min-w-[220px]">
-                            <div className="mb-1.5">
-                              {renderGradeBadge(row.ourShop.grade)}
-                            </div>
-                            <p className="leading-snug font-medium text-xs sm:text-sm">
-                              {row.ourShop.text}
-                            </p>
-                          </td>
-                          <td className="p-4 text-zinc-600 border-r border-zinc-200/60 min-w-[180px]">
-                            <div className="mb-1.5">
-                              {renderGradeBadge(row.scoutAgency.grade)}
-                            </div>
-                            <p className="leading-snug text-xs sm:text-sm text-zinc-600">
-                              {row.scoutAgency.text}
-                            </p>
-                          </td>
-                          <td className="p-4 text-zinc-600 border-r border-zinc-200/60 min-w-[180px]">
-                            <div className="mb-1.5">
-                              {renderGradeBadge(row.generalPortal.grade)}
-                            </div>
-                            <p className="leading-snug text-xs sm:text-sm text-zinc-600">
-                              {row.generalPortal.text}
-                            </p>
-                          </td>
-                          <td className="p-4 text-zinc-600 min-w-[180px]">
-                            <div className="mb-1.5">
-                              {renderGradeBadge(row.otherNightwork.grade)}
-                            </div>
-                            <p className="leading-snug text-xs sm:text-sm text-zinc-600">
-                              {row.otherNightwork.text}
-                            </p>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-
-                {/* Warning Callout Box for Scouts */}
-                <div className="p-5 sm:p-6 bg-gradient-to-r from-amber-50 to-rose-50 border-t border-rose-100 flex flex-col sm:flex-row items-start sm:items-center gap-4 text-xs sm:text-sm">
-                  <div className="w-10 h-10 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center flex-shrink-0">
-                    <LucideIcon name="AlertTriangle" size={20} />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-zinc-900 mb-1">
-                      【警告】街頭やSNS裏垢（X/旧Twitter）のスカウト業者経由は絶対にNG！
-                    </h3>
-                    <p className="text-zinc-600 text-xs leading-relaxed">
-                      スカウトを通すと、あなたの売上から毎月10〜30%が「紹介料」として永久に天引きされます。また個人情報の流出や退職時の脅迫トラブルも後を絶ちません。飛田新地は**料理組合公認の料亭直営公式採用（飛田ガールズ）**から応募することで、仲介手数料ゼロ・売上完全50%日払いが保証されます。
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
 
             {/* ========================================================
                 働き方診断：「結局、自分にはどれが合ってる？」

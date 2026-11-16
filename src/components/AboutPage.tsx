@@ -56,7 +56,7 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
             className="hover:text-rose-600 transition-colors flex items-center gap-1 cursor-pointer"
           >
             <LucideIcon name="Home" size={13} />
-            <span>ホーム</span>
+            <span>飛田新地求人トップ（飛田ガールズ）</span>
           </a>
           <span>/</span>
           <span className="text-zinc-800 font-bold">当店について（料亭案内）</span>
