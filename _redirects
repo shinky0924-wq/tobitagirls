@@ -9,5 +9,13 @@
 /target-jobs /compare 301
 /categories /compare 301
 /company /about 301
+/dorm /dekasegi 301
+/compare/inexperienced /compare/beginner 301
+/compare/weekly-1 /compare/one-day-week 301
+/compare/dormitory /compare/short-term 301
+/compare/double-work /compare/office-worker 301
+/compare/age-20s /compare/20s 301
+/compare/age-30s /compare/30s 301
+/compare/age-40s /compare/40s 301
 /api/*  /api/:splat  200
 /*      /index.html  200

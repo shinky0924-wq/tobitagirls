@@ -45,7 +45,7 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
           id="hero-tagline"
         >
           <span className="relative flex h-2 w-2 inline-block mr-2 rounded-full bg-secondary animate-ping align-middle" />
-          {content.tagline && !content.tagline.includes('店舗直営公式求人') ? content.tagline : '24時間受付中 ・ 相談だけでもOK'}
+          {content.tagline && !content.tagline.includes('店舗直営公式求人') && !content.tagline.includes('24時間受付中') ? content.tagline : '飛田新地の求人案内｜当店の公式採用情報'}
         </motion.div>
 
         {/* Main Display Title */}
@@ -56,8 +56,8 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
           transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
           id="hero-title"
         >
-          <span className="block text-on-surface">飛田新地の求人案内</span>
-          <span className="block text-secondary">働くことを考えている女性へ。</span>
+          <span className="block text-on-surface">飛田新地で働くことを</span>
+          <span className="block text-secondary">考えている女性へ。</span>
         </motion.h1>
 
         {/* Sub description */}

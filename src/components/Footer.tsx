@@ -38,27 +38,27 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
   }, []);
 
   const navLinks = [
-    { name: '飛田新地求人サイト徹底比較', action: 'site-compare', target: '/site-compare' },
-    { name: '目的・働き方別求人ガイド', action: 'compare', target: '/compare' },
-    { name: '求人総合ガイド', action: 'section', target: '/#hub' },
     { name: 'お仕事コラム一覧', action: 'blog', target: '/blog' },
-    { name: '運営者情報・お店のご案内', action: 'about', target: '/about' },
+    { name: '求人総合ガイド', action: 'section', target: '/#hub' },
+    { name: '目的・働き方別求人ガイド', action: 'compare', target: '/compare' },
     { name: '選ばれる理由', action: 'section', target: '/#reasons' },
-    { name: 'よくある質問 FAQ（全119問）', action: 'faq', target: '/faq' },
     { name: '女性の声・体験談', action: 'section', target: '/#voice' },
+    { name: 'よくある質問 FAQ（全119問）', action: 'faq', target: '/faq' },
     { name: '応募・面接の流れ', action: 'section', target: '/#flow' },
+    { name: '飛田新地求人サイト徹底比較', action: 'site-compare', target: '/site-compare' },
+    { name: '運営者情報・お店のご案内', action: 'about', target: '/about' },
   ];
 
   const targetCategoryLinks = [
-    { name: '未経験向け求人', slug: 'inexperienced' },
-    { name: '高収入求人（日給10万〜）', slug: 'high-income' },
-    { name: '週1日・マイペース求人', slug: 'weekly-1' },
-    { name: '短期・出稼ぎ求人（交通費支給）', slug: 'short-term' },
-    { name: '個室寮付き・即日住み込み', slug: 'dormitory' },
-    { name: 'Wワーク・副業向け（会社バレ防止）', slug: 'double-work' },
-    { name: '20代向け求人（学生・OL）', slug: 'age-20s' },
-    { name: '30代・オトナ女子向け求人', slug: 'age-30s' },
-    { name: '40代・ミセス向け求人', slug: 'age-40s' },
+    { name: '未経験', slug: 'beginner' },
+    { name: '経験者・移籍', slug: 'experienced' },
+    { name: 'ガッツリ高収入', slug: 'high-income' },
+    { name: '週1日〜', slug: 'one-day-week' },
+    { name: '出稼ぎ', slug: 'short-term' },
+    { name: 'Wワーク', slug: 'office-worker' },
+    { name: '20代', slug: '20s' },
+    { name: '30代', slug: '30s' },
+    { name: '40代', slug: '40s' },
   ];
 
   const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>, link: typeof navLinks[0]) => {
@@ -90,12 +90,14 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
     e.preventDefault();
     if (onNavigateCompare) {
       onNavigateCompare(slug);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       if (typeof window !== 'undefined') {
         const targetUrl = slug ? `/compare/${slug}` : '/compare';
         window.history.pushState({}, '', targetUrl);
       }
       onChangeTab('compare');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -153,17 +155,17 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
             </ul>
           </div>
 
-          {/* Col 3: 目的・属性別求人比較 */}
+          {/* Col 3: 自分に合うものはどれ？ */}
           <div className="space-y-4">
             <h2 className="font-display font-bold text-on-surface text-sm uppercase tracking-wider">
               <a
                 href="/compare"
                 onClick={(e) => handleCategoryLinkClick(e)}
                 className="hover:text-secondary flex items-center gap-1.5 transition-colors group cursor-pointer"
-                title="目的・属性別求人ガイドへ"
+                title="自分に合うものはどれ？｜働き方・求人比較ガイドへ"
               >
                 <LucideIcon name="Target" size={15} className="text-secondary" />
-                <span className="group-hover:underline">目的・属性別求人</span>
+                <span className="group-hover:underline">自分に合うものはどれ？</span>
                 <LucideIcon name="ChevronRight" size={13} className="text-zinc-400 group-hover:text-secondary transition-transform group-hover:translate-x-0.5" />
               </a>
             </h2>

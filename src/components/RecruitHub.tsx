@@ -614,62 +614,67 @@ export default function RecruitHub({
               </div>
 
               {/* 2. メインタイトル */}
-              <h3 className="font-display font-bold text-[21px] sm:text-[23px] lg:text-[26px] xl:text-[28px] text-[#49313B] leading-snug tracking-tight mb-2.5 break-keep">
-                あなたに合う働き方、見つけませんか？
+              <h3 className="font-display font-bold text-[21px] sm:text-[23px] lg:text-[26px] xl:text-[28px] text-[#49313B] leading-snug tracking-tight mb-3 break-keep">
+                あなたに合った働き方を、一緒に考えませんか？
               </h3>
 
               {/* 3. 説明文 */}
-              <p className="font-sans text-[13.5px] sm:text-[14px] lg:text-[15px] text-[#755C66] leading-relaxed mb-5 max-w-3xl">
-                未経験・収入・勤務日数・寮など、希望条件に合わせて求人情報や働き方を比較できます。自分に合った選択肢を見つけるための情報をまとめました。
-              </p>
+              <div className="font-sans text-[13.5px] sm:text-[14px] lg:text-[15px] text-[#755C66] leading-relaxed mb-5 max-w-3xl space-y-2">
+                <p>
+                  未経験から始めたい方、これまでの経験を活かしたい方、がっつり収入を増やしたい方、週1日から自分のペースで働きたい方。
+                </p>
+                <p>
+                  当店では、一人ひとりの経験や希望、生活スタイルに合わせて働き方を一緒に考えてます。
+                </p>
+              </div>
 
               {/* 4. 条件タグ (完全ピル型・白背景・薄ピンク境界線・濃いピンク文字・ホバー時変化) */}
               <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
                 {[
                   {
                     label: '未経験',
-                    href: '/compare/inexperienced',
-                    onClick: () => onNavigateCompare ? onNavigateCompare('inexperienced') : onScrollToSection('compare')
+                    href: '/compare/beginner',
+                    onClick: () => onNavigateCompare ? onNavigateCompare('beginner') : onScrollToSection('compare')
                   },
                   {
-                    label: '経験者',
-                    href: '/experienced',
-                    onClick: () => onNavigateTopic ? onNavigateTopic('experienced') : (onNavigateCompare ? onNavigateCompare('high-income') : onScrollToSection('compare'))
+                    label: '経験者・移籍',
+                    href: '/compare/experienced',
+                    onClick: () => onNavigateCompare ? onNavigateCompare('experienced') : onScrollToSection('compare')
                   },
                   {
-                    label: '1日8~10万高収入',
+                    label: '高収入を目指したい',
                     href: '/compare/high-income',
                     onClick: () => onNavigateCompare ? onNavigateCompare('high-income') : onScrollToSection('compare')
                   },
                   {
-                    label: '週1日から',
-                    href: '/compare/weekly-1',
-                    onClick: () => onNavigateCompare ? onNavigateCompare('weekly-1') : onScrollToSection('compare')
+                    label: '週1日〜',
+                    href: '/compare/one-day-week',
+                    onClick: () => onNavigateCompare ? onNavigateCompare('one-day-week') : onScrollToSection('compare')
                   },
                   {
-                    label: '出稼ぎ',
-                    href: '/compare/dormitory',
-                    onClick: () => onNavigateCompare ? onNavigateCompare('dormitory') : onScrollToSection('compare')
+                    label: '短期・出稼ぎ',
+                    href: '/compare/short-term',
+                    onClick: () => onNavigateCompare ? onNavigateCompare('short-term') : onScrollToSection('compare')
                   },
                   {
-                    label: '掛け持ち・Wワーク',
-                    href: '/compare/double-work',
-                    onClick: () => onNavigateCompare ? onNavigateCompare('double-work') : onScrollToSection('compare')
+                    label: '会社員（Wワーク）',
+                    href: '/compare/office-worker',
+                    onClick: () => onNavigateCompare ? onNavigateCompare('office-worker') : onScrollToSection('compare')
                   },
                   {
                     label: '20代',
-                    href: '/compare/age-20s',
-                    onClick: () => onNavigateCompare ? onNavigateCompare('age-20s') : onScrollToSection('compare')
+                    href: '/compare/20s',
+                    onClick: () => onNavigateCompare ? onNavigateCompare('20s') : onScrollToSection('compare')
                   },
                   {
                     label: '30代',
-                    href: '/compare/age-30s',
-                    onClick: () => onNavigateCompare ? onNavigateCompare('age-30s') : onScrollToSection('compare')
+                    href: '/compare/30s',
+                    onClick: () => onNavigateCompare ? onNavigateCompare('30s') : onScrollToSection('compare')
                   },
                   {
                     label: '40代',
-                    href: '/compare/age-40s',
-                    onClick: () => onNavigateCompare ? onNavigateCompare('age-40s') : onScrollToSection('compare')
+                    href: '/compare/40s',
+                    onClick: () => onNavigateCompare ? onNavigateCompare('40s') : onScrollToSection('compare')
                   },
                 ].map((tag) => (
                   <a

@@ -100,6 +100,14 @@ async function startServer() {
       '/target-jobs': '/compare',
       '/categories': '/compare',
       '/company': '/about',
+      '/dorm': '/dekasegi',
+      '/compare/inexperienced': '/compare/beginner',
+      '/compare/weekly-1': '/compare/one-day-week',
+      '/compare/dormitory': '/compare/short-term',
+      '/compare/double-work': '/compare/office-worker',
+      '/compare/age-20s': '/compare/20s',
+      '/compare/age-30s': '/compare/30s',
+      '/compare/age-40s': '/compare/40s',
     };
 
     const cleanReqPath = req.path.replace(/\/$/, '') || '/';

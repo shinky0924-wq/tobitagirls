@@ -78,9 +78,9 @@ export interface SiteContent {
 
 export const DEFAULT_SITE_CONTENT: SiteContent = {
   hero: {
-    tagline: "24時間受付中 ・ 相談だけでもOK",
-    titleLine1: "飛田新地で",
-    titleLine2: "働いてみたい女性へ。",
+    tagline: "飛田新地の求人案内｜当店の公式採用情報",
+    titleLine1: "飛田新地で働くことを",
+    titleLine2: "考えている女性へ。",
     descriptionLine1: "当店では、仕事内容や給料の仕組み、未経験から働くまでの流れ、お店選びのポイントなど、求人を探すうえで知っておきたい情報をわかりやすくまとめています。",
     descriptionLine2: "「未経験でも大丈夫？」「実際どんな仕事をするの？」「身バレや人間関係が心配……」そんな疑問や不安にも、丁寧にお答えします。",
     descriptionLine3: "まずは相談だけでもお気軽にご相談ください。",
@@ -234,7 +234,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
       {
         id: "faq-7",
         question: "Q. お酒が飲めなくても働けますか？",
-        answer: "A. はい、お酒が全く飲めなくても問題ありません！お茶やソフトドリンクでお仕事が可能です。お酒が不得意な方も多数活躍されています。"
+        answer: "A. はい、お酒が全く飲めなくても問題ありません！業務上のお酒の提供や飲酒は一切ありませんので、お酒が不得意な方も多数活躍されています。"
       },
       {
         id: "faq-8",

@@ -20,8 +20,8 @@ export default function JobDetails({ content, onCtaclickWithData, onNavigateRequ
     ? 'RECRUIT REQUIREMENTS' 
     : content.subtitle;
 
-  const infoSubtitleText = (!content?.infoSubtitle || content.infoSubtitle.includes('お店の種類や稼働条件により変動'))
-    ? '※シフトや稼働条件に応じて日給3万〜8万円以上可能です'
+  const infoSubtitleText = (!content?.infoSubtitle || content.infoSubtitle.includes('お店の種類や稼働条件により変動') || content.infoSubtitle.includes('日給3万'))
+    ? '※完全歩合制（売上50%バック・即日日払い）のため収入は時間帯・来店状況により変動します'
     : content.infoSubtitle;
 
   return (
@@ -144,7 +144,7 @@ export default function JobDetails({ content, onCtaclickWithData, onNavigateRequ
                   <h4 className="font-bold text-zinc-900 text-sm">15〜20分のおもてなしサービス</h4>
                 </div>
                 <p className="text-zinc-600 leading-relaxed text-xs">
-                  入店が決まったらお部屋（2階個室）へご案内。世間話をしながらリラックスして過ごすおもてなしサービス。お酒不要＆時間通りきっちり終了。
+                  入店が決まったらお部屋（2階個室）へご案内。約15〜20分の短時間サービスを行います。お酒の飲酒はなく、終了時間も仲居さんが管理します。
                 </p>
               </div>
               <div className="mt-3 pt-3 border-t border-rose-50 text-[11px] text-rose-700 font-bold">

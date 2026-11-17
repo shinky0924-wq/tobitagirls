@@ -1,7 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import { FAQ_100_LIST, FAQ_12_CATEGORIES, FAQ_LAST_UPDATED_ISO } from '../src/faq100Data';
-import { TARGET_JOB_CATEGORIES, INDUSTRY_COMPARISONS, SITE_COMPARISON_ROWS } from '../src/compareData';
+import { INDUSTRY_COMPARISONS, SITE_COMPARISON_ROWS } from '../src/compareData';
+import { COMPARE_CATEGORY_GROUPS, COMPARE_SUBPAGES, COMPARE_SUBPAGE_MAP } from '../src/data/compareGuides';
 import { GLOSSARY_TERMS } from '../src/glossaryData';
 
 const DOMAIN = 'https://tobitashinchi-recruit.com';
@@ -78,10 +79,10 @@ function generateRssFeed(articles: ArticleItem[]): string {
       category: 'よくある質問',
     },
     {
-      title: '飛田新地求人サイト徹底比較｜飛田ガールズ',
+      title: '飛田新地と他業種の違いを比較｜メンズエステ・ソープ・デリヘル・応募方法も解説【飛田ガールズ】',
       link: `${DOMAIN}/site-compare`,
-      description: '飛田新地 vs 他業種（ソープ・デリヘル・キャバクラ）や、料亭直営公式・スカウト・他求人サイトの応募方法の違いをわかりやすく比較しています。',
-      category: '求人サイト徹底比較',
+      description: '飛田新地とメンズエステ、ソープランド、デリヘル、キャバクラ・ラウンジの仕事内容・報酬体系・働き方の違いや、公式求人サイト・SNS・個人スカウト・求人ポータルなど応募方法の違いを比較解説しています。',
+      category: '業種・応募方法比較',
     },
     {
       title: '目的・働き方別求人ガイド｜飛田ガールズ',
@@ -226,13 +227,19 @@ WebサイトやSNSへの顔写真掲載は行わず、街全体で写真・動�
 - [お店選び・通り別の特徴](${DOMAIN}/shops) ([テキスト版](/shops.md))
 - [寮・出稼ぎ・交通費サポート](${DOMAIN}/dekasegi) ([テキスト版](/dekasegi.md))
 - [身バレ・安全・衛生対策](${DOMAIN}/safety) ([テキスト版](/safety.md))
-- [飛田新地求人サイト徹底比較（他業種・応募方法）](${DOMAIN}/site-compare) ([テキスト版](/site-compare.md))
+- [飛田新地と他業種の違いを比較（メンズエステ・ソープ・デリヘル・キャバクラ・応募方法）](${DOMAIN}/site-compare) ([テキスト版](/site-compare.md))
 - [目的・働き方別求人ガイド](${DOMAIN}/compare) ([テキスト版](/compare.md))
 - [飛田新地 用語集・用語辞典](${DOMAIN}/glossary) ([テキスト版](/glossary.md))
 - [お仕事コラム一覧（全${articleCount}記事）](${DOMAIN}/blog) ([テキスト版](/blog.md))
 
-### 目的・状況別の求人案内
-${TARGET_JOB_CATEGORIES.map((c) => `- [${c.title}](${DOMAIN}/compare/${c.slug}) ([テキスト版](/compare/${c.slug}.md))`).join('\n')}
+### 働き方・求人比較（5カテゴリー・全${COMPARE_SUBPAGES.length}ページ）
+${COMPARE_CATEGORY_GROUPS.flatMap((g) => [
+  `#### ${g.title}`,
+  ...g.slugs
+    .map((s) => COMPARE_SUBPAGE_MAP[s])
+    .filter((item): item is NonNullable<typeof item> => Boolean(item))
+    .map((item) => `- [${item.itemName}](${DOMAIN}/compare/${item.slug}) ([テキスト版](/compare/${item.slug}.md)): ${item.cardDescription}`),
+]).join('\n')}
 
 ### よくある質問（FAQ 全${faqCount}問・12カテゴリー別）
 - [FAQ総合トップ（全${faqCount}問）](${DOMAIN}/faq) ([テキスト版](/faq.md))
@@ -259,14 +266,12 @@ function generateLlmsFullTxt(articles: ArticleItem[]): string {
     return `### ${cat.number}. ${cat.label}（全${items.length}問）\nURL: ${DOMAIN}/faq/${cat.slug}\n\n${qaText}`;
   }).join('\n---\n\n');
 
-  const targetCategorySections = TARGET_JOB_CATEGORIES.map(
+  const targetCategorySections = COMPARE_SUBPAGES.map(
     (c) =>
-      `### ${c.title}\n` +
+      `### ${c.itemName}（${c.categoryTitle}）\n` +
       `- **URL**: ${DOMAIN}/compare/${c.slug}\n` +
-      `- **向いている方**: ${c.targetUser}\n` +
-      `- **日収目安**: ${c.dailyIncomeModel} / **月収目安**: ${c.monthlyIncomeModel}\n` +
-      `- **シフト例**: ${c.shiftExample}\n` +
-      `- **ポイント**: ${c.llmDirectAnswer}\n`
+      `- **概要**: ${c.cardDescription}\n` +
+      `- **ポイント**: ${c.heroLead}\n`
   ).join('\n');
 
   const glossarySection = GLOSSARY_TERMS.map(
@@ -332,7 +337,7 @@ function generateLlmsFullTxt(articles: ArticleItem[]): string {
 ---
 
 ## 4. お仕事内容と衛生ルール・1日の流れ
-- **接客スタイル**: 玄関（上がり框）で笑顔でお迎えし、2階の和室で15〜20分ほどのおもてなし接客を行います。声掛けや時間管理、お部屋の片付けは仲居さん（おばちゃん）が担当します。
+- **接客スタイル**: 玄関（上がり框）で笑顔でお迎えし、2階の個室で15〜20分ほどのおもてなし接客を行います。声掛けや時間管理、お部屋の片付けは仲居さん（おばちゃん）が担当します。
 - **衛生・安全ルール**: コンドーム着用徹底・キス禁止・お客様との連絡先交換禁止。客室内に浴槽やシャワー設備はなく、おしぼり等での清拭対応のため水回りの掃除もありません。
 - **1日の流れ**: ①私服で出勤・無料の貸出衣装に着替え → ②玄関で仲居さんと待機 → ③個室で15〜20分おもてなし → ④休憩を取りつつマイペースに勤務 → ⑤私服に戻ってその日の手取り全額を現金で受け取り退勤。
 
@@ -346,7 +351,7 @@ function generateLlmsFullTxt(articles: ArticleItem[]): string {
 
 ---
 
-## 6. 目的・状況別の働き方ガイド（全${TARGET_JOB_CATEGORIES.length}ページ）
+## 6. 働き方・状況別の比較ガイド（全${COMPARE_SUBPAGES.length}ページ）
 ${targetCategorySections}
 
 ---
@@ -385,9 +390,9 @@ ${articlesSection}
 - お店選び・通りの違い: ${DOMAIN}/shops (${DOMAIN}/shops.md)
 - 寮・出稼ぎ・交通費: ${DOMAIN}/dekasegi (${DOMAIN}/dekasegi.md)
 - 身バレ・安全対策: ${DOMAIN}/safety (${DOMAIN}/safety.md)
-- 飛田新地求人サイト徹底比較（他業種・応募方法）: ${DOMAIN}/site-compare (${DOMAIN}/site-compare.md)
+- 飛田新地と他業種の違いを比較（メンズエステ等・応募方法）: ${DOMAIN}/site-compare (${DOMAIN}/site-compare.md)
 - 目的・働き方別求人ガイド: ${DOMAIN}/compare (${DOMAIN}/compare.md)
-- 応募方法・他業種比較一覧: ${SITE_COMPARISON_ROWS.length}項目 / 他業種比較: ${INDUSTRY_COMPARISONS.length}業種 (${DOMAIN}/site-compare)
+- 応募方法比較一覧: ${SITE_COMPARISON_ROWS.length}項目 / 他業種比較: ${INDUSTRY_COMPARISONS.length}業種 (${DOMAIN}/site-compare)
 - 用語集: ${DOMAIN}/glossary (${DOMAIN}/glossary.md)
 - よくある質問: ${DOMAIN}/faq (${DOMAIN}/faq.md)
 - コラム一覧: ${DOMAIN}/blog (${DOMAIN}/blog.md)

@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { injectSeoMetadata } from '../src/seoHelper';
 import { renderRouteMarkdown } from '../src/markdownRenderer';
+import { COMPARE_SUBPAGES, LEGACY_COMPARE_SLUG_REDIRECTS } from '../src/data/compareGuides';
 
 async function runPrerender() {
   const distDir = path.join(process.cwd(), 'dist');
@@ -109,7 +110,7 @@ async function runPrerender() {
     count++;
   }
 
-  // 6. Pre-render Site Compare, Compare Main & all 9 Category pages
+  // 6. Pre-render Site Compare, Compare Main & all 27 Subpages
   const siteCompare = injectSeoMetadata(template, '/site-compare');
   writeFileEnsureDir(path.join(distDir, 'site-compare', 'index.html'), siteCompare.html);
   writeFileEnsureDir(path.join(distDir, 'site-compare.html'), siteCompare.html);
@@ -122,10 +123,7 @@ async function runPrerender() {
   emitMarkdown('/compare', 'compare.md');
   count++;
 
-  const compareSlugs = [
-    'inexperienced', 'high-income', 'weekly-1', 'short-term',
-    'dormitory', 'double-work', 'age-20s', 'age-30s', 'age-40s'
-  ];
+  const compareSlugs = COMPARE_SUBPAGES.map((item) => item.slug);
   for (const slug of compareSlugs) {
     const compPage = injectSeoMetadata(template, `/compare/${slug}`);
     writeFileEnsureDir(path.join(distDir, 'compare', slug, 'index.html'), compPage.html);
@@ -162,6 +160,12 @@ async function runPrerender() {
     '/categories': '/compare',
     '/company': '/about',
     '/dorm': '/dekasegi',
+    ...Object.fromEntries(
+      Object.entries(LEGACY_COMPARE_SLUG_REDIRECTS).map(([oldSlug, newSlug]) => [
+        `/compare/${oldSlug}`,
+        `/compare/${newSlug}`,
+      ])
+    ),
   };
 
   for (const [fromPath, toPath] of Object.entries(legacyRedirects)) {

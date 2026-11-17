@@ -53,7 +53,15 @@
     { "source": "/target-categories", "destination": "/compare", "permanent": true },
     { "source": "/target-jobs", "destination": "/compare", "permanent": true },
     { "source": "/categories", "destination": "/compare", "permanent": true },
-    { "source": "/company", "destination": "/about", "permanent": true }
+    { "source": "/company", "destination": "/about", "permanent": true },
+    { "source": "/dorm", "destination": "/dekasegi", "permanent": true },
+    { "source": "/compare/inexperienced", "destination": "/compare/beginner", "permanent": true },
+    { "source": "/compare/weekly-1", "destination": "/compare/one-day-week", "permanent": true },
+    { "source": "/compare/dormitory", "destination": "/compare/short-term", "permanent": true },
+    { "source": "/compare/double-work", "destination": "/compare/office-worker", "permanent": true },
+    { "source": "/compare/age-20s", "destination": "/compare/20s", "permanent": true },
+    { "source": "/compare/age-30s", "destination": "/compare/30s", "permanent": true },
+    { "source": "/compare/age-40s", "destination": "/compare/40s", "permanent": true }
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },

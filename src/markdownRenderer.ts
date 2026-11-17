@@ -9,7 +9,24 @@ import { TOPIC_CLUSTERS } from './topicClusterData';
 import { TESTIMONIALS } from './data';
 import { GLOSSARY_TERMS } from './glossaryData';
 import { FAQ_12_CATEGORIES, FAQ_LAST_UPDATED_ISO } from './faq100Data';
-import { TARGET_JOB_CATEGORIES, SITE_COMPARISON_ROWS, INDUSTRY_COMPARISONS, TOBITA_PROS_CONS } from './compareData';
+import {
+  SITE_COMPARE_SEO,
+  INDUSTRY_COMPARE_COLUMNS,
+  INDUSTRY_COMPARE_ROWS,
+  INDUSTRY_DETAIL_CARDS,
+  APPLICATION_METHOD_COLUMNS,
+  APPLICATION_METHOD_ROWS,
+  PRE_APPLY_CHECK_POINTS,
+  SITE_COMPARE_FAQS,
+  SITE_COMPARE_INTERNAL_LINKS,
+} from './compareData';
+import {
+  COMPARE_CATEGORY_GROUPS,
+  COMPARE_PARENT_COPY,
+  COMPARE_LINE_CTA,
+  COMPARE_SUBPAGE_MAP,
+  resolveCompareSubpage,
+} from './data/compareGuides';
 
 interface BlogArticle {
   id: string;
@@ -109,7 +126,7 @@ function renderHomeMarkdown(): string {
     `2. **売上50%バック・即日全額現金手渡し**: 退勤時にその日の手取り分を全額現金でお渡しします。ロッカー代・更衣室代などの雑費天引きやノルマ・罰金はありません（※完全歩合制のため収入は時間帯・来店状況により変動します）。`,
     `3. **選べる5大勤務時間**: 昼短時間（10:00〜16:00）、昼標準（10:00〜17:00）、夜標準（17:00〜24:00）、午後通し（14:00〜24:00）、フル稼働（12:00〜24:00）から自由に選択。週1日・短時間・週末のみも相談可。`,
     `4. **WEB顔出しなし・身バレへの配慮**: 料理組合規約によりエリア全体で撮影が禁止されており、WebやSNSへの顔写真掲載は行いません。完全源氏名・私服通勤・住民税普通徴収の案内などでプライバシーに配慮しています（※店頭で接客する仕事特性上、知人との遭遇リスクを完全にゼロと保証することはできないため対策を事前相談できます）。`,
-    `5. **シンプルなおもてなし接客**: 玄関（上がり框）に座って笑顔でお迎えし、お部屋で15〜20分のおもてなし接客を行います。呼び込みや時間管理は仲居さん（おばちゃん）が担当。お酒の飲酒やお客様との連絡先交換、お茶出し・お菓子出しなどの雑用もありません。`,
+    `5. **シンプルなおもてなし接客**: 玄関（上がり框）に座って笑顔でお迎えし、お部屋で15〜20分の短時間サービスを行います。呼び込みや時間管理は仲居さん（おばちゃん）が担当。お酒の飲酒やお客様との連絡先交換はありません。`,
     `6. **応募資格**: 満20歳以上の女性（料理組合規約遵守・20歳未満・高校生不可）。履歴書不要・私服面接・1日体験入店可能。`,
     ``,
     `## 公式募集要項・採用条件一覧`,
@@ -440,29 +457,46 @@ export function renderRouteMarkdown(urlPath: string): { markdown: string; status
       status: 200,
       markdown: [
         getMarkdownMetaHeader(
-          '飛田新地求人サイト徹底比較｜料亭直営・スカウト・他業種との違い【公式】',
+          SITE_COMPARE_SEO.title,
           '/site-compare',
-          '飛田新地料亭直営公式求人「飛田ガールズ」と街頭・SNSスカウト業者、他求人サイト、他業種ナイトワーク（ソープ・デリヘル・キャバクラ）を報酬・日払い・お酒・身バレ対策で徹底比較。'
+          SITE_COMPARE_SEO.description
         ),
-        `## 飛田新地 vs 他業種（ソープ・デリヘル・キャバクラ）比較`,
-        `| 業種・お仕事形態 | 1回の接客時間 | お酒・営業連絡 | 日給目安・支払い | 身体への負担・入浴 |`,
-        `| :--- | :--- | :--- | :--- | :--- |`,
-        ...INDUSTRY_COMPARISONS.map((item, idx) =>
-          `| **${item.industry}**${idx === 0 ? '（当サイト）' : ''}（${item.workStyle}） | ${item.timePerCustomer} | お酒: ${item.alcohol} / 営業LINE: ${item.salesLineContact} | ${item.dailyIncome} | ${item.showerLabor} |`
-        ),
+        `## ${SITE_COMPARE_SEO.h1}`,
+        ...SITE_COMPARE_SEO.heroLead,
         ``,
-        `## 飛田新地求人サイト・応募方法 徹底比較`,
-        `| 比較項目 | 【公式】飛田ガールズ（料亭直営） | SNS・街頭スカウト業者 | 他求人サイト（飛田ジョブなど） | 他業種ナイトワーク（ソープ等） |`,
-        `| :--- | :--- | :--- | :--- | :--- |`,
-        ...SITE_COMPARISON_ROWS.map((row) =>
-          `| **${row.criteria}** | ${row.ourShop.text} | ${row.scoutAgency.text} | ${row.generalPortal.text} | ${row.otherNightwork.text} |`
+        `## 飛田新地と他業種の違いを比較`,
+        `飛田新地とメンズエステ・ソープランド・デリヘル・キャバクラ・ラウンジの主な違いは、仕事内容・接客場所・1回の接客時間・報酬体系・勤務形態です。`,
+        ``,
+        `| 比較項目 | ${INDUSTRY_COMPARE_COLUMNS.map((c) => c.label).join(' | ')} |`,
+        `| :--- | ${INDUSTRY_COMPARE_COLUMNS.map(() => ':---').join(' | ')} |`,
+        ...INDUSTRY_COMPARE_ROWS.map(
+          (r) => `| **${r.criteria}** | ${r.tobita} | ${r.mensEsthe} | ${r.soap} | ${r.delihel} | ${r.cabaret} |`
         ),
         ``,
-        `### 【警告】街頭やSNS裏垢（X/旧Twitter）のスカウト業者経由は絶対にNG！`,
-        `スカウトを通すと、あなたの売上から毎月10〜30%が「紹介料」として永久に天引きされます。また個人情報の流出や退職時の脅迫トラブルも後を絶ちません。飛田新地は**料理組合公認の料亭直営公式採用（飛田ガールズ）**から応募することで、仲介手数料ゼロ・売上完全50%日払いが保証されます。`,
+        `## 業種ごとの仕事内容・働き方の違い`,
+        ...INDUSTRY_DETAIL_CARDS.flatMap((c) => [
+          `### ${c.heading}`,
+          c.summary,
+          ...(c.ctaLabel && c.ctaPath ? [`- [${c.ctaLabel}](${c.ctaPath})`] : []),
+          ``,
+        ]),
+        `## 飛田新地の求人はどこから応募する？応募方法・求人サイトを比較`,
+        `公式求人サイト・SNSや個人スカウト・他社求人ポータル・紹介仲介型ネットワークの違いは、募集元の確認方法、応募窓口、報酬条件や仲介手数料の照合方法、個人情報の取り扱い方にあります。`,
         ``,
-        `## 関連ガイド`,
-        `- [目的・働き方別求人ガイド（あなたに最適な働き方が必ず見つかる）](/compare)`,
+        `| 比較項目 | ${APPLICATION_METHOD_COLUMNS.map((c) => c.label).join(' | ')} |`,
+        `| :--- | ${APPLICATION_METHOD_COLUMNS.map(() => ':---').join(' | ')} |`,
+        ...APPLICATION_METHOD_ROWS.map(
+          (r) =>
+            `| **${r.criteria}** | [${r.official.badge}] ${r.official.text} | [${r.snsScout.badge}] ${r.snsScout.text} | [${r.portal.badge}] ${r.portal.text} | [${r.network.badge}] ${r.network.text} |`
+        ),
+        ``,
+        `## 飛田新地の求人に応募する前に確認したいこと`,
+        ...PRE_APPLY_CHECK_POINTS.map((p) => `- **${p.number}. ${p.title}**: ${p.description}`),
+        ``,
+        `## よくある質問`,
+        ...SITE_COMPARE_FAQS.flatMap((f) => [`### Q. ${f.q}`, `**A.** ${f.a}`, ``]),
+        `## 関連公式ガイド`,
+        ...SITE_COMPARE_INTERNAL_LINKS.map((l) => `- [${l.label}](${l.path}): ${l.desc}`),
         getMarkdownMetaFooter()
       ].join('\n')
     };
@@ -473,23 +507,34 @@ export function renderRouteMarkdown(urlPath: string): { markdown: string; status
       status: 200,
       markdown: [
         getMarkdownMetaHeader(
-          '目的・働き方別求人ガイド｜あなたに最適な働き方が必ず見つかる。',
+          COMPARE_PARENT_COPY.seoTitle,
           '/compare',
-          '「未経験や週1、30代でも稼げる？」の疑問を解消。料亭直営の条件・メリットデメリット・ターゲット別の働き方・給料計算・安心サポートをわかりやすく解説。'
+          COMPARE_PARENT_COPY.metaDescription
         ),
-        `## 飛田新地で働くメリット（5大特長）`,
-        ...TOBITA_PROS_CONS.merits.map((m) => `- **${m.title}**: ${m.desc}`),
+        `## ${COMPARE_PARENT_COPY.h1}`,
+        `${COMPARE_PARENT_COPY.introLine1}`,
         ``,
-        `## 知っておくべきデメリット・注意点`,
-        ...TOBITA_PROS_CONS.demeritsAndNotes.map((d) => `- **${d.title}**: ${d.desc}`),
+        `${COMPARE_PARENT_COPY.introLine2}`,
         ``,
-        `## 目的・状況別の求人ガイド`,
-        ...TARGET_JOB_CATEGORIES.map((cat) =>
-          `- [${cat.title}](/compare/${cat.slug}): ${cat.summary}`
-        ),
+        `**補足キーワード**: ${COMPARE_PARENT_COPY.keywords}`,
         ``,
+        `## 5つのカテゴリー・全27項目から働き方を探す`,
+        ...COMPARE_CATEGORY_GROUPS.flatMap((group) => [
+          `### ${group.title}`,
+          `${group.description}`,
+          ``,
+          ...group.slugs
+            .map((s) => COMPARE_SUBPAGE_MAP[s])
+            .filter((item): item is NonNullable<typeof item> => Boolean(item))
+            .map((item) => `- [${item.itemName}](/compare/${item.slug}): ${item.cardDescription}`),
+          ``,
+        ]),
         `## 他業種・応募方法の比較`,
-        `- [飛田新地求人サイト徹底比較](/site-compare): ソープ・デリヘル・キャバクラ・スカウト・他求人サイトとの違いを比較`,
+        `- [飛田新地と他業種の違いを比較（応募方法も解説）](/site-compare): メンズエステ・ソープランド・デリヘル・キャバクラとの比較や公式・SNS・スカウト等の応募方法の違いを解説`,
+        ``,
+        `## ${COMPARE_LINE_CTA.heading}`,
+        `${COMPARE_LINE_CTA.description}`,
+        `${COMPARE_LINE_CTA.footnote}`,
         getMarkdownMetaFooter()
       ].join('\n')
     };
@@ -497,47 +542,67 @@ export function renderRouteMarkdown(urlPath: string): { markdown: string; status
 
   if (cleanPath.startsWith('/compare/')) {
     const slug = cleanPath.replace('/compare/', '').replace(/\/$/, '');
-    const cat = TARGET_JOB_CATEGORIES.find((c) => c.slug === slug);
-    if (cat) {
+    const item = resolveCompareSubpage(slug);
+    if (item) {
+      const relatedCompareItems = item.relatedCompareSlugs
+        .map((rs) => COMPARE_SUBPAGE_MAP[rs])
+        .filter((x): x is NonNullable<typeof x> => Boolean(x));
+
       const lines: string[] = [
         getMarkdownMetaHeader(
-          `${cat.title}｜飛田ガールズ`,
-          `/compare/${cat.slug}`,
-          cat.summary
+          item.seoTitle,
+          `/compare/${item.slug}`,
+          item.metaDescription
         ),
-        `## この働き方のポイント`,
-        `> ${cat.llmDirectAnswer}`,
+        `> カテゴリー: ${item.categoryTitle} / 項目: ${item.itemName}`,
         ``,
-        `## 基本の条件・目安`,
-        `- **向いている方**: ${cat.targetUser}`,
-        `- **日収の目安**: ${cat.dailyIncomeModel}`,
-        `- **月収の目安**: ${cat.monthlyIncomeModel}`,
-        `- **シフト例**: ${cat.shiftExample}`,
-        `- **おすすめの通り**: ${cat.recommendedStreet}`,
+        `## ${item.h1}`,
+        `${item.heroLead}`,
         ``,
-        `## 安心ポイント・メリット`,
-        ...cat.merits.map((m) => `- ${m}`),
+        `## このような女性に向けたページです`,
+        ...item.targetPoints.map((pt) => `- ${pt}`),
         ``,
-        `## 事前に知っておきたい注意点`,
-        ...cat.demeritsOrNotes.map((n) => `- ${n}`),
+        `## 知っておきたい仕事内容・働き方`,
+        `${item.workstyle.lead}`,
+        ...item.workstyle.points.map((pt) => `- ${pt}`),
+        ...(item.workstyle.note ? [``, `> ${item.workstyle.note}`] : []),
         ``,
-        `## お店のサポート内容`,
-        ...cat.supportFeatures.map((s) => `- ${s}`),
-        ``
+        `## 給料・報酬・勤務条件`,
+        `${item.salaryConditions.lead}`,
+        ...item.salaryConditions.rows.map((row) => `- **${row.label}**: ${row.value}`),
+        ...(item.salaryConditions.formulaExample ? [``, `**計算の目安（例）**: ${item.salaryConditions.formulaExample}`] : []),
+        ``,
+        `${item.salaryConditions.disclaimer}`,
+        ``,
+        `## 応募前に確認しておきたいこと`,
+        ...item.preCheckPoints.map((pt, idx) => `${idx + 1}. ${pt}`),
+        ``,
+        `## よくある質問`,
+        ...item.faqs.flatMap((f) => [
+          `### Q. ${f.q}`,
+          `**A.** ${f.a}`,
+          ``
+        ]),
+        `## 関連ページ`,
+        ...relatedCompareItems.map((rel) => `- [${rel.itemName}](/compare/${rel.slug}): ${rel.cardDescription}`),
+        ...item.relatedSitePaths.map((guide) => `- [${guide.label}](${guide.path}): ${guide.desc}`),
+        `- [働き方・求人比較一覧（27項目）へ戻る](/compare)`,
+        ``,
+        `## ${COMPARE_LINE_CTA.heading}`,
+        `${COMPARE_LINE_CTA.description}`,
+        `${COMPARE_LINE_CTA.footnote}`,
+        getMarkdownMetaFooter()
       ];
-
-      if (cat.faqs && cat.faqs.length > 0) {
-        lines.push(`## よくある質問（Q&A）`);
-        for (const faq of cat.faqs) {
-          lines.push(`### Q. ${faq.q}`);
-          lines.push(`**A.** ${faq.a}`);
-          lines.push(``);
-        }
-      }
-
-      lines.push(getMarkdownMetaFooter());
       return { status: 200, markdown: lines.join('\n') };
     }
+    return {
+      status: 404,
+      markdown: [
+        getMarkdownMetaHeader('ページが見つかりません (404 Not Found)', `/compare/${slug}`, '指定されたページは存在しないか移動した可能性があります。'),
+        `[働き方・求人比較一覧](/compare) からご希望の働き方をお選びください。`,
+        getMarkdownMetaFooter()
+      ].join('\n')
+    };
   }
 
   // 7. About & Company

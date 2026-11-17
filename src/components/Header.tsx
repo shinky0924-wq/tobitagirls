@@ -574,7 +574,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                   onClick={(e) => handleLinkClick(e, { action: 'compare' })}
                   className="py-2 px-1 rounded-lg bg-gray-50 hover:bg-rose-50 text-zinc-600 hover:text-rose-600 font-bold border border-gray-100 transition-colors block"
                 >
-                  サイト比較
+                  働き方比較
                 </a>
                 <a
                   href="/blog"

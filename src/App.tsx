@@ -24,7 +24,8 @@ import FAQPage from './components/FAQPage';
 import TopicClusterPage from './components/TopicClusterPage';
 import GlossaryPage from './components/GlossaryPage';
 import { TOPIC_CLUSTERS } from './topicClusterData';
-import { TARGET_JOB_CATEGORIES } from './compareData';
+import { COMPARE_PARENT_COPY, LEGACY_COMPARE_SLUG_REDIRECTS, resolveCompareSubpage } from './data/compareGuides';
+import { SITE_COMPARE_SEO } from './compareData';
 import LucideIcon from './components/LucideIcon';
 import { getStoredArticles, BlogArticle, BLOG_ARTICLES, getValidArticleEyeCatch, mergeWithDefaultArticles } from './blogData';
 import { getStoredSiteContent, SiteContent } from './siteContent';
@@ -208,10 +209,13 @@ export default function App() {
     if (selectedSlug && slugRedirectMap[selectedSlug]) {
       navigate(slugRedirectMap[selectedSlug], true);
     }
+    if (selectedCategorySlug && LEGACY_COMPARE_SLUG_REDIRECTS[selectedCategorySlug]) {
+      navigate(`/compare/${LEGACY_COMPARE_SLUG_REDIRECTS[selectedCategorySlug]}`, true);
+    }
     if (cleanPath === '/dorm') {
       navigate('/dekasegi', true);
     }
-  }, [selectedSlug, cleanPath]);
+  }, [selectedSlug, cleanPath, selectedCategorySlug]);
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
@@ -228,24 +232,24 @@ export default function App() {
         canonicalUrl = `https://tobitashinchi-recruit.com${topic.path}`;
       }
     } else if (currentTab === 'site-compare') {
-      pageTitle = '飛田新地求人サイト徹底比較｜料亭直営・スカウト・他業種との違い【公式】';
-      pageDesc = '飛田新地料亭直営公式求人「飛田ガールズ」と街頭・SNSスカウト業者、他求人サイト、他業種ナイトワーク（ソープ・デリヘル・キャバクラ）を報酬・日払い・お酒・身バレ対策で徹底比較。';
-      canonicalUrl = 'https://tobitashinchi-recruit.com/site-compare';
+      pageTitle = SITE_COMPARE_SEO.title;
+      pageDesc = SITE_COMPARE_SEO.description;
+      canonicalUrl = SITE_COMPARE_SEO.canonicalUrl;
     } else if (currentTab === 'compare') {
       if (selectedCategorySlug) {
-        const cat = TARGET_JOB_CATEGORIES.find(c => c.slug === selectedCategorySlug);
-        if (cat) {
-          pageTitle = `${cat.title}｜飛田新地料亭直営公式 飛田ガールズ`;
-          pageDesc = cat.summary;
-          canonicalUrl = `https://tobitashinchi-recruit.com/compare/${cat.slug}`;
+        const subpage = resolveCompareSubpage(selectedCategorySlug);
+        if (subpage) {
+          pageTitle = subpage.seoTitle;
+          pageDesc = subpage.metaDescription;
+          canonicalUrl = `https://tobitashinchi-recruit.com/compare/${subpage.slug}`;
         } else {
-          pageTitle = '目的・働き方別求人ガイド｜あなたに最適な働き方が必ず見つかる【飛田ガールズ】';
-          pageDesc = '未経験・高収入・週1日・短期出稼ぎ・寮付き・Wワーク・年齢別など、あなたの希望に合う飛田新地の働き方と条件を分かりやすくご案内します。';
+          pageTitle = COMPARE_PARENT_COPY.seoTitle;
+          pageDesc = COMPARE_PARENT_COPY.metaDescription;
           canonicalUrl = 'https://tobitashinchi-recruit.com/compare';
         }
       } else {
-        pageTitle = '目的・働き方別求人ガイド｜あなたに最適な働き方が必ず見つかる【飛田ガールズ】';
-        pageDesc = '未経験・高収入・週1日・短期出稼ぎ・寮付き・Wワーク・年齢別など、あなたの希望に合う飛田新地の働き方と条件を分かりやすくご案内します。';
+        pageTitle = COMPARE_PARENT_COPY.seoTitle;
+        pageDesc = COMPARE_PARENT_COPY.metaDescription;
         canonicalUrl = 'https://tobitashinchi-recruit.com/compare';
       }
     } else if (currentTab === 'glossary') {
@@ -588,6 +592,7 @@ export default function App() {
                 onNavigateHome={() => setCurrentTab('recruit')}
                 onNavigateBlog={() => setCurrentTab('blog')}
                 onNavigateSiteCompare={() => setCurrentTab('site-compare')}
+                onNavigatePath={(targetPath) => navigate(targetPath)}
                 onCtaclick={handleScrollToForm}
                 onInjectedScroll={handleInjectedScroll}
                 initialCategorySlug={selectedCategorySlug}
@@ -614,6 +619,7 @@ export default function App() {
               <SiteComparisonPage
                 onNavigateHome={() => setCurrentTab('recruit')}
                 onNavigateCompare={() => setCurrentTab('compare')}
+                onNavigatePath={(path) => navigate(path)}
                 onCtaclick={handleScrollToForm}
               />
             </motion.div>

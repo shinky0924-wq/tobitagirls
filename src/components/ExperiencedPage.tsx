@@ -1308,7 +1308,7 @@ const BASIC_INFO_CARDS: {
     icon: 'Clock',
     label: '① 接客スタイル',
     title: '短時間中心の接客',
-    desc: '1回15〜20分が基本の和室接客。長時間の施術や席付きとは異なるペースで働けます。',
+    desc: '1回15〜20分が基本の個室接客。長時間の施術や席付きとは異なるペースで働けます。',
   },
   {
     icon: 'ShieldCheck',
@@ -1360,7 +1360,7 @@ const CURRENT_BURDENS: {
 const FIVE_INDUSTRY_COMPARISON = [
   {
     item: '主な接客',
-    tobita: '和室での接客',
+    tobita: '個室での接客',
     esthe: 'エステ施術',
     soap: '入浴を伴う接客',
     health: '店舗形態による',
@@ -1493,7 +1493,7 @@ const STORE_CONDITIONS: {
     icon: 'ShieldCheck',
     title: '接客ルール',
     main: 'キスなし・粘膜接触なし',
-    detail: '短時間中心（15〜20分基本）の和室接客で、キスや粘膜接触を行わないルールを採用しています。',
+    detail: '短時間中心（15〜20分基本）の個室接客で、キスや粘膜接触を行わないルールを採用しています。',
   },
 ];
 
