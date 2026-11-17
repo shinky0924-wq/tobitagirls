@@ -146,7 +146,7 @@ export const FAQS: FAQItem[] = [
   {
     id: 'faq-9',
     question: 'Q. 働くときの服や衣装はどうなりますか？',
-    answer: 'A. ほとんどのお店で、着物やドレス、可愛い和服などの素敵な衣装が無料（または格好よい衣装レンタル完備）で用意されています。ご自身で準備する手間や余計な出費はありません。'
+    answer: 'A. 当店では、着物やドレス、可愛い和服などの衣装を無料で用意しています。ご自身で準備する手間や余計な出費はありません。'
   },
   {
     id: 'faq-10',
@@ -174,7 +174,7 @@ export const TESTIMONIALS: TestimonialItem[] = [
       workPeriod: '勤務歴 6ヶ月',
       nightWorkExp: '完全未経験（夜職・風俗ゼロ）',
       interviewDate: '2026年3月14日（最新更新確認：2026年8月）',
-      interviewer: '飛田ガールズ 編集部（女性サポート さくら）',
+      interviewer: '飛田ガールズ 女性サポート（さくら）',
       shiftStyle: '週4日（10:00〜17:00 / 昼シフト・残業なし）',
       consentNotice: '※実在する現役キャスト本人の自署サイン・掲載許諾を得て、事実に基づいて掲載しています'
     },
@@ -261,7 +261,7 @@ export const TESTIMONIALS: TestimonialItem[] = [
       workPeriod: '勤務歴 8ヶ月',
       nightWorkExp: '完全未経験（お酒一切NG・お酒が苦手）',
       interviewDate: '2026年5月20日（最新更新確認：2026年8月）',
-      interviewer: '飛田ガールズ 編集部（女性サポート さくら）',
+      interviewer: '飛田ガールズ 女性サポート（さくら）',
       shiftStyle: '週2〜3日（講義後 17:00〜24:00 または 土日 10:00〜16:00）',
       consentNotice: '※実在する現役キャスト本人の自署サイン・掲載許諾を得て、事実に基づいて掲載しています'
     },
@@ -348,7 +348,7 @@ export const TESTIMONIALS: TestimonialItem[] = [
       workPeriod: '勤務歴 1年6ヶ月',
       nightWorkExp: '完全未経験（会社は副業禁止規定あり）',
       interviewDate: '2026年2月12日（最新更新確認：2026年8月）',
-      interviewer: '飛田ガールズ 編集部（女性サポート さくら）',
+      interviewer: '飛田ガールズ 女性サポート（さくら）',
       shiftStyle: '週末限定 月6〜7日（金曜 17:00〜24:00 / 土曜 14:00〜24:00 または 10:00〜17:00）',
       consentNotice: '※実在する現役キャスト本人の自署サイン・掲載許諾を得て、事実に基づいて掲載しています'
     },
@@ -455,7 +455,7 @@ export const JOB_FACTS: JobFactItem[] = [
 export const FLOW_STEPS: FlowStep[] = [
   { number: '01', title: 'LINE相談' },
   { number: '02', title: 'ご希望の相談・確認' },
-  { number: '03', title: 'お店紹介' },
+  { number: '03', title: '条件確認・店内見学' },
   { number: '04', title: '面接' },
   { number: '05', title: '体験入店' },
   { number: '06', title: 'お仕事スタート' }

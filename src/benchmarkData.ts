@@ -116,7 +116,7 @@ export const SITUATION_DECISION_CASES: DecisionCase[] = [
     id: 'case-single-mother-30s',
     tag: '30代・子育て中・主婦',
     situation: '家庭や子育ての予定を優先しながら、昼間の数時間だけで収入を得たい女性',
-    recommendedStreet: '大人の魅力や落ち着きが評価される通り・店舗をご案内',
+    recommendedStreet: '大人の魅力や落ち着きが活かしやすい直営店舗・シフトをご案内',
     recommendedShift: '平日昼の朝シフト（10:00〜16:00 / 17:00の保育園・学校時間帯）',
     targetDailyIncome: '売上50%（1本目から即収入・控除0円）',
     targetMonthlyIncome: '家庭と両立できる無理のない範囲で計画',

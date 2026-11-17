@@ -181,7 +181,7 @@ const BEFORE_WORK_CARDS: {
     summary: '実際の仕事内容や業務分担を事前に確認できます。',
     details: [
       '個室での短時間中心（1回15〜20分基本）の接客です',
-      '募集店舗ではキス・粘膜接触なし、お酒を飲む必要はありません',
+      '当店ではキス・粘膜接触なし、お酒を飲む必要はありません',
       'お部屋の清掃やシーツ交換、お呼び込みは仲居さんが担当します',
     ],
   },
@@ -1090,7 +1090,7 @@ export default function WorkstylePage({
                 <div className="p-4 rounded-xl bg-[#FFF8FA] border border-[#F0E4E9] space-y-1">
                   <div className="font-bold text-[#B83B67]">開始時間と終了時間</div>
                   <p className="text-[#29252A]/85 leading-relaxed">
-                    12:00〜24:00は時間枠の目安です。実際の出勤時刻・最終の上がり時間は店舗条件と体調に合わせて決めます。
+                    12:00〜24:00は時間枠の目安です。実際の出勤時刻・最終の上がり時間は当店の営業時間と体調に合わせて決めます。
                   </p>
                 </div>
                 <div className="p-4 rounded-xl bg-[#FFF8FA] border border-[#F0E4E9] space-y-1">

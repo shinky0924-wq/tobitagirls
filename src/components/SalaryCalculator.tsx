@@ -71,7 +71,7 @@ const REAL_VARIATIONS = {
         dailyTotal: 60000,
       },
       {
-        name: '実績例E（最低保証・15分のみ）',
+        name: '試算例E（15分コースのみ）',
         breakdown: [
           { time: '15分', payout: 5000, count: 10, subtotal: 50000 },
           { time: '20分', payout: 7500, count: 0, subtotal: 0 },
@@ -144,7 +144,7 @@ const REAL_VARIATIONS = {
         dailyTotal: 127500,
       },
       {
-        name: '実績例E（最低保証・15分のみ）',
+        name: '試算例E（15分コースのみ）',
         breakdown: [
           { time: '15分', payout: 5000, count: 20, subtotal: 100000 },
           { time: '20分', payout: 7500, count: 0, subtotal: 0 },
@@ -217,7 +217,7 @@ const REAL_VARIATIONS = {
         dailyTotal: 190000,
       },
       {
-        name: '実績例E（最低保証・15分のみ）',
+        name: '試算例E（15分コースのみ）',
         breakdown: [
           { time: '15分', payout: 5000, count: 30, subtotal: 150000 },
           { time: '20分', payout: 7500, count: 0, subtotal: 0 },

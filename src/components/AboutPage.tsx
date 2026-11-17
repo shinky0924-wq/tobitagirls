@@ -142,7 +142,7 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
                 1
               </div>
               <div>
-                <h3 className="font-bold text-base text-zinc-900 mb-1.5">徹底したプライバシー保護・身バレゼロ保証</h3>
+                <h3 className="font-bold text-base text-zinc-900 mb-1.5">徹底したプライバシー保護・写真掲載ゼロ</h3>
                 <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
                   飛田新地は街全体で一般人の撮影が固く禁止されています。また、当グループではインターネット上への写真掲載は一切行いません。
                   勤務は完全源氏名、身分証の管理も万全、住民税の普通徴収（副業対策）もしっかりアドバイスいたします。
@@ -186,7 +186,7 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
         <div className="bg-gradient-to-br from-rose-500 to-rose-600 rounded-3xl p-6 sm:p-8 text-white text-center shadow-lg">
           <h3 className="text-xl sm:text-2xl font-black mb-2">まずは見学・ご相談からお気軽にどうぞ</h3>
           <p className="text-xs sm:text-sm text-rose-100 mb-6 max-w-lg mx-auto">
-            履歴書不要・手ぶらでOK。まずはLINEやお電話で気になることを何でも聞いてみてください。
+            履歴書不要・私服で見学OK。まずはLINEやお電話で気になることを何でも聞いてみてください。
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-3">
             <button

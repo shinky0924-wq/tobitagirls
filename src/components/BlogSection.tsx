@@ -616,7 +616,7 @@ export default function BlogSection({
                 </span>
               </h1>
               <p className="mt-4 text-base text-on-surface-variant leading-relaxed">
-                飛田新地での働き方、リアルな給与システム、身バレ防止の徹底的な対策、充実の個室寮や託児所補助など、気になるすべての情報を当店女性サポートスタッフが丁寧にお答えします。
+                飛田新地での働き方、リアルな給与システム、身バレ防止の対策、寮や滞在条件、働き方の選択肢など、気になるすべての情報を当店女性サポートスタッフが丁寧にお答えします。
               </p>
             </div>
 

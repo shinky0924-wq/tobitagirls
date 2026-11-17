@@ -86,10 +86,10 @@ export default function AccessGuide({ onCtaclick }: AccessGuideProps) {
         <div>
           <h4 className="text-sm sm:text-base font-bold font-display mb-1 flex items-center gap-1.5">
             <LucideIcon name="Plane" size={16} />
-            <span>地方・遠方からの出稼ぎ交通費は【全額キャッシュバック支給】</span>
+            <span>地方・遠方からの出稼ぎ交通費支給（規定あり）</span>
           </h4>
           <p className="text-xs text-white/90 leading-relaxed">
-            新幹線（新大阪駅）、飛行機（伊丹・関空）、高速夜行バスの往復交通費を全額支給いたします。家具家電付き個室マンション寮に即日入居可能です。
+            新幹線・飛行機・高速夜行バスの往復交通費支給（規定・上限あり）に対応しています。個室マンション寮の空き状況や支給条件は応募前にLINEでご確認いただけます。
           </p>
         </div>
         {onCtaclick && (

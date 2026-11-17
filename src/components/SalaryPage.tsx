@@ -78,7 +78,7 @@ const REAL_VARIATIONS = {
         dailyTotal: 60000,
       },
       {
-        name: '実績例E（最低保証・15分のみ）',
+        name: '試算例E（15分コースのみ）',
         breakdown: [
           { time: '15分', payout: 5000, count: 10, subtotal: 50000 },
           { time: '20分', payout: 7500, count: 0, subtotal: 0 },
@@ -151,7 +151,7 @@ const REAL_VARIATIONS = {
         dailyTotal: 127500,
       },
       {
-        name: '実績例E（最低保証・15分のみ）',
+        name: '試算例E（15分コースのみ）',
         breakdown: [
           { time: '15分', payout: 5000, count: 20, subtotal: 100000 },
           { time: '20分', payout: 7500, count: 0, subtotal: 0 },
@@ -224,7 +224,7 @@ const REAL_VARIATIONS = {
         dailyTotal: 190000,
       },
       {
-        name: '実績例E（最低保証・15分のみ）',
+        name: '試算例E（15分コースのみ）',
         breakdown: [
           { time: '15分', payout: 5000, count: 30, subtotal: 150000 },
           { time: '20分', payout: 7500, count: 0, subtotal: 0 },
@@ -406,7 +406,7 @@ const TREATMENT_COMPARISONS = [
   },
   {
     item: '交通費',
-    ourShop: '地方・遠方からの往復交通費を全額支給',
+    ourShop: '地方・遠方からの往復交通費支給（規定あり・事前確認可）',
     otherShop: '自己負担、または規定売上未達の場合は支給なし'
   },
   {
