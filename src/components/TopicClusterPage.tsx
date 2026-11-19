@@ -3,20 +3,22 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import LucideIcon from './LucideIcon';
 import { TOPIC_CLUSTERS, ALL_CLUSTER_NODES, TopicClusterData } from '../topicClusterData';
 import { BLOG_ARTICLES } from '../blogData';
 import JobDetails from './JobDetails';
 import BenefitsShowcase from './BenefitsShowcase';
 import SalaryCalculator from './SalaryCalculator';
-import JobContentPage from './JobContentPage';
-import SalaryPage from './SalaryPage';
-import BeginnerPage from './BeginnerPage';
-import ExperiencedPage from './ExperiencedPage';
-import FlowPage from './FlowPage';
-import WorkstylePage from './WorkstylePage';
-import ShopsPage from './ShopsPage';
+import {
+  LazyJobContentPage,
+  LazySalaryPage,
+  LazyBeginnerPage,
+  LazyExperiencedPage,
+  LazyFlowPage,
+  LazyWorkstylePage,
+  LazyShopsPage,
+} from '../routeLoaders';
 import { getStoredSiteContent } from '../siteContent';
 import { LINE_OFFICIAL_URL } from '../data';
 import { updatePageJsonLd } from '../utils/jsonLd';
@@ -32,6 +34,10 @@ interface TopicClusterPageProps {
   onInjectedScroll?: (msg: string) => void;
 }
 
+const TopicRouteFallback = (
+  <div className="min-h-screen bg-[#fffafb]" aria-hidden="true" />
+);
+
 export default function TopicClusterPage({
   topicId,
   onNavigateHome,
@@ -44,98 +50,112 @@ export default function TopicClusterPage({
   // If topic is 'job', render the dedicated comprehensive JobContentPage
   if (topicId === 'job') {
     return (
-      <JobContentPage
-        onNavigateHome={onNavigateHome}
-        onNavigateTopic={onNavigateTopic}
-        onNavigateBlog={onNavigateBlog}
-        onNavigateFaq={onNavigateFaq}
-        onCtaclick={onCtaclick}
-        onInjectedScroll={onInjectedScroll}
-      />
+      <Suspense fallback={TopicRouteFallback}>
+        <LazyJobContentPage
+          onNavigateHome={onNavigateHome}
+          onNavigateTopic={onNavigateTopic}
+          onNavigateBlog={onNavigateBlog}
+          onNavigateFaq={onNavigateFaq}
+          onCtaclick={onCtaclick}
+          onInjectedScroll={onInjectedScroll}
+        />
+      </Suspense>
     );
   }
 
   // If topic is 'salary' (or /salary, /benefits, /treatment), render the dedicated comprehensive SalaryPage
   if (topicId === 'salary') {
     return (
-      <SalaryPage
-        onNavigateHome={onNavigateHome}
-        onNavigateTopic={onNavigateTopic}
-        onNavigateBlog={onNavigateBlog}
-        onNavigateFaq={onNavigateFaq}
-        onCtaclick={onCtaclick}
-        onInjectedScroll={onInjectedScroll}
-      />
+      <Suspense fallback={TopicRouteFallback}>
+        <LazySalaryPage
+          onNavigateHome={onNavigateHome}
+          onNavigateTopic={onNavigateTopic}
+          onNavigateBlog={onNavigateBlog}
+          onNavigateFaq={onNavigateFaq}
+          onCtaclick={onCtaclick}
+          onInjectedScroll={onInjectedScroll}
+        />
+      </Suspense>
     );
   }
 
   // If topic is 'beginner' (or /beginner), render the dedicated comprehensive BeginnerPage
   if (topicId === 'beginner') {
     return (
-      <BeginnerPage
-        onNavigateHome={onNavigateHome}
-        onNavigateTopic={onNavigateTopic}
-        onNavigateBlog={onNavigateBlog}
-        onNavigateFaq={onNavigateFaq}
-        onCtaclick={onCtaclick}
-        onInjectedScroll={onInjectedScroll}
-      />
+      <Suspense fallback={TopicRouteFallback}>
+        <LazyBeginnerPage
+          onNavigateHome={onNavigateHome}
+          onNavigateTopic={onNavigateTopic}
+          onNavigateBlog={onNavigateBlog}
+          onNavigateFaq={onNavigateFaq}
+          onCtaclick={onCtaclick}
+          onInjectedScroll={onInjectedScroll}
+        />
+      </Suspense>
     );
   }
 
   // If topic is 'experienced' (or /experienced), render the dedicated comprehensive ExperiencedPage
   if (topicId === 'experienced') {
     return (
-      <ExperiencedPage
-        onNavigateHome={onNavigateHome}
-        onNavigateTopic={onNavigateTopic}
-        onNavigateBlog={onNavigateBlog}
-        onNavigateFaq={onNavigateFaq}
-        onCtaclick={onCtaclick}
-        onInjectedScroll={onInjectedScroll}
-      />
+      <Suspense fallback={TopicRouteFallback}>
+        <LazyExperiencedPage
+          onNavigateHome={onNavigateHome}
+          onNavigateTopic={onNavigateTopic}
+          onNavigateBlog={onNavigateBlog}
+          onNavigateFaq={onNavigateFaq}
+          onCtaclick={onCtaclick}
+          onInjectedScroll={onInjectedScroll}
+        />
+      </Suspense>
     );
   }
 
   // If topic is 'flow' (or /flow, /interview), render the dedicated comprehensive FlowPage
   if (topicId === 'flow') {
     return (
-      <FlowPage
-        onNavigateHome={onNavigateHome}
-        onNavigateTopic={onNavigateTopic}
-        onNavigateBlog={onNavigateBlog}
-        onNavigateFaq={onNavigateFaq}
-        onCtaclick={onCtaclick}
-        onInjectedScroll={onInjectedScroll}
-      />
+      <Suspense fallback={TopicRouteFallback}>
+        <LazyFlowPage
+          onNavigateHome={onNavigateHome}
+          onNavigateTopic={onNavigateTopic}
+          onNavigateBlog={onNavigateBlog}
+          onNavigateFaq={onNavigateFaq}
+          onCtaclick={onCtaclick}
+          onInjectedScroll={onInjectedScroll}
+        />
+      </Suspense>
     );
   }
 
   // If topic is 'workstyle' (or /workstyle), render the dedicated comprehensive WorkstylePage
   if (topicId === 'workstyle') {
     return (
-      <WorkstylePage
-        onNavigateHome={onNavigateHome}
-        onNavigateTopic={onNavigateTopic}
-        onNavigateBlog={onNavigateBlog}
-        onNavigateFaq={onNavigateFaq}
-        onCtaclick={onCtaclick}
-        onInjectedScroll={onInjectedScroll}
-      />
+      <Suspense fallback={TopicRouteFallback}>
+        <LazyWorkstylePage
+          onNavigateHome={onNavigateHome}
+          onNavigateTopic={onNavigateTopic}
+          onNavigateBlog={onNavigateBlog}
+          onNavigateFaq={onNavigateFaq}
+          onCtaclick={onCtaclick}
+          onInjectedScroll={onInjectedScroll}
+        />
+      </Suspense>
     );
   }
 
   // If topic is 'shops' (or /shops), render the dedicated comprehensive ShopsPage
   if (topicId === 'shops') {
     return (
-      <ShopsPage
-        onNavigateHome={onNavigateHome}
-        onNavigateTopic={onNavigateTopic}
-        onNavigateBlog={onNavigateBlog}
-        onNavigateFaq={onNavigateFaq}
-        onCtaclick={onCtaclick}
-        onInjectedScroll={onInjectedScroll}
-      />
+      <Suspense fallback={TopicRouteFallback}>
+        <LazyShopsPage
+          onNavigateHome={onNavigateHome}
+          onNavigateTopic={onNavigateTopic}
+          onNavigateBlog={onNavigateBlog}
+          onNavigateFaq={onNavigateFaq}
+          onCtaclick={onCtaclick}
+          onInjectedScroll={onInjectedScroll}
+        />
+      </Suspense>
     );
   }
 

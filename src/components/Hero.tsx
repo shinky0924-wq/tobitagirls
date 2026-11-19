@@ -39,9 +39,9 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
         {/* Tagline */}
         <motion.div 
           className="inline-block bg-rose-100 text-secondary font-sans font-bold text-xs md:text-sm px-4 py-1.5 rounded-full mb-6 relative shadow-sm"
-          initial={{ opacity: 0, y: -20 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
           id="hero-tagline"
         >
           <span className="relative flex h-2 w-2 inline-block mr-2 rounded-full bg-secondary animate-ping align-middle" />
@@ -51,9 +51,9 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
         {/* Main Display Title */}
         <motion.h1 
           className="font-display font-extrabold text-2xl md:text-5xl lg:text-5xl text-on-surface leading-tight mb-6 break-words"
-          initial={{ opacity: 0, y: -20 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
           id="hero-title"
         >
           <span className="block text-on-surface">飛田新地で働くことを</span>
@@ -63,9 +63,9 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
         {/* Sub description */}
         <motion.div 
           className="font-sans leading-relaxed mb-8 max-w-2xl px-2 sm:px-0 text-center"
-          initial={{ opacity: 0, y: -20 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
           id="hero-description"
         >
           <div className="space-y-4 text-xs sm:text-sm md:text-base text-zinc-700 leading-relaxed">
@@ -93,9 +93,9 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
         {/* Horizontal Styled Photo Wrapper */}
         <motion.div 
           className="w-full relative mb-10"
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={false}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
           id="hero-visual"
         >
           {/* Ambient Background Glow */}
@@ -140,9 +140,9 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
         {randomArticles.length > 0 && (
           <motion.div 
             className="flex flex-col gap-5 justify-center items-center w-full max-w-xl"
-            initial={{ opacity: 0, y: 10 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={{ duration: 0.3 }}
             id="hero-cta-container"
           >
             <div className="w-full text-left bg-gradient-to-br from-white to-[#fffbfd] p-5 md:p-6 rounded-3xl border border-secondary/20 shadow-xl shadow-rose-100/30 relative mt-2" id="hero-random-columns">
@@ -230,9 +230,9 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
         {/* Guarantee Badge */}
         <motion.div 
           className="mt-8 flex items-center justify-center gap-3"
-          initial={{ opacity: 0 }}
+          initial={false}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          transition={{ duration: 0.3 }}
           id="hero-badge"
         >
           <div className="flex -space-x-2">

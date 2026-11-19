@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Settings } from 'lucide-react';
 import Header from './components/Header';
@@ -14,17 +14,19 @@ import Testimonials from './components/Testimonials';
 import Flow from './components/Flow';
 import LineCtaSection from './components/LineCtaSection';
 import Footer from './components/Footer';
-import BlogSection from './components/BlogSection';
 import RecruitHub from './components/RecruitHub';
 import MobileStickyCta from './components/MobileStickyCta';
-import AboutPage from './components/AboutPage';
-import ComparisonPage from './components/ComparisonPage';
-import SiteComparisonPage from './components/SiteComparisonPage';
-import FAQPage from './components/FAQPage';
-import TopicClusterPage from './components/TopicClusterPage';
-import GlossaryPage from './components/GlossaryPage';
+import {
+  LazyAboutPage,
+  LazyAdminPanel,
+  LazyBlogSection,
+  LazyComparisonPage,
+  LazyFAQPage,
+  LazyGlossaryPage,
+  LazySiteComparisonPage,
+  LazyTopicClusterPage,
+} from './routeLoaders';
 import { TOPIC_CLUSTERS } from './topicClusterData';
-import { COMPARE_PARENT_COPY, LEGACY_COMPARE_SLUG_REDIRECTS, resolveCompareSubpage } from './data/compareGuides';
 import { SITE_COMPARE_SEO } from './compareData';
 import LucideIcon from './components/LucideIcon';
 import { getStoredArticles, BlogArticle, BLOG_ARTICLES, getValidArticleEyeCatch, mergeWithDefaultArticles } from './blogData';
@@ -36,7 +38,9 @@ if (typeof window !== 'undefined') {
   captureInitialHomeJsonLd();
 }
 
-const AdminPanel = lazy(() => import('./components/AdminPanel'));
+const PageRouteFallback = (
+  <div className="min-h-[70vh] bg-[#fffafb]" aria-hidden="true" />
+);
 
 export default function App() {
   const [path, setPath] = useState(() => {
@@ -215,13 +219,15 @@ export default function App() {
     if (selectedSlug && slugRedirectMap[selectedSlug]) {
       navigate(slugRedirectMap[selectedSlug], true);
     }
-    if (selectedCategorySlug && LEGACY_COMPARE_SLUG_REDIRECTS[selectedCategorySlug]) {
-      navigate(`/compare/${LEGACY_COMPARE_SLUG_REDIRECTS[selectedCategorySlug]}`, true);
-    }
     if (cleanPath === '/dorm') {
       navigate('/dekasegi', true);
     }
-  }, [selectedSlug, cleanPath, selectedCategorySlug]);
+  }, [selectedSlug, cleanPath]);
+
+  // Remove SSR shell critical CSS only after React has mounted and replaced [data-ssr-content]
+  useEffect(() => {
+    document.getElementById('ssr-shell-styles')?.remove();
+  }, []);
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
@@ -242,22 +248,9 @@ export default function App() {
       pageDesc = SITE_COMPARE_SEO.description;
       canonicalUrl = SITE_COMPARE_SEO.canonicalUrl;
     } else if (currentTab === 'compare') {
-      if (selectedCategorySlug) {
-        const subpage = resolveCompareSubpage(selectedCategorySlug);
-        if (subpage) {
-          pageTitle = subpage.seoTitle;
-          pageDesc = subpage.metaDescription;
-          canonicalUrl = `https://tobitashinchi-recruit.com/compare/${subpage.slug}`;
-        } else {
-          pageTitle = COMPARE_PARENT_COPY.seoTitle;
-          pageDesc = COMPARE_PARENT_COPY.metaDescription;
-          canonicalUrl = 'https://tobitashinchi-recruit.com/compare';
-        }
-      } else {
-        pageTitle = COMPARE_PARENT_COPY.seoTitle;
-        pageDesc = COMPARE_PARENT_COPY.metaDescription;
-        canonicalUrl = 'https://tobitashinchi-recruit.com/compare';
-      }
+      canonicalUrl = selectedCategorySlug
+        ? `https://tobitashinchi-recruit.com/compare/${selectedCategorySlug}`
+        : 'https://tobitashinchi-recruit.com/compare';
     } else if (currentTab === 'glossary') {
       pageTitle = '飛田新地 用語集・用語辞典｜上がり框・仲居・清拭・通り別の意味を徹底解説【公式】';
       pageDesc = '飛田新地求人の専門用語辞典。上がり框、仲居さん、清拭（シャワーなしルール）、メイン通り・青春通り・妖怪通りの違い、給料計算（50%バック）など、働く前に知っておきたい用語を料亭直営スタッフが分かりやすく解説。';
@@ -284,8 +277,8 @@ export default function App() {
       pageTitle = '管理パネル｜飛田ガールズ';
     }
 
-    // Only update if not on a blog detail page (BlogSection handles its own)
-    if (currentTab !== 'blog' || !selectedSlug) {
+    // Only update if not handled by dedicated page components (BlogSection detail / ComparisonPage)
+    if ((currentTab !== 'blog' || !selectedSlug) && currentTab !== 'compare') {
       document.title = pageTitle;
 
       const metaDesc = document.querySelector('meta[name="description"]');
@@ -467,7 +460,7 @@ export default function App() {
 
       {/* Main Layout Area */}
       <main className="flex-grow pt-16 overflow-x-hidden pb-20 md:pb-0">
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" initial={false}>
           {currentTab === 'recruit' ? (
             /* ==========================================
                RECRUITING LANDING PAGE (TAB)
@@ -565,23 +558,25 @@ export default function App() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
             >
-              <BlogSection 
-                articles={blogArticles}
-                selectedSlug={selectedSlug}
-                initialCategory={selectedCategorySlug}
-                onSelectSlug={(slug) => {
-                  if (slug) {
-                    navigate(`/blog/${slug}`);
-                  } else {
-                    navigate('/blog');
-                  }
-                }}
-                onCtaclick={handleScrollToForm} 
-                onInjectedScroll={handleInjectedScroll}
-                onSimulatorClick={handleScrollToSimulator}
-                onNavigateAbout={() => setCurrentTab('about')}
-                onNavigateHome={() => setCurrentTab('recruit')}
-              />
+              <Suspense fallback={PageRouteFallback}>
+                <LazyBlogSection 
+                  articles={blogArticles}
+                  selectedSlug={selectedSlug}
+                  initialCategory={selectedCategorySlug}
+                  onSelectSlug={(slug) => {
+                    if (slug) {
+                      navigate(`/blog/${slug}`);
+                    } else {
+                      navigate('/blog');
+                    }
+                  }}
+                  onCtaclick={handleScrollToForm} 
+                  onInjectedScroll={handleInjectedScroll}
+                  onSimulatorClick={handleScrollToSimulator}
+                  onNavigateAbout={() => setCurrentTab('about')}
+                  onNavigateHome={() => setCurrentTab('recruit')}
+                />
+              </Suspense>
             </motion.div>
           ) : currentTab === 'compare' ? (
             /* ==========================================
@@ -594,22 +589,24 @@ export default function App() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
             >
-              <ComparisonPage
-                onNavigateHome={() => setCurrentTab('recruit')}
-                onNavigateBlog={() => setCurrentTab('blog')}
-                onNavigateSiteCompare={() => setCurrentTab('site-compare')}
-                onNavigatePath={(targetPath) => navigate(targetPath)}
-                onCtaclick={handleScrollToForm}
-                onInjectedScroll={handleInjectedScroll}
-                initialCategorySlug={selectedCategorySlug}
-                onSelectCategorySlug={(slug) => {
-                  if (slug && slug !== 'all') {
-                    navigate(`/compare/${slug}`);
-                  } else {
-                    navigate('/compare');
-                  }
-                }}
-              />
+              <Suspense fallback={PageRouteFallback}>
+                <LazyComparisonPage
+                  onNavigateHome={() => setCurrentTab('recruit')}
+                  onNavigateBlog={() => setCurrentTab('blog')}
+                  onNavigateSiteCompare={() => setCurrentTab('site-compare')}
+                  onNavigatePath={(targetPath) => navigate(targetPath)}
+                  onCtaclick={handleScrollToForm}
+                  onInjectedScroll={handleInjectedScroll}
+                  initialCategorySlug={selectedCategorySlug}
+                  onSelectCategorySlug={(slug) => {
+                    if (slug && slug !== 'all') {
+                      navigate(`/compare/${slug}`);
+                    } else {
+                      navigate('/compare');
+                    }
+                  }}
+                />
+              </Suspense>
             </motion.div>
           ) : currentTab === 'site-compare' ? (
             /* ==========================================
@@ -622,12 +619,14 @@ export default function App() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
             >
-              <SiteComparisonPage
-                onNavigateHome={() => setCurrentTab('recruit')}
-                onNavigateCompare={() => setCurrentTab('compare')}
-                onNavigatePath={(path) => navigate(path)}
-                onCtaclick={handleScrollToForm}
-              />
+              <Suspense fallback={PageRouteFallback}>
+                <LazySiteComparisonPage
+                  onNavigateHome={() => setCurrentTab('recruit')}
+                  onNavigateCompare={() => setCurrentTab('compare')}
+                  onNavigatePath={(path) => navigate(path)}
+                  onCtaclick={handleScrollToForm}
+                />
+              </Suspense>
             </motion.div>
           ) : currentTab === 'glossary' ? (
             /* ==========================================
@@ -640,10 +639,12 @@ export default function App() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
             >
-              <GlossaryPage
-                onNavigateHome={() => setCurrentTab('recruit')}
-                onCtaclick={handleScrollToForm}
-              />
+              <Suspense fallback={PageRouteFallback}>
+                <LazyGlossaryPage
+                  onNavigateHome={() => setCurrentTab('recruit')}
+                  onCtaclick={handleScrollToForm}
+                />
+              </Suspense>
             </motion.div>
           ) : currentTab === 'about' ? (
             /* ==========================================
@@ -656,11 +657,13 @@ export default function App() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
             >
-              <AboutPage
-                onNavigateHome={() => setCurrentTab('recruit')}
-                onNavigateBlog={() => setCurrentTab('blog')}
-                onCtaclick={handleScrollToForm}
-              />
+              <Suspense fallback={PageRouteFallback}>
+                <LazyAboutPage
+                  onNavigateHome={() => setCurrentTab('recruit')}
+                  onNavigateBlog={() => setCurrentTab('blog')}
+                  onCtaclick={handleScrollToForm}
+                />
+              </Suspense>
             </motion.div>
           ) : currentTab === 'faq' ? (
             /* ==========================================
@@ -673,16 +676,18 @@ export default function App() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
             >
-              <FAQPage
-                initialCategory={selectedFaqCategory}
-                onNavigateHome={() => {
-                  navigate('/');
-                }}
-                onNavigatePath={(targetPath) => {
-                  navigate(targetPath);
-                }}
-                onCtaclick={handleScrollToForm}
-              />
+              <Suspense fallback={PageRouteFallback}>
+                <LazyFAQPage
+                  initialCategory={selectedFaqCategory}
+                  onNavigateHome={() => {
+                    navigate('/');
+                  }}
+                  onNavigatePath={(targetPath) => {
+                    navigate(targetPath);
+                  }}
+                  onCtaclick={handleScrollToForm}
+                />
+              </Suspense>
             </motion.div>
           ) : currentTab === 'cluster' ? (
             /* ==========================================
@@ -695,27 +700,29 @@ export default function App() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
             >
-              <TopicClusterPage
-                topicId={clusterTopic}
-                onNavigateHome={() => {
-                  navigate('/');
-                }}
-                onNavigateTopic={(tid) => {
-                  navigate(TOPIC_CLUSTERS[tid]?.path || `/${tid}`);
-                }}
-                onNavigateBlog={(slug) => {
-                  if (slug) {
-                    navigate(`/blog/${slug}`);
-                  } else {
-                    navigate('/blog');
-                  }
-                }}
-                onNavigateFaq={() => {
-                  navigate('/faq');
-                }}
-                onCtaclick={handleScrollToForm}
-                onInjectedScroll={handleInjectedScroll}
-              />
+              <Suspense fallback={PageRouteFallback}>
+                <LazyTopicClusterPage
+                  topicId={clusterTopic}
+                  onNavigateHome={() => {
+                    navigate('/');
+                  }}
+                  onNavigateTopic={(tid) => {
+                    navigate(TOPIC_CLUSTERS[tid]?.path || `/${tid}`);
+                  }}
+                  onNavigateBlog={(slug) => {
+                    if (slug) {
+                      navigate(`/blog/${slug}`);
+                    } else {
+                      navigate('/blog');
+                    }
+                  }}
+                  onNavigateFaq={() => {
+                    navigate('/faq');
+                  }}
+                  onCtaclick={handleScrollToForm}
+                  onInjectedScroll={handleInjectedScroll}
+                />
+              </Suspense>
             </motion.div>
           ) : (
             /* ==========================================
@@ -734,7 +741,7 @@ export default function App() {
                   <p className="text-sm font-sans">管理パネルを読み込み中...</p>
                 </div>
               }>
-                <AdminPanel 
+                <LazyAdminPanel 
                   onClose={() => setCurrentTab('blog')}
                   onRefreshBlog={handleRefreshBlog}
                   onRefreshSite={handleRefreshSiteContent}

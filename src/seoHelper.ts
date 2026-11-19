@@ -53,17 +53,55 @@ const DEFAULT_IMAGE = 'https://tobitashinchi-recruit.com/images/tobita_dream_her
 
 function buildHomeNoscript(): string {
   return `
-    <header>
-      <p>飛田新地求人サイト「飛田ガールズ」公式採用窓口</p>
-      <p>飛田新地の求人案内｜当店の公式採用情報</p>
+    <header class="ssr-topbar">
+      <div class="ssr-topbar-inner">
+        <a href="/" class="ssr-brand">
+          <img src="/favicon.png" alt="飛田ガールズ アイコン" class="ssr-logo-img" width="36" height="36" />
+          <span class="ssr-brand-text">
+            <strong>飛田ガールズ</strong>
+            <small>Tobita Girls・料亭直営求人</small>
+          </span>
+        </a>
+        <nav class="ssr-topnav" aria-label="主要メニュー">
+          <a href="/">求人トップ</a>
+          <a href="/faq">よくある質問</a>
+          <a href="/blog">お仕事コラム</a>
+          <a href="/#consultation" class="ssr-nav-cta">LINE無料相談</a>
+        </nav>
+      </div>
     </header>
 
-    <main>
-      <article>
-        <h1>飛田新地で働くことを考えている女性へ。</h1>
-        <img src="https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg" alt="飛田新地のお仕事・料亭直営求人で夢を叶える場所" width="1376" height="768" />
-        <p class="lead">当店では、仕事内容や給料の仕組み、未経験から働くまでの流れ、お店選びのポイントなど、求人を探すうえで知っておきたい情報をわかりやすくまとめています。まずは相談だけでもお気軽にご相談ください。</p>
+    <section class="ssr-hero">
+      <div class="ssr-hero-inner">
+        <p class="ssr-hero-pill"><span class="ssr-hero-dot"></span>飛田新地の求人案内｜当店の公式採用情報</p>
+        <h1 class="ssr-hero-h1">
+          <span>飛田新地で働くことを</span>
+          <span class="ssr-hero-accent">考えている女性へ。</span>
+        </h1>
+        <div class="ssr-hero-desc">
+          <p>当店では、仕事内容や給料の仕組み、未経験から働くまでの流れ、お店選びのポイントなど、求人を探すうえで知っておきたい情報をわかりやすくまとめています。</p>
+          <p class="ssr-hero-questions">
+            <span>・「未経験でも大丈夫？」</span>
+            <span>・「実際どんな仕事をするの？」</span>
+            <span>・「身バレや人間関係が心配……」</span>
+          </p>
+          <p>そんな疑問や不安にも、丁寧にお答えします。</p>
+          <p class="ssr-hero-cta-line">まずは相談だけでもお気軽にご相談ください。</p>
+        </div>
+        <div class="ssr-hero-visual">
+          <div class="ssr-hero-card">
+            <img src="https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg" alt="飛田新地のお仕事・料亭直営求人で夢を叶える場所" class="ssr-hero-img" width="800" height="450" />
+            <div class="ssr-hero-stamp">
+              <span>飛田新地で</span>
+              <strong>夢を叶えよう！</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <main class="ssr-below-fold">
+      <article>
         <section>
           <h2>飛田新地求人の基本条件・募集要項</h2>
           <table border="1">
@@ -813,15 +851,29 @@ function buildBlogArticleNoscript(article: any): string {
   const eyeCatchUrl = resolveFullImageUrl(article.eyeCatch);
 
   return `
-    <header>
-      <p>飛田新地求人サイト「飛田ガールズ」</p>
-      <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ <a href="/blog">お仕事コラム一覧に戻る</a></p>
+    <header class="ssr-topbar">
+      <div class="ssr-topbar-inner">
+        <a href="/" class="ssr-brand">
+          <img src="/favicon.png" alt="飛田ガールズ アイコン" class="ssr-logo-img" width="36" height="36" />
+          <span class="ssr-brand-text">
+            <strong>飛田ガールズ</strong>
+            <small>Tobita Girls・料亭直営求人</small>
+          </span>
+        </a>
+        <nav class="ssr-topnav" aria-label="主要メニュー">
+          <a href="/">求人トップ</a>
+          <a href="/blog">コラム一覧</a>
+          <a href="/faq">よくある質問</a>
+        </nav>
+      </div>
     </header>
-    <main>
+    <main class="ssr-below-fold ssr-blog-shell">
       <article>
-        <h1>${escapeHtml(article.title)}</h1>
+        <div class="ssr-blog-eyecatch">
+          <img src="${escapeHtml(eyeCatchUrl)}" alt="${escapeHtml(article.title)}" class="ssr-blog-img" width="768" height="288" />
+        </div>
         <p class="meta">公開日: ${escapeHtml(article.publishedAt || '2026.07.01')} | 執筆: ${escapeHtml(article.author?.name || 'さくら')}（${escapeHtml(article.author?.role || '女性サポートスタッフ')}）</p>
-        <img src="${escapeHtml(eyeCatchUrl)}" alt="${escapeHtml(article.title)}" width="1200" height="630" />
+        <h1>${escapeHtml(article.title)}</h1>
         <p class="summary">${escapeHtml(article.summary || '')}</p>
         ${bodyText}
         <section>
@@ -1868,39 +1920,86 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
   }
 
   // Render visible semantic initial HTML directly inside #root with scoped critical brand CSS
-  // (Prevents unstyled text flash caused by Tailwind Preflight before React mounts, while keeping 100% crawler visibility)
+  // (Matches React Header/Hero geometry above-the-fold so zero flash or oversized image shift occurs while keeping 100% crawler visibility)
   if (customNoscript) {
     const ssrCriticalCss = `<style id="ssr-shell-styles">
-  html, body { margin: 0; background: #faf6f7; color: #383038; font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; -webkit-font-smoothing: antialiased; }
-  [data-ssr-content="true"] { max-width: 960px; margin: 0 auto; padding: 16px 16px 48px; color: #383038; line-height: 1.8; font-size: 15px; }
-  [data-ssr-content="true"] > header { background: rgba(255, 255, 255, 0.96); border: 1px solid #f0e5e9; border-radius: 16px; padding: 12px 18px; margin-bottom: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; box-shadow: 0 2px 12px rgba(233, 0, 72, 0.04); }
-  [data-ssr-content="true"] > header p:first-child { margin: 0; font-weight: 800; font-size: 14px; color: #e90048; letter-spacing: 0.02em; }
-  [data-ssr-content="true"] > header p:last-child, [data-ssr-content="true"] > header nav { margin: 0; font-size: 12.5px; color: #6e636b; }
-  [data-ssr-content="true"] > main > article { background: #ffffff; border: 1px solid #f0e5e9; border-radius: 22px; padding: 28px 22px; box-shadow: 0 6px 24px rgba(56, 48, 56, 0.04); }
-  [data-ssr-content="true"] h1 { font-size: clamp(1.35rem, 2.8vw, 1.95rem); font-weight: 800; color: #333333; line-height: 1.38; margin: 0 0 14px; letter-spacing: -0.01em; }
-  [data-ssr-content="true"] h2 { font-size: 1.15rem; font-weight: 800; color: #333333; line-height: 1.45; margin: 28px 0 12px; padding: 2px 0 2px 12px; border-left: 4px solid #e90048; }
-  [data-ssr-content="true"] h3 { font-size: 1rem; font-weight: 700; color: #383038; line-height: 1.5; margin: 18px 0 6px; }
-  [data-ssr-content="true"] p { margin: 0 0 14px; color: #4a4248; }
+  html, body { margin: 0; background: #fffafb; color: #2c1a1e; font-family: "Noto Sans JP", "Plus Jakarta Sans", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; -webkit-font-smoothing: antialiased; }
+  [data-ssr-content="true"] { color: #2c1a1e; line-height: 1.7; font-size: 15px; min-height: 100vh; }
+  [data-ssr-content="true"] .ssr-topbar,
+  [data-ssr-content="true"] > header { position: fixed; top: 0; left: 0; width: 100%; z-index: 50; background: rgba(255, 255, 255, 0.95); border-bottom: 1px solid #ffe4e6; box-sizing: border-box; }
+  [data-ssr-content="true"] > header:not(.ssr-topbar) { padding: 12px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; }
+  [data-ssr-content="true"] > header:not(.ssr-topbar) p { margin: 0; font-size: 13px; color: #5e474c; }
+  [data-ssr-content="true"] > header:not(.ssr-topbar) p:first-child { font-weight: 800; color: #d2547b; font-size: 14px; }
+  [data-ssr-content="true"] .ssr-topbar-inner { max-width: 1240px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  [data-ssr-content="true"] .ssr-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; border-bottom: none !important; color: inherit; }
+  [data-ssr-content="true"] .ssr-logo-img { display: block; width: 36px; height: 36px; border-radius: 9999px; object-fit: cover; flex-shrink: 0; border: 1px solid #fecdd3; margin: 0; }
+  [data-ssr-content="true"] .ssr-brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+  [data-ssr-content="true"] .ssr-brand-text strong { font-size: 17px; font-weight: 900; color: #e11d48; letter-spacing: -0.01em; }
+  [data-ssr-content="true"] .ssr-brand-text small { font-size: 10px; font-weight: 700; color: #be123c; letter-spacing: 0.04em; }
+  [data-ssr-content="true"] .ssr-topnav { display: none; align-items: center; gap: 14px; font-size: 13px; font-weight: 700; }
+  [data-ssr-content="true"] .ssr-topnav a { color: #27272a; text-decoration: none; border-bottom: none; padding: 6px 10px; border-radius: 10px; }
+  [data-ssr-content="true"] .ssr-topnav a.ssr-nav-cta { background: linear-gradient(90deg, #ec4899, #f43f5e); color: #ffffff; border-radius: 9999px; padding: 7px 14px; font-size: 12px; }
+  [data-ssr-content="true"] .ssr-hero { padding: 176px 24px 36px; background-color: #fffafb; background-image: radial-gradient(#fd80ac18 2px, transparent 2px); background-size: 30px 30px; text-align: center; }
+  [data-ssr-content="true"] .ssr-hero-inner { max-width: 852px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+  [data-ssr-content="true"] .ssr-hero-pill { display: inline-flex; align-items: center; gap: 8px; background: #ffe4e6; color: #d2547b; font-weight: 700; font-size: 12px; padding: 6px 16px; border-radius: 9999px; margin: 0 0 24px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); }
+  [data-ssr-content="true"] .ssr-hero-dot { width: 8px; height: 8px; border-radius: 9999px; background: #d2547b; display: inline-block; }
+  [data-ssr-content="true"] .ssr-hero-h1 { font-size: 1.5rem; font-weight: 800; line-height: 1.25; margin: 0 0 24px; color: #2c1a1e; text-align: center; }
+  [data-ssr-content="true"] .ssr-hero-h1 span { display: block; }
+  [data-ssr-content="true"] .ssr-hero-h1 .ssr-hero-accent { color: #d2547b; }
+  [data-ssr-content="true"] .ssr-hero-desc { max-width: 672px; margin: 0 auto 32px; font-size: 13px; color: #3f3f46; line-height: 1.7; text-align: center; }
+  [data-ssr-content="true"] .ssr-hero-desc p { margin: 0 0 12px; color: #27272a; font-weight: 500; }
+  [data-ssr-content="true"] .ssr-hero-questions { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 4px; color: #d2547b !important; font-weight: 700 !important; margin: 4px auto 8px !important; }
+  [data-ssr-content="true"] .ssr-hero-cta-line { color: #d2547b !important; font-weight: 800 !important; font-size: 15px; margin: 12px 0 0 !important; }
+  [data-ssr-content="true"] .ssr-hero-visual { width: 100%; max-width: 852px; margin: 0 auto 24px; }
+  [data-ssr-content="true"] .ssr-hero-card { position: relative; background: #ffffff; padding: 12px; border-radius: 28px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.18); border: 1px solid rgba(255, 228, 230, 0.6); overflow: hidden; }
+  [data-ssr-content="true"] .ssr-hero-img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 20px; background: #f3f4f6; margin: 0; border: none; }
+  [data-ssr-content="true"] .ssr-hero-stamp { position: absolute; bottom: 24px; right: 24px; background: rgba(255, 255, 255, 0.95); padding: 10px 14px; border-radius: 14px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12); border: 1px solid #ffe4e6; display: flex; flex-direction: column; align-items: center; line-height: 1.2; }
+  [data-ssr-content="true"] .ssr-hero-stamp span { font-size: 11px; font-weight: 800; color: #d2547b; }
+  [data-ssr-content="true"] .ssr-hero-stamp strong { font-size: 14px; font-weight: 800; color: #a13762; }
+  [data-ssr-content="true"] main { max-width: 900px; margin: 0 auto; padding: 88px 16px 56px; box-sizing: border-box; }
+  [data-ssr-content="true"] main.ssr-below-fold { padding-top: 24px; }
+  [data-ssr-content="true"] main.ssr-blog-shell { max-width: 768px; padding-top: 96px; }
+  [data-ssr-content="true"] .ssr-blog-eyecatch { height: 224px; border-radius: 28px; overflow: hidden; background: #fff0f3; border: 1px solid #f3dce2; margin: 0 0 24px; }
+  [data-ssr-content="true"] .ssr-blog-img { display: block; width: 100%; height: 100%; object-fit: cover; margin: 0; border: none; }
+  [data-ssr-content="true"] main > article { background: #ffffff; border: 1px solid #f3dce2; border-radius: 24px; padding: 24px 20px; box-shadow: 0 4px 20px rgba(44, 26, 30, 0.04); }
+  [data-ssr-content="true"] main:not(.ssr-below-fold) h1,
+  [data-ssr-content="true"] main.ssr-blog-shell h1 { font-size: clamp(1.3rem, 2.6vw, 1.85rem); font-weight: 800; color: #2c1a1e; line-height: 1.4; margin: 0 0 14px; text-align: left; }
+  [data-ssr-content="true"] h2 { font-size: 1.12rem; font-weight: 800; color: #2c1a1e; line-height: 1.45; margin: 26px 0 12px; padding: 2px 0 2px 12px; border-left: 4px solid #d2547b; }
+  [data-ssr-content="true"] h3 { font-size: 1rem; font-weight: 700; color: #2c1a1e; line-height: 1.5; margin: 16px 0 6px; }
+  [data-ssr-content="true"] main p { margin: 0 0 14px; color: #4a3b40; }
   [data-ssr-content="true"] p.lead, [data-ssr-content="true"] p.summary { background: #fff5f8; border: 1px solid #f8d8e3; border-radius: 14px; padding: 14px 16px; color: #49313b; font-size: 14.5px; margin: 14px 0 20px; }
-  [data-ssr-content="true"] p.meta { font-size: 12.5px; color: #857982; margin: 0 0 14px; }
-  [data-ssr-content="true"] img { display: block; width: 100%; height: auto; max-height: 380px; object-fit: cover; border-radius: 16px; margin: 16px 0 20px; border: 1px solid #f0e5e9; background: #fff0f4; }
-  [data-ssr-content="true"] a { color: #d94b7a; font-weight: 600; text-decoration: none; border-bottom: 1px solid rgba(217, 75, 122, 0.3); }
+  [data-ssr-content="true"] p.meta { font-size: 12.5px; color: #857982; margin: 0 0 12px; }
+  [data-ssr-content="true"] main img:not(.ssr-blog-img):not(.ssr-hero-img) { display: block; max-width: 100%; width: auto; height: auto; max-height: 288px; border-radius: 16px; margin: 16px auto; border: 1px solid #f3dce2; }
+  [data-ssr-content="true"] main a { color: #d2547b; font-weight: 600; text-decoration: none; border-bottom: 1px solid rgba(210, 84, 123, 0.3); }
   [data-ssr-content="true"] ul, [data-ssr-content="true"] ol { margin: 10px 0 18px; padding-left: 22px; }
   [data-ssr-content="true"] ul { list-style: disc; }
   [data-ssr-content="true"] ol { list-style: decimal; }
-  [data-ssr-content="true"] li { margin-bottom: 8px; color: #4a4248; }
-  [data-ssr-content="true"] table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; font-size: 13.5px; border: 1px solid #f0e5e9; border-radius: 12px; overflow: hidden; display: table; }
-  [data-ssr-content="true"] th, [data-ssr-content="true"] td { border: 1px solid #f0e5e9; padding: 10px 14px; text-align: left; vertical-align: top; }
-  [data-ssr-content="true"] th { background: #fff0f4; color: #383038; font-weight: 700; width: 28%; }
-  [data-ssr-content="true"] td { background: #ffffff; color: #4a4248; }
+  [data-ssr-content="true"] li { margin-bottom: 8px; color: #4a3b40; }
+  [data-ssr-content="true"] table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; font-size: 13.5px; border: 1px solid #f3dce2; border-radius: 12px; overflow: hidden; display: table; }
+  [data-ssr-content="true"] th, [data-ssr-content="true"] td { border: 1px solid #f3dce2; padding: 10px 14px; text-align: left; vertical-align: top; }
+  [data-ssr-content="true"] th { background: #fff0f4; color: #2c1a1e; font-weight: 700; width: 28%; }
+  [data-ssr-content="true"] td { background: #ffffff; color: #4a3b40; }
   [data-ssr-content="true"] dl { margin: 12px 0 18px; }
-  [data-ssr-content="true"] dt { font-weight: 700; color: #333333; margin: 14px 0 4px; padding-top: 10px; border-top: 1px dashed #f0e5e9; }
+  [data-ssr-content="true"] dt { font-weight: 700; color: #2c1a1e; margin: 14px 0 4px; padding-top: 10px; border-top: 1px dashed #f3dce2; }
   [data-ssr-content="true"] dt:first-child { border-top: none; padding-top: 0; }
-  [data-ssr-content="true"] dd { margin: 0 0 10px; color: #555555; }
-  [data-ssr-content="true"] blockquote { margin: 14px 0; padding: 12px 16px; background: #fff5f8; border-left: 4px solid #e90048; border-radius: 8px; color: #49313b; }
-  @media (min-width: 640px) {
-    [data-ssr-content="true"] { padding: 24px 24px 56px; }
-    [data-ssr-content="true"] > main > article { padding: 36px 34px; }
+  [data-ssr-content="true"] dd { margin: 0 0 10px; color: #5e474c; }
+  [data-ssr-content="true"] blockquote { margin: 14px 0; padding: 12px 16px; background: #fff5f8; border-left: 4px solid #d2547b; border-radius: 8px; color: #49313b; }
+  @media (min-width: 768px) {
+    [data-ssr-content="true"] .ssr-hero { padding: 208px 24px 48px; }
+    [data-ssr-content="true"] .ssr-hero-pill { font-size: 14px; }
+    [data-ssr-content="true"] .ssr-hero-h1 { font-size: 3rem; }
+    [data-ssr-content="true"] .ssr-hero-desc { font-size: 16px; }
+    [data-ssr-content="true"] .ssr-hero-cta-line { font-size: 18px; }
+    [data-ssr-content="true"] .ssr-hero-card { border-radius: 36px; }
+    [data-ssr-content="true"] .ssr-hero-img { border-radius: 28px; }
+    [data-ssr-content="true"] .ssr-hero-stamp { bottom: 32px; right: 32px; padding: 14px 18px; border-radius: 16px; }
+    [data-ssr-content="true"] .ssr-hero-stamp span { font-size: 13px; }
+    [data-ssr-content="true"] .ssr-hero-stamp strong { font-size: 20px; }
+    [data-ssr-content="true"] .ssr-blog-eyecatch { height: 288px; }
+    [data-ssr-content="true"] main > article { padding: 32px; }
+  }
+  @media (min-width: 1024px) {
+    [data-ssr-content="true"] .ssr-topnav { display: flex; }
   }
 </style>`;
     if (!html.includes('id="ssr-shell-styles"')) {

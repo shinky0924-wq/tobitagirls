@@ -2,6 +2,7 @@ import { StrictMode, Component, ErrorInfo, ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import './index.css';
+import { preloadRouteForPath } from './routeLoaders';
 
 interface Props {
   children: ReactNode;
@@ -61,28 +62,30 @@ class ErrorBoundary extends Component<Props, State> {
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
-  try {
-    const root = createRoot(rootElement);
-    root.render(
-      <StrictMode>
-        <ErrorBoundary>
-          <App />
-        </ErrorBoundary>
-      </StrictMode>,
-    );
-    document.getElementById('ssr-shell-styles')?.remove();
-  } catch (err: any) {
-    console.error('Fatal initialization error:', err);
-    rootElement.innerHTML = `
-      <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;font-family:sans-serif;background:#fff5f7;text-align:center;">
-        <div style="background:#fff;padding:30px;border-radius:20px;box-shadow:0 10px 25px rgba(0,0,0,0.05);max-width:480px;width:100%;border:1px solid #ffe4e8;">
-          <div style="font-size:24px;margin-bottom:12px;color:#d2547b;font-weight:bold;">初期化エラーが発生しました</div>
-          <p style="font-size:14px;color:#666;margin-bottom:20px;">${err?.message || '不明なエラー'}</p>
-          <button onclick="location.reload()" style="background:#d2547b;color:#fff;border:none;padding:12px 24px;border-radius:9999px;font-weight:bold;cursor:pointer;">再読み込み</button>
+  (async () => {
+    try {
+      await preloadRouteForPath(window.location.pathname);
+      const root = createRoot(rootElement);
+      root.render(
+        <StrictMode>
+          <ErrorBoundary>
+            <App />
+          </ErrorBoundary>
+        </StrictMode>,
+      );
+    } catch (err: any) {
+      console.error('Fatal initialization error:', err);
+      rootElement.innerHTML = `
+        <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;font-family:sans-serif;background:#fff5f7;text-align:center;">
+          <div style="background:#fff;padding:30px;border-radius:20px;box-shadow:0 10px 25px rgba(0,0,0,0.05);max-width:480px;width:100%;border:1px solid #ffe4e8;">
+            <div style="font-size:24px;margin-bottom:12px;color:#d2547b;font-weight:bold;">初期化エラーが発生しました</div>
+            <p style="font-size:14px;color:#666;margin-bottom:20px;">${err?.message || '不明なエラー'}</p>
+            <button onclick="location.reload()" style="background:#d2547b;color:#fff;border:none;padding:12px 24px;border-radius:9999px;font-weight:bold;cursor:pointer;">再読み込み</button>
+          </div>
         </div>
-      </div>
-    `;
-  }
+      `;
+    }
+  })();
 }
 
 
