@@ -517,7 +517,7 @@ export default function SalaryCalculator({ onCtaclick }: SalaryCalculatorProps) 
                   👉 <strong>合計 {calculated.totalCount} 本</strong> の接客想定（退勤時に全額現金手渡し）
                 </p>
                 <p className="text-white/70 text-[10px]">
-                  ※全て15分（5,000円）のみの場合でも最低 {calculated.minDaily.toLocaleString()} 円手渡し保証
+                  ※全て15分（5,000円）のみの場合の計算目安：{calculated.minDaily.toLocaleString()} 円（控除0円・当日全額現金手渡し）
                 </p>
               </div>
             </div>

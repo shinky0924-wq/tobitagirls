@@ -338,23 +338,23 @@ const TREATMENT_CARDS = [
   {
     id: 'treatment-dorm',
     icon: 'Home',
-    title: '家具家電付きオートロック個室マンション寮完備',
-    summary: '敷金・礼金・初期費用0円で即日入居可能。カバン1つで清潔な完全個室の新生活をスタートできます。',
+    title: '家具家電付きオートロック個室マンション寮案内可',
+    summary: '空き状況や日額・初期費用などの利用条件は事前確認可。清潔な完全個室マンションをご案内できます。',
     points: [
       '冷蔵庫・洗濯機・電子レンジ・テレビ・ベッド・エアコン・無料Wi-Fi完備',
-      'オートロック＆モニター付きインターホンで防犯・プライバシーも万全',
-      '店舗まで徒歩圏内・即日入居手続きに対応'
+      'オートロック＆モニター付きインターホンで防犯・プライバシーにも配慮',
+      '入居日や費用条件は面接・LINE相談時に明確にご案内'
     ]
   },
   {
     id: 'treatment-transport',
     icon: 'Train',
-    title: '遠方・地方からの往復交通費全額支給',
-    summary: '全国各地からの出稼ぎ希望者へ、往復交通費を全額当店が負担・支給いたします。',
+    title: '遠方・地方からの往復交通費支給（規定あり）',
+    summary: '全国各地からの出稼ぎ希望者へ、条件・上限を事前にお伝えしたうえで往復交通費を支給しています。',
     points: [
-      '新幹線・飛行機・特急・高速夜行バスなど実費往復全額支給',
-      '領収書をお持ちいただければ初日稼働後に現金精算手渡し',
-      '短期集中（2泊3日〜週末のみ）から長期滞在まで柔軟に対応'
+      '新幹線・飛行機・特急・高速夜行バス等が対象（支給上限・対象日数等の規定あり）',
+      '領収書をご提示のうえ、事前案内した条件に沿って精算・手渡し',
+      '短期集中から長期滞在まで日程に合わせて相談可能'
     ]
   },
   {
@@ -365,7 +365,7 @@ const TREATMENT_CARDS = [
     points: [
       'ドレス、ワンピース、和装（着物・浴衣）、ヒール靴まで全サイズ完備',
       'ヘアアイロン（コテ・ストレート）、コスメ・アメニティも自由に使用可能',
-      '私服手ぶらで出勤し、お仕事後に着替えてそのまま帰宅OK'
+      '衣装の事前準備や購入不要（※体験・勤務時は本人確認書類をご持参ください）'
     ]
   },
   {
@@ -447,11 +447,11 @@ const SALARY_FAQS = [
   },
   {
     q: '完全な未経験でも給与の仕組みを理解できますか？',
-    a: 'はい、仕組みは非常にシンプルです。コースごとに手取り額（15分5,000円、20分7,500円など）が最初から固定されており、接客した本数を掛け算するだけです。出勤初日に女性スタッフが丁寧に説明いたします。'
+    a: 'はい、仕組みは非常にシンプルです。完全歩合制ですがコースごとに手取り単価（15分5,000円、20分7,500円など）が明確に決まっており、接客した本数で計算できます。出勤初日に女性スタッフが丁寧に説明いたします。'
   },
   {
     q: '寮や住居の利用条件について事前に相談できますか？',
-    a: 'はい、可能です。オートロック・家具家電完備の個室マンションをご用意しており、初期費用や保証人は不要です。即日入居のご相談や入居期間について、LINEでお気軽にご質問いただけます。'
+    a: 'はい、可能です。オートロック・家具家電完備の個室マンションをご用意しており、物件の空き状況や日額費用・初期条件、入居日程などについてLINEでお気軽にご質問いただけます。'
   },
   {
     q: '家族や本業の会社に身バレしないか心配ですが、相談できますか？',
@@ -1331,7 +1331,7 @@ export default function SalaryPage({
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#85818A]">適用条件：</span>
-                    <span className="font-bold">完全個室寮完備・往復交通費全額支給</span>
+                    <span className="font-bold">完全個室寮相談可・往復交通費規定支給</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#85818A]">適用ペース：</span>
@@ -1381,15 +1381,15 @@ export default function SalaryPage({
               <div className="space-y-2 pt-1 text-xs sm:text-sm">
                 <div className="flex items-center gap-2 text-[#35313A]">
                   <LucideIcon name="Check" size={15} className="text-[#D94B7A] shrink-0" />
-                  <span>家具家電付きオートロック個室マンション寮完備（初期費用0円）</span>
+                  <span>家具家電付きオートロック個室マンション寮相談可（条件事前確認可）</span>
                 </div>
                 <div className="flex items-center gap-2 text-[#35313A]">
                   <LucideIcon name="Check" size={15} className="text-[#D94B7A] shrink-0" />
-                  <span>地方・遠方からの往復交通費を全額当店負担</span>
+                  <span>地方・遠方からの往復交通費支給制度あり（規定・事前確認可）</span>
                 </div>
                 <div className="flex items-center gap-2 text-[#35313A]">
                   <LucideIcon name="Check" size={15} className="text-[#D94B7A] shrink-0" />
-                  <span>衣装・靴・ヘアアイロン・コスメ一式無料貸出（手ぶら出勤OK）</span>
+                  <span>衣装・靴・ヘアアイロン・コスメ一式無料貸出（衣装準備不要）</span>
                 </div>
               </div>
             </div>
@@ -1559,10 +1559,10 @@ export default function SalaryPage({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Article 1 */}
             <a
-              href="/blog/tobitashinchi-salary-system-breakdown"
+              href="/blog/tobitashinchi-official-salary-formula-breakdown"
               onClick={(e) => {
                 e.preventDefault();
-                onNavigateBlog && onNavigateBlog('tobitashinchi-salary-system-breakdown');
+                onNavigateBlog && onNavigateBlog('tobitashinchi-official-salary-formula-breakdown');
               }}
               className="p-5 rounded-2xl bg-[#FFF9FB] border border-[#F0E5EA] hover:border-[#D94B7A]/40 hover:bg-white transition-all cursor-pointer flex flex-col justify-between group shadow-2xs"
             >
@@ -1597,7 +1597,7 @@ export default function SalaryPage({
                   寮・住居
                 </span>
                 <h3 className="font-bold text-sm text-[#35313A] group-hover:text-[#D94B7A] leading-snug mb-2 transition-colors">
-                  家具家電付き個室マンション寮の生活ガイド｜初期費用0円で即日入居
+                  家具家電付き個室マンション寮の生活ガイド｜設備・利用条件の確認ポイント
                 </h3>
                 <p className="text-xs text-[#85818A] leading-relaxed line-clamp-3">
                   オートロックマンションの設備、セキュリティ、周辺環境、出稼ぎ交通費の精算方法を解説。

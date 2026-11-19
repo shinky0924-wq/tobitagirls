@@ -16,7 +16,7 @@ export const BENEFITS_ITEMS = [
     id: 'benefit-zero-deduction',
     icon: 'ShieldCheck',
     color: 'from-amber-500 to-rose-500',
-    badge: '完全0円保証',
+    badge: '天引きなし',
     badgeBg: 'bg-amber-100 text-amber-800 border-amber-200',
     title: '雑費・天引き 完全0円',
     summary: '待機料・厚生費・ロッカー代などの差し引きは一切なし。稼いだお給料がそのまま手元に残ります。',
@@ -30,42 +30,42 @@ export const BENEFITS_ITEMS = [
     id: 'benefit-dorm',
     icon: 'Home',
     color: 'from-rose-500 to-pink-500',
-    badge: '即日入居OK',
+    badge: '入居相談OK',
     badgeBg: 'bg-rose-100 text-rose-800 border-rose-200',
-    title: 'オートロック個室マンション寮完備',
-    summary: '家具家電・Wi-Fi完備の清潔な完全個室マンション。カバン1つで即日から新生活を始められます。',
+    title: 'オートロック個室マンション寮案内可',
+    summary: '家具家電・Wi-Fi完備の清潔な完全個室マンション。空き状況や利用条件は事前に明確にご案内します。',
     points: [
-      '敷金・礼金・保証人・初期費用すべて0円で即日入居可能',
+      '物件の空き状況や日額費用・初期条件などを応募前に事前確認可能',
       '冷蔵庫・洗濯機・電子レンジ・テレビ・ベッド・エアコン・無料Wi-Fi完備',
-      'オートロック＆モニター付きインターホンで防犯・プライバシーも万全'
+      'オートロック＆モニター付きインターホンで防犯・プライバシーにも配慮'
     ]
   },
   {
     id: 'benefit-transport',
     icon: 'Train',
     color: 'from-blue-500 to-indigo-500',
-    badge: '往復全額負担',
+    badge: '規定支給あり',
     badgeBg: 'bg-blue-100 text-blue-800 border-blue-200',
-    title: '地方・遠方からの出稼ぎ交通費全額支給',
-    summary: '全国各地からの出稼ぎ希望者へ、往復交通費を全額当店が負担支給いたします。',
+    title: '地方・遠方からの出稼ぎ交通費支給（規定あり）',
+    summary: '全国各地からの出稼ぎ希望者へ、往復交通費のサポート制度をご用意しています（支給条件は事前確認可）。',
     points: [
-      '新幹線・飛行機・特急・高速夜行バスなど実費往復全額支給',
-      '領収書またはチケット控えをお持ちいただければ初日稼働後に精算手渡し',
-      '短期集中（2泊3日〜週末のみ）から長期滞在まで柔軟に対応'
+      '新幹線・飛行機・特急・高速夜行バス等が対象（支給上限・必要稼働日数等の規定あり）',
+      '領収書またはチケット控えをご提示のうえ、事前案内した条件に沿って精算',
+      '短期集中から長期滞在まで、ご希望の日程に合わせて相談可能'
     ]
   },
   {
     id: 'benefit-costume',
     icon: 'Sparkles',
     color: 'from-purple-500 to-rose-500',
-    badge: '手ぶら出勤OK',
+    badge: '衣装準備不要',
     badgeBg: 'bg-purple-100 text-purple-800 border-purple-200',
     title: '衣装・ドレス・靴・ヘアメイク一式無料貸出',
-    summary: '事前準備や持参物は一切不要！可愛いドレスや浴衣、着物、コスメ道具まで全完備。',
+    summary: '衣装やメイク用品の事前購入は不要！可愛いドレスや浴衣、着物、コスメ道具まで充実。',
     points: [
       'トレンドの可愛いドレス、ワンピース、和装（着物・浴衣）、ヒール靴まで全サイズ完備',
       'ヘアアイロン（コテ・ストレート）、コスメ・アメニティも自由に使用可能',
-      '私服手ぶらでそのまま出勤・お仕事後に着替えて退勤OK'
+      '普段着で出勤でき、衣装費がかかりません（※体験・勤務時は本人確認書類が必要）'
     ]
   },
   {
@@ -88,11 +88,11 @@ export const BENEFITS_ITEMS = [
     color: 'from-pink-500 to-rose-500',
     badge: '女性スタッフ常駐',
     badgeBg: 'bg-pink-100 text-pink-800 border-pink-200',
-    title: '専任女性スタッフ常駐＆身バレ完全防止',
-    summary: '女性ならではの細やかな体調管理や相談受付。街全体が撮影禁止で身バレも防ぎます。',
+    title: '専任女性スタッフ常駐＆身バレ配慮徹底',
+    summary: '女性ならではの細やかな体調管理や相談受付。街全体が撮影禁止でプライバシーを守ります。',
     points: [
       '専任女性スタッフ（さくら）常駐＋各部屋前のベテラン仲居さんが常時見守り',
-      'Webサイト・SNSへの顔写真掲載一切ゼロ（完全非公開・100%守秘義務）',
+      'Webサイト・SNSへの顔写真掲載一切ゼロ（完全非公開）',
       '完全源氏名（お仕事用のお名前）使用、時間帯やシフトの柔軟な調整も可能'
     ]
   }
@@ -116,7 +116,7 @@ export const BENEFIT_COMPARISONS = [
   },
   {
     item: '寮・住居',
-    ourShop: 'オートロック家具家電付き完全個室マンション即日入居',
+    ourShop: 'オートロック家具家電付き完全個室マンション相談可（空き・条件事前確認）',
     otherShop: '相部屋・雑居ビルの一室、または敷金・保証金が必要'
   },
   {
@@ -167,7 +167,7 @@ export default function BenefitsShowcase({ onCtaclickWithData, onCtaclick }: Ben
           </span>
           <span className="inline-flex items-center gap-1 bg-rose-50 text-rose-700 text-[11px] font-bold px-3 py-1 rounded-full border border-rose-200/60">
             <LucideIcon name="Sparkles" size={12} className="text-rose-500" />
-            <span>天引き・雑費完全ゼロ保証</span>
+            <span>天引き・雑費 完全0円</span>
           </span>
         </div>
 
@@ -178,31 +178,31 @@ export default function BenefitsShowcase({ onCtaclickWithData, onCtaclick }: Ben
             <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-zinc-900 leading-tight mb-3">
               待遇
               <span className="block text-base sm:text-xl font-bold text-rose-600 mt-1 font-sans">
-                雑費天引きゼロ・家具家電付き個室寮・往復交通費支給・衣装ヘアメイク無料
+                雑費天引きゼロ・家具家電付き個室寮・往復交通費規定支給・衣装無料
               </span>
             </h2>
 
             <p className="text-xs sm:text-sm md:text-base text-zinc-600 leading-relaxed mb-4">
-              当直営料亭では、働く女性キャストが余計な金銭的・精神的負担なく安心して高収入に専念できるよう、業界最高水準の待遇をご用意しています。理不尽な天引きや雑費は一切なく、即日入居可能な快適なオートロック個室マンション寮や往復交通費の全額支給など、新生活と稼ぎやすさを徹底サポートいたします。
+              当直営料亭では、働く女性キャストが余計な金銭的・精神的負担なく働けるよう待遇・サポートを整えています。理不尽な天引きや雑費は一切なく、家具家電付きのオートロック個室マンション寮のご相談や往復交通費の支給（規定あり）など、条件を明確にお伝えしたうえでサポートいたします。
             </p>
 
             {/* Quick Trust Checklist Pills */}
             <div className="flex flex-wrap gap-2 text-xs">
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800 font-bold border border-rose-100/80">
                 <LucideIcon name="CheckCircle2" size={13} className="text-rose-600 shrink-0" />
-                <span>家具家電付き個室寮 即日入居</span>
+                <span>家具家電付き個室寮相談可</span>
               </span>
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800 font-bold border border-rose-100/80">
                 <LucideIcon name="CheckCircle2" size={13} className="text-rose-600 shrink-0" />
-                <span>遠方往復交通費 全額当店負担</span>
+                <span>遠方往復交通費支給（規定あり）</span>
               </span>
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800 font-bold border border-rose-100/80">
                 <LucideIcon name="CheckCircle2" size={13} className="text-rose-600 shrink-0" />
-                <span>衣装・コスメ・備品 完全無料</span>
+                <span>衣装・コスメ・備品 無料貸出</span>
               </span>
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800 font-bold border border-rose-100/80">
                 <LucideIcon name="CheckCircle2" size={13} className="text-rose-600 shrink-0" />
-                <span>女性スタッフ常駐＆身バレ完全防止</span>
+                <span>女性スタッフ常駐＆身バレ配慮徹底</span>
               </span>
             </div>
           </div>
@@ -236,14 +236,14 @@ export default function BenefitsShowcase({ onCtaclickWithData, onCtaclick }: Ben
               {/* Bottom Info on Photo */}
               <div className="absolute bottom-3 left-3 right-3 text-white">
                 <p className="text-xs font-bold leading-tight drop-shadow-md mb-1 text-white">
-                  カバン1つで即日入居・新生活スタート
+                  カバン1つで新生活相談OK（空き・条件事前確認）
                 </p>
                 <div className="flex items-center justify-between text-[11px] text-zinc-200">
                   <span className="flex items-center gap-1">
                     <LucideIcon name="ShieldCheck" size={13} className="text-emerald-400" />
                     <span>完全個室マンション寮完備</span>
                   </span>
-                  <span className="text-rose-300 font-black">初期費用0円</span>
+                  <span className="text-rose-300 font-black">条件事前案内</span>
                 </div>
               </div>
             </div>
@@ -262,7 +262,7 @@ export default function BenefitsShowcase({ onCtaclickWithData, onCtaclick }: Ben
             </span>
           </div>
           <p className="text-xs sm:text-sm text-zinc-700 leading-relaxed font-medium">
-            当直営料亭では「引かれ物一切なし（完全0円）」を徹底。即日入居できる家具家電付きの完全個室マンション寮、全国からの往復交通費全額支給、衣装・コスメ・ヘアアイロンの無料完備など、キャストの負担を極限まで減らした手厚い生活サポートをお約束します。
+            当直営料亭では「引かれ物一切なし（完全0円）」を徹底。家具家電付きの完全個室マンション寮のご相談や、遠方からの往復交通費支給（規定・上限等は事前確認）、衣装・コスメ・ヘアアイロンの無料完備など、無理なく働ける待遇をご用意しています。
           </p>
         </div>
 
@@ -278,23 +278,23 @@ export default function BenefitsShowcase({ onCtaclickWithData, onCtaclick }: Ben
           <div className="p-3.5 bg-rose-50/30 hover:bg-rose-50/60 rounded-2xl border border-rose-100/70 hover:border-rose-200 transition-all">
             <span className="text-[10px] text-zinc-500 font-bold block mb-0.5">個室マンション寮</span>
             <p className="font-display font-black text-rose-700 text-sm sm:text-base leading-snug">
-              即日入居OK
+              入居相談OK
             </p>
             <p className="text-[10px] text-zinc-500 mt-0.5 leading-tight">家具家電＆Wi-Fi完備</p>
           </div>
           <div className="p-3.5 bg-rose-50/30 hover:bg-rose-50/60 rounded-2xl border border-rose-100/70 hover:border-rose-200 transition-all">
             <span className="text-[10px] text-zinc-500 font-bold block mb-0.5">出稼ぎ交通費</span>
             <p className="font-display font-black text-rose-700 text-sm sm:text-base leading-snug">
-              往復全額支給
+              往復支給（規定あり）
             </p>
             <p className="text-[10px] text-zinc-500 mt-0.5 leading-tight">新幹線・飛行機・バス代</p>
           </div>
           <div className="p-3.5 bg-rose-50/30 hover:bg-rose-50/60 rounded-2xl border border-rose-100/70 hover:border-rose-200 transition-all">
             <span className="text-[10px] text-zinc-500 font-bold block mb-0.5">衣装・ヘアメイク</span>
             <p className="font-display font-black text-rose-700 text-sm sm:text-base leading-snug">
-              完全無料貸出
+              無料貸出
             </p>
-            <p className="text-[10px] text-zinc-500 mt-0.5 leading-tight">手ぶら出勤OK</p>
+            <p className="text-[10px] text-zinc-500 mt-0.5 leading-tight">衣装準備不要</p>
           </div>
         </div>
       </div>
@@ -362,7 +362,7 @@ export default function BenefitsShowcase({ onCtaclickWithData, onCtaclick }: Ben
             <thead className="bg-rose-50 text-rose-900 font-bold border-b border-gray-200">
               <tr>
                 <th className="p-3 w-1/4">待遇・サポート項目</th>
-                <th className="p-3 w-2/5 bg-rose-100/80 text-rose-950 font-extrabold">当グループ直営料亭</th>
+                <th className="p-3 w-2/5 bg-rose-100/80 text-rose-950 font-extrabold">当直営料亭（飛田ガールズ）</th>
                 <th className="p-3 w-1/3 bg-gray-100 text-gray-700">一般的な他店・風俗他店</th>
               </tr>
             </thead>

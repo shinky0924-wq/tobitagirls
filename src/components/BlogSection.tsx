@@ -1029,7 +1029,7 @@ export default function BlogSection({
                 <div className="mt-3 pt-3 border-t border-rose-100/80 text-xs text-[#5e474c] leading-relaxed flex items-start gap-1.5">
                   <span className="text-secondary font-bold shrink-0">【執筆・監修者コメント】</span>
                   <span>
-                    {currentAuthorProfile?.comment || '当グループ直営料亭の求人担当スタッフによる現場情報と実際の募集条件をもとに、法令および組合規約に基づいた事実のみを記載しています。'}
+                    {currentAuthorProfile?.comment || '当直営料亭の求人担当スタッフによる現場情報と実際の募集条件をもとに、法令および組合規約に基づいた事実のみを記載しています。'}
                   </span>
                 </div>
               </div>

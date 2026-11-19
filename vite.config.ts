@@ -19,8 +19,10 @@ export default defineConfig(() => {
     server: {
       allowedHosts: true as const,
       cors: true,
-      hmr: process.env.DISABLE_HMR !== 'true',
-      watch: process.env.DISABLE_HMR === 'true' ? null : {},
+      hmr: false,
+      watch: process.env.DISABLE_HMR === 'true' ? null : {
+        ignored: ['**/public/images/**', '**/public/assets/**', '**/src/assets/**', '**/dist/**', '**/.aistudio/**'],
+      },
     },
   };
 });

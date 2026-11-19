@@ -84,11 +84,6 @@ async function runPrerender() {
   emitMarkdown('/glossary', 'glossary.md');
   count++;
 
-  const company = injectSeoMetadata(template, '/company');
-  writeFileEnsureDir(path.join(distDir, 'company', 'index.html'), company.html);
-  writeFileEnsureDir(path.join(distDir, 'company.html'), company.html);
-  count++;
-
   // 5. Pre-render FAQ Index, all 12 Category pages, and legacy category slugs
   const faq = injectSeoMetadata(template, '/faq');
   writeFileEnsureDir(path.join(distDir, 'faq', 'index.html'), faq.html);
@@ -146,54 +141,46 @@ async function runPrerender() {
     count++;
   }
 
-  // 8. Generate static HTML redirects for legacy URLs (ensures static hosts like GitHub Pages / Cloudflare 301 properly)
-  const legacyRedirects: Record<string, string> = {
-    '/blog/tobitashinchi-dormitory-lifestyle-support': '/blog/tobitashinchi-housing-support',
-    '/blog/tobitashinchi-tax-declaration-guide': '/blog/tobitashinchi-tax-guide',
-    '/blog/tobitashinchi-privacy-alibi-support': '/blog/tobitashinchi-identity-alibi-safety-measures',
-    '/blog/tobitashinchi-physical-mental-care-guide': '/blog/tobitashinchi-stamina-mental-care-100k',
-    '/blog/tobitashinchi-fake-job-scout-warning': '/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment',
-    '/blog/tobitashinchi-daily-work-routine-guide': '/blog/tobitashinchi-daily-schedule-work-flow-detail',
-    '/comparison': '/compare',
-    '/target-categories': '/compare',
-    '/target-jobs': '/compare',
-    '/categories': '/compare',
-    '/company': '/about',
-    '/dorm': '/dekasegi',
-    ...Object.fromEntries(
-      Object.entries(LEGACY_COMPARE_SLUG_REDIRECTS).map(([oldSlug, newSlug]) => [
-        `/compare/${oldSlug}`,
-        `/compare/${newSlug}`,
-      ])
-    ),
-  };
-
-  for (const [fromPath, toPath] of Object.entries(legacyRedirects)) {
-    const fullDest = `https://tobitashinchi-recruit.com${toPath}`;
-    const redirectHtml = `<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>ページ移動のお知らせ｜飛田ガールズ</title>
-  <meta http-equiv="refresh" content="0;url=${fullDest}">
-  <link rel="canonical" href="${fullDest}">
-  <meta name="robots" content="noindex, follow">
-  <script>location.replace(${JSON.stringify(fullDest)});</script>
-</head>
-<body style="font-family: sans-serif; text-align: center; padding: 50px 20px;">
-  <p>ページが移動しました。<br><a href="${fullDest}">自動的に移動しない場合はこちらをクリックしてください。</a></p>
-</body>
-</html>`;
-    const cleanFrom = fromPath.replace(/^\//, '');
-    writeFileEnsureDir(path.join(distDir, cleanFrom, 'index.html'), redirectHtml);
-    writeFileEnsureDir(path.join(distDir, `${cleanFrom}.html`), redirectHtml);
-    count++;
+  // 8. Legacy URLs are handled via HTTP 301 in vercel.json, _redirects, .htaccess, and server.ts.
+  // Do NOT emit static HTML files with noindex for redirected URLs, otherwise static hosts/CDNs
+  // serve HTTP 200 + noindex instead of executing the 301 rule (causing GSC "noindex" exclusions).
+  const legacyPathsToClean = [
+    '/blog/tobitashinchi-dormitory-lifestyle-support',
+    '/blog/tobitashinchi-tax-declaration-guide',
+    '/blog/tobitashinchi-privacy-alibi-support',
+    '/blog/tobitashinchi-physical-mental-care-guide',
+    '/blog/tobitashinchi-fake-job-scout-warning',
+    '/blog/tobitashinchi-daily-work-routine-guide',
+    '/blog/tobitashinchi-id-requirements',
+    '/blog/tobitashinchi-merits-and-demerits',
+    '/blog/tobitashinchi-shift-workstyle-guide',
+    '/blog/tobitashinchi-safety-rules-faq',
+    '/blog/tobitashinchi-main-vs-seishun-street',
+    '/blog/tobitashinchi-salary-system-breakdown',
+    '/comparison',
+    '/target-categories',
+    '/target-jobs',
+    '/categories',
+    '/company',
+    '/dorm',
+    ...Object.keys(LEGACY_COMPARE_SLUG_REDIRECTS).map((oldSlug) => `/compare/${oldSlug}`),
+  ];
+  for (const legacyPath of legacyPathsToClean) {
+    const cleanFrom = legacyPath.replace(/^\//, '');
+    const stubHtml = path.join(distDir, `${cleanFrom}.html`);
+    const stubDir = path.join(distDir, cleanFrom);
+    if (fs.existsSync(stubHtml)) fs.rmSync(stubHtml, { force: true });
+    if (fs.existsSync(stubDir)) fs.rmSync(stubDir, { recursive: true, force: true });
   }
 
-  // 9. Ensure _redirects in dist
+  // 9. Ensure _redirects and .htaccess in dist
   const rootRedirects = path.join(process.cwd(), '_redirects');
   if (fs.existsSync(rootRedirects)) {
     fs.copyFileSync(rootRedirects, path.join(distDir, '_redirects'));
+  }
+  const rootHtaccess = path.join(process.cwd(), '.htaccess');
+  if (fs.existsSync(rootHtaccess)) {
+    fs.copyFileSync(rootHtaccess, path.join(distDir, '.htaccess'));
   }
 
   // 10. Ensure sitemap, robots, RSS feed, and llms files in dist

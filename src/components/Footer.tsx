@@ -125,7 +125,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
               </div>
             </div>
             <p className="font-sans text-xs text-on-surface-variant leading-loose">
-              受付時間：24時間年中無休<br />
+              LINE相談：24時間受付（店舗営業時間：10:00〜24:00）<br />
               アクセス：大阪府大阪市西成区山王（飛田新地料理組合加盟料亭）
             </p>
             <div className="flex items-center gap-2 text-[11px] text-gray-500 font-mono bg-white p-2.5 rounded-xl border border-rose-100/60 inline-flex">
@@ -235,7 +235,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
           <div className="flex items-center gap-2 mb-3">
             <LucideIcon name="Compass" size={15} className="text-secondary" />
             <h2 className="font-display font-bold text-on-surface text-xs uppercase tracking-wider">
-              飛田新地求人 総合ガイド（全12テーマ）
+              飛田新地求人 総合ガイド・特集一覧
             </h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 text-xs">
@@ -325,7 +325,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
             <div className="text-xs text-gray-700 space-y-3 leading-relaxed font-sans">
               <p><strong>1. 法令遵守と健全性の徹底（20歳以上完全限定）</strong><br />料理組合規約およびコンプライアンス管理に基づき、20歳未満（18歳・19歳・高校生含む）の就労を固く禁じております（※2022年の成人年齢引き下げ後も20歳未満不可を徹底）。本籍地記載の住民票原本等による厳正な身分証確認を行い、違法行為・反社会的勢力との関わりを一切排除しています。</p>
               <p><strong>2. 嘘や誇大広告の禁止と、正しい情報の掲載</strong><br />当サイトの掲載情報は、お店の女性採用スタッフが直接確認した実際の募集条件をもとに作成しています。「誰でも日給30万円」などの誇大表記は行わず、料亭組合規約に基づいた正確な給与計算（売上50%バック即日全額日払い）と現場のリアルな実態をそのまま掲載し、条件変更時は随時更新を行っています。</p>
-              <p><strong>3. ノルマ・天引きの禁止</strong><br />指名ノルマ・同伴ペナルティ・不当な衣装代などの天引きを行う店舗の掲載は一切認めておりません。</p>
+              <p><strong>3. ノルマ・天引きの禁止</strong><br />指名ノルマ・同伴ペナルティ・不当な衣装代などの天引きは一切行っておりません。</p>
             </div>
           </div>
         </div>

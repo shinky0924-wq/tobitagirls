@@ -13,8 +13,15 @@
       "経験なし",
       "水商売"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "beginner",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "未経験者向けガイドを見る",
+    "relatedIds": [
+      "faq-job-3",
+      "faq-job-9"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-2",
@@ -30,15 +37,22 @@
       "年齢",
       "若い"
     ],
-    "eightCategory": "recruit",
-    "eightCategoryLabel": "応募・面接"
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "募集要項・応募条件を見る",
+    "relatedIds": [
+      "faq-rec-3",
+      "faq-rec-5"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-3",
     "category": "recruit",
     "categoryLabel": "求人・応募・面接",
     "question": "30代でも応募できますか？採用されますか？",
-    "answer": "はい、大歓迎です！飛田新地では落ち着いた大人の女性ならではの包容力や気配りを求めるお客様が非常に多く、30代の女性は年間を通じて常に高い需要があります。青春通りや大門通り、当グループの直営料亭で月収100万円以上を稼ぐ30代キャストも多数在籍しています。",
+    "answer": "はい、大歓迎です！飛田新地では落ち着いた大人の女性ならではの包容力や気配りを求めるお客様も多く、30代の女性にも活躍の場があります。当店（メイン・青春通りエリアの直営老舗料亭）でも、年齢だけにとらわれず人柄や雰囲気を大切に採用・ご案内しています。",
     "isPopular": true,
     "keywords": [
       "30代",
@@ -46,15 +60,22 @@
       "大人",
       "年齢層"
     ],
-    "eightCategory": "recruit",
-    "eightCategoryLabel": "応募・面接"
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "募集要項・応募条件を見る",
+    "relatedIds": [
+      "faq-rec-2",
+      "faq-rec-4"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-4",
     "category": "recruit",
     "categoryLabel": "求人・応募・面接",
     "question": "40代以上の女性でも応募できるお店はありますか？",
-    "answer": "はい、ございます。飛田新地には若手中心の通りだけでなく、30代〜40代、さらには50代の女性が看板として大切に活躍している専門の料亭・通り（百番周辺や妖怪通りなど）も確立されています。ご自身の年齢やお人柄が最も輝くお店で働いていただけますので、遠慮なくご相談ください。",
+    "answer": "満20歳以上であれば法律・規約上の年齢上限はありません。当店はメイン・青春通りエリアの直営老舗料亭ですが、落ち着いた雰囲気や丁寧な接客、清潔感を大切にされる30代・40代の方からのご相談もお受けしています。ご年齢だけで一律にお断りするのではなく、時期の募集枠やご希望の勤務時間帯（昼シフトなど）を踏まえて個別に正直にご案内いたしますので、まずはLINEでお気軽にご相談ください。",
     "isPopular": false,
     "keywords": [
       "40代",
@@ -63,8 +84,15 @@
       "年齢制限",
       "熟女"
     ],
-    "eightCategory": "recruit",
-    "eightCategoryLabel": "応募・面接"
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/shops",
+    "relatedLabel": "通りの特徴・お店選びを見る",
+    "relatedIds": [
+      "faq-rec-3",
+      "faq-rec-5"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-5",
@@ -79,8 +107,15 @@
       "応募資格",
       "20歳以上"
     ],
-    "eightCategory": "recruit",
-    "eightCategoryLabel": "応募・面接"
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "応募資格・必要書類を見る",
+    "relatedIds": [
+      "faq-rec-6",
+      "faq-rec-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-6",
@@ -96,15 +131,22 @@
       "成人年齢",
       "理由"
     ],
-    "eightCategory": "recruit",
-    "eightCategoryLabel": "応募・面接"
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "応募資格・年齢条件の理由を見る",
+    "relatedIds": [
+      "faq-rec-5",
+      "faq-rec-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-7",
     "category": "recruit",
     "categoryLabel": "求人・応募・面接",
     "question": "面接に必要な持ち物や身分証明書は何ですか？",
-    "answer": "法令遵守および年齢確認のため、「本籍地記載の住民票原本（発行から3ヶ月以内）」と「顔写真付き公的身分証明書（マイナンバーカード、運転免許証、パスポート等）」の2点が必要となります。住民票の取得方法がわからない場合はスタッフが丁寧にサポートしますのでご安心ください。",
+    "answer": "法令遵守および年齢確認のため、「本籍地記載の住民票原本（発行から3ヶ月以内・マイナンバー記載なし）」または「有効期限内の日本国パスポート」（あわせて顔写真付き公的身分証明書）が必要となります（※運転免許証・マイナンバーカード・健康保険証単体での体験・勤務はできません）。住民票の取得方法がわからない場合はスタッフが丁寧にご案内します。",
     "isPopular": true,
     "keywords": [
       "身分証明書",
@@ -113,15 +155,22 @@
       "免許証",
       "マイナンバー"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "面接時の必要書類を確認する",
+    "relatedIds": [
+      "faq-rec-8",
+      "faq-priv-9"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-8",
     "category": "recruit",
     "categoryLabel": "求人・応募・面接",
     "question": "履歴書は必要ですか？",
-    "answer": "いいえ、履歴書は一切不要です！学歴や職歴を細かく書く必要はありません。面接当日は手ぶら、または身分証のみをご持参いただければすぐに面接を受けられます。面接シートにお名前（源氏名でOK）や希望シフト、目標金額などを簡単にご記入いただくだけです。",
+    "answer": "いいえ、履歴書は一切不要です！学歴や職歴を細かく書く必要はありません。面接当日は履歴書不要・私服でお越しいただけます（※体験入店や勤務を開始する場合は本籍地記載の住民票原本または有効期限内の日本国パスポート（＋顔写真付き公的身分証明書）の本人確認書類が必要です）。面接シートにお名前（源氏名でOK）や希望シフトなどを簡単にご記入いただくだけです。",
     "isPopular": true,
     "keywords": [
       "履歴書",
@@ -130,8 +179,15 @@
       "職歴",
       "学歴"
     ],
-    "eightCategory": "recruit",
-    "eightCategoryLabel": "応募・面接"
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "面接・体験入店の流れを見る",
+    "relatedIds": [
+      "faq-rec-7",
+      "faq-rec-9"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-9",
@@ -146,8 +202,15 @@
       "何を聞かれる",
       "面談"
     ],
-    "eightCategory": "recruit",
-    "eightCategoryLabel": "応募・面接"
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "面接で話す内容を見る",
+    "relatedIds": [
+      "faq-rec-8",
+      "faq-rec-10"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-10",
@@ -159,18 +222,25 @@
     "keywords": [
       "面接落ちる",
       "不採用",
-      "合格率",
+      "採用基準",
       "受かる"
     ],
-    "eightCategory": "recruit",
-    "eightCategoryLabel": "応募・面接"
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "面接・採用基準を見る",
+    "relatedIds": [
+      "faq-rec-5",
+      "faq-rec-9"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-11",
     "category": "recruit",
     "categoryLabel": "求人・応募・面接",
     "question": "友達と一緒に応募・面接を受けることはできますか？",
-    "answer": "はい、お友達同士のご応募・同時面接・同日体験入店も大歓迎です！「1人だと不安だからまずは友達と話を聞いてみたい」という方も多数いらっしゃいます。当店（直営店舗）での同日出勤や、お互いの希望に合わせて近くの直営系列店舗で出勤するなど柔軟に対応可能です。",
+    "answer": "はい、お友達同士のご応募・同時面接・同日体験入店も大歓迎です！「1人だと不安だからまずは友達と話を聞いてみたい」という方も多くいらっしゃいます。お友達と同じ日・同じ時間帯のシフトで出勤できるよう調整するなど柔軟に対応可能です。",
     "isPopular": true,
     "keywords": [
       "友達同士",
@@ -178,8 +248,15 @@
       "グループ応募",
       "同伴面接"
     ],
-    "eightCategory": "recruit",
-    "eightCategoryLabel": "応募・面接"
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "面接の流れを見る",
+    "relatedIds": [
+      "faq-rec-13",
+      "faq-rec-16"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-12",
@@ -194,8 +271,15 @@
       "当日",
       "スピード採用"
     ],
-    "eightCategory": "recruit",
-    "eightCategoryLabel": "応募・面接"
+    "category12": "interview",
+    "audienceTag": "全員共通",
+    "relatedPage": "/flow",
+    "relatedLabel": "応募から勤務開始の流れを見る",
+    "relatedIds": [
+      "faq-rec-7",
+      "faq-rec-13"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-13",
@@ -211,8 +295,15 @@
       "合わない",
       "辞める"
     ],
-    "eightCategory": "leaving",
-    "eightCategoryLabel": "退店"
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "体験入店の詳細を見る",
+    "relatedIds": [
+      "faq-rec-14",
+      "faq-trouble-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-14",
@@ -227,8 +318,15 @@
       "日払い",
       "体験入店日給"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "体入当日の流れと日払いを見る",
+    "relatedIds": [
+      "faq-rec-13",
+      "faq-sal-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-15",
@@ -243,8 +341,15 @@
       "手順",
       "ステップ"
     ],
-    "eightCategory": "recruit",
-    "eightCategoryLabel": "応募・面接"
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "応募〜初日までの手順を見る",
+    "relatedIds": [
+      "faq-rec-12",
+      "faq-rec-13"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-rec-16",
@@ -259,8 +364,15 @@
       "格好",
       "着ていく服"
     ],
-    "eightCategory": "recruit",
-    "eightCategoryLabel": "応募・面接"
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "面接時の服装・持ち物を見る",
+    "relatedIds": [
+      "faq-rec-7",
+      "faq-rec-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-1",
@@ -276,8 +388,15 @@
       "日当",
       "相場"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給料・手取り計算を見る",
+    "relatedIds": [
+      "faq-sal-6",
+      "faq-sal-4"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-2",
@@ -292,8 +411,15 @@
       "振込日",
       "支払日"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "日払いの仕組みを見る",
+    "relatedIds": [
+      "faq-sal-3",
+      "faq-sal-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-3",
@@ -308,8 +434,15 @@
       "手渡し",
       "即日"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "全額日払いの仕組みを見る",
+    "relatedIds": [
+      "faq-sal-2",
+      "faq-sal-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-4",
@@ -324,8 +457,15 @@
       "本数",
       "達成"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給料の計算例を見る",
+    "relatedIds": [
+      "faq-sal-1",
+      "faq-sal-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-5",
@@ -341,8 +481,15 @@
       "週末",
       "高収入"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給料・計算シミュレーターを見る",
+    "relatedIds": [
+      "faq-sal-4",
+      "faq-sal-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-6",
@@ -360,8 +507,15 @@
       "手当",
       "手取り"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給料システムの詳細を見る",
+    "relatedIds": [
+      "faq-sal-7",
+      "faq-sal-14"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-7",
@@ -377,8 +531,15 @@
       "引かれ物",
       "控除"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "控除ゼロ・待遇を見る",
+    "relatedIds": [
+      "faq-sal-6",
+      "faq-sal-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-8",
@@ -393,8 +554,15 @@
       "ノルマ",
       "遅刻罰金"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "ノルマ・罰金なしを見る",
+    "relatedIds": [
+      "faq-sal-7",
+      "faq-sal-9"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-9",
@@ -406,12 +574,19 @@
     "keywords": [
       "ボウズ",
       "0円",
-      "保証給",
+      "歩合制",
       "最低保証",
-      "つかない"
+      "待機カットなし"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給料・歩合制の詳細を見る",
+    "relatedIds": [
+      "faq-sal-6",
+      "faq-sal-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-10",
@@ -427,8 +602,15 @@
       "年間",
       "貯金"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "稼働ペース別計算例を見る",
+    "relatedIds": [
+      "faq-sal-1",
+      "faq-sal-5"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-11",
@@ -444,15 +626,22 @@
       "電車代",
       "送り"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "access",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "アクセス・交通費案内を見る",
+    "relatedIds": [
+      "faq-dorm-5",
+      "faq-shift-14"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-sal-12",
     "category": "salary",
     "categoryLabel": "給料・日払い・稼ぎ",
     "question": "確定申告や税金対策の相談はできますか？",
-    "answer": "はい、お任せください！当店ではナイトワークや個人事業主の税務に精通した提携女性税理士や専門スタッフが在籍しており、確定申告のやり方、必要経費の計上方法、本業の会社や親にバレない申告手続き（普通徴収の選択など）を無料でアドバイスしています。",
+    "answer": "はい、ご相談いただけます。当店では確定申告の基本的な進め方や、本業の会社やご家族に知られにくい住民税（普通徴収）の選択ポイントなどをスタッフから分かりやすくご案内しています（※個別の税務申告代行や税理士紹介の有無・条件は時期により異なるため事前にご確認ください）。",
     "isPopular": false,
     "keywords": [
       "確定申告",
@@ -461,8 +650,15 @@
       "節税",
       "経費"
     ],
-    "eightCategory": "wwork",
-    "eightCategoryLabel": "Wワーク"
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "副業・確定申告対策を見る",
+    "relatedIds": [
+      "faq-priv-3",
+      "faq-priv-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-13",
@@ -477,8 +673,15 @@
       "手渡し以外",
       "振込名義"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給与受取方法を見る",
+    "relatedIds": [
+      "faq-sal-3",
+      "faq-sal-16"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-sal-14",
@@ -493,8 +696,15 @@
       "プレゼント",
       "自分のもの"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給料・チップの扱いを見る",
+    "relatedIds": [
+      "faq-sal-6",
+      "faq-sal-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-sal-15",
@@ -509,8 +719,15 @@
       "支給条件",
       "ボーナス"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "待遇・支給条件を見る",
+    "relatedIds": [
+      "faq-sal-7",
+      "faq-rec-14"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-sal-16",
@@ -525,8 +742,15 @@
       "発行",
       "レシート"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "salary",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "給与管理・明細を見る",
+    "relatedIds": [
+      "faq-sal-12",
+      "faq-sal-3"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-shift-1",
@@ -542,8 +766,15 @@
       "シフト",
       "単発"
     ],
-    "eightCategory": "hours",
-    "eightCategoryLabel": "勤務時間"
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "働き方・シフト例を見る",
+    "relatedIds": [
+      "faq-shift-2",
+      "faq-shift-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-2",
@@ -559,8 +790,15 @@
       "たまに",
       "自由"
     ],
-    "eightCategory": "hours",
-    "eightCategoryLabel": "勤務時間"
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "働き方・シフト例を見る",
+    "relatedIds": [
+      "faq-shift-1",
+      "faq-shift-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-3",
@@ -576,8 +814,15 @@
       "年末年始",
       "1週間"
     ],
-    "eightCategory": "hours",
-    "eightCategoryLabel": "勤務時間"
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "短期勤務・シフトを見る",
+    "relatedIds": [
+      "faq-dorm-6",
+      "faq-shift-15"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-4",
@@ -593,8 +838,15 @@
       "掛け持ち",
       "兼業"
     ],
-    "eightCategory": "wwork",
-    "eightCategoryLabel": "Wワーク"
+    "category12": "sidejob",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "Wワーク・副業の働き方を見る",
+    "relatedIds": [
+      "faq-shift-5",
+      "faq-priv-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-5",
@@ -610,8 +862,15 @@
       "事務職",
       "平日夜"
     ],
-    "eightCategory": "wwork",
-    "eightCategoryLabel": "Wワーク"
+    "category12": "sidejob",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "昼職掛け持ちのシフトを見る",
+    "relatedIds": [
+      "faq-shift-4",
+      "faq-priv-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-6",
@@ -627,8 +886,15 @@
       "大学",
       "テスト期間"
     ],
-    "eightCategory": "wwork",
-    "eightCategoryLabel": "Wワーク"
+    "category12": "sidejob",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "学生向けの働き方を見る",
+    "relatedIds": [
+      "faq-shift-4",
+      "faq-rec-5"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-7",
@@ -644,8 +910,15 @@
       "シングルマザー",
       "シンママ"
     ],
-    "eightCategory": "wwork",
-    "eightCategoryLabel": "Wワーク"
+    "category12": "sidejob",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "昼時間帯の働き方を見る",
+    "relatedIds": [
+      "faq-shift-10",
+      "faq-dorm-9"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-shift-8",
@@ -660,8 +933,15 @@
       "何時から何時まで",
       "短時間"
     ],
-    "eightCategory": "hours",
-    "eightCategoryLabel": "勤務時間"
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "選べる5つの時間帯を見る",
+    "relatedIds": [
+      "faq-shift-10",
+      "faq-shift-13"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-9",
@@ -676,8 +956,15 @@
       "土曜日",
       "日曜日"
     ],
-    "eightCategory": "hours",
-    "eightCategoryLabel": "勤務時間"
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "週末・土日シフトを見る",
+    "relatedIds": [
+      "faq-shift-1",
+      "faq-shift-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-10",
@@ -693,8 +980,15 @@
       "夕方上がり",
       "短時間"
     ],
-    "eightCategory": "hours",
-    "eightCategoryLabel": "勤務時間"
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "昼シフトの詳細を見る",
+    "relatedIds": [
+      "faq-shift-8",
+      "faq-shift-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-11",
@@ -709,15 +1003,22 @@
       "自己申告",
       "固定シフト"
     ],
-    "eightCategory": "hours",
-    "eightCategoryLabel": "勤務時間"
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "自由シフト制を見る",
+    "relatedIds": [
+      "faq-shift-1",
+      "faq-shift-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-12",
     "category": "shift",
     "categoryLabel": "働き方・シフト",
     "question": "急な体調不良や家庭の用事で当日欠勤することはできますか？",
-    "answer": "はい、体調不良や生理痛、急用などの場合は、出勤前にご連絡いただければ無理に出勤を強要することは絶対にありません。ペナルティや罰金も一切発生しませんので、お体を最優先にゆっくり療養してください。",
+    "answer": "はい、体調不良や生理痛、急用などの場合は、出勤前にご連絡いただければ無理に出勤を強要することは一切ありません。ペナルティや罰金も一切発生しませんので、お体を最優先にゆっくり療養してください。",
     "isPopular": false,
     "keywords": [
       "当日欠勤",
@@ -726,15 +1027,22 @@
       "休む",
       "ペナルティなし"
     ],
-    "eightCategory": "recruit",
-    "eightCategoryLabel": "応募・面接"
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "欠勤・お休み対応を見る",
+    "relatedIds": [
+      "faq-trouble-5",
+      "faq-job-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-13",
     "category": "shift",
     "categoryLabel": "働き方・シフト",
     "question": "終電に合わせて上がる（退勤する）ことはできますか？",
-    "answer": "はい、もちろん可能です！お住まいの最寄り駅への終電時刻（22:30や23:00など）を事前にスタッフにお伝えいただければ、終電に絶対に間に合うよう接客時間を逆算して退勤の手配を行います。",
+    "answer": "はい、もちろん可能です！お住まいの最寄り駅への終電時刻（22:30や23:00など）を事前にスタッフにお伝えいただければ、終電に間に合うよう接客時間を逆算して退勤できるよう手配します。",
     "isPopular": false,
     "keywords": [
       "終電あがり",
@@ -742,8 +1050,15 @@
       "終電",
       "帰宅時間"
     ],
-    "eightCategory": "hours",
-    "eightCategoryLabel": "勤務時間"
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "勤務時間帯と帰宅を見る",
+    "relatedIds": [
+      "faq-shift-14",
+      "faq-shift-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-shift-14",
@@ -759,8 +1074,15 @@
       "帰り道",
       "車で送る"
     ],
-    "eightCategory": "hours",
-    "eightCategoryLabel": "勤務時間"
+    "category12": "access",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "勤務時間・帰宅案内を見る",
+    "relatedIds": [
+      "faq-shift-13",
+      "faq-sal-11"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-shift-15",
@@ -776,15 +1098,22 @@
       "復帰",
       "旅行"
     ],
-    "eightCategory": "hours",
-    "eightCategoryLabel": "勤務時間"
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "長期休暇・復帰を見る",
+    "relatedIds": [
+      "faq-shift-11",
+      "faq-trouble-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-1",
     "category": "privacy",
     "categoryLabel": "不安・身バレ対策",
     "question": "身バレしませんか？知り合いや家族に知られるのが一番怖いです。",
-    "answer": "飛田新地はWebやSNSにキャストの顔写真を公開しない仕組みのため、他のナイトワークと比べて身バレのリスクを抑えやすい環境です。ただし、知人と遭遇する可能性などを「100%ゼロ」と保証できるものではありません。\n\n■ 当店で行っている主な対策\n・求人サイトやSNSへの顔写真・全身写真の非掲載\n・飛田新地料理組合による街全体での写真・動画撮影禁止と巡回\n・本名を使わない源氏名での勤務、自宅への郵送物なし\n\n■ 想定されるリスクとご自身での注意点\n・通退勤時や店頭で偶然知り合いと顔を合わせる可能性\n・ご自身のSNS投稿や、副業時の確定申告方法の誤りによる発覚\n\nご希望に応じて、普段と雰囲気を変えるメイクやウィッグの活用、生活圏から離れた店舗選びなどもご相談いただけます。",
+    "answer": "飛田新地はWebやSNSにキャストの顔写真を公開しない仕組みのため、他のナイトワークと比べて身バレのリスクを抑えやすい環境です。ただし、知人と遭遇する可能性などを「100%ゼロ」と保証できるものではありません。\n\n■ 当店で行っている主な対策\n・求人サイトやSNSへの顔写真・全身写真の非掲載\n・飛田新地料理組合による街全体での写真・動画撮影禁止と巡回\n・本名を使わない源氏名での勤務、自宅への郵送物なし\n\n■ 想定されるリスクとご自身での注意点\n・通退勤時や店頭で偶然知り合いと顔を合わせる可能性\n・ご自身のSNS投稿や、副業時の確定申告方法の誤りによる発覚\n\nご希望に応じて、普段と雰囲気を変えるメイクやウィッグの活用、通退勤時の服装・ルート面の配慮や勤務時間帯の調整などもご相談いただけます。",
     "isPopular": true,
     "keywords": [
       "身バレ",
@@ -793,8 +1122,15 @@
       "友達",
       "プライバシー"
     ],
-    "eightCategory": "privacy",
-    "eightCategoryLabel": "身バレ"
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "身バレ対策の詳細を見る",
+    "relatedIds": [
+      "faq-priv-4",
+      "faq-priv-5"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-2",
@@ -810,15 +1146,22 @@
       "郵便物なし",
       "手渡し"
     ],
-    "eightCategory": "privacy",
-    "eightCategoryLabel": "身バレ"
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "家族・同居のプライバシー対策を見る",
+    "relatedIds": [
+      "faq-priv-8",
+      "faq-sal-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-3",
     "category": "privacy",
     "categoryLabel": "不安・身バレ対策",
     "question": "昼間の会社（本業）や上司・同僚に副業がバレませんか？",
-    "answer": "会社バレの最大の原因は「住民税の金額変動」ですが、確定申告の際に住民税の納付方法を「普通徴収（自分で納付）」に選択することで、昼の会社に副業の収入情報が通知されるのを防ぐことができます。税理士監修の具体的な申告方法もスタッフが丁寧にサポートします。",
+    "answer": "会社バレの主な要因の一つが「住民税の金額変動」ですが、確定申告の際に住民税の納付方法を「普通徴収（自分で納付）」に選択することで、本業の会社に副業の収入情報が通知されにくい仕組みとなっています（※自治体により取扱いが異なる場合もあります）。基本的な申告手順やポイントもスタッフが丁寧にご案内します。",
     "isPopular": true,
     "keywords": [
       "会社バレ",
@@ -827,8 +1170,15 @@
       "普通徴収",
       "副業禁止"
     ],
-    "eightCategory": "privacy",
-    "eightCategoryLabel": "身バレ"
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "会社バレ・住民税対策を見る",
+    "relatedIds": [
+      "faq-priv-7",
+      "faq-sal-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-4",
@@ -844,8 +1194,15 @@
       "デジタルタトゥー",
       "画像流出"
     ],
-    "eightCategory": "privacy",
-    "eightCategoryLabel": "身バレ"
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "ネット写真非公開の方針を見る",
+    "relatedIds": [
+      "faq-priv-5",
+      "faq-priv-1"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-5",
@@ -861,8 +1218,15 @@
       "YouTube",
       "盗撮防止"
     ],
-    "eightCategory": "privacy",
-    "eightCategoryLabel": "身バレ"
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "撮影禁止ルールを見る",
+    "relatedIds": [
+      "faq-priv-4",
+      "faq-priv-1"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-6",
@@ -878,15 +1242,22 @@
       "ニックネーム",
       "名前"
     ],
-    "eightCategory": "privacy",
-    "eightCategoryLabel": "身バレ"
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "源氏名・個人情報保護を見る",
+    "relatedIds": [
+      "faq-priv-10",
+      "faq-rec-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-7",
     "category": "privacy",
     "categoryLabel": "不安・身バレ対策",
     "question": "マイナンバーの提示や提出で昼の会社にバレることはありますか？",
-    "answer": "マイナンバー制度によって昼の会社に夜職の勤務事実が通知されることは法律上・システム上絶対にありません。マイナンバーは行政機関が税金や社会保障を一元管理するための番号であり、民間の勤務先同士で情報が共有される仕組みは存在しません。",
+    "answer": "マイナンバー制度によって昼の会社に夜職の勤務事実が通知されることは法律上・システム上原則ありません。マイナンバーは行政機関が税金や社会保障を管理するための番号であり、民間の勤務先同士で情報が自動共有される仕組みはありません。",
     "isPopular": false,
     "keywords": [
       "マイナンバー",
@@ -894,8 +1265,15 @@
       "マイナンバーカード",
       "通知"
     ],
-    "eightCategory": "wwork",
-    "eightCategoryLabel": "Wワーク"
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "マイナンバーと税金対策を見る",
+    "relatedIds": [
+      "faq-priv-3",
+      "faq-sal-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-8",
@@ -911,8 +1289,15 @@
       "郵送",
       "自宅に届く"
     ],
-    "eightCategory": "privacy",
-    "eightCategoryLabel": "身バレ"
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "郵便物・連絡ルールを見る",
+    "relatedIds": [
+      "faq-priv-2",
+      "faq-priv-10"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-9",
@@ -927,8 +1312,15 @@
       "親に連絡",
       "確認連絡"
     ],
-    "eightCategory": "privacy",
-    "eightCategoryLabel": "身バレ"
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "必要書類の用途を見る",
+    "relatedIds": [
+      "faq-rec-7",
+      "faq-priv-10"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-10",
@@ -943,8 +1335,15 @@
       "身分証コピー",
       "金庫保管"
     ],
-    "eightCategory": "privacy",
-    "eightCategoryLabel": "身バレ"
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "個人情報管理を見る",
+    "relatedIds": [
+      "faq-priv-9",
+      "faq-priv-15"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-priv-11",
@@ -960,8 +1359,15 @@
       "目隠し",
       "メイクで変装"
     ],
-    "eightCategory": "privacy",
-    "eightCategoryLabel": "身バレ"
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "身バレリスク対策を見る",
+    "relatedIds": [
+      "faq-priv-12",
+      "faq-priv-16"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-12",
@@ -977,8 +1383,15 @@
       "ブロック",
       "遭遇"
     ],
-    "eightCategory": "privacy",
-    "eightCategoryLabel": "身バレ"
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "来店時・知り合い対策を見る",
+    "relatedIds": [
+      "faq-priv-11",
+      "faq-job-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-13",
@@ -994,8 +1407,15 @@
       "不動産",
       "カード審査"
     ],
-    "eightCategory": "privacy",
-    "eightCategoryLabel": "身バレ"
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "生活サポート相談を見る",
+    "relatedIds": [
+      "faq-priv-3",
+      "faq-dorm-1"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-priv-14",
@@ -1011,8 +1431,15 @@
       "控え室",
       "自由時間"
     ],
-    "eightCategory": "privacy",
-    "eightCategoryLabel": "身バレ"
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "待機時間・控え室の過ごし方を見る",
+    "relatedIds": [
+      "faq-beauty-9",
+      "faq-job-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-priv-15",
@@ -1027,8 +1454,15 @@
       "データ削除",
       "流出なし"
     ],
-    "eightCategory": "leaving",
-    "eightCategoryLabel": "退店"
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "退店後の個人情報処理を見る",
+    "relatedIds": [
+      "faq-priv-10",
+      "faq-trouble-1"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-priv-16",
@@ -1043,8 +1477,15 @@
       "近所",
       "エリア分け"
     ],
-    "eightCategory": "privacy",
-    "eightCategoryLabel": "身バレ"
+    "category12": "privacy",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "地元・生活圏との配慮を見る",
+    "relatedIds": [
+      "faq-priv-11",
+      "faq-priv-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-1",
@@ -1060,8 +1501,15 @@
       "ノンアルコール",
       "飲酒なし"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・接客ルールを見る",
+    "relatedIds": [
+      "faq-job-3",
+      "faq-job-4"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-2",
@@ -1077,8 +1525,15 @@
       "緊急ボタン",
       "安心"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "安全・防犯対策を見る",
+    "relatedIds": [
+      "faq-job-13",
+      "faq-trouble-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-3",
@@ -1091,18 +1546,25 @@
       "接客の流れ",
       "仕事内容",
       "おもてなし",
-      "短時間接客",
+      "衛生管理",
       "2階個室"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "job",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容の詳しい流れを見る",
+    "relatedIds": [
+      "faq-job-8",
+      "faq-job-16"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-4",
     "category": "job",
     "categoryLabel": "お仕事内容・接客",
     "question": "お客様とLINEや連絡先の交換をする必要はありますか？",
-    "answer": "一切ありません！むしろ飛田新地の当店ではお客様との私的な連絡先交換（LINE、電話番号、SNS等）は一切禁止（NG）です。店外営業や「今日来てね」という営業連絡をする必要が全くないため、休日に連絡が来たりプライベートを邪魔される心配は100%ありません。安心してお気軽にご応募くださいね。",
+    "answer": "一切ありません！むしろ飛田新地の当店ではお客様との私的な連絡先交換（LINE、電話番号、SNS等）は一切禁止（NG）です。店外営業や「今日来てね」という営業連絡をする必要がないため、休日に連絡が来たりプライベートを邪魔されたりする心配はありません。安心してお気軽にご応募ください。",
     "isPopular": true,
     "keywords": [
       "連絡先交換",
@@ -1111,8 +1573,15 @@
       "プライベート",
       "店外営業"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・禁止事項を見る",
+    "relatedIds": [
+      "faq-job-5",
+      "faq-job-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-5",
@@ -1127,8 +1596,15 @@
       "店外デート",
       "直帰"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容を見る",
+    "relatedIds": [
+      "faq-job-4",
+      "faq-job-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-6",
@@ -1144,8 +1620,15 @@
       "平等",
       "ギスギスなし"
     ],
-    "eightCategory": "salary",
-    "eightCategoryLabel": "給料"
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・店舗ルールを見る",
+    "relatedIds": [
+      "faq-job-4",
+      "faq-trouble-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-7",
@@ -1161,8 +1644,15 @@
       "体調",
       "生理痛"
     ],
-    "eightCategory": "hours",
-    "eightCategoryLabel": "勤務時間"
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・体調配慮を見る",
+    "relatedIds": [
+      "faq-shift-12",
+      "faq-trouble-5"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-8",
@@ -1178,8 +1668,15 @@
       "20分",
       "短時間"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・接客時間を見る",
+    "relatedIds": [
+      "faq-job-3",
+      "faq-sal-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-9",
@@ -1195,8 +1692,15 @@
       "愛想",
       "トーク力不要"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "beginner",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "未経験者向けガイドを見る",
+    "relatedIds": [
+      "faq-rec-1",
+      "faq-job-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-10",
@@ -1212,8 +1716,15 @@
       "サラリーマン",
       "観光客"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・客層を見る",
+    "relatedIds": [
+      "faq-job-2",
+      "faq-job-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-11",
@@ -1228,8 +1739,15 @@
       "声かけ不要",
       "仲居さんにお任せ"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "beginner",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "未経験者向けガイドを見る",
+    "relatedIds": [
+      "faq-job-12",
+      "faq-job-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-12",
@@ -1245,15 +1763,22 @@
       "守ってくれる",
       "仲居"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "beginner",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "仲居さんのサポートを見る",
+    "relatedIds": [
+      "faq-job-11",
+      "faq-trouble-4"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-13",
     "category": "job",
     "categoryLabel": "お仕事内容・接客",
     "question": "危険な行為や嫌がることを強要されたりしませんか？",
-    "answer": "絶対にありません。当店では料理組合の安全規約に則り、女性が嫌がる行為や危険な行為は固く禁止されています。ルールを守れないお客様は即座に接客を中断し、退店していただきます。女性キャストの尊厳と安全が何よりも最優先されます。",
+    "answer": "一切ありません。当店では料理組合の安全規約に則り、女性が嫌がる行為や危険な行為は固く禁止されています。ルールを守れないお客様は即座に接客を中断し、退店していただきます。女性キャストの尊厳と安全が何よりも最優先されます。",
     "isPopular": false,
     "keywords": [
       "危険行為",
@@ -1262,8 +1787,15 @@
       "中断",
       "安心"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "安全・衛生対策を見る",
+    "relatedIds": [
+      "faq-job-2",
+      "faq-job-14"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-14",
@@ -1279,8 +1811,15 @@
       "クリニック提携",
       "ゴム着用"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "衛生・健康管理を見る",
+    "relatedIds": [
+      "faq-job-13",
+      "faq-job-16"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-job-15",
@@ -1296,8 +1835,15 @@
       "煙草の煙",
       "匂い"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "店舗環境・設備を見る",
+    "relatedIds": [
+      "faq-job-16",
+      "faq-job-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-job-16",
@@ -1313,8 +1859,15 @@
       "清潔",
       "ドライヤー"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・清拭ルールを見る",
+    "relatedIds": [
+      "faq-job-3",
+      "faq-job-14"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-1",
@@ -1330,8 +1883,15 @@
       "家具家電付き",
       "即日"
     ],
-    "eightCategory": "dorm",
-    "eightCategoryLabel": "寮"
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮・出稼ぎページを見る",
+    "relatedIds": [
+      "faq-dorm-2",
+      "faq-dorm-4"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-2",
@@ -1347,8 +1907,15 @@
       "光熱費込み",
       "初期費用ゼロ"
     ],
-    "eightCategory": "dorm",
-    "eightCategoryLabel": "寮"
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮費・費用案内を見る",
+    "relatedIds": [
+      "faq-dorm-1",
+      "faq-dorm-4"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-3",
@@ -1364,8 +1931,15 @@
       "テレビ",
       "Wi-Fi"
     ],
-    "eightCategory": "dorm",
-    "eightCategoryLabel": "寮"
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮の設備一覧を見る",
+    "relatedIds": [
+      "faq-dorm-1",
+      "faq-dorm-2"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-4",
@@ -1380,8 +1954,15 @@
       "仲介手数料なし",
       "費用不要"
     ],
-    "eightCategory": "recruit",
-    "eightCategoryLabel": "応募・面接"
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮の初期費用を見る",
+    "relatedIds": [
+      "faq-dorm-2",
+      "faq-dorm-13"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-5",
@@ -1397,8 +1978,15 @@
       "飛行機代",
       "地方から"
     ],
-    "eightCategory": "dorm",
-    "eightCategoryLabel": "寮"
+    "category12": "access",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "出稼ぎ・交通費条件を見る",
+    "relatedIds": [
+      "faq-dorm-6",
+      "faq-sal-11"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-6",
@@ -1414,8 +2002,15 @@
       "大型連休",
       "短期滞在"
     ],
-    "eightCategory": "dorm",
-    "eightCategoryLabel": "寮"
+    "category12": "hours",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮・出稼ぎページを見る",
+    "relatedIds": [
+      "faq-shift-3",
+      "faq-dorm-5"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-7",
@@ -1431,8 +2026,15 @@
       "ペット同伴寮",
       "動物"
     ],
-    "eightCategory": "dorm",
-    "eightCategoryLabel": "寮"
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮・入居相談を見る",
+    "relatedIds": [
+      "faq-dorm-1",
+      "faq-dorm-8"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-8",
@@ -1447,8 +2049,15 @@
       "シングルマザー寮",
       "ファミリータイプ"
     ],
-    "eightCategory": "dorm",
-    "eightCategoryLabel": "寮"
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮・子育て相談を見る",
+    "relatedIds": [
+      "faq-dorm-9",
+      "faq-shift-7"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-9",
@@ -1463,8 +2072,15 @@
       "保育園",
       "託児所手当"
     ],
-    "eightCategory": "dorm",
-    "eightCategoryLabel": "寮"
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "育児・託児相談を見る",
+    "relatedIds": [
+      "faq-dorm-8",
+      "faq-shift-7"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-10",
@@ -1479,8 +2095,15 @@
       "運搬サポート",
       "事前受け取り"
     ],
-    "eightCategory": "dorm",
-    "eightCategoryLabel": "寮"
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "出稼ぎ・事前相談を見る",
+    "relatedIds": [
+      "faq-dorm-1",
+      "faq-dorm-5"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-11",
@@ -1496,8 +2119,15 @@
       "天王寺",
       "難波"
     ],
-    "eightCategory": "dorm",
-    "eightCategoryLabel": "寮"
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮・周辺環境を見る",
+    "relatedIds": [
+      "faq-dorm-1",
+      "faq-dorm-12"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-dorm-12",
@@ -1512,8 +2142,15 @@
       "寮のルール",
       "防犯セキュリティ"
     ],
-    "eightCategory": "dorm",
-    "eightCategoryLabel": "寮"
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮の利用ルールを見る",
+    "relatedIds": [
+      "faq-dorm-11",
+      "faq-dorm-1"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-dorm-13",
@@ -1528,8 +2165,15 @@
       "退去費用ゼロ",
       "スムーズ退寮"
     ],
-    "eightCategory": "leaving",
-    "eightCategoryLabel": "退店"
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "寮・退寮条件を見る",
+    "relatedIds": [
+      "faq-trouble-1",
+      "faq-trouble-2"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-dorm-14",
@@ -1544,8 +2188,15 @@
       "ビジネスホテル",
       "完全個室"
     ],
-    "eightCategory": "dorm",
-    "eightCategoryLabel": "寮"
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/dekasegi",
+    "relatedLabel": "滞在先・出稼ぎ案内を見る",
+    "relatedIds": [
+      "faq-dorm-1",
+      "faq-dorm-6"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-beauty-1",
@@ -1561,8 +2212,15 @@
       "ドレス",
       "自前購入不要"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "environment",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "衣装・身支度サポートを見る",
+    "relatedIds": [
+      "faq-beauty-11",
+      "faq-beauty-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-2",
@@ -1577,8 +2235,15 @@
       "ヘアセット",
       "メイク代ゼロ"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "environment",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "ヘアメイク案内を見る",
+    "relatedIds": [
+      "faq-beauty-1",
+      "faq-beauty-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-3",
@@ -1594,8 +2259,15 @@
       "グラマー",
       "体型カバー"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "募集要項を見る",
+    "relatedIds": [
+      "faq-beauty-4",
+      "faq-beauty-1"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-4",
@@ -1610,8 +2282,15 @@
       "高身長",
       "サイズ"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "募集要項を見る",
+    "relatedIds": [
+      "faq-beauty-3",
+      "faq-beauty-1"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-5",
@@ -1627,8 +2306,15 @@
       "ファンデーションテープ",
       "タトゥー隠し"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "募集要項・身だしなみを見る",
+    "relatedIds": [
+      "faq-beauty-6",
+      "faq-beauty-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-6",
@@ -1644,8 +2330,15 @@
       "ピアス",
       "派手髪"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "qualification",
+    "audienceTag": "全員共通",
+    "relatedPage": "/requirements",
+    "relatedLabel": "募集要項を見る",
+    "relatedIds": [
+      "faq-beauty-5",
+      "faq-beauty-2"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-7",
@@ -1660,8 +2353,15 @@
       "コンタクト",
       "視力"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "job",
+    "audienceTag": "全員共通",
+    "relatedPage": "/job",
+    "relatedLabel": "仕事内容・身だしなみを見る",
+    "relatedIds": [
+      "faq-beauty-9",
+      "faq-beauty-6"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-8",
@@ -1677,8 +2377,15 @@
       "照明効果",
       "メイク"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "beginner",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "未経験者向けガイドを見る",
+    "relatedIds": [
+      "faq-beauty-2",
+      "faq-priv-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-9",
@@ -1693,8 +2400,15 @@
       "仕事道具",
       "手ぶら出勤"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "job",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "初日出勤の持ち物を見る",
+    "relatedIds": [
+      "faq-beauty-1",
+      "faq-rec-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-10",
@@ -1710,8 +2424,15 @@
       "エステ",
       "自分磨き"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/beginner",
+    "relatedLabel": "店舗サポート案内を見る",
+    "relatedIds": [
+      "faq-beauty-2",
+      "faq-beauty-1"
+    ],
+    "needsVerification": true
   },
   {
     "id": "faq-beauty-11",
@@ -1727,8 +2448,15 @@
       "コスプレ",
       "季節の衣装"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "environment",
+    "audienceTag": "全員共通",
+    "relatedPage": "/beginner",
+    "relatedLabel": "衣装バリエーションを見る",
+    "relatedIds": [
+      "faq-beauty-1",
+      "faq-beauty-4"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-beauty-12",
@@ -1744,15 +2472,22 @@
       "スリッパ",
       "素足"
     ],
-    "eightCategory": "beginner",
-    "eightCategoryLabel": "未経験"
+    "category12": "environment",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/job",
+    "relatedLabel": "店内環境・備品を見る",
+    "relatedIds": [
+      "faq-beauty-1",
+      "faq-beauty-9"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-1",
     "category": "trouble",
     "categoryLabel": "退職・トラブル対策",
     "question": "辞めたくなったときは、すぐに辞められますか？即日退店は？",
-    "answer": "はい、いつでも即日退店可能です！「今日で終わりにしたいです」「今月いっぱいで辞めます」とお伝えいただければ、その場でお給料を全額受け取ってスムーズに退店できます。理不尽な引き止めや嫌がらせは100%ありません。",
+    "answer": "はい、いつでも即日退店可能です！「今日で終わりにしたいです」「今月いっぱいで辞めます」とお伝えいただければ、その場でお給料を全額受け取ってスムーズに退店できます。理不尽な引き止めや嫌がらせは一切ありません。",
     "isPopular": true,
     "keywords": [
       "すぐ辞められる",
@@ -1761,8 +2496,15 @@
       "辞める",
       "退職"
     ],
-    "eightCategory": "leaving",
-    "eightCategoryLabel": "退店"
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "退店・サポート方針を見る",
+    "relatedIds": [
+      "faq-trouble-2",
+      "faq-trouble-3"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-2",
@@ -1777,8 +2519,15 @@
       "解約金ゼロ",
       "退職金なし"
     ],
-    "eightCategory": "leaving",
-    "eightCategoryLabel": "退店"
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "退店ルールを見る",
+    "relatedIds": [
+      "faq-trouble-1",
+      "faq-sal-8"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-3",
@@ -1793,15 +2542,22 @@
       "やめてもいい",
       "体験入店のみ"
     ],
-    "eightCategory": "leaving",
-    "eightCategoryLabel": "退店"
+    "category12": "support",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "体験入店後の判断を見る",
+    "relatedIds": [
+      "faq-rec-13",
+      "faq-trouble-1"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-4",
     "category": "trouble",
     "categoryLabel": "退職・トラブル対策",
     "question": "スタッフや店長に怒られたり、怒鳴られたりしませんか？",
-    "answer": "絶対にありません！当店では女性キャストを何よりも大切にする運営方針を徹底しており、威圧的な言動や怒鳴り声などは全スタッフに厳禁としています。店長も女性サポートスタッフも穏やかで優しい人ばかりですのでご安心ください。",
+    "answer": "一切ありません！当店では女性キャストを何よりも大切にする運営方針を徹底しており、威圧的な言動や怒鳴り声などは全スタッフに厳禁としています。店長も女性サポートスタッフも穏やかで話しやすい環境ですのでご安心ください。",
     "isPopular": false,
     "keywords": [
       "スタッフ怖い",
@@ -1810,8 +2566,15 @@
       "アットホーム",
       "優しいスタッフ"
     ],
-    "eightCategory": "leaving",
-    "eightCategoryLabel": "退店"
+    "category12": "beginner",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/beginner",
+    "relatedLabel": "未経験者向けサポートを見る",
+    "relatedIds": [
+      "faq-job-12",
+      "faq-trouble-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-5",
@@ -1826,8 +2589,15 @@
       "体調不良",
       "安心休養"
     ],
-    "eightCategory": "hours",
-    "eightCategoryLabel": "勤務時間"
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/workstyle",
+    "relatedLabel": "体調管理・お休み連絡を見る",
+    "relatedIds": [
+      "faq-shift-12",
+      "faq-job-7"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-6",
@@ -1843,15 +2613,22 @@
       "キャスト同士",
       "ストレスフリー"
     ],
-    "eightCategory": "leaving",
-    "eightCategoryLabel": "退店"
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/shops",
+    "relatedLabel": "職場環境・お店選びを見る",
+    "relatedIds": [
+      "faq-job-6",
+      "faq-trouble-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-7",
     "category": "trouble",
     "categoryLabel": "退職・トラブル対策",
     "question": "お客様とトラブルになった場合、女性側の責任にされませんか？",
-    "answer": "女性の責任にすることは絶対にありません！お客様との間に生じたトラブルや金銭の対応は、全て店舗責任者と専任スタッフが前面に出て解決します。女性キャストを守るのがお店の最大の責務です。",
+    "answer": "女性の責任にすることは一切ありません！お客様との間に生じたトラブルや金銭の対応は、全て店舗責任者と専任スタッフが前面に出て解決します。女性キャストを守るのがお店の最大の責務です。",
     "isPopular": false,
     "keywords": [
       "お客様トラブル",
@@ -1859,8 +2636,15 @@
       "スタッフが対応",
       "女性を守る"
     ],
-    "eightCategory": "leaving",
-    "eightCategoryLabel": "退店"
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "安全対策・店舗対応を見る",
+    "relatedIds": [
+      "faq-job-2",
+      "faq-trouble-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-8",
@@ -1876,15 +2660,22 @@
       "相談",
       "秘密厳守"
     ],
-    "eightCategory": "leaving",
-    "eightCategoryLabel": "退店"
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/salary",
+    "relatedLabel": "日払い・相談窓口を見る",
+    "relatedIds": [
+      "faq-sal-3",
+      "faq-trouble-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-9",
     "category": "trouble",
     "categoryLabel": "退職・トラブル対策",
     "question": "万が一、妊娠が発覚した場合はどうなりますか？",
-    "answer": "母体とお子様の安全を最優先にし、直ちにお仕事をお休みいただきます。無理な継続を求めることは絶対にありません。体調に寄り添い、速やかな休業・退店手続きとお体のケアを全力でサポートします。",
+    "answer": "母体とお子様の安全を最優先にし、直ちにお仕事をお休みいただきます。無理な継続を求めることは一切ありません。体調に寄り添い、速やかな休業・退店手続きなど負担のない形をご案内します。",
     "isPopular": false,
     "keywords": [
       "妊娠",
@@ -1892,8 +2683,15 @@
       "母体安全",
       "退店サポート"
     ],
-    "eightCategory": "leaving",
-    "eightCategoryLabel": "退店"
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/safety",
+    "relatedLabel": "体調・休業サポートを見る",
+    "relatedIds": [
+      "faq-trouble-5",
+      "faq-trouble-11"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-10",
@@ -1909,15 +2707,22 @@
       "直営が安全",
       "求人詐欺"
     ],
-    "eightCategory": "privacy",
-    "eightCategoryLabel": "身バレ"
+    "category12": "interview",
+    "audienceTag": "全員共通",
+    "relatedPage": "/shops",
+    "relatedLabel": "直営店とスカウトの違いを見る",
+    "relatedIds": [
+      "faq-sal-7",
+      "faq-trouble-14"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-11",
     "category": "trouble",
     "categoryLabel": "退職・トラブル対策",
     "question": "困ったときにいつでも相談できる女性専任スタッフはいますか？",
-    "answer": "はい、現場サポート歴8年の女性専任スタッフ「さくら」をはじめ、経験豊富な女性スタッフが24時間LINEで待機しています。お仕事の悩み、体調のこと、プライベートの相談まで、いつでもお気軽にお話しいただけます。",
+    "answer": "はい、現場サポート歴8年の女性専任スタッフ「さくら」をはじめ、経験豊富な女性スタッフがLINEにて24時間ご相談を受け付けています（ご返信は順次丁寧に対応いたします）。お仕事の悩み、体調のこと、プライベートの相談まで、いつでもお気軽にお話しいただけます。",
     "isPopular": false,
     "keywords": [
       "女性スタッフ相談",
@@ -1925,8 +2730,15 @@
       "サポート担当",
       "悩み相談"
     ],
-    "eightCategory": "recruit",
-    "eightCategoryLabel": "応募・面接"
+    "category12": "support",
+    "audienceTag": "全員共通",
+    "relatedPage": "/about",
+    "relatedLabel": "運営体制・サポート担当を見る",
+    "relatedIds": [
+      "faq-trouble-7",
+      "faq-trouble-14"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-12",
@@ -1941,15 +2753,22 @@
       "過去に勤務",
       "経験者優遇"
     ],
-    "eightCategory": "leaving",
-    "eightCategoryLabel": "退店"
+    "category12": "experienced",
+    "audienceTag": "経験者向け",
+    "relatedPage": "/experienced",
+    "relatedLabel": "経験者・移籍ガイドを見る",
+    "relatedIds": [
+      "faq-trouble-13",
+      "faq-rec-12"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-13",
     "category": "trouble",
     "categoryLabel": "退職・トラブル対策",
     "question": "他のお店（他店・他グループ）からの移籍は秘密厳守で可能ですか？",
-    "answer": "はい、完全秘密厳守でスムーズな移籍をサポートいたします。前のお店の関係者に知られることなく、寮の移動やシフトの移行を即日対応いたしますので、お困りの際はぜひ一度ご相談ください。",
+    "answer": "はい、秘密厳守で移籍のご相談を承っています。前のお店の関係者に連絡・共有することはなく、寮の空き状況やご希望のシフト条件を確認のうえスムーズに対応できるようご相談に応じますので、お困りの際はぜひ一度ご相談ください。",
     "isPopular": false,
     "keywords": [
       "移籍",
@@ -1957,8 +2776,15 @@
       "秘密移籍",
       "トラブルなし"
     ],
-    "eightCategory": "leaving",
-    "eightCategoryLabel": "退店"
+    "category12": "experienced",
+    "audienceTag": "経験者向け",
+    "relatedPage": "/experienced",
+    "relatedLabel": "他店・他業種からの移籍案内を見る",
+    "relatedIds": [
+      "faq-trouble-12",
+      "faq-trouble-1"
+    ],
+    "needsVerification": false
   },
   {
     "id": "faq-trouble-14",
@@ -1973,7 +2799,14 @@
       "LINE相談歓迎",
       "無理な勧誘なし"
     ],
-    "eightCategory": "leaving",
-    "eightCategoryLabel": "退店"
+    "category12": "interview",
+    "audienceTag": "未経験向け",
+    "relatedPage": "/flow",
+    "relatedLabel": "LINE相談・応募方法を見る",
+    "relatedIds": [
+      "faq-rec-15",
+      "faq-trouble-11"
+    ],
+    "needsVerification": false
   }
 ]

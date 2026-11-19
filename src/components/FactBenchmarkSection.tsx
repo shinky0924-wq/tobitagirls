@@ -32,7 +32,7 @@ export default function FactBenchmarkSection({ onCtaclick }: FactBenchmarkSectio
           数字でわかる！<span className="text-secondary">在籍キャストのリアルデータ＆お悩み別ガイド</span>
         </h2>
         <p className="font-sans text-xs sm:text-sm md:text-base text-zinc-600 leading-relaxed max-w-2xl mx-auto">
-          「本当に未経験でも大丈夫？」「みんなの年齢層や実際の平均日給はどれくらい？」など、気になる疑問を当料亭グループで働く女の子たちのリアルなデータからわかりやすくまとめました。
+          「本当に未経験でも大丈夫？」「みんなの年齢層や実際の平均日給はどれくらい？」など、気になる疑問を当店で働く女の子たちのリアルなデータからわかりやすくまとめました。
         </p>
       </div>
 
@@ -141,7 +141,7 @@ export default function FactBenchmarkSection({ onCtaclick }: FactBenchmarkSectio
             状況・タイプで選ぶ！<span className="text-secondary">あなたに最適な働き方ガイド</span>
           </h3>
           <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
-            あなたの年齢や生活スタイル、稼ぎたい目標金額をタップすると、おすすめの通りやシフト、収入の目安がひと目でわかります。
+            あなたの年齢や生活スタイル、希望の目標に合わせてタップすると、合いやすい勤務スタイルやシフト、収入の目安がひと目でわかります。
           </p>
         </div>
 
@@ -208,7 +208,7 @@ export default function FactBenchmarkSection({ onCtaclick }: FactBenchmarkSectio
             {/* Grid Specs */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-xs">
               <div className="bg-rose-50/30 p-3.5 rounded-xl border border-rose-100">
-                <span className="text-zinc-500 font-bold block mb-1">🏮 おすすめの通り</span>
+                <span className="text-zinc-500 font-bold block mb-1">🏮 当店の立地・環境</span>
                 <span className="text-zinc-900 font-bold text-sm">{selectedCase.recommendedStreet}</span>
               </div>
               <div className="bg-rose-50/30 p-3.5 rounded-xl border border-rose-100">

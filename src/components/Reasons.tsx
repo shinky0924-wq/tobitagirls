@@ -97,7 +97,7 @@ const REASONS_DATA: ReasonCardData[] = [
     ),
     appealPoints: [
       '報酬システムを事前に説明',
-      'バックや保証などの待遇を明確化',
+      'バック率や控除ゼロなどの待遇を明確化',
       '支払い条件を事前に確認'
     ],
     image: '/images/reason_05_system_1794212982911.jpg'

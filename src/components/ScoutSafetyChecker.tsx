@@ -54,7 +54,7 @@ export default function ScoutSafetyChecker({ onCtaclick }: ScoutSafetyCheckerPro
   let badgeText = '安全・優良求人';
   let badgeColor = 'bg-emerald-100 text-emerald-800 border-emerald-200';
   let messageTitle = '危険な項目は見つかりませんでした';
-  let messageDesc = '検討されている求人は健全な直営店、または安全な条件です。「飛田ガールズ」のような料理組合公認の料亭直営窓口なら、スカウトの中抜き0円・全額日払い手渡し・写真非掲載が100%保証されます。';
+  let messageDesc = '検討されている求人は健全な条件に当てはまります。当サイト「飛田ガールズ」のような料理組合公認の料亭直営窓口なら、スカウトの中抜き0円・退勤時全額日払い手渡し・Web顔写真非掲載が徹底されています。';
 
   if (checkedCount >= 3 || totalScore >= 4) {
     dangerLevel = 'danger';

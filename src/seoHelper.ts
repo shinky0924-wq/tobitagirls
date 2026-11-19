@@ -47,7 +47,7 @@ export function resolveFullImageUrl(eyeCatch?: string): string {
   return 'https://tobitashinchi-recruit.com/images/col_beginner_guide_art_1787803245812.jpg';
 }
 
-const DEFAULT_TITLE = '飛田新地求人｜飛田ガールズ【公式・料亭直営】';
+const DEFAULT_TITLE = '飛田新地求人｜飛田ガールズ【公式・料亭直営】未経験歓迎・即日日払い';
 const DEFAULT_DESC = '飛田新地で働くか迷っている女性へ。飛田ガールズは料亭直営の求人案内サイトです。仕事内容や接客方法、給料・全額日払いの仕組み、応募条件、身バレ対策まで詳しく解説。未経験の方も経験者の方も、応募前に知っておきたい情報を分かりやすく紹介しています。';
 const DEFAULT_IMAGE = 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg';
 
@@ -103,11 +103,11 @@ function buildHomeNoscript(): string {
             <li><h3><a href="/salary">給料・待遇｜売上バック率と日払いの仕組み</a></h3><p>売上に応じた明確なバック率で働いたその日に全額日払い。</p></li>
             <li><h3><a href="/beginner">未経験｜初めてでも安心のサポート体制</a></h3><p>在籍キャストの約9割が未経験からスタート。女性スタッフが個別対応。</p></li>
             <li><h3><a href="/experienced">経験者｜より良い環境で働くための移籍優遇</a></h3><p>営業連絡・ノルマ・お風呂掃除なしの働きやすい環境。</p></li>
-            <li><h3><a href="/requirements">募集要項｜応募条件と手ぶら面接の必要書類</a></h3><p>満20歳以上の女性対象。履歴書不要・私服で面接OK。</p></li>
+            <li><h3><a href="/requirements">募集要項｜応募条件と面接・体験時の必要書類</a></h3><p>満20歳以上の女性対象。履歴書不要・私服で面接OK（※体験・勤務時は住民票原本または日本国パスポート必須）。</p></li>
             <li><h3><a href="/flow">面接・体験入店｜応募から体験入店までの流れ</a></h3><p>LINE相談・私服見学・希望に応じた体験入店に対応。</p></li>
             <li><h3><a href="/workstyle">働き方｜自分のペースで選べるシフト</a></h3><p>朝・昼・夕方から選べる自由シフト制。週1日〜・Wワーク対応。</p></li>
-            <li><h3><a href="/shops">お店選び｜通りごとの特徴と安心の直営店</a></h3><p>メイン通り・青春通り・大門通りの特徴と直営店案内。</p></li>
-            <li><h3><a href="/dekasegi">寮・出稼ぎ｜完全個室寮と交通費支給</a></h3><p>家具家電・Wi-Fi付き個室寮と遠方交通費サポート。</p></li>
+            <li><h3><a href="/shops">お店選び｜通りの特徴と当直営料亭</a></h3><p>各通りの特徴・確認ポイントと当直営料亭のご案内。</p></li>
+            <li><h3><a href="/dekasegi">寮・出稼ぎ｜個室寮相談と交通費規定支給</a></h3><p>家具家電・Wi-Fi付き個室寮の相談や遠方交通費サポート（規定あり）。</p></li>
             <li><h3><a href="/safety">プライバシー対策｜身バレを防ぐ安全対策</a></h3><p>撮影禁止ルール・完全源氏名・住民税普通徴収の案内。</p></li>
             <li><h3><a href="/faq">よくある質問｜応募前の不安を解消するQ&A</a></h3><p>未経験・給料・身バレなど全119問のQ&A。</p></li>
             <li><h3><a href="/blog">お仕事コラム｜働く前に知りたい体験談とノウハウ</a></h3><p>100本以上の解説記事・実例コラム。</p></li>
@@ -272,7 +272,7 @@ function buildHomeJsonLd(): string {
         '@type': 'HowTo',
         '@id': 'https://tobitashinchi-recruit.com/#howto',
         'name': '飛田新地料亭直営求人・お仕事スタートの4ステップ',
-        'description': '飛田新地料理組合加盟の料亭直営グループでのお仕事開始手順。公式LINE無料相談から私服面接、体験入店、即日全額日払い受取までの流れを解説。',
+        'description': '飛田新地料理組合加盟の当直営料亭でのお仕事開始手順。公式LINE無料相談から私服面接、体験入店、即日全額日払い受取までの流れを解説。',
         'step': [
           {
             '@type': 'HowToStep',
@@ -727,9 +727,9 @@ function buildAboutNoscript(): string {
           <h2>安心の実績と信頼</h2>
           <table border="1">
             <tbody>
-              <tr><th>創業実績</th><td><strong>創業40余年</strong>（料理組合公認・老舗直営料亭グループ）</td></tr>
-              <tr><th>未経験スタート率</th><td><strong>90%以上</strong>（夜職初心者も即日安心のマンツーマン研修完備）</td></tr>
-              <tr><th>給与還元率</th><td><strong>完全50%ハーフバック</strong>（即日全額現金日払い手渡し保証・天引きゼロ）</td></tr>
+              <tr><th>創業実績</th><td><strong>創業40余年</strong>（料理組合公認・老舗直営料亭）</td></tr>
+              <tr><th>未経験スタート率</th><td><strong>90%以上</strong>（夜職初心者も即日安心の口頭事前説明完備）</td></tr>
+              <tr><th>給与還元率</th><td><strong>完全50%ハーフバック</strong>（退勤時に即日全額現金日払い手渡し・天引きゼロ）</td></tr>
             </tbody>
           </table>
         </section>
@@ -737,7 +737,7 @@ function buildAboutNoscript(): string {
         <section>
           <h2>女性ファーストを貫く3つの運営理念</h2>
           <h3>1. 徹底したプライバシー保護・写真掲載ゼロ</h3>
-          <p>飛田新地は街全体で一般人の撮影が固く禁止されています。また、当グループではインターネット上・SNSへの写真掲載は一切行いません。勤務は完全源氏名、身分証の管理も厳格で、昼職OLの副業向けに住民税の普通徴収手続きもしっかりサポートいたします。</p>
+          <p>飛田新地は街全体で一般人の撮影が固く禁止されています。また、当店ではインターネット上・SNSへの写真掲載は一切行いません。勤務は完全源氏名、身分証の管理も厳格で、昼職OLの副業向けに住民税の普通徴収手続きもしっかり案内いたします。</p>
 
           <h3>2. ノルマ・罰金・上下関係なしの自由な働き方</h3>
           <p>指名争いや同伴・アフター、営業LINEの送信などは一切不要です。お酒を飲む必要も一切ありません。週1日から、短時間から、あなたのライフスタイルに合わせた完全自由出勤制を採用しています。</p>
@@ -934,7 +934,7 @@ function buildTopicNoscript(topic: string): string {
 
         <section>
           <h2>料亭直営公式採用窓口（飛田ガールズ）</h2>
-          <p>24時間365日、専任の女性サポートスタッフがLINEおよびお電話で質問やご相談を受付中です。無理な勧誘や引き止めは一切ありませんので、お気軽にお問い合わせください。</p>
+          <p>24時間365日、専任の女性サポートスタッフが公式LINEで質問やご相談を受付中です。無理な勧誘や引き止めは一切ありませんので、お気軽にお問い合わせください。</p>
         </section>
       </article>
     </main>
@@ -963,6 +963,12 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
     '/blog/tobitashinchi-physical-mental-care-guide': '/blog/tobitashinchi-stamina-mental-care-100k',
     '/blog/tobitashinchi-fake-job-scout-warning': '/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment',
     '/blog/tobitashinchi-daily-work-routine-guide': '/blog/tobitashinchi-daily-schedule-work-flow-detail',
+    '/blog/tobitashinchi-id-requirements': '/blog/tobitashinchi-resident-record-requirement-checklist',
+    '/blog/tobitashinchi-merits-and-demerits': '/blog/tobitashinchi-merit-demerit-honest',
+    '/blog/tobitashinchi-shift-workstyle-guide': '/blog/flexible-shift-work-style-guide',
+    '/blog/tobitashinchi-safety-rules-faq': '/blog/tobita-safe-recruitment',
+    '/blog/tobitashinchi-main-vs-seishun-street': '/blog/tobita-street-compare',
+    '/blog/tobitashinchi-salary-system-breakdown': '/blog/tobitashinchi-official-salary-formula-breakdown',
     '/comparison': '/compare',
     '/target-categories': '/compare',
     '/target-jobs': '/compare',
@@ -978,7 +984,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
     '/compare/age-40s': '/compare/40s',
   };
 
-  const cleanReqPath = cleanPath.replace(/\/$/, '') || '/';
+  const cleanReqPath = cleanPath.replace(/\/+$/, '').replace(/\.html$/i, '') || '/';
   if (LEGACY_URL_REDIRECTS[cleanReqPath] || LEGACY_URL_REDIRECTS[cleanPath]) {
     const dest = LEGACY_URL_REDIRECTS[cleanReqPath] || LEGACY_URL_REDIRECTS[cleanPath];
     canonicalUrl = `https://tobitashinchi-recruit.com${dest}`;
@@ -1673,7 +1679,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
     if (cluster) {
       title = cluster.seoTitle;
       description = cluster.metaDescription;
-      canonicalUrl = `https://tobitashinchi-recruit.com${cleanPath === '/interview' ? '/interview' : cluster.path}`;
+      canonicalUrl = `https://tobitashinchi-recruit.com${cluster.path}`;
       ogImageUrl = resolveFullImageUrl(cluster.heroImage);
       ogImageAlt = cluster.title;
       customNoscript = buildTopicNoscript(topicKey);
@@ -1795,11 +1801,6 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
     }
     html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/i, '');
   } else if (status === 301) {
-    if (/<meta\s+name=["']robots["'][^>]*>/i.test(html)) {
-      html = html.replace(/<meta\s+name=["']robots["'][^>]*>/i, '<meta name="robots" content="noindex, follow" />');
-    } else {
-      html = html.replace(/<\/head>/i, '  <meta name="robots" content="noindex, follow" />\n</head>');
-    }
     html = html.replace(/<\/head>/i, `  <meta http-equiv="refresh" content="0;url=${canonicalUrl}" />\n</head>`);
     if (/<link\s+rel=["']canonical["'][^>]*>/i.test(html)) {
       html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/i, `<link rel="canonical" href="${canonicalUrl}" />`);

@@ -75,7 +75,9 @@ function isAiBotOrMarkdownRequest(req: express.Request): boolean {
 
 async function startServer() {
   const app = express();
-  const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+  const portArgIdx = process.argv.indexOf('--port');
+  const cliPort = portArgIdx !== -1 && process.argv[portArgIdx + 1] ? parseInt(process.argv[portArgIdx + 1], 10) : NaN;
+  const PORT = !Number.isNaN(cliPort) ? cliPort : (process.env.PORT ? parseInt(process.env.PORT, 10) : 3000);
 
   app.use(express.json({ limit: '50mb' }));
 
@@ -87,7 +89,7 @@ async function startServer() {
       return res.redirect(301, cleanUrl);
     }
 
-    // 2. Soft 404 URL Map
+    // 2. Soft 404 / Noindex URL Redirect Map (HTTP 301 Permanent Redirect)
     const LEGACY_URL_REDIRECTS: Record<string, string> = {
       '/blog/tobitashinchi-dormitory-lifestyle-support': '/blog/tobitashinchi-housing-support',
       '/blog/tobitashinchi-tax-declaration-guide': '/blog/tobitashinchi-tax-guide',
@@ -95,6 +97,12 @@ async function startServer() {
       '/blog/tobitashinchi-physical-mental-care-guide': '/blog/tobitashinchi-stamina-mental-care-100k',
       '/blog/tobitashinchi-fake-job-scout-warning': '/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment',
       '/blog/tobitashinchi-daily-work-routine-guide': '/blog/tobitashinchi-daily-schedule-work-flow-detail',
+      '/blog/tobitashinchi-id-requirements': '/blog/tobitashinchi-resident-record-requirement-checklist',
+      '/blog/tobitashinchi-merits-and-demerits': '/blog/tobitashinchi-merit-demerit-honest',
+      '/blog/tobitashinchi-shift-workstyle-guide': '/blog/flexible-shift-work-style-guide',
+      '/blog/tobitashinchi-safety-rules-faq': '/blog/tobita-safe-recruitment',
+      '/blog/tobitashinchi-main-vs-seishun-street': '/blog/tobita-street-compare',
+      '/blog/tobitashinchi-salary-system-breakdown': '/blog/tobitashinchi-official-salary-formula-breakdown',
       '/comparison': '/compare',
       '/target-categories': '/compare',
       '/target-jobs': '/compare',
@@ -110,10 +118,11 @@ async function startServer() {
       '/compare/age-40s': '/compare/40s',
     };
 
-    const cleanReqPath = req.path.replace(/\/$/, '') || '/';
+    const isMdReq = /\.md$/i.test(req.path);
+    const cleanReqPath = req.path.replace(/\/+$/, '').replace(/\.(html|md)$/i, '') || '/';
     const targetRedirect = LEGACY_URL_REDIRECTS[cleanReqPath] || LEGACY_URL_REDIRECTS[req.path];
     if (targetRedirect) {
-      return res.redirect(301, targetRedirect);
+      return res.redirect(301, isMdReq ? `${targetRedirect}.md` : targetRedirect);
     }
 
     next();
@@ -208,6 +217,23 @@ ${itemsXml}
   // Health check
   app.get('/api/health', (_req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  });
+
+  // Resilient /images/* fallback serving public/images -> src/assets/images -> public/assets/images
+  app.get('/images/:filename', (req, res, next) => {
+    const safeName = path.basename(req.params.filename || '');
+    if (!safeName) return next();
+    const candidates = [
+      path.join(process.cwd(), 'public', 'images', safeName),
+      path.join(process.cwd(), 'src', 'assets', 'images', safeName),
+      path.join(process.cwd(), 'public', 'assets', 'images', safeName),
+    ];
+    for (const filePath of candidates) {
+      if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+        return res.sendFile(filePath);
+      }
+    }
+    return next();
   });
 
   // CMS Login

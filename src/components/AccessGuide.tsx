@@ -47,7 +47,7 @@ export default function AccessGuide({ onCtaclick }: AccessGuideProps) {
           面接店舗へのアクセス・主要駅からの徒歩ルート
         </h3>
         <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
-          天王寺・難波エリアに直結しており、3駅複数路線から徒歩圏内です。面接時は私服・手ぶらで駅までお越しいただければ、女性スタッフが丁寧にご案内します。
+          天王寺・難波エリアに直結しており、3駅複数路線から徒歩圏内です。相談・見学時は私服でお越しいただければ女性スタッフが丁寧にご案内します（※体験入店・勤務時は所定の本人確認書類が必要です）。
         </p>
       </div>
 

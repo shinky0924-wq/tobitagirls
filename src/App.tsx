@@ -205,6 +205,12 @@ export default function App() {
       'tobitashinchi-physical-mental-care-guide': '/blog/tobitashinchi-stamina-mental-care-100k',
       'tobitashinchi-fake-job-scout-warning': '/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment',
       'tobitashinchi-daily-work-routine-guide': '/blog/tobitashinchi-daily-schedule-work-flow-detail',
+      'tobitashinchi-id-requirements': '/blog/tobitashinchi-resident-record-requirement-checklist',
+      'tobitashinchi-merits-and-demerits': '/blog/tobitashinchi-merit-demerit-honest',
+      'tobitashinchi-shift-workstyle-guide': '/blog/flexible-shift-work-style-guide',
+      'tobitashinchi-safety-rules-faq': '/blog/tobita-safe-recruitment',
+      'tobitashinchi-main-vs-seishun-street': '/blog/tobita-street-compare',
+      'tobitashinchi-salary-system-breakdown': '/blog/tobitashinchi-official-salary-formula-breakdown',
     };
     if (selectedSlug && slugRedirectMap[selectedSlug]) {
       navigate(slugRedirectMap[selectedSlug], true);
@@ -220,7 +226,7 @@ export default function App() {
   useEffect(() => {
     if (typeof document === 'undefined') return;
 
-    let pageTitle = '飛田新地求人｜飛田ガールズ【公式・料亭直営】';
+    let pageTitle = '飛田新地求人｜飛田ガールズ【公式・料亭直営】未経験歓迎・即日日払い';
     let pageDesc = '飛田新地で働くか迷っている女性へ。飛田ガールズは料亭直営の求人案内サイトです。仕事内容や接客方法、給料・全額日払いの仕組み、応募条件、身バレ対策まで詳しく解説。未経験の方も経験者の方も、応募前に知っておきたい情報を分かりやすく紹介しています。';
     let canonicalUrl = 'https://tobitashinchi-recruit.com/';
 
@@ -271,7 +277,7 @@ export default function App() {
       pageDesc = '飛田新地で働く前に知っておきたい仕事内容・給料・応募条件・身バレ対策などの疑問をQ&A形式で分かりやすくまとめました。未経験・経験者どちらも確認できます。';
       canonicalUrl = selectedFaqCategory ? `https://tobitashinchi-recruit.com/faq/${selectedFaqCategory}` : 'https://tobitashinchi-recruit.com/faq';
     } else if (currentTab === 'recruit') {
-      pageTitle = '飛田新地求人｜飛田ガールズ【公式・料亭直営】';
+      pageTitle = '飛田新地求人｜飛田ガールズ【公式・料亭直営】未経験歓迎・即日日払い';
       pageDesc = '飛田新地で働くか迷っている女性へ。飛田ガールズは料亭直営の求人案内サイトです。仕事内容や接客方法、給料・全額日払いの仕組み、応募条件、身バレ対策まで詳しく解説。未経験の方も経験者の方も、応募前に知っておきたい情報を分かりやすく紹介しています。';
       canonicalUrl = 'https://tobitashinchi-recruit.com/';
     } else if (currentTab === 'admin') {

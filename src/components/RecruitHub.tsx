@@ -169,19 +169,19 @@ export default function RecruitHub({
       title: "募集要項",
       bannerHeadline: "応募する前に確認！",
       bannerSubtext: "年齢・応募条件・勤務条件",
-      questionTitle: "募集要項｜応募条件と手ぶら面接の必要書類",
+      questionTitle: "募集要項｜応募条件と面接・体験時の必要書類",
       tagline: "20歳以上の女性限定・安心の料亭直営募集条件",
       badge: "20歳以上",
       icon: "FileText",
       image: "/images/cat_05_requirements_1794165002731.jpg",
-      summary: "応募に必要な年齢や資格、面接当日に必要な書類について解説しています。履歴書不要で参加できる手ぶら面接の条件などを確認できます。",
+      summary: "応募に必要な年齢や資格、面接・体験時に必要な書類について解説しています。履歴書不要・私服面接OKの条件などを確認できます。",
       keyPoints: [
         "満20歳以上の女性が対象",
-        "履歴書不要・私服のまま手ぶら面接OK",
-        "本籍地記載の住民票または身分証"
+        "履歴書不要・普段通りの私服のまま面接OK",
+        "本籍地記載の住民票原本または日本国パスポート（＋顔写真付き身分証）"
       ],
       featuredArticles: [
-        { slug: "tobitashinchi-id-requirements", title: "面接時に必要な身分証と住民票の準備方法", tag: "必要書類" },
+        { slug: "tobitashinchi-resident-record-requirement-checklist", title: "本籍地入り住民票が必須な理由と必要書類一覧", tag: "必要書類" },
         { slug: "tobitashinchi-interview-guide", title: "応募条件と採用までのステップを解説", tag: "応募資格" }
       ],
       buttonText: "応募条件・募集内容を確認する"
@@ -195,8 +195,8 @@ export default function RecruitHub({
       bannerHeadline: "面接では何をする？",
       bannerSubtext: "応募から体験入店まで",
       questionTitle: "面接・体入｜応募から体験入店までの流れ",
-      tagline: "履歴書不要・私服見学OK・面接当日の即日体入対応",
-      badge: "手ぶらOK",
+      tagline: "履歴書不要・私服見学OK・希望に応じた当日体入対応",
+      badge: "私服・見学OK",
       icon: "Calendar",
       image: "/images/cat_06_interview_1794165003714.jpg",
       summary: "応募から面接、体験入店までの具体的な手順について解説しています。当日の持ち物やお店の雰囲気を確認しながら、安心して進められる流れをまとめました。",
@@ -245,7 +245,7 @@ export default function RecruitHub({
       bannerHeadline: "お店選びで失敗しないために",
       bannerSubtext: "比較したいポイント",
       questionTitle: "お店選び｜通りごとの特徴と安心の直営店",
-      tagline: "メイン通り・青春通り・大門通りの特徴と直営店",
+      tagline: "各通りの特徴・確認ポイントと当直営料亭のご案内",
       badge: "直営安心",
       icon: "Store",
       image: "/images/cat_08_shops_1794165005681.jpg",
@@ -270,15 +270,15 @@ export default function RecruitHub({
       bannerHeadline: "遠方からでも働ける？",
       bannerSubtext: "寮・住まい・出稼ぎ",
       questionTitle: "寮・出稼ぎ｜完全個室寮と交通費支給",
-      tagline: "家具家電付き個室マンション寮・往復交通費全額支給",
-      badge: "個室寮完備",
+      tagline: "家具家電付き個室マンション寮相談・往復交通費支給（規定あり）",
+      badge: "個室寮・交通費",
       icon: "Home",
       image: "/images/cat_09_dorm_1794165006753.jpg",
       summary: "遠方から大阪に来られる女性向けの寮設備や交通費サポートについて解説しています。家具家電付きの住まいや短期滞在の流れをわかりやすくまとめました。",
       keyPoints: [
-        "家具家電・Wi-Fi付きの完全個室寮",
-        "遠方からの往復交通費をサポート",
-        "荷物ひとつで即日入居・短期も歓迎"
+        "家具家電・Wi-Fi付きの完全個室寮（条件事前確認）",
+        "遠方からの往復交通費をサポート（規定あり）",
+        "短期〜長期まで滞在スケジュールを柔軟に相談可"
       ],
       featuredArticles: [
         { slug: "tobitashinchi-housing-support", title: "完全個室マンション寮の設備と入居ルール", tag: "個室寮" },
@@ -320,7 +320,7 @@ export default function RecruitHub({
       bannerHeadline: "応募前の疑問を解決！",
       bannerSubtext: "よくある質問",
       questionTitle: "よくある質問｜応募前の不安を解消するQ&A",
-      tagline: "業界最多クラス全119問・8大テーマ体系化Q&A",
+      tagline: "全119問・12カテゴリー体系化Q&A",
       badge: "全119問",
       icon: "HelpCircle",
       image: "/images/cat_11_faq_1794165006079.jpg",
@@ -624,7 +624,7 @@ export default function RecruitHub({
                   未経験から始めたい方、これまでの経験を活かしたい方、がっつり収入を増やしたい方、週1日から自分のペースで働きたい方。
                 </p>
                 <p>
-                  当店では、一人ひとりの経験や希望、生活スタイルに合わせて働き方を一緒に考えてます。
+                  当店では、一人ひとりの経験や希望、生活スタイルに合わせて働き方を一緒に考えています。
                 </p>
               </div>
 

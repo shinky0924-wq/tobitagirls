@@ -73,7 +73,7 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
             <div className="order-2 lg:order-1 lg:col-span-7">
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 leading-tight mb-4 font-display">
                 歴史と伝統に守られた安心の環境<br />
-                <span className="text-rose-600">飛田新地 老舗料亭グループ</span>
+                <span className="text-rose-600">飛田新地 直営老舗料亭</span>
               </h1>
 
               <p className="text-sm sm:text-base text-zinc-600 leading-relaxed mb-4">
@@ -88,7 +88,7 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
                 </span>
                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800 font-bold border border-rose-100">
                   <LucideIcon name="CheckCircle2" size={13} className="text-rose-600" />
-                  <span>24時間女性スタッフ常駐</span>
+                  <span>女性スタッフ常駐・LINEは24時間受付</span>
                 </span>
               </div>
             </div>
@@ -124,7 +124,7 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
             <div className="p-4 bg-rose-50/50 rounded-2xl">
               <div className="text-xs text-zinc-500 font-bold mb-1">給与還元</div>
               <div className="text-xl font-black text-rose-600">50%完全バック</div>
-              <div className="text-[11px] text-zinc-600 mt-0.5">即日全額手渡し保証</div>
+              <div className="text-[11px] text-zinc-600 mt-0.5">退勤時に即日全額現金手渡し</div>
             </div>
           </div>
         </div>
@@ -144,7 +144,7 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
               <div>
                 <h3 className="font-bold text-base text-zinc-900 mb-1.5">徹底したプライバシー保護・写真掲載ゼロ</h3>
                 <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">
-                  飛田新地は街全体で一般人の撮影が固く禁止されています。また、当グループではインターネット上への写真掲載は一切行いません。
+                  飛田新地は街全体で一般人の撮影が固く禁止されています。また、当店ではインターネット上への写真掲載は一切行いません。
                   勤務は完全源氏名、身分証の管理も万全、住民税の普通徴収（副業対策）もしっかりアドバイスいたします。
                 </p>
               </div>
@@ -186,7 +186,7 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
         <div className="bg-gradient-to-br from-rose-500 to-rose-600 rounded-3xl p-6 sm:p-8 text-white text-center shadow-lg">
           <h3 className="text-xl sm:text-2xl font-black mb-2">まずは見学・ご相談からお気軽にどうぞ</h3>
           <p className="text-xs sm:text-sm text-rose-100 mb-6 max-w-lg mx-auto">
-            履歴書不要・私服で見学OK。まずはLINEやお電話で気になることを何でも聞いてみてください。
+            履歴書不要・私服で見学OK。まずは公式LINEで気になることを何でも聞いてみてください。
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-3">
             <button

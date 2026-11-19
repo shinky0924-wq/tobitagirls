@@ -86,7 +86,7 @@ export function getAuthorProfile(author?: { name?: string; role?: string; avatar
       badge: '元人気キャスト・接客指導 監修',
       experienceTag: 'メイン・青春通りトップ経験＋育成歴5年',
       comment: '玄関（上がり框）での座り方や笑顔で手を振るコツ、仲居さんとの呼吸の合わせ方、短時間でお客さまに喜んでいただくプロのコツなど、現場で確実に役立つ実践テクニックを共有します。',
-      bio: 'メイン通り・青春通りの人気料亭で長年トップキャストとして活躍。現在は料亭の現場サポートおよび新人女性の接客指導・マナー研修を担当。容姿だけに頼らず『愛嬌と笑顔』で日給10万円以上を安定して稼ぐ極意を伝授します。'
+      bio: 'メイン通り・青春通りエリアの料亭で長年キャストとして活躍。現在は現場サポートおよび新人女性の接客指導・マナー研修を担当。容姿だけに頼らず『愛嬌と笑顔』を大切にし、自分のペースでやりがいを持って働くコツをお伝えします。'
     };
   }
 
@@ -97,8 +97,8 @@ export function getAuthorProfile(author?: { name?: string; role?: string; avatar
       avatar: avatar && !avatar.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/) ? avatar : '/images/tobita_cast_two_real_1782374841336.jpg',
       badge: '現役キャスト（昼職Wワーク）体験レポ',
       experienceTag: '平日OL×週末飛田新地 2年目',
-      comment: '会社に絶対に副業がバレない住民税の普通徴収手続きや、平日の体力配分など、Wワーク実践者としての生の声をお届けします。',
-      bio: '昼間は一般企業のOLとして勤務しながら、週末や有給を活用して飛田新地で働く現役キャスト2年目。住民税の普通徴収による完全秘密保持や、無理のない週末シフトでの貯金・資産形成リアルを女性目線で執筆しています。'
+      comment: '本業に知られにくい住民税の普通徴収手続きや、平日の体力配分など、Wワーク実践者としての生の声をお届けします。',
+      bio: '昼間は一般企業のOLとして勤務しながら、週末や有給を活用して飛田新地で働く現役キャスト2年目。住民税の普通徴収を基本としたプライバシー配慮や、無理のない週末シフトでの貯金・ライフスタイルのリアルを女性目線で執筆しています。'
     };
   }
 
@@ -133,8 +133,8 @@ export function getAuthorProfile(author?: { name?: string; role?: string; avatar
       avatar: avatar && !avatar.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/) ? avatar : '/images/tobita_cast_two_1781787990991.jpg',
       badge: '生活支援・出稼ぎサポート担当',
       experienceTag: '女性生活支援・寮手配歴5年',
-      comment: '地方からの出稼ぎや引っ越しを伴う応募でも安心していただけるよう、生活環境や初期費用0円の住居サポート情報を詳しく解説します。',
-      bio: '女性サポートスタッフとして、地方からの出稼ぎ希望者や一人暮らし希望者の生活立ち上げ・寮案内を中心に担当。即入居可能なオートロック付きマンションの手配から日用品の準備まで、安心して新生活を送れるようサポートしています。'
+      comment: '地方からの出稼ぎや引っ越しを伴う応募でも安心していただけるよう、生活環境や個室寮の費用・空き状況の事前確認ポイントを詳しく解説します。',
+      bio: '女性サポートスタッフとして、地方からの出稼ぎ希望者や一人暮らし希望者の生活立ち上げ・寮案内を中心に担当。オートロック付きマンション寮のご相談（空き状況・入居条件の事前案内）から新生活準備まで、安心してスタートできるようサポートしています。'
     };
   }
 
@@ -251,7 +251,7 @@ export function mergeWithDefaultArticles(incomingArticles: BlogArticle[]): { mer
   return { merged, hasChanges };
 }
 
-const BLOG_DATA_VERSION = '20261113_experienced_transfer_articles_v12';
+const BLOG_DATA_VERSION = '20261118_seo_articles_batch7_254_263_v19';
 
 export function getStoredArticles(): BlogArticle[] {
   if (typeof window === 'undefined') return BLOG_ARTICLES;
