@@ -810,6 +810,8 @@ function buildBlogArticleNoscript(article: any): string {
     });
   }
 
+  const eyeCatchUrl = resolveFullImageUrl(article.eyeCatch);
+
   return `
     <header>
       <p>飛田新地求人サイト「飛田ガールズ」</p>
@@ -818,8 +820,9 @@ function buildBlogArticleNoscript(article: any): string {
     <main>
       <article>
         <h1>${escapeHtml(article.title)}</h1>
-        <p class="summary">${escapeHtml(article.summary || '')}</p>
         <p class="meta">公開日: ${escapeHtml(article.publishedAt || '2026.07.01')} | 執筆: ${escapeHtml(article.author?.name || 'さくら')}（${escapeHtml(article.author?.role || '女性サポートスタッフ')}）</p>
+        <img src="${escapeHtml(eyeCatchUrl)}" alt="${escapeHtml(article.title)}" width="1200" height="630" />
+        <p class="summary">${escapeHtml(article.summary || '')}</p>
         ${bodyText}
         <section>
           <h2>飛田新地 料亭直営採用の募集要項</h2>
@@ -1864,9 +1867,46 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
     }
   }
 
-  // Render visible semantic initial HTML directly inside #root (replaces noscript/display:none dependency)
+  // Render visible semantic initial HTML directly inside #root with scoped critical brand CSS
+  // (Prevents unstyled text flash caused by Tailwind Preflight before React mounts, while keeping 100% crawler visibility)
   if (customNoscript) {
-    const ssrShell = `<div id="root"><div data-ssr-content="true" style="max-width:920px;margin:0 auto;padding:32px 20px;background:#FFF9FB;color:#383038;font-family:'Hiragino Sans','Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;line-height:1.8;">\n${customNoscript}\n</div></div>`;
+    const ssrCriticalCss = `<style id="ssr-shell-styles">
+  html, body { margin: 0; background: #faf6f7; color: #383038; font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; -webkit-font-smoothing: antialiased; }
+  [data-ssr-content="true"] { max-width: 960px; margin: 0 auto; padding: 16px 16px 48px; color: #383038; line-height: 1.8; font-size: 15px; }
+  [data-ssr-content="true"] > header { background: rgba(255, 255, 255, 0.96); border: 1px solid #f0e5e9; border-radius: 16px; padding: 12px 18px; margin-bottom: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; box-shadow: 0 2px 12px rgba(233, 0, 72, 0.04); }
+  [data-ssr-content="true"] > header p:first-child { margin: 0; font-weight: 800; font-size: 14px; color: #e90048; letter-spacing: 0.02em; }
+  [data-ssr-content="true"] > header p:last-child, [data-ssr-content="true"] > header nav { margin: 0; font-size: 12.5px; color: #6e636b; }
+  [data-ssr-content="true"] > main > article { background: #ffffff; border: 1px solid #f0e5e9; border-radius: 22px; padding: 28px 22px; box-shadow: 0 6px 24px rgba(56, 48, 56, 0.04); }
+  [data-ssr-content="true"] h1 { font-size: clamp(1.35rem, 2.8vw, 1.95rem); font-weight: 800; color: #333333; line-height: 1.38; margin: 0 0 14px; letter-spacing: -0.01em; }
+  [data-ssr-content="true"] h2 { font-size: 1.15rem; font-weight: 800; color: #333333; line-height: 1.45; margin: 28px 0 12px; padding: 2px 0 2px 12px; border-left: 4px solid #e90048; }
+  [data-ssr-content="true"] h3 { font-size: 1rem; font-weight: 700; color: #383038; line-height: 1.5; margin: 18px 0 6px; }
+  [data-ssr-content="true"] p { margin: 0 0 14px; color: #4a4248; }
+  [data-ssr-content="true"] p.lead, [data-ssr-content="true"] p.summary { background: #fff5f8; border: 1px solid #f8d8e3; border-radius: 14px; padding: 14px 16px; color: #49313b; font-size: 14.5px; margin: 14px 0 20px; }
+  [data-ssr-content="true"] p.meta { font-size: 12.5px; color: #857982; margin: 0 0 14px; }
+  [data-ssr-content="true"] img { display: block; width: 100%; height: auto; max-height: 380px; object-fit: cover; border-radius: 16px; margin: 16px 0 20px; border: 1px solid #f0e5e9; background: #fff0f4; }
+  [data-ssr-content="true"] a { color: #d94b7a; font-weight: 600; text-decoration: none; border-bottom: 1px solid rgba(217, 75, 122, 0.3); }
+  [data-ssr-content="true"] ul, [data-ssr-content="true"] ol { margin: 10px 0 18px; padding-left: 22px; }
+  [data-ssr-content="true"] ul { list-style: disc; }
+  [data-ssr-content="true"] ol { list-style: decimal; }
+  [data-ssr-content="true"] li { margin-bottom: 8px; color: #4a4248; }
+  [data-ssr-content="true"] table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; font-size: 13.5px; border: 1px solid #f0e5e9; border-radius: 12px; overflow: hidden; display: table; }
+  [data-ssr-content="true"] th, [data-ssr-content="true"] td { border: 1px solid #f0e5e9; padding: 10px 14px; text-align: left; vertical-align: top; }
+  [data-ssr-content="true"] th { background: #fff0f4; color: #383038; font-weight: 700; width: 28%; }
+  [data-ssr-content="true"] td { background: #ffffff; color: #4a4248; }
+  [data-ssr-content="true"] dl { margin: 12px 0 18px; }
+  [data-ssr-content="true"] dt { font-weight: 700; color: #333333; margin: 14px 0 4px; padding-top: 10px; border-top: 1px dashed #f0e5e9; }
+  [data-ssr-content="true"] dt:first-child { border-top: none; padding-top: 0; }
+  [data-ssr-content="true"] dd { margin: 0 0 10px; color: #555555; }
+  [data-ssr-content="true"] blockquote { margin: 14px 0; padding: 12px 16px; background: #fff5f8; border-left: 4px solid #e90048; border-radius: 8px; color: #49313b; }
+  @media (min-width: 640px) {
+    [data-ssr-content="true"] { padding: 24px 24px 56px; }
+    [data-ssr-content="true"] > main > article { padding: 36px 34px; }
+  }
+</style>`;
+    if (!html.includes('id="ssr-shell-styles"')) {
+      html = html.replace(/<\/head>/i, `  ${ssrCriticalCss}\n</head>`);
+    }
+    const ssrShell = `<div id="root"><div data-ssr-content="true">\n${customNoscript}\n</div></div>`;
     if (/<div\s+id=["']root["']\s*><\/div>/i.test(html)) {
       html = html.replace(/<div\s+id=["']root["']\s*><\/div>/i, ssrShell);
       html = html.replace(/<noscript>[\s\S]*?<\/noscript>/i, '');

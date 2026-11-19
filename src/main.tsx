@@ -70,6 +70,7 @@ if (rootElement) {
         </ErrorBoundary>
       </StrictMode>,
     );
+    document.getElementById('ssr-shell-styles')?.remove();
   } catch (err: any) {
     console.error('Fatal initialization error:', err);
     rootElement.innerHTML = `
