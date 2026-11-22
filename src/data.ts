@@ -11,7 +11,7 @@ const tobitaCastYukiSelfie = '/images/tobita_cast_yuki_selfie.jpg';
 const tobitaCastOne = tobitaCastYukiSelfie;
 const tobitaCastTwo = tobitaCastMaiSelfie;
 const tobitaCastThree = tobitaCastHinaSelfie;
-const tobitaDreamHeroBanner = '/images/tobita_dream_hero_banner_1782557055526.jpg';
+const tobitaDreamHeroBanner = '/images/tobita_dream_hero_banner_v2.jpg';
 const tobitaAdvisorAvatar = '/images/sakura_advisor_portrait_1788920514818.jpg';
 
 // ==========================================

@@ -104,9 +104,13 @@ export default function Hero({ content, onBlogClick, onArticleClick }: HeroProps
                 id="hero-img-element"
                 onError={(e) => {
                   const target = e.currentTarget;
+                  const picture = target.closest('picture');
+                  if (picture) {
+                    picture.querySelectorAll('source').forEach((s) => s.remove());
+                  }
                   if (!target.dataset.triedFallback) {
                     target.dataset.triedFallback = '1';
-                    target.src = '/images/tobita_dream_hero_banner_1782557055526.jpg';
+                    target.src = '/images/tobita_dream_hero_banner_v2.jpg';
                   } else {
                     target.onerror = null;
                   }
