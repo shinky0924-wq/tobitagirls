@@ -5,16 +5,22 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Settings } from 'lucide-react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import Concerns from './components/Concerns';
+import AboutSection from './components/AboutSection';
 import Reasons from './components/Reasons';
+import JobFlowSection from './components/JobFlowSection';
+import SalarySystemSection from './components/SalarySystemSection';
+import WorkstyleGuideSection from './components/WorkstyleGuideSection';
+import EnvironmentGallerySection from './components/EnvironmentGallerySection';
+import RequirementsSection from './components/RequirementsSection';
+import AccessSection from './components/AccessSection';
 import Testimonials from './components/Testimonials';
+import HomeFaqSection from './components/HomeFaqSection';
 import Flow from './components/Flow';
 import LineCtaSection from './components/LineCtaSection';
+import RecruitGuideSection from './components/RecruitGuideSection';
 import Footer from './components/Footer';
-import RecruitHub from './components/RecruitHub';
 import MobileStickyCta from './components/MobileStickyCta';
 import {
   LazyAboutPage,
@@ -27,11 +33,9 @@ import {
   LazyTopicClusterPage,
 } from './routeLoaders';
 import { SITE_COMPARE_SEO } from './compareData';
-import LucideIcon from './components/LucideIcon';
 import type { BlogArticle } from './blogData';
 import { TOPIC_ROUTE_PATHS } from './featuredArticles';
 import { getStoredSiteContent, SiteContent } from './siteContent';
-import { HomeRequirementsSummary, HomeFaqPreview } from './components/HomeRequirementsAndFaq';
 import { captureInitialHomeJsonLd, restoreHomeJsonLd } from './utils/jsonLd';
 import { trackAiSearchReferral, trackAiSearchPageView } from './utils/aiAnalytics';
 
@@ -235,12 +239,12 @@ export default function App() {
     if (typeof document === 'undefined') return;
     trackAiSearchPageView(cleanPath || '/');
 
-    let pageTitle = '飛田新地求人｜飛田ガールズ【公式・店舗グループ直営】';
-    let pageDesc = '飛田新地の求人を探している女性へ。飛田ガールズは、飛田新地で複数店舗を運営するグループの公式求人サイトです。未経験・経験者向けの募集情報、仕事内容、給与・待遇、勤務条件、応募方法を詳しくご案内。応募前のLINE相談も受け付けています。';
-    let ogTitleText: string | null = null;
-    let ogDescText: string | null = null;
+    let pageTitle = '飛田新地求人｜飛田ガールズ【公式・料亭直営の女性採用窓口】';
+    let pageDesc = '大阪・飛田新地の料亭直営公式求人窓口「飛田ガールズ」。お店による直接募集だからこそ、仕事内容や売上50%バック・即日全額現金日払いの報酬仕組み、勤務条件、身バレ対策を分かりやすくご案内。未経験・経験者どちらも応募前のLINE無料相談を受け付けています。';
+    let ogTitleText: string | null = '飛田新地求人｜飛田ガールズ公式採用サイト【料亭直営】';
+    let ogDescText: string | null = '大阪・飛田新地の料亭が直接募集する公式求人窓口「飛田ガールズ」。仕事内容・売上50%バック・即日全額日払い・未経験や移籍のサポート体制をご案内しています。';
     let canonicalUrl = 'https://tobitashinchi-recruit.com/';
-    const defaultOgImg = 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_v2.jpg';
+    const defaultOgImg = 'https://tobitashinchi-recruit.com/images/home_hero_ryotei_1795337037663.jpg';
 
     if (currentTab === 'cluster') {
       canonicalUrl = `https://tobitashinchi-recruit.com${TOPIC_ROUTE_PATHS[clusterTopic] || `/${clusterTopic}`}`;
@@ -302,10 +306,10 @@ export default function App() {
       pageDesc = '飛田新地で働く前に知っておきたい仕事内容・給料・応募条件・身バレ対策などの疑問をQ&A形式で分かりやすくまとめました。未経験・経験者どちらも確認できます。';
       canonicalUrl = selectedFaqCategory ? `https://tobitashinchi-recruit.com/faq/${selectedFaqCategory}` : 'https://tobitashinchi-recruit.com/faq';
     } else if (currentTab === 'recruit') {
-      pageTitle = '飛田新地求人｜飛田ガールズ【公式・店舗グループ直営】';
-      pageDesc = '飛田新地の求人を探している女性へ。飛田ガールズは、飛田新地で複数店舗を運営するグループの公式求人サイトです。未経験・経験者向けの募集情報、仕事内容、給与・待遇、勤務条件、応募方法を詳しくご案内。応募前のLINE相談も受け付けています。';
-      ogTitleText = '飛田新地求人｜飛田ガールズ公式採用サイト';
-      ogDescText = '飛田新地の店舗グループが直接運営する公式求人サイト。仕事内容・給与・待遇・未経験者向け情報をご案内しています。';
+      pageTitle = '飛田新地求人｜飛田ガールズ【公式・料亭直営の女性採用窓口】';
+      pageDesc = '大阪・飛田新地の料亭直営公式求人窓口「飛田ガールズ」。お店による直接募集だからこそ、仕事内容や売上50%バック・即日全額現金日払いの報酬仕組み、勤務条件、身バレ対策を分かりやすくご案内。未経験・経験者どちらも応募前のLINE無料相談を受け付けています。';
+      ogTitleText = '飛田新地求人｜飛田ガールズ公式採用サイト【料亭直営】';
+      ogDescText = '大阪・飛田新地の料亭が直接募集する公式求人窓口「飛田ガールズ」。仕事内容・売上50%バック・即日全額日払い・未経験や移籍のサポート体制をご案内しています。';
       canonicalUrl = 'https://tobitashinchi-recruit.com/';
     } else if (currentTab === 'admin') {
       pageTitle = '管理パネル｜飛田ガールズ';
@@ -520,10 +524,11 @@ export default function App() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
             >
-              {/* Hero Section */}
-              <Hero 
-                content={siteContent.hero} 
-                onCtaclick={handleScrollToForm} 
+              {/* 2. ファーストビュー */}
+              <Hero
+                content={siteContent.hero}
+                onCtaclick={handleScrollToForm}
+                onScrollToSalaryOrJob={() => handleScrollToSection('job')}
                 onBlogClick={() => {
                   setCurrentTab('blog');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -533,8 +538,41 @@ export default function App() {
                 }}
               />
 
-              {/* Basic Conditions & Recruitment Summary (SSR Parity) */}
-              <HomeRequirementsSummary
+              {/* 3. 飛田ガールズとは？ */}
+              <AboutSection
+                onNavigateAbout={() => {
+                  navigate('/about');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
+
+              {/* 4. 飛田ガールズが選ばれる6つの理由 */}
+              <Reasons
+                content={siteContent.reasons}
+                onNavigateTopic={(topicId) => {
+                  navigate(TOPIC_ROUTE_PATHS[topicId] || `/${topicId}`);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
+
+              {/* 5. 仕事内容・1日の流れ */}
+              <JobFlowSection
+                onNavigateJob={() => {
+                  navigate('/job');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
+
+              {/* 6. 給料・報酬システム */}
+              <SalarySystemSection
+                onNavigateSalary={() => {
+                  navigate('/salary');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
+
+              {/* 7. 希望別の働き方ガイド */}
+              <WorkstyleGuideSection
                 onNavigateTopic={(topicId) => {
                   navigate(TOPIC_ROUTE_PATHS[topicId] || `/${topicId}`);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -545,73 +583,58 @@ export default function App() {
                 }}
               />
 
-              {/* Category Hub & Comprehensive Recruitment Architecture */}
-              <div id="recruit-hub">
-                <div id="hub">
-                  <RecruitHub 
-                    onScrollToSection={handleScrollToSection}
-                    onNavigateToArticle={(slug) => {
-                      navigate(`/blog/${slug}`);
-                    }}
-                    onNavigateToBlog={(category) => {
-                      if (category && category !== 'all') {
-                        navigate(`/blog?category=${category}`);
-                      } else {
-                        navigate('/blog');
-                      }
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    onNavigateCompare={(catSlug) => {
-                      if (catSlug) {
-                        navigate(`/compare/${catSlug}`);
-                      } else {
-                        navigate('/compare');
-                      }
-                    }}
-                    onNavigateTopic={(topicId) => {
-                      navigate(TOPIC_ROUTE_PATHS[topicId] || `/${topicId}`);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    onNavigateFaq={() => {
-                      navigate('/faq');
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                  />
-                </div>
-              </div>
+              {/* 8. 働く環境・設備紹介 */}
+              <EnvironmentGallerySection
+                onNavigatePath={(targetPath) => {
+                  navigate(targetPath);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
 
-              {/* Reasons Section - 選ばれる6つの理由 */}
-              <div id="reasons">
-                <Reasons content={siteContent.reasons} />
-              </div>
+              {/* 9. 募集要項 */}
+              <RequirementsSection
+                onNavigatePath={(targetPath) => {
+                  navigate(targetPath);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
 
-              {/* Testimonials Quote Cards - 女性のリアル体験談 */}
-              <div id="voice">
-                <Testimonials 
-                  onNavigateFaq={() => {
-                    navigate('/faq');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                />
-              </div>
+              {/* 10. アクセス */}
+              <AccessSection />
 
-              {/* Pick Up FAQ (SSR & FAQPage JSON-LD Parity) */}
-              <HomeFaqPreview
+              {/* 11. 働く女性のリアルな声 */}
+              <Testimonials
                 onNavigateFaq={() => {
                   navigate('/faq');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
               />
 
-              {/* Onboarding steps list - お仕事までの流れ (WORKFLOW) */}
-              <div id="flow">
-                <Flow content={siteContent.flow} />
-              </div>
+              {/* 12. 応募前のFAQ */}
+              <HomeFaqSection
+                onNavigateFaq={() => {
+                  navigate('/faq');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
 
-              {/* LINE consultation CTA (まずは気軽に質問・相談) */}
-              <div id="consultation">
-                <LineCtaSection />
-              </div>
+              {/* 13. 応募からお仕事開始まで */}
+              <Flow content={siteContent.flow} />
+
+              {/* 14. 最後のLINE相談案内 */}
+              <LineCtaSection content={siteContent.consultation} />
+
+              {/* テーマ別の詳細ガイド・関連ページ */}
+              <RecruitGuideSection
+                onNavigateTopic={(topicId) => {
+                  navigate(TOPIC_ROUTE_PATHS[topicId] || `/${topicId}`);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                onNavigatePath={(targetPath) => {
+                  navigate(targetPath);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
             </motion.div>
           ) : currentTab === 'blog' ? (
             /* ==========================================

@@ -69,55 +69,11 @@ const FILTER_TAGS = [
   { id: 'twenties', label: '20代', matches: () => true }
 ];
 
-// 不安解消アコーディオン用 8つの質問と回答
-const ANXIETY_FAQS = [
-  {
-    id: 'afaq-1',
-    question: '未経験でも本当に大丈夫ですか？',
-    answer: 'はい、在籍キャストの約9割（90%以上）が夜職・風俗完全未経験からスタートしています。料亭のおばちゃん（仲居さん）が接客マナーから立ち居振る舞いまで優しくフォローするため、事前の専門知識や経験は一切不要です。'
-  },
-  {
-    id: 'afaq-2',
-    question: '家族・友人・会社に身バレしませんか？',
-    answer: '完全秘密厳守を徹底しています。源氏名での勤務はもちろん、顔写真や個人情報のWEB公開は一切ありません。会社員の方には副業がバレない「住民税の普通徴収手続きマニュアル」をご案内し、個人情報も厳重に暗号化管理しています。'
-  },
-  {
-    id: 'afaq-3',
-    question: 'お酒が飲めない・弱くても働けますか？',
-    answer: '全く問題ありません。飛田新地の料亭はお酒を飲む場ではありません。お酒を飲む必要や飲酒ノルマは一切なく、お酒が一切飲めない下戸の女性も多数活躍しています。'
-  },
-  {
-    id: 'afaq-4',
-    question: '体験入店（1日だけ）でも大丈夫ですか？',
-    answer: 'はい、大歓迎です。まずは1日体験入店をして、お店の雰囲気や客層、お仕事内容を確かめてください。働いた分の日給はその場で全額現金手渡しとなります。もし合わないと感じた場合は、その日だけで終了しても一切問題ありません。'
-  },
-  {
-    id: 'afaq-5',
-    question: 'ノルマやペナルティ、罰金はありますか？',
-    answer: 'ノルマ・ペナルティ・遅刻罰金などは一切ありません。無理に出勤を強要したり、売上目標を課したりすることは組合規約で厳しく禁止されていますので、ご自身のペースで安心して働けます。'
-  },
-  {
-    id: 'afaq-6',
-    question: '必要な持ち物や服装はどうすればいいですか？',
-    answer: '面接・体験入店時は普段着でお越しいただいて構いません。お仕事に必要な衣装（和装・ワンピース等）はすべて無料でお店が用意・貸与いたします。体験入店・勤務開始にあたっては本籍地記載の住民票原本（発行3ヶ月以内）または有効期限内の日本国パスポート（＋顔写真付き公的身分証明書）が必要となります。'
-  },
-  {
-    id: 'afaq-7',
-    question: 'お給料は本当にその日全額日払いでもらえますか？',
-    answer: 'はい、退勤時にその日の売上・報酬を全額現金で直接手渡しいたします。「翌月払い」や「一部保留」などは一切ありません。急な出費や生活費が必要な方もその日から安心です。'
-  },
-  {
-    id: 'afaq-8',
-    question: '相談や面接に行ったら、断れなくなりませんか？',
-    answer: '無理な勧誘や引き止めは一切行いません。「まずは話を聞いてみたい」「お店の様子を見てみたい」という相談だけでも大丈夫です。面接後にお断りいただく場合もLINE一本でOKですので、安心してご相談ください。'
-  }
-];
-
 interface TestimonialsProps {
   onNavigateFaq?: () => void;
 }
 
-export default function Testimonials({ onNavigateFaq }: TestimonialsProps = {}) {
+export default function Testimonials({ onNavigateFaq: _onNavigateFaq }: TestimonialsProps = {}) {
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [likedReviews, setLikedReviews] = useState<Record<string, boolean>>({});
   const [likeCounts, setLikeCounts] = useState<Record<string, number>>({
@@ -127,10 +83,6 @@ export default function Testimonials({ onNavigateFaq }: TestimonialsProps = {}) 
   });
   const [selectedFullStory, setSelectedFullStory] = useState<TestimonialItem | null>(null);
   const [selectedVerification, setSelectedVerification] = useState<TestimonialItem | null>(null);
-  const [openFaqIds, setOpenFaqIds] = useState<Record<string, boolean>>({
-    'afaq-1': true,
-    'afaq-2': true
-  });
 
   const handleLike = (id: string, e: MouseEvent) => {
     e.preventDefault();
@@ -143,50 +95,45 @@ export default function Testimonials({ onNavigateFaq }: TestimonialsProps = {}) 
     });
   };
 
-  const toggleFaq = (id: string) => {
-    setOpenFaqIds(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
-  };
-
   const currentFilterObj = FILTER_TAGS.find(f => f.id === activeFilter) || FILTER_TAGS[0];
   const filteredTestimonials = TESTIMONIALS.filter(currentFilterObj.matches);
 
   return (
-    <section className="py-16 md:py-24 bg-[#FFF8F9] text-[#66545A]" id="voice">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+    <section className="py-16 sm:py-24 bg-surface text-on-surface-variant border-b border-outline-variant/60" id="voice">
+      <div className="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* =========================================================
             1. セクションの見出し
            ========================================================= */}
         <div className="text-center max-w-3xl mx-auto mb-10 md:mb-12">
-          <div className="text-xs font-black tracking-widest text-[#E84B78] uppercase mb-2">
-            REAL VOICE
+          <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-primary uppercase mb-3">
+            <span className="w-4 h-px bg-primary" aria-hidden="true" />
+            <span>REAL VOICE</span>
+            <span className="w-4 h-px bg-primary" aria-hidden="true" />
           </div>
           
-          <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-[#38242B] leading-snug mb-4 tracking-tight text-balance max-w-xl sm:max-w-2xl mx-auto">
-            飛田新地で働く女性の声
+          <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl text-on-surface leading-snug mb-4 tracking-tight text-balance max-w-xl sm:max-w-2xl mx-auto">
+            働く女性のリアルな声
           </h2>
           
-          <p className="font-sans text-xs sm:text-sm text-[#66545A] leading-relaxed max-w-2xl mx-auto">
+          <p className="font-sans text-sm sm:text-base text-on-surface-variant leading-relaxed max-w-2xl mx-auto">
             未経験から始めた女性や、働き方を変えた女性の体験談をご紹介します。
-            実際の収入や働き方、働いてみて感じたことを参考にしてください。
+            実際の働き方や働く前の不安・入店後の変化を参考にしてください。
           </p>
 
           {/* 補足ラベル 3項目 */}
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5 text-xs text-[#38242B]">
-            <span className="inline-flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full border border-[#F3E1E6] shadow-2xs font-medium">
-              <LucideIcon name="PenTool" size={13} className="text-[#E84B78]" />
-              本人の体験談（直筆サイン確認済み）
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5 text-xs text-on-surface">
+            <span className="inline-flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full border border-outline-variant shadow-2xs font-medium">
+              <LucideIcon name="PenTool" size={13} className="text-primary" />
+              直筆サイン確認済みの取材記録
             </span>
-            <span className="inline-flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full border border-[#F3E1E6] shadow-2xs font-medium">
+            <span className="inline-flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full border border-outline-variant shadow-2xs font-medium">
               <LucideIcon name="ShieldCheck" size={13} className="text-emerald-600" />
               個人情報保護・プライバシー配慮
             </span>
-            <span className="inline-flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full border border-[#F3E1E6] shadow-2xs font-medium">
-              <LucideIcon name="UserCheck" size={13} className="text-indigo-600" />
-              満20歳以上の在籍スタッフ
+            <span className="inline-flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full border border-outline-variant shadow-2xs font-medium">
+              <LucideIcon name="UserCheck" size={13} className="text-primary" />
+              満20歳以上の女性スタッフ
             </span>
           </div>
         </div>
@@ -483,132 +430,12 @@ export default function Testimonials({ onNavigateFaq }: TestimonialsProps = {}) 
           })}
         </div>
 
-        {/* =========================================================
-            4. 応募する前に、気になることを解消しませんか？（アコーディオン）
-           ========================================================= */}
-        <div className="mt-16 md:mt-20 bg-white rounded-3xl border border-[#F3E1E6] p-6 sm:p-8 md:p-10 shadow-xs">
-          <div className="text-center max-w-2xl mx-auto mb-8">
-            <span className="text-[11px] font-bold text-[#E84B78] bg-[#FFF8F9] border border-[#F3E1E6] px-3.5 py-1 rounded-full inline-block mb-2">
-              事前のお悩み解消
-            </span>
-            <h3 className="text-xl sm:text-2xl font-black text-[#38242B] tracking-tight">
-              応募する前に、気になることを解消しませんか？
-            </h3>
-            <p className="text-xs sm:text-sm text-[#66545A] mt-2">
-              未経験の方が特に気になる疑問や不安をまとめました。クリックして回答をご確認いただけます。
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
-            {ANXIETY_FAQS.map((faq) => {
-              const isOpen = !!openFaqIds[faq.id];
-              return (
-                <div 
-                  key={faq.id}
-                  className="border border-[#F3E1E6] rounded-2xl overflow-hidden bg-[#FFF8F9]/50 transition-colors"
-                >
-                  <button
-                    type="button"
-                    onClick={() => toggleFaq(faq.id)}
-                    className="w-full text-left p-4 sm:p-4.5 flex items-center justify-between gap-3 cursor-pointer hover:bg-[#FFF8F9] transition-colors"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <span className="w-6 h-6 rounded-full bg-[#E84B78] text-white text-xs font-black flex items-center justify-center flex-shrink-0">
-                        Q
-                      </span>
-                      <span className="font-bold text-xs sm:text-sm text-[#38242B]">
-                        {faq.question}
-                      </span>
-                    </div>
-                    <LucideIcon 
-                      name={isOpen ? 'ChevronUp' : 'ChevronDown'} 
-                      size={16} 
-                      className="text-[#E84B78] flex-shrink-0"
-                    />
-                  </button>
-
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="px-4 pb-4 pt-1 sm:px-4.5 sm:pb-4.5 border-t border-[#F3E1E6] bg-white text-xs text-[#66545A] leading-relaxed flex items-start gap-2.5"
-                      >
-                        <span className="w-5 h-5 rounded-full bg-zinc-100 text-[#38242B] text-[10px] font-black flex items-center justify-center flex-shrink-0 mt-0.5">
-                          A
-                        </span>
-                        <div className="flex-1">
-                          {faq.answer}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* FAQページへのリンクボタン */}
-          <div className="mt-8 pt-6 border-t border-[#F3E1E6] text-center">
-            <a
-              href="/faq"
-              onClick={(e) => {
-                e.preventDefault();
-                if (onNavigateFaq) {
-                  onNavigateFaq();
-                } else {
-                  window.history.pushState({}, '', '/faq');
-                  window.dispatchEvent(new PopStateEvent('popstate'));
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-              }}
-              className="inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#E84B78] to-[#F27299] hover:from-[#D93B6B] hover:to-[#E84B78] text-white font-extrabold text-sm sm:text-base px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5 cursor-pointer max-w-md w-full mx-auto"
-            >
-              <LucideIcon name="HelpCircle" size={20} className="text-white" />
-              <span>よくある質問（FAQ全119問）を見る</span>
-              <LucideIcon name="ChevronRight" size={18} className="text-white" />
-            </a>
-            <p className="text-[11px] sm:text-xs text-[#85818A] mt-2.5">
-              未経験・給料・身バレ・寮・面接など、12カテゴリーで気になる疑問をすべて本音で回答しています
-            </p>
-          </div>
-        </div>
-
-        {/* =========================================================
-            5. あなたに合った働き方を一緒に考えます
-           ========================================================= */}
-        <div className="mt-8 bg-gradient-to-r from-[#FFF8F9] via-white to-[#FFF8F9] rounded-3xl border border-[#F3E1E6] p-6 sm:p-8 shadow-xs">
-          <div className="flex flex-col md:flex-row items-center gap-6">
-            <div className="w-14 h-14 rounded-2xl bg-[#E84B78]/10 text-[#E84B78] flex items-center justify-center flex-shrink-0">
-              <LucideIcon name="HeartHandshake" size={30} />
-            </div>
-            
-            <div className="flex-1 text-center md:text-left">
-              <h4 className="text-base sm:text-lg font-black text-[#38242B]">
-                あなたに合った働き方を一緒に考えます
-              </h4>
-              <p className="text-xs sm:text-sm text-[#66545A] mt-1.5 leading-relaxed">
-                飛田ガールズでは、無理なシフトの強要やノルマの押し付けは一切行いません。「学業と両立したい」「本業にバレずに週末だけ」「○ヶ月で100万円貯めたい」など、女性スタッフがあなたの希望を丁寧にヒアリングし、最も働きやすい環境をご案内します。
-              </p>
-            </div>
-
-            <div className="flex-shrink-0 flex flex-col gap-2 w-full md:w-auto text-xs">
-              <div className="flex items-center gap-2 bg-white px-3.5 py-1.5 rounded-xl border border-[#F3E1E6]">
-                <LucideIcon name="Check" size={14} className="text-[#E84B78]" />
-                <span className="font-bold text-[#38242B]">匿名・LINEでの事前相談OK</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white px-3.5 py-1.5 rounded-xl border border-[#F3E1E6]">
-                <LucideIcon name="Check" size={14} className="text-[#E84B78]" />
-                <span className="font-bold text-[#38242B]">極力貴女の希望に合わせます</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white px-3.5 py-1.5 rounded-xl border border-[#F3E1E6]">
-                <LucideIcon name="Check" size={14} className="text-[#E84B78]" />
-                <span className="font-bold text-[#38242B]">体験入店のみで終了もペナルティなし</span>
-              </div>
-            </div>
-          </div>
+        {/* Disclaimer Box */}
+        <div className="mt-8 bg-white rounded-2xl border border-outline-variant p-4 sm:p-5 text-xs text-on-surface-variant leading-relaxed flex items-start gap-2.5">
+          <LucideIcon name="Info" size={16} className="text-primary shrink-0 mt-0.5" />
+          <p>
+            ※プライバシー配慮のためプロフィール写真はイメージ画像を使用しています。掲載している収入実績は取材時点における個人の体験例であり、一定の収入額を保証するものではありません。収入は勤務日数・時間帯・来店状況などにより変動します。
+          </p>
         </div>
       </div>
 

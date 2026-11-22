@@ -6,9 +6,9 @@ import { COMPARE_CATEGORY_GROUPS, COMPARE_SUBPAGES, COMPARE_SUBPAGE_MAP } from '
 import { GLOSSARY_TERMS } from '../src/glossaryData';
 
 const DOMAIN = 'https://tobitashinchi-recruit.com';
-const SITE_TITLE = '飛田新地求人｜飛田ガールズ【公式・店舗グループ直営】';
+const SITE_TITLE = '飛田新地求人｜飛田ガールズ【公式・料亭直営の女性採用窓口】';
 const SITE_DESC =
-  '飛田新地の求人を探している女性へ。飛田ガールズは、飛田新地で複数店舗を運営するグループの公式求人サイトです。未経験・経験者向けの募集情報、仕事内容、給与・待遇、勤務条件、応募方法を詳しくご案内。応募前のLINE相談も受け付けています。';
+  '大阪・飛田新地の料亭直営公式求人窓口「飛田ガールズ」。お店による直接募集だからこそ、仕事内容や売上50%バック・即日全額現金日払いの報酬仕組み、勤務条件、身バレ対策を分かりやすくご案内。未経験・経験者どちらも応募前のLINE無料相談を受け付けています。';
 
 interface ArticleItem {
   id: string;

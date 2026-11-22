@@ -97,11 +97,11 @@ function getJpegOrImageDimensions(imgUrl: string): { width: number; height: numb
   return { width: 1376, height: 768, mimeType: 'image/jpeg' };
 }
 
-const DEFAULT_TITLE = '飛田新地求人｜飛田ガールズ【公式・店舗グループ直営】';
-const DEFAULT_DESC = '飛田新地の求人を探している女性へ。飛田ガールズは、飛田新地で複数店舗を運営するグループの公式求人サイトです。未経験・経験者向けの募集情報、仕事内容、給与・待遇、勤務条件、応募方法を詳しくご案内。応募前のLINE相談も受け付けています。';
-const DEFAULT_OG_TITLE = '飛田新地求人｜飛田ガールズ公式採用サイト';
-const DEFAULT_OG_DESC = '飛田新地の店舗グループが直接運営する公式求人サイト。仕事内容・給与・待遇・未経験者向け情報をご案内しています。';
-const DEFAULT_IMAGE = 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_v2.jpg';
+const DEFAULT_TITLE = '飛田新地求人｜飛田ガールズ【公式・料亭直営の女性採用窓口】';
+const DEFAULT_DESC = '大阪・飛田新地の料亭直営公式求人窓口「飛田ガールズ」。お店による直接募集だからこそ、仕事内容や売上50%バック・即日全額現金日払いの報酬仕組み、勤務条件、身バレ対策を分かりやすくご案内。未経験・経験者どちらも応募前のLINE無料相談を受け付けています。';
+const DEFAULT_OG_TITLE = '飛田新地求人｜飛田ガールズ公式採用サイト【料亭直営】';
+const DEFAULT_OG_DESC = '大阪・飛田新地の料亭が直接募集する公式求人窓口「飛田ガールズ」。仕事内容・売上50%バック・即日全額日払い・未経験や移籍のサポート体制をご案内しています。';
+const DEFAULT_IMAGE = 'https://tobitashinchi-recruit.com/images/home_hero_ryotei_1795337037663.jpg';
 
 function buildHomeNoscript(): string {
   return `
@@ -111,94 +111,90 @@ function buildHomeNoscript(): string {
           <img src="/favicon.png" alt="飛田ガールズ アイコン" class="ssr-logo-img" width="36" height="36" />
           <span class="ssr-brand-text">
             <strong>飛田ガールズ</strong>
-            <small>Tobita Girls・料亭直営求人</small>
+            <small>飛田新地求人</small>
           </span>
         </a>
         <nav class="ssr-topnav" aria-label="主要メニュー">
-          <a href="/">求人トップ</a>
-          <a href="/faq">よくある質問</a>
-          <a href="/blog">お仕事コラム</a>
-          <a href="/#consultation" class="ssr-nav-cta">LINE無料相談</a>
+          <a href="/#about">飛田ガールズとは</a>
+          <a href="/#job">仕事内容</a>
+          <a href="/#salary">給料・待遇</a>
+          <a href="/#workstyle">働き方</a>
+          <a href="/#requirements">募集要項</a>
+          <a href="/faq">FAQ</a>
+          <a href="/#access">アクセス</a>
+          <a href="https://lin.ee/phFZoea" target="_blank" rel="noopener noreferrer" class="ssr-nav-cta">LINE無料相談</a>
         </nav>
       </div>
     </header>
 
     <section class="ssr-hero">
       <div class="ssr-hero-inner">
-        <p class="ssr-hero-pill"><span class="ssr-hero-dot"></span>飛田新地の求人案内｜料亭直営の公式採用窓口</p>
-        <h1 id="hero-title" class="ssr-hero-h1">
-          <span>飛田新地の求人案内｜</span>
-          <span class="ssr-hero-accent">働くことを考えている女性へ。</span>
-        </h1>
-        <div id="hero-description" class="ssr-hero-desc">
-          <p>当店では、仕事内容や給料の仕組み、未経験から働くまでの流れ、お店選びのポイントなど、求人を探すうえで知っておきたい情報をわかりやすくまとめています。</p>
-          <p class="ssr-hero-questions">
-            <span>・「未経験でも大丈夫？」</span>
-            <span>・「実際どんな仕事をするの？」</span>
-            <span>・「身バレや人間関係が心配……」</span>
-          </p>
-          <p>そんな疑問や不安にも、丁寧にお答えします。</p>
-          <p class="ssr-hero-cta-line">まずは相談だけでもお気軽にご相談ください。</p>
+        <div class="ssr-hero-copy">
+          <p class="ssr-hero-kicker">大阪・飛田新地の女性求人</p>
+          <h1 id="hero-title" class="ssr-hero-h1">飛田新地で、自分らしい働き方を見つけませんか。</h1>
+          <p class="ssr-hero-sub">飛田ガールズ｜料亭直営の公式求人窓口</p>
+          <div id="hero-description" class="ssr-hero-desc">
+            <p>飛田ガールズは、大阪・飛田新地の料亭直営の求人窓口です。お店による直接募集だからこそ、仕事内容や報酬、勤務条件について、事前に分かりやすくご案内します。</p>
+            <p>未経験の方も、これまでの経験を活かしたい方も、一人ひとりの希望に合わせてご相談いただけます。</p>
+          </div>
+          <div class="ssr-hero-actions">
+            <a href="https://lin.ee/phFZoea" target="_blank" rel="noopener noreferrer" class="ssr-btn-line">LINEで無料相談する</a>
+            <a href="/#job" class="ssr-btn-sub">仕事内容・給料を見る</a>
+          </div>
+          <p class="ssr-hero-note">応募前の質問・相談だけでも歓迎</p>
         </div>
+
         <div class="ssr-hero-visual">
           <div class="ssr-hero-card">
             <picture>
-              <source srcset="/images/tobita_dream_hero_banner_v3.webp" type="image/webp" />
-              <img src="/images/tobita_dream_hero_banner_v2.jpg" alt="飛田新地のお仕事・料亭直営求人で夢を叶える場所" class="ssr-hero-img" width="800" height="450" />
+              <source srcset="/images/home_hero_ryotei_1795337037663.webp" type="image/webp" />
+              <img src="/images/home_hero_ryotei_1795337037663.jpg" alt="大阪・飛田新地の料亭直営求人 飛田ガールズ 上品な和風料亭イメージ" class="ssr-hero-img" width="1376" height="768" />
             </picture>
-            <div class="ssr-hero-stamp">
-              <span>飛田新地で</span>
-              <strong>夢を叶えよう！</strong>
-            </div>
           </div>
         </div>
-        <section class="ssr-hero-pickup" aria-label="人気のお仕事コラム（おすすめ5選）">
-          <h2>人気のお仕事コラム（おすすめ5選）</h2>
-          <ol>
-            <li><a href="/blog/tobitashinchi-beginner-guide">【未経験者必読】飛田新地のお仕事とは？業界一わかりやすい初心者ガイド</a></li>
-            <li><a href="/blog/tobita-job-guide">飛田新地の仕事内容とは？出勤から接客・退勤までの1日の流れを解説</a></li>
-            <li><a href="/blog/tobitashinchi-salary-system">【給料システム公開】飛田新地って本当に稼げる？日給10万円超えの仕組みと計算式</a></li>
-            <li><a href="/blog/tobitashinchi-privacy-guide">【飛田新地の秘密厳守】友達・家族に知られにくく働くための5つの「身バレ対策」ルール</a></li>
-            <li><a href="/blog/tobitashinchi-interview-guide">【飛田新地・面接ガイド】面接の服装は？持ち物は？採用担当者がチェックする3つのポイント</a></li>
-          </ol>
-        </section>
+      </div>
+
+      <div class="ssr-hero-conditions" aria-label="主な募集条件">
+        <ul>
+          <li>売上50％バック</li>
+          <li>即日全額現金日払い</li>
+          <li>勤務時間 10:00〜24:00</li>
+          <li>週1日から相談可能</li>
+          <li>応募資格 満20歳以上</li>
+          <li>未経験者歓迎</li>
+        </ul>
+        <p class="ssr-hero-disclaimer">※報酬は完全歩合制のため、適用条件や時間帯・来店状況によって変動します。</p>
       </div>
     </section>
 
     <main class="ssr-below-fold">
       <article>
-        <section>
-          <h2>募集要項・基本条件</h2>
-          <table border="1">
-            <tbody>
-              <tr>
-                <th>職種</th>
-                <td>料亭接客スタッフ（大阪市西成区山王）</td>
-              </tr>
-              <tr>
-                <th>給与・報酬</th>
-                <td>完全歩合制・売上50%バック・即日全額現金日払い（雑費天引きなし ※時間帯・来店状況により変動）</td>
-              </tr>
-              <tr>
-                <th>応募資格</th>
-                <td>満20歳以上の女性（未経験歓迎・学歴経験不問 ※20歳未満不可）</td>
-              </tr>
-              <tr>
-                <th>勤務地・アクセス</th>
-                <td>Osaka Metro「動物園前駅」徒歩5分 / JR・南海「新今宮駅」徒歩7分 / 各線「天王寺駅」徒歩10分</td>
-              </tr>
-              <tr>
-                <th>勤務時間</th>
-                <td>10:00〜24:00（自由シフト制・週1日〜・短時間・WワークOK）</td>
-              </tr>
-              <tr>
-                <th>待遇・サポート</th>
-                <td>WEB顔出しなし・衣装無料貸出・女性スタッフ対応（個室寮・交通費は事前確認）</td>
-              </tr>
-            </tbody>
-          </table>
+        <section id="about">
+          <h2>飛田ガールズとは？｜あなたらしく働ける場所を、一緒に見つけませんか。</h2>
+          <p>飛田ガールズは、大阪市西成区・飛田新地にある料亭直営の公式求人窓口です。外部のスカウト会社や仲介業者ではなく、お店による直接募集として紹介料・手数料は一切不要でご案内しています。</p>
+          <p>飛田新地全体の一般的なルール（満20歳以上・撮影禁止・お酒や営業連絡なし）と、飛田ガールズ独自の女性スタッフサポートを明確に区別してお伝えしています。<a href="/about">運営者情報・店舗体制を見る</a></p>
+        </section>
 
-          <h3>コース別の手取り目安（売上50%バック・全額現金日払い）</h3>
+        <section id="reasons">
+          <h2>飛田ガールズが選ばれる6つの理由</h2>
+          <ul>
+            <li>01. 集客力へのこだわり（安定したご案内を目指した店舗運営）</li>
+            <li>02. メイク・美容サポート（初めてでも相談できる身だしなみアドバイス）</li>
+            <li>03. 未経験から始められる丁寧なサポート（女性スタッフ・仲居によるフォロー）</li>
+            <li>04. いじめや派閥のない働きやすい環境（穏やかで落ち着きのある関係性）</li>
+            <li>05. 分かりやすい給与・待遇システム（売上50％バック・雑費天引きなし）</li>
+            <li>06. 顔出しなし・個人情報保護などのプライバシー配慮（WEB非掲載・源氏名勤務）</li>
+          </ul>
+        </section>
+
+        <section id="job">
+          <h2>仕事内容・1日の流れ</h2>
+          <p>出勤からお仕度（無料貸出衣装）・玄関（上がり框）でのお迎え・2階個室でのおもてなし接客・退勤時の即日現金受け取りまでの流れをご案内します。お酒の飲酒やお客様との連絡先交換、過度な勧誘・強要はありません。<a href="/job">仕事内容の詳細を見る</a></p>
+        </section>
+
+        <section id="salary">
+          <h2>給料・報酬システム</h2>
+          <p>完全歩合制（売上50％バック・即日全額現金日払い）で、ロッカー代や更衣室代などの雑費天引きはありません（※収入は出勤時間帯や来店状況等により変動します）。<a href="/salary">給料システムの詳細を見る</a></p>
           <table border="1">
             <thead>
               <tr>
@@ -215,79 +211,76 @@ function buildHomeNoscript(): string {
               <tr><th>外国人客対応手当</th><td>1組あたり ＋2,500円</td></tr>
             </tbody>
           </table>
-
-          <h3>通りの違い・最寄り駅からのアクセス</h3>
-          <ul>
-            <li><strong>メイン通り・青春通り</strong>：エリアの中でも人通りが多く活気のある中心エリア。当店もメイン・青春通りエリアにあり、雰囲気を確認しやすい立地です。</li>
-            <li><strong>大門通り・裏通り</strong>：大門通りはエリア入口付近、裏通りは落ち着いた常連客・ビジネス層中心の静かな通りです。</li>
-            <li><strong>主要3駅からの徒歩ルート</strong>：動物園前駅（徒歩5分）・新今宮駅（徒歩7分）・天王寺駅（徒歩10分）。希望時は最寄り駅周辺での待ち合わせ案内にも対応します。</li>
-          </ul>
-
-          <div class="ssr-trust-box">
-            <h3>料亭直営公式窓口・情報監修について</h3>
-            <p>所在地：大阪府大阪市西成区山王（飛田新地料理組合加盟料亭）。当サイト「飛田ガールズ」は、外部スカウトや仲介業者を介さない料亭直営の公式採用窓口です。紹介料・手数料は一切かからず、現場に常駐する女性サポートスタッフ（さくら）・採用管理担当（木村）が、事前見学から体験入店・安全管理まで事実ベースでご案内しています。</p>
-            <p><a href="/about">運営者情報・直営体制を見る</a> / <a href="/site-compare">他業種・応募ルート徹底比較</a> / <a href="/compare">働き方・条件別ガイド（5カテゴリー）</a> / <a href="/glossary">用語集・業界知識辞典</a></p>
-          </div>
         </section>
 
-        <section id="recruit-hub">
-          <h2>お仕事・総合ガイド（全12カテゴリー）</h2>
-          <ol>
-            <li><h3><a href="/job">仕事内容｜未経験でもできる？お仕事の流れ</a></h3><p>笑顔での接客・お酒不要・呼び込みは仲居さんが担当。</p></li>
-            <li><h3><a href="/salary">給料・待遇｜売上バック率と日払いの仕組み</a></h3><p>売上50%バックで働いたその日に全額現金日払い。</p></li>
-            <li><h3><a href="/beginner">未経験｜初めてでも安心のサポート体制</a></h3><p>在籍キャストの多くが未経験からスタート。女性スタッフが個別対応。</p></li>
-            <li><h3><a href="/experienced">経験者｜より良い環境で働くための移籍優遇</a></h3><p>営業連絡・ノルマ・お酒・お風呂掃除なしの働きやすい環境。</p></li>
-            <li><h3><a href="/requirements">募集要項｜応募条件と面接・体験時の必要書類</a></h3><p>満20歳以上の女性対象。履歴書不要・私服で面接OK（※体験・勤務時は住民票原本または日本国パスポート必須）。</p></li>
-            <li><h3><a href="/flow">面接・体験入店｜応募から体験入店までの流れ</a></h3><p>LINE相談・私服見学・希望に応じた1日体験入店に対応。</p></li>
-            <li><h3><a href="/workstyle">働き方｜自分のペースで選べるシフト</a></h3><p>10:00〜24:00の自由シフト制。週1日〜・Wワーク対応。</p></li>
-            <li><h3><a href="/shops">お店選び｜通りの特徴と当直営料亭</a></h3><p>各通りの特徴・確認ポイントと当直営料亭のご案内。</p></li>
-            <li><h3><a href="/dekasegi">寮・出稼ぎ｜個室寮相談と交通費規定支給</a></h3><p>家具家電・Wi-Fi付き個室寮の相談や遠方交通費サポート（規定あり）。</p></li>
-            <li><h3><a href="/safety">プライバシー対策｜身バレを防ぐ安全対策</a></h3><p>撮影禁止ルール・完全源氏名・住民税普通徴収の案内。</p></li>
-            <li><h3><a href="/faq">よくある質問｜応募前の不安を解消するQ&amp;A</a></h3><p>未経験・給料・身バレなど全${FAQ_100_LIST.length}問のQ&amp;A。</p></li>
-            <li><h3><a href="/blog">お仕事コラム｜働く前に知りたい体験談とノウハウ</a></h3><p>厳選128本の解説記事・実例コラム。</p></li>
-          </ol>
-          <p><a href="/site-compare">他業種・応募方法徹底比較を見る</a> / <a href="/compare">目的・働き方別求人ガイドを見る</a> / <a href="/glossary">用語集を見る</a> / <a href="/about">運営者情報を見る</a></p>
+        <section id="workstyle">
+          <h2>あなたの希望に合った働き方を探してみませんか？（働き方・求人比較）</h2>
+          <ul>
+            <li><a href="/compare">あなたに合った働き方を、一緒に考えませんか？（働き方・求人比較一覧）</a></li>
+            <li><a href="/compare/beginner">未経験の方</a> / <a href="/compare/experienced">経験者の方</a> / <a href="/compare/20s">20代</a> / <a href="/compare/30s">30代</a> / <a href="/compare/40s">40代</a></li>
+            <li><a href="/compare/high-income">高収入を目指したい</a> / <a href="/compare/savings">貯金したい</a> / <a href="/compare/living-expenses">生活費を増やしたい</a> / <a href="/compare/target-income">目標金額を稼ぎたい</a></li>
+            <li><a href="/compare/one-day-week">週1日〜勤務</a> / <a href="/compare/short-time">短時間勤務</a> / <a href="/compare/daytime">昼勤務</a> / <a href="/compare/nighttime">夜勤務</a> / <a href="/compare/weekends">週末・土日のみ</a> / <a href="/compare/regular">レギュラー勤務</a> / <a href="/compare/short-term">短期・出稼ぎ</a></li>
+            <li><a href="/compare/student">学生</a> / <a href="/compare/office-worker">OL・会社員（Wワーク）</a> / <a href="/compare/freeter">フリーター</a> / <a href="/compare/housewife">主婦</a> / <a href="/compare/parenting">子育て・シングルマザー</a> / <a href="/compare/self-employed">個人事業主・フリーランス</a></li>
+            <li><a href="/compare/privacy">身バレ対策</a> / <a href="/compare/customer-service-anxiety">接客への不安</a> / <a href="/compare/returning">出戻り・ブランク</a> / <a href="/compare/transfer">他店・他業種から移籍</a> / <a href="/compare/consultation">相談のみ希望</a></li>
+          </ul>
+          <p><a href="/site-compare">他業種との違い比較</a> / <a href="/glossary">用語集</a> / <a href="/blog">お仕事コラム一覧</a></p>
         </section>
 
-        <section id="reasons">
-          <h2>選ばれる6つの理由</h2>
-          <ul>
-            <li>集客力へのこだわり（新規・リピーターの獲得）</li>
-            <li>メイク・美容サポート（ヘアスタイル・身だしなみ相談）</li>
-            <li>未経験から始められる丁寧なサポート</li>
-            <li>いじめや派閥のない働きやすい環境</li>
-            <li>分かりやすい給与・待遇システム</li>
-            <li>顔出しなし・個人情報保護などのプライバシー配慮</li>
-          </ul>
+        <section id="requirements">
+          <h2>募集要項・アクセス</h2>
+          <table border="1">
+            <tbody>
+              <tr><th>募集職種</th><td>料亭の接客スタッフ（大阪市西成区山王・飛田新地）</td></tr>
+              <tr><th>応募資格</th><td>満20歳以上の女性（未経験・ブランク歓迎 ※20歳未満・高校生不可）</td></tr>
+              <tr><th>勤務時間</th><td>10:00〜24:00（選べる5大シフト制・週1日〜自由出勤）</td></tr>
+              <tr><th>必要書類</th><td>面接時は履歴書不要・私服OK／体験入店・勤務開始時は本籍地記載の住民票原本または有効期限内の日本国パスポート＋顔写真付き公的身分証明書必須</td></tr>
+              <tr><th>アクセス</th><td>Osaka Metro「動物園前駅」徒歩5分 / JR・南海「新今宮駅」徒歩7分 / 各線「天王寺駅・大阪阿部野橋駅」徒歩10分</td></tr>
+            </tbody>
+          </table>
         </section>
 
         <section id="voice">
-          <h2>在籍キャストのリアル体験談</h2>
+          <h2>働く女性のリアルな声</h2>
           <ul>
-            <li><strong>未経験スタート（20代前半・週3日勤務）</strong>：仲居さんが隣で優しく声をかけてくれるため、初日の不安がすぐ消えました。退勤時にその場で全額現金手渡しで受け取れるので安心です。</li>
-            <li><strong>Wワーク・副業（20代後半・週末のみ）</strong>：顔写真掲載や連絡先交換がなく、住民税の普通徴収についても事前に案内してもらえたため、昼職と無理なく両立できています。</li>
+            <li><strong>未経験スタート（22歳・週4日昼シフト）</strong>：仲居さんや女性スタッフが寄り添ってくれ、初日から全額日払いを受け取れたことで安心できました。</li>
+            <li><strong>学生・未経験（20歳・お酒NG）</strong>：お酒を飲む必要がなく、学業や試験スケジュールを優先しながら自分のペースで勤務しています。</li>
           </ul>
         </section>
 
-        <section id="section-faq">
-          <h2>応募する前に、気になることを解消しませんか？（よくある質問）</h2>
+        <section id="faq-preview">
+          <h2>応募前のよくある質問</h2>
           <dl>
-            <dt>Q. 未経験でも本当に大丈夫ですか？</dt>
-            <dd>A. はい、在籍キャストの多くが未経験からスタートしています。仲居さんや女性スタッフが優しくフォローするため、事前の専門知識は不要です。</dd>
-            <dt>Q. 家族・友人・会社に身バレしませんか？</dt>
-            <dd>A. 源氏名での勤務、WEB写真非公開、住民税の普通徴収手続き案内など、プライバシー保護を徹底しています。</dd>
-            <dt>Q. お酒が飲めない・弱くても働けますか？</dt>
-            <dd>A. 全く問題ありません。飛田新地の料亭はお酒を飲む場ではないため、お酒が飲めない方も活躍しています。</dd>
-            <dt>Q. 体験入店（1日だけ）でも大丈夫ですか？</dt>
-            <dd>A. はい、大歓迎です。日給はその場で全額日払いとなり、合わないと感じた場合はその日だけで終了しても問題ありません。</dd>
+            <dt>Q. 未経験でも応募できますか？</dt>
+            <dd>A. はい、在籍キャストの多くが未経験からスタートしています。女性スタッフが接客手順や準備を個別でお伝えします。</dd>
+            <dt>Q. お給料はその日に全額受け取れますか？</dt>
+            <dd>A. はい、完全歩合制（売上50％バック）で、退勤時にその日の分を全額現金でお渡しします。</dd>
+            <dt>Q. 身バレや顔写真のネット掲載はありますか？</dt>
+            <dd>A. WebやSNSへの顔写真掲載は行いません。完全源氏名・私服通勤でプライバシーに配慮しています。</dd>
           </dl>
-          <p><a href="/faq">よくある質問（FAQ全${FAQ_100_LIST.length}問）を見る</a></p>
+          <p><a href="/faq">よくある質問（全${FAQ_100_LIST.length}問）をすべて見る</a></p>
         </section>
 
-        <section id="flow">
-          <h2>応募からお仕事開始までの流れ・LINE相談</h2>
-          <p>①公式LINEで無料相談・見学予約 → ②私服・履歴書不要で見学＆条件説明 → ③貸出衣装で1日体験入店 → ④退勤時に売上50%バックを即日全額現金手渡し受取。</p>
-          <p>応募するか迷っている方も、まずはお気軽に公式LINEよりご相談ください（24時間受付中・相談無料）。</p>
+        <section id="consultation">
+          <h2>応募からお仕事開始まで・LINE無料相談</h2>
+          <p>①LINEで無料相談 → ②ご希望・条件の確認 → ③私服で見学・ご説明 → ④必要書類確認・お仕度 → ⑤1日体験入店（全額日払い） → ⑥ご納得のうえ開始。相談無料・24時間受付（営業時間10:00〜24:00 順次返信）。</p>
+        </section>
+
+        <section id="recruit-guide">
+          <h2>テーマ別の詳細ガイド・関連ページ</h2>
+          <ul>
+            <li><a href="/job">01｜仕事内容を詳しく見る</a></li>
+            <li><a href="/salary">02｜お給料・報酬の仕組みを見る</a></li>
+            <li><a href="/beginner">03｜未経験者向けガイドを見る</a></li>
+            <li><a href="/experienced">04｜経験者向けガイドを見る</a></li>
+            <li><a href="/requirements">05｜募集要項・採用条件を見る</a></li>
+            <li><a href="/flow">06｜面接・体験入店の流れを見る</a></li>
+            <li><a href="/workstyle">07｜自由な働き方について見る</a></li>
+            <li><a href="/shops">08｜通り別の特徴と直営店を見る</a></li>
+            <li><a href="/dekasegi">09｜寮・出稼ぎ情報を見る</a></li>
+            <li><a href="/safety">10｜身バレ・安全対策を見る</a></li>
+            <li><a href="/faq">11｜よくある質問（全${FAQ_100_LIST.length}問）を見る</a></li>
+            <li><a href="/blog">12｜お仕事コラム一覧を見る</a></li>
+          </ul>
         </section>
       </article>
     </main>
@@ -343,10 +336,11 @@ function buildHomeJsonLd(): string {
           'cssSelector': [
             '#hero-title',
             '#hero-description',
-            '#recruit-hub',
+            '#about',
             '#reasons',
-            '#voice',
-            '#flow'
+            '#job',
+            '#salary',
+            '#voice'
           ]
         }
       },
@@ -2177,92 +2171,66 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
   // (Matches React Header/Hero geometry above-the-fold so zero flash or oversized image shift occurs while keeping 100% crawler visibility)
   if (customNoscript) {
     const ssrCriticalCss = `<style id="ssr-shell-styles">
-  html, body { margin: 0; background: #fffafb; color: #2c1a1e; font-family: "Noto Sans JP", "Plus Jakarta Sans", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; -webkit-font-smoothing: antialiased; }
-  [data-ssr-content="true"] { color: #2c1a1e; line-height: 1.7; font-size: 15px; min-height: 100vh; }
+  html, body { margin: 0; background: #FFF9FA; color: #2B2326; font-family: "Noto Sans JP", "Plus Jakarta Sans", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; -webkit-font-smoothing: antialiased; }
+  [data-ssr-content="true"] { color: #2B2326; line-height: 1.75; font-size: 15px; min-height: 100vh; }
   [data-ssr-content="true"] .ssr-topbar,
-  [data-ssr-content="true"] > header { position: fixed; top: 0; left: 0; width: 100%; z-index: 50; background: rgba(255, 255, 255, 0.95); border-bottom: 1px solid #ffe4e6; box-sizing: border-box; }
-  [data-ssr-content="true"] > header:not(.ssr-topbar) { padding: 12px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; }
-  [data-ssr-content="true"] > header:not(.ssr-topbar) p { margin: 0; font-size: 13px; color: #5e474c; }
-  [data-ssr-content="true"] > header:not(.ssr-topbar) p:first-child { font-weight: 800; color: #d2547b; font-size: 14px; }
-  [data-ssr-content="true"] .ssr-topbar-inner { max-width: 1240px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  [data-ssr-content="true"] > header { position: fixed; top: 0; left: 0; width: 100%; z-index: 50; background: rgba(255, 255, 255, 0.95); border-bottom: 1px solid #EFE0E5; box-sizing: border-box; }
+  [data-ssr-content="true"] .ssr-topbar-inner { max-width: 1160px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   [data-ssr-content="true"] .ssr-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; border-bottom: none !important; color: inherit; }
-  [data-ssr-content="true"] .ssr-logo-img { display: block; width: 36px; height: 36px; border-radius: 9999px; object-fit: cover; flex-shrink: 0; border: 1px solid #fecdd3; margin: 0; }
+  [data-ssr-content="true"] .ssr-logo-img { display: block; width: 36px; height: 36px; border-radius: 9999px; object-fit: cover; flex-shrink: 0; border: 1px solid #EFE0E5; margin: 0; }
   [data-ssr-content="true"] .ssr-brand-text { display: flex; flex-direction: column; line-height: 1.15; }
-  [data-ssr-content="true"] .ssr-brand-text strong { font-size: 17px; font-weight: 900; color: #e11d48; letter-spacing: -0.01em; }
-  [data-ssr-content="true"] .ssr-brand-text small { font-size: 10px; font-weight: 700; color: #be123c; letter-spacing: 0.04em; }
-  [data-ssr-content="true"] .ssr-topnav { display: none; align-items: center; gap: 14px; font-size: 13px; font-weight: 700; }
-  [data-ssr-content="true"] .ssr-topnav a { color: #27272a; text-decoration: none; border-bottom: none; padding: 6px 10px; border-radius: 10px; }
-  [data-ssr-content="true"] .ssr-topnav a.ssr-nav-cta { background: linear-gradient(90deg, #ec4899, #f43f5e); color: #ffffff; border-radius: 9999px; padding: 7px 14px; font-size: 12px; }
-  [data-ssr-content="true"] .ssr-hero { padding: 176px 24px 36px; background-color: #fffafb; background-image: radial-gradient(#fd80ac18 2px, transparent 2px); background-size: 30px 30px; text-align: center; }
-  [data-ssr-content="true"] .ssr-hero-inner { max-width: 852px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
-  [data-ssr-content="true"] .ssr-hero-pill { display: inline-flex; align-items: center; gap: 8px; background: #ffe4e6; color: #d2547b; font-weight: 700; font-size: 12px; padding: 6px 16px; border-radius: 9999px; margin: 0 0 24px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); }
-  [data-ssr-content="true"] .ssr-hero-dot { width: 8px; height: 8px; border-radius: 9999px; background: #d2547b; display: inline-block; }
-  [data-ssr-content="true"] .ssr-hero-h1 { font-size: 1.5rem; font-weight: 800; line-height: 1.25; margin: 0 0 24px; color: #2c1a1e; text-align: center; }
-  [data-ssr-content="true"] .ssr-hero-h1 span { display: block; }
-  [data-ssr-content="true"] .ssr-hero-h1 .ssr-hero-accent { color: #d2547b; }
-  [data-ssr-content="true"] .ssr-hero-desc { max-width: 672px; margin: 0 auto 32px; font-size: 13px; color: #3f3f46; line-height: 1.7; text-align: center; }
-  [data-ssr-content="true"] .ssr-hero-desc p { margin: 0 0 12px; color: #27272a; font-weight: 500; }
-  [data-ssr-content="true"] .ssr-hero-questions { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 4px; color: #d2547b !important; font-weight: 700 !important; margin: 4px auto 8px !important; }
-  [data-ssr-content="true"] .ssr-hero-cta-line { color: #d2547b !important; font-weight: 800 !important; font-size: 15px; margin: 12px 0 0 !important; }
-  [data-ssr-content="true"] .ssr-hero-visual { width: 100%; max-width: 852px; margin: 0 auto 24px; }
-  [data-ssr-content="true"] .ssr-hero-card { position: relative; background: #ffffff; padding: 12px; border-radius: 28px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.18); border: 1px solid rgba(255, 228, 230, 0.6); overflow: hidden; }
-  [data-ssr-content="true"] .ssr-hero-img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 20px; background: #f3f4f6; margin: 0; border: none; }
-  [data-ssr-content="true"] .ssr-hero-stamp { position: absolute; bottom: 24px; right: 24px; background: rgba(255, 255, 255, 0.95); padding: 10px 14px; border-radius: 14px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12); border: 1px solid #ffe4e6; display: flex; flex-direction: column; align-items: center; line-height: 1.2; }
-  [data-ssr-content="true"] .ssr-hero-stamp span { font-size: 11px; font-weight: 800; color: #d2547b; }
-  [data-ssr-content="true"] .ssr-hero-stamp strong { font-size: 14px; font-weight: 800; color: #a13762; }
-  [data-ssr-content="true"] .ssr-hero-pickup { width: 100%; max-width: 852px; margin: 0 auto 24px; background: rgba(255, 255, 255, 0.92); border: 1px solid #ffe4e6; border-radius: 24px; padding: 20px; text-align: left; box-shadow: 0 4px 16px rgba(44, 26, 30, 0.05); box-sizing: border-box; }
-  [data-ssr-content="true"] .ssr-hero-pickup h2 { font-size: 14px; font-weight: 800; color: #2c1a1e; margin: 0 0 12px; padding: 0; border-left: none; }
-  [data-ssr-content="true"] .ssr-hero-pickup ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
-  [data-ssr-content="true"] .ssr-hero-pickup li { margin: 0; }
-  [data-ssr-content="true"] .ssr-hero-pickup a { display: block; padding: 8px 10px; border-radius: 10px; color: #2c1a1e; text-decoration: none; border-bottom: none; font-size: 13px; font-weight: 700; line-height: 1.45; }
-  [data-ssr-content="true"] main { max-width: 900px; margin: 0 auto; padding: 88px 16px 56px; box-sizing: border-box; }
-  [data-ssr-content="true"] main.ssr-below-fold { padding-top: 24px; }
+  [data-ssr-content="true"] .ssr-brand-text strong { font-size: 17px; font-weight: 800; color: #2B2326; letter-spacing: -0.01em; }
+  [data-ssr-content="true"] .ssr-brand-text small { font-size: 10px; font-weight: 700; color: #9D3B5E; letter-spacing: 0.04em; }
+  [data-ssr-content="true"] .ssr-topnav { display: none; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; }
+  [data-ssr-content="true"] .ssr-topnav a { color: #2B2326; text-decoration: none; border-bottom: none; padding: 6px 8px; border-radius: 10px; }
+  [data-ssr-content="true"] .ssr-topnav a.ssr-nav-cta { background: #06C755; color: #ffffff; border-radius: 12px; padding: 7px 14px; font-size: 12px; }
+  [data-ssr-content="true"] .ssr-hero { padding: 96px 20px 44px; background-color: #FFF9FA; border-bottom: 1px solid #EFE0E5; }
+  [data-ssr-content="true"] .ssr-hero-inner { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 28px; align-items: center; }
+  [data-ssr-content="true"] .ssr-hero-kicker { font-size: 12px; font-weight: 700; color: #D64572; margin: 0 0 10px; letter-spacing: 0.06em; }
+  [data-ssr-content="true"] .ssr-hero-h1 { font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 700; line-height: 1.3; margin: 0 0 10px; color: #2B2326; }
+  [data-ssr-content="true"] .ssr-hero-sub { font-size: 15px; font-weight: 700; color: #9D3B5E; margin: 0 0 14px; }
+  [data-ssr-content="true"] .ssr-hero-desc p { margin: 0 0 10px; color: #5E4D53; font-size: 14.5px; }
+  [data-ssr-content="true"] .ssr-hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  [data-ssr-content="true"] .ssr-btn-line { display: inline-flex; align-items: center; justify-content: center; background: #06C755; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 14px; padding: 12px 22px; border-radius: 12px; border-bottom: none !important; }
+  [data-ssr-content="true"] .ssr-btn-sub { display: inline-flex; align-items: center; justify-content: center; background: #ffffff; color: #2B2326; text-decoration: none; font-weight: 700; font-size: 14px; padding: 12px 20px; border-radius: 12px; border: 1px solid #EFE0E5; }
+  [data-ssr-content="true"] .ssr-hero-note { font-size: 12px; color: #5E4D53; margin: 10px 0 0; }
+  [data-ssr-content="true"] .ssr-hero-card { background: #ffffff; border-radius: 20px; border: 1px solid #EFE0E5; overflow: hidden; box-shadow: 0 12px 30px rgba(43, 35, 38, 0.08); }
+  [data-ssr-content="true"] .ssr-hero-img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; margin: 0; border: none; }
+  [data-ssr-content="true"] .ssr-hero-conditions { max-width: 1160px; margin: 24px auto 0; }
+  [data-ssr-content="true"] .ssr-hero-conditions ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  [data-ssr-content="true"] .ssr-hero-conditions li { background: #ffffff; border: 1px solid #EFE0E5; border-radius: 12px; padding: 10px 12px; font-size: 12.5px; font-weight: 700; color: #2B2326; }
+  [data-ssr-content="true"] .ssr-hero-disclaimer { font-size: 11.5px; color: #5E4D53; margin: 10px 0 0; }
+  [data-ssr-content="true"] main { max-width: 1000px; margin: 0 auto; padding: 88px 16px 56px; box-sizing: border-box; }
+  [data-ssr-content="true"] main.ssr-below-fold { padding-top: 28px; }
   [data-ssr-content="true"] main.ssr-blog-shell { max-width: 768px; padding-top: 96px; }
-  [data-ssr-content="true"] .ssr-blog-eyecatch { height: 224px; border-radius: 28px; overflow: hidden; background: #fff0f3; border: 1px solid #f3dce2; margin: 0 0 24px; }
+  [data-ssr-content="true"] .ssr-blog-eyecatch { height: 224px; border-radius: 24px; overflow: hidden; background: #FFF0F4; border: 1px solid #EFE0E5; margin: 0 0 24px; }
   [data-ssr-content="true"] .ssr-blog-img { display: block; width: 100%; height: 100%; object-fit: cover; margin: 0; border: none; }
-  [data-ssr-content="true"] main > article { background: #ffffff; border: 1px solid #f3dce2; border-radius: 24px; padding: 24px 20px; box-shadow: 0 4px 20px rgba(44, 26, 30, 0.04); }
+  [data-ssr-content="true"] main > article { background: #ffffff; border: 1px solid #EFE0E5; border-radius: 20px; padding: 24px 20px; }
   [data-ssr-content="true"] main:not(.ssr-below-fold) h1,
-  [data-ssr-content="true"] main.ssr-blog-shell h1 { font-size: clamp(1.3rem, 2.6vw, 1.85rem); font-weight: 800; color: #2c1a1e; line-height: 1.4; margin: 0 0 14px; text-align: left; }
-  [data-ssr-content="true"] h2 { font-size: 1.12rem; font-weight: 800; color: #2c1a1e; line-height: 1.45; margin: 26px 0 12px; padding: 2px 0 2px 12px; border-left: 4px solid #d2547b; }
-  [data-ssr-content="true"] h3 { font-size: 1rem; font-weight: 700; color: #2c1a1e; line-height: 1.5; margin: 16px 0 6px; }
-  [data-ssr-content="true"] main p { margin: 0 0 14px; color: #4a3b40; }
-  [data-ssr-content="true"] p.lead, [data-ssr-content="true"] p.summary { background: #fff5f8; border: 1px solid #f8d8e3; border-radius: 14px; padding: 14px 16px; color: #49313b; font-size: 14.5px; margin: 14px 0 20px; }
-  [data-ssr-content="true"] p.meta { font-size: 12.5px; color: #857982; margin: 0 0 12px; }
-  [data-ssr-content="true"] main img:not(.ssr-blog-img):not(.ssr-hero-img) { display: block; max-width: 100%; width: auto; height: auto; max-height: 288px; border-radius: 16px; margin: 16px auto; border: 1px solid #f3dce2; }
-  [data-ssr-content="true"] main a { color: #d2547b; font-weight: 600; text-decoration: none; border-bottom: 1px solid rgba(210, 84, 123, 0.3); }
+  [data-ssr-content="true"] main.ssr-blog-shell h1 { font-size: clamp(1.3rem, 2.6vw, 1.85rem); font-weight: 700; color: #2B2326; line-height: 1.4; margin: 0 0 14px; text-align: left; }
+  [data-ssr-content="true"] h2 { font-size: 1.15rem; font-weight: 700; color: #2B2326; line-height: 1.45; margin: 28px 0 12px; padding: 2px 0 2px 12px; border-left: 4px solid #D64572; }
+  [data-ssr-content="true"] h3 { font-size: 1rem; font-weight: 700; color: #2B2326; line-height: 1.5; margin: 16px 0 6px; }
+  [data-ssr-content="true"] main p { margin: 0 0 14px; color: #5E4D53; }
+  [data-ssr-content="true"] p.lead, [data-ssr-content="true"] p.summary { background: #FFF0F4; border: 1px solid #EFE0E5; border-radius: 14px; padding: 14px 16px; color: #2B2326; font-size: 14.5px; margin: 14px 0 20px; }
+  [data-ssr-content="true"] p.meta { font-size: 12.5px; color: #5E4D53; margin: 0 0 12px; }
+  [data-ssr-content="true"] main img:not(.ssr-blog-img):not(.ssr-hero-img) { display: block; max-width: 100%; width: auto; height: auto; max-height: 288px; border-radius: 16px; margin: 16px auto; border: 1px solid #EFE0E5; }
+  [data-ssr-content="true"] main a { color: #D64572; font-weight: 600; text-decoration: none; border-bottom: 1px solid rgba(214, 69, 114, 0.3); }
   [data-ssr-content="true"] ul, [data-ssr-content="true"] ol { margin: 10px 0 18px; padding-left: 22px; }
   [data-ssr-content="true"] ul { list-style: disc; }
   [data-ssr-content="true"] ol { list-style: decimal; }
-  [data-ssr-content="true"] li { margin-bottom: 8px; color: #4a3b40; }
-  [data-ssr-content="true"] table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; font-size: 13.5px; border: 1px solid #f3dce2; border-radius: 12px; overflow: hidden; display: table; }
-  [data-ssr-content="true"] th, [data-ssr-content="true"] td { border: 1px solid #f3dce2; padding: 10px 14px; text-align: left; vertical-align: top; }
-  [data-ssr-content="true"] th { background: #fff0f4; color: #2c1a1e; font-weight: 700; width: 28%; }
-  [data-ssr-content="true"] td { background: #ffffff; color: #4a3b40; }
-  [data-ssr-content="true"] .ssr-trust-box { background: #fff5f8; border: 1px solid #ffe4e6; border-radius: 16px; padding: 16px 18px; margin: 16px 0 22px; }
-  [data-ssr-content="true"] .ssr-trust-box h3 { margin: 0 0 8px; font-size: 1rem; color: #2c1a1e; }
-  [data-ssr-content="true"] .ssr-trust-box p { margin: 0 0 8px; font-size: 13.5px; }
-  [data-ssr-content="true"] .ssr-trust-box p:last-child { margin-bottom: 0; }
+  [data-ssr-content="true"] li { margin-bottom: 8px; color: #5E4D53; }
+  [data-ssr-content="true"] table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; font-size: 13.5px; border: 1px solid #EFE0E5; border-radius: 12px; overflow: hidden; display: table; }
+  [data-ssr-content="true"] th, [data-ssr-content="true"] td { border: 1px solid #EFE0E5; padding: 10px 14px; text-align: left; vertical-align: top; }
+  [data-ssr-content="true"] th { background: #FFF0F4; color: #2B2326; font-weight: 700; width: 28%; }
+  [data-ssr-content="true"] td { background: #ffffff; color: #5E4D53; }
   [data-ssr-content="true"] dl { margin: 12px 0 18px; }
-  [data-ssr-content="true"] dt { font-weight: 700; color: #2c1a1e; margin: 14px 0 4px; padding-top: 10px; border-top: 1px dashed #f3dce2; }
+  [data-ssr-content="true"] dt { font-weight: 700; color: #2B2326; margin: 14px 0 4px; padding-top: 10px; border-top: 1px dashed #EFE0E5; }
   [data-ssr-content="true"] dt:first-child { border-top: none; padding-top: 0; }
-  [data-ssr-content="true"] dd { margin: 0 0 10px; color: #5e474c; }
-  [data-ssr-content="true"] blockquote { margin: 14px 0; padding: 12px 16px; background: #fff5f8; border-left: 4px solid #d2547b; border-radius: 8px; color: #49313b; }
-  @media (min-width: 768px) {
-    [data-ssr-content="true"] .ssr-hero { padding: 208px 24px 48px; }
-    [data-ssr-content="true"] .ssr-hero-pill { font-size: 14px; }
-    [data-ssr-content="true"] .ssr-hero-h1 { font-size: 3rem; }
-    [data-ssr-content="true"] .ssr-hero-desc { font-size: 16px; }
-    [data-ssr-content="true"] .ssr-hero-cta-line { font-size: 18px; }
-    [data-ssr-content="true"] .ssr-hero-card { border-radius: 36px; }
-    [data-ssr-content="true"] .ssr-hero-img { border-radius: 28px; }
-    [data-ssr-content="true"] .ssr-hero-stamp { bottom: 32px; right: 32px; padding: 14px 18px; border-radius: 16px; }
-    [data-ssr-content="true"] .ssr-hero-stamp span { font-size: 13px; }
-    [data-ssr-content="true"] .ssr-hero-stamp strong { font-size: 20px; }
-    [data-ssr-content="true"] .ssr-blog-eyecatch { height: 288px; }
-    [data-ssr-content="true"] main > article { padding: 32px; }
-  }
+  [data-ssr-content="true"] dd { margin: 0 0 10px; color: #5E4D53; }
   @media (min-width: 1024px) {
     [data-ssr-content="true"] .ssr-topnav { display: flex; }
+    [data-ssr-content="true"] .ssr-hero-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+    [data-ssr-content="true"] .ssr-hero-conditions ul { grid-template-columns: repeat(6, 1fr); }
   }
 </style>`;
     if (!html.includes('id="ssr-shell-styles"')) {

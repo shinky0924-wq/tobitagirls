@@ -12,7 +12,7 @@ export interface FeaturedHeroArticle {
   eyeCatch: string;
 }
 
-export const HERO_IMAGE_WEBP_URL = '/images/tobita_dream_hero_banner_v3.webp';
+export const HERO_IMAGE_WEBP_URL = '/images/home_hero_ryotei_1795337037663.webp';
 
 // 固定の定番おすすめ5記事（CLSゼロ・Googlebot向けの安定した内部リンク先）
 export const FEATURED_HERO_ARTICLES: FeaturedHeroArticle[] = [

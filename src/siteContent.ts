@@ -87,28 +87,43 @@ export function getStoredSiteContent(): SiteContent {
     }
     const customContent = JSON.parse(stored);
     
-    // Auto-migrate: If the stored custom hero contains obsolete/stale text from previous versions, reset hero to current DEFAULT_SITE_CONTENT.hero
+    // Auto-migrate: Reset stale hero/reasons/flow/consultation from pre-renewal versions
+    let migrated = false;
     if (
       customContent.hero &&
-      (customContent.hero.titleLine1?.includes('店舗直営求人') ||
-       customContent.hero.titleLine2?.includes('安心の高収入') ||
-       customContent.hero.titleLine1?.includes('飛田新地が') ||
-       customContent.hero.descriptionLine1?.includes('店舗直営だから') ||
-       customContent.hero.descriptionLine1?.includes('安心してお店選び') ||
-       customContent.hero.tagline?.includes('店舗直営公式求人') ||
-       customContent.hero.titleLine1 !== DEFAULT_SITE_CONTENT.hero.titleLine1)
+      (customContent.hero.titleLine1 !== DEFAULT_SITE_CONTENT.hero.titleLine1 ||
+       customContent.hero.tagline !== DEFAULT_SITE_CONTENT.hero.tagline)
     ) {
       customContent.hero = { ...DEFAULT_SITE_CONTENT.hero };
-      try {
-        localStorage.setItem('custom_site_content', JSON.stringify(customContent));
-      } catch (e) {
-        // ignore
-      }
+      migrated = true;
     }
 
-    // Auto-migrate flow: if containing old items like 'LINE相談' or old subtitle, reset to new DEFAULT_SITE_CONTENT.flow
-    if (customContent.flow && (customContent.flow.subtitle !== 'WORKFLOW' || customContent.flow.items?.[0]?.title === 'LINE相談')) {
+    if (
+      customContent.reasons &&
+      customContent.reasons.title !== DEFAULT_SITE_CONTENT.reasons.title
+    ) {
+      customContent.reasons = { ...DEFAULT_SITE_CONTENT.reasons };
+      migrated = true;
+    }
+
+    if (
+      customContent.flow &&
+      (customContent.flow.subtitle !== DEFAULT_SITE_CONTENT.flow.subtitle ||
+       customContent.flow.items?.[0]?.title !== DEFAULT_SITE_CONTENT.flow.items[0].title)
+    ) {
       customContent.flow = { ...DEFAULT_SITE_CONTENT.flow };
+      migrated = true;
+    }
+
+    if (
+      customContent.consultation &&
+      customContent.consultation.title !== DEFAULT_SITE_CONTENT.consultation.title
+    ) {
+      customContent.consultation = { ...DEFAULT_SITE_CONTENT.consultation };
+      migrated = true;
+    }
+
+    if (migrated) {
       try {
         localStorage.setItem('custom_site_content', JSON.stringify(customContent));
       } catch (e) {

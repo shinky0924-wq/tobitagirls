@@ -1,21 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Noto Sans JP", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Plus Jakarta Sans", "Noto Sans JP", sans-serif;
+  --font-sans: "Noto Sans JP", "Plus Jakarta Sans", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Noto Sans JP", "Plus Jakarta Sans", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Noto Sans JP", "Plus Jakarta Sans", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", ui-sans-serif, system-ui, sans-serif;
 
-  --color-primary: #ec4899;
-  --color-primary-container: #f43f5e;
-  --color-secondary: #d2547b;
-  --color-secondary-container: #ff9ebb;
-  --color-on-secondary-container: #761341;
-  --color-surface: #fffafb;
-  --color-surface-container: #fff0f3;
-  --color-surface-container-low: #fff8f9;
-  --color-on-surface: #2c1a1e;
-  --color-on-surface-variant: #5e474c;
-  --color-outline-variant: #f3dce2;
+  /* Calm, refined feminine palette */
+  --color-primary: #D64572;
+  --color-primary-container: #E65A85;
+  --color-secondary: #9D3B5E;
+  --color-secondary-container: #FCE8EF;
+  --color-on-secondary-container: #6E233F;
+  --color-surface: #FFF9FA;
+  --color-surface-container: #FFF0F4;
+  --color-surface-container-low: #FAF4F6;
+  --color-on-surface: #2B2326;
+  --color-on-surface-variant: #5E4D53;
+  --color-outline-variant: #EFE0E5;
 }
 
 /* Mobile Friendly & Core Web Vitals optimizations */
@@ -59,15 +61,21 @@ button, a, input, select, textarea {
   justify-content: center;
 }
 
-/* Custom background pattern for added visual polish */
-.hero-pattern {
-  background-image: radial-gradient(#fd80ac18 2px, transparent 2px);
-  background-size: 30px 30px;
+/* Tabular figures helper for aligned salary/payout numbers */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Subtle horizontal scroll container without visible scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Safe area inset support for modern mobile browsers */
 .pb-safe {
-  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  padding-bottom: max(0.65rem, env(safe-area-inset-bottom));
 }
-
-

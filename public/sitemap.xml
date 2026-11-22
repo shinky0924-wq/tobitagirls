@@ -3,17 +3,17 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://tobitashinchi-recruit.com/</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_v2.jpg</image:loc>
-      <image:title>飛田新地求人｜飛田ガールズ【公式・店舗グループ直営】</image:title>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg</image:loc>
+      <image:title>飛田新地求人｜飛田ガールズ【公式・料亭直営】</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/about</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -23,7 +23,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/glossary</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -33,147 +33,307 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/site-compare</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/col_beginner_guide_art_1787803245812.jpg</image:loc>
-      <image:title>飛田新地と他業種の違いを比較｜他業種・応募方法比較｜飛田ガールズ</image:title>
+      <image:title>飛田新地と他業種の違いを比較｜メンズエステ・ソープ・デリヘル・応募方法も解説</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/col_beginner_guide_art_1787803245812.jpg</image:loc>
-      <image:title>働き方・条件別の応募ガイド｜飛田ガールズ</image:title>
+      <image:title>飛田新地求人｜働き方・求人比較</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/beginner</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_beginner_support_1788153037569.jpg</image:loc>
-      <image:title>【未経験向け】飛田新地での働き方</image:title>
+      <image:title>未経験からの飛田新地求人</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/experienced</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_experienced_cast_1792411797671.jpg</image:loc>
-      <image:title>【経験者・移籍向け】飛田新地での働き方</image:title>
+      <image:title>経験者・移籍向け飛田新地求人</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/20s</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_experienced_cast_1792411797671.jpg</image:loc>
-      <image:title>【20代女性向け】飛田新地の働き方</image:title>
+      <image:title>20代の飛田新地求人</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/30s</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_job_guide_tea_1788153000519.jpg</image:loc>
-      <image:title>【30代女性向け】飛田新地の働き方</image:title>
+      <image:title>30代の飛田新地求人</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/40s</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_job_guide_tea_1788153000519.jpg</image:loc>
-      <image:title>【40代女性向け】飛田新地の働き方</image:title>
+      <image:title>40代の飛田新地求人</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/high-income</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_salary_calculator_1788153012478.jpg</image:loc>
-      <image:title>【高収入を目指したい方へ】飛田新地の報酬システム</image:title>
+      <image:title>高収入を目指したい方の飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/savings</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_salary_calculator_1788153012478.jpg</image:loc>
+      <image:title>貯金したい方の飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/living-expenses</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_salary_calculator_1788153012478.jpg</image:loc>
+      <image:title>生活費を補いたい方の飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/target-income</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_salary_calculator_1788153012478.jpg</image:loc>
+      <image:title>目標金額がある方の飛田新地求人</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/one-day-week</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_shift_schedule_1788153063163.jpg</image:loc>
-      <image:title>【週1日〜勤務】飛田新地の自由シフト</image:title>
+      <image:title>週1日〜働ける飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/short-time</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_shift_schedule_1788153063163.jpg</image:loc>
+      <image:title>短時間勤務の飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/daytime</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_shift_schedule_1788153063163.jpg</image:loc>
+      <image:title>昼間勤務の飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/nighttime</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_shift_schedule_1788153063163.jpg</image:loc>
+      <image:title>夜間勤務の飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/weekends</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_shift_schedule_1788153063163.jpg</image:loc>
+      <image:title>土日祝のみの飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/regular</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_shift_schedule_1788153063163.jpg</image:loc>
+      <image:title>レギュラー勤務の飛田新地求人</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/short-term</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_trial_interview_1788153091611.jpg</image:loc>
-      <image:title>【短期・出稼ぎ】飛田新地の期間集中ワーク</image:title>
+      <image:title>短期・出稼ぎの飛田新地求人</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/student</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_wwork_privacy_1788153051081.jpg</image:loc>
-      <image:title>【学生向け（20歳以上）】飛田新地のバイト事情</image:title>
+      <image:title>学生向けの飛田新地求人</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/office-worker</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_wwork_privacy_1788153051081.jpg</image:loc>
-      <image:title>【会社員・OLのWワーク】飛田新地の副業対策</image:title>
+      <image:title>会社員・Wワークの飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/freeter</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_shift_schedule_1788153063163.jpg</image:loc>
+      <image:title>フリーター向けの飛田新地求人</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/compare/housewife</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_wwork_privacy_1788153051081.jpg</image:loc>
-      <image:title>【主婦向け】飛田新地の昼間シフト</image:title>
+      <image:title>主婦向けの飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/parenting</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_wwork_privacy_1788153051081.jpg</image:loc>
+      <image:title>子育て中の方向け飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/self-employed</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_wwork_privacy_1788153051081.jpg</image:loc>
+      <image:title>自営業の方の飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/privacy</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_wwork_privacy_1788153051081.jpg</image:loc>
+      <image:title>身バレ対策重視の飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/customer-service-anxiety</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_beginner_support_1788153037569.jpg</image:loc>
+      <image:title>接客が不安な方向け飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/returning</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_beginner_support_1788153037569.jpg</image:loc>
+      <image:title>ブランクありの方の飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/transfer</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_experienced_cast_1792411797671.jpg</image:loc>
+      <image:title>他店から移籍向け飛田新地求人</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/compare/consultation</loc>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tobita_trial_interview_1788153091611.jpg</image:loc>
+      <image:title>相談から始めたい方向け飛田新地求人</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/col_beginner_guide_art_1787803245812.jpg</image:loc>
-      <image:title>飛田新地のよくある質問｜全119問</image:title>
+      <image:title>飛田新地求人FAQ｜よくある質問（119問）</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/qualification</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -183,7 +343,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/beginner</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -193,7 +353,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/experienced</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -203,7 +363,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/job</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -213,17 +373,17 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/salary</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/col_beginner_guide_art_1787803245812.jpg</image:loc>
-      <image:title>飛田新地の給料・日払いに関するFAQ</image:title>
+      <image:title>給料・日払い・費用に関するFAQ</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/hours</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -233,7 +393,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/interview</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -243,7 +403,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/privacy</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -253,7 +413,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/environment</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -263,7 +423,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/access</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -273,7 +433,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/sidejob</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -283,7 +443,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/faq/support</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
     <image:image>
@@ -293,37 +453,37 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-11-18</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/col_beginner_guide_art_1787803245812.jpg</image:loc>
-      <image:title>飛田新地お仕事コラム一覧</image:title>
+      <image:title>飛田新地求人コラム一覧</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/job</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_job_guide_tea_1788153000519.jpg</image:loc>
-      <image:title>飛田新地の仕事内容・1日の流れ</image:title>
+      <image:title>飛田新地のお仕事内容・1日の流れ</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/salary</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_salary_calculator_1788153012478.jpg</image:loc>
-      <image:title>飛田新地の給料・報酬システムと即日日払い</image:title>
+      <image:title>給料システムと即日日払い</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/beginner</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -333,37 +493,37 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/experienced</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/experienced_hero_woman_1794551773329.jpg</image:loc>
-      <image:title>飛田新地への移籍・経験者向け案内</image:title>
+      <image:title>飛田新地の経験者求人｜他業種・他店からの移籍</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/requirements</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_interview_flow_1788153075249.jpg</image:loc>
-      <image:title>飛田新地の募集要項と応募条件</image:title>
+      <image:title>募集要項と応募条件</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/flow</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_trial_interview_1788153091611.jpg</image:loc>
-      <image:title>面接・体験入店の流れ</image:title>
+      <image:title>面接・体入の流れ</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/workstyle</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -373,32 +533,32 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/shops</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/shops_hero_street_1794559557935.jpg</image:loc>
-      <image:title>飛田新地のお店選びガイド｜通りの特徴・見分け方｜飛田ガールズ</image:title>
+      <image:title>飛田新地のお店選びガイド｜通りの特徴・求人の見分け方｜飛田ガールズ</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/dekasegi</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_luxury_room_1788153103866.jpg</image:loc>
-      <image:title>飛田新地の個室寮完備・地方出稼ぎサポート</image:title>
+      <image:title>個室寮完備・地方出稼ぎ完全サポート</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/safety</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_wwork_privacy_1788153051081.jpg</image:loc>
-      <image:title>飛田新地の身バレ対策と安心の防犯体制</image:title>
+      <image:title>身バレ対策と安心の防犯体制</image:title>
     </image:image>
   </url>
   <url>
@@ -473,7 +633,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-trial-guide</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-06-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -483,7 +643,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-age-and-looks</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -493,7 +653,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-tax-guide</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -503,7 +663,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-non-alcoholic</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -512,8 +672,18 @@
     </image:image>
   </url>
   <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-cast-holiday</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_cast_holiday_1783677895722.jpg</image:loc>
+      <image:title>【稼げるキャストの休日】オンとオフを賢く両立！飛田新地で稼ぐ女の子たちのリアルなプライベートライフ</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-short-term-work</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-05-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -522,13 +692,43 @@
     </image:image>
   </url>
   <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-safety-and-security</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_safety_security_1783677920159.jpg</image:loc>
+      <image:title>【料亭の安全管理】飛田新地の客層が良い理由！お店のスタッフが徹底する「女の子最優先」の警備体制</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-kimono-and-makeup</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_kimono_makeup_1783677929197.jpg</image:loc>
+      <image:title>【飛田新地の和装・メイク術】自分に一番似合うスタイルは？無料レンタル浴衣・着物とお仕事メイクのコツ</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-double-work-lifestyle</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-05-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/assets/images/col_weekend_shift_1783677940789.jpg</image:loc>
       <image:title>【飛田新地は週1日・週末だけOK】OL・会社員や学生さん必見！お昼だけ・週末だけの掛け持ちシフト例</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-mental-support</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_mental_support_1783677954070.jpg</image:loc>
+      <image:title>【飛田新地の安心サポート】悩みは一人で抱え込まないで！現役キャストが教える女性スタッフの頼り方</image:title>
     </image:image>
   </url>
   <url>
@@ -569,6 +769,16 @@
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/assets/images/col_kimono_magic_1783748310784.jpg</image:loc>
       <image:title>【飛田新地の和装マジック】自分史上いちばん可愛くなれる！貸出衣装（着物・浴衣）とヘアメイクのこだわり</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-privacy-tips</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_privacy_smart_1783883659536.jpg</image:loc>
+      <image:title>【飛田新地・身バレ対策の極意】家族・友達・会社に100%知られずに働き続けるための5つの鉄則</image:title>
     </image:image>
   </url>
   <url>
@@ -632,13 +842,53 @@
     </image:image>
   </url>
   <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-beauty-self-investment</loc>
+    <lastmod>2026-07-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/premium_nail_art_illust_1783983247884.jpg</image:loc>
+      <image:title>【憧れの美容代に！】飛田新地バイトで叶える「自分磨き」＆ハイブランド購入計画</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-student-success</loc>
+    <lastmod>2026-07-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/premium_cafe_study_illust_1783982999931.jpg</image:loc>
+      <image:title>【飛田新地で女子大生・専門学生が働く】親に内緒で卒業旅行＆奨学金返済！学業と両立するスマートな働き方</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-10million-savings</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-07-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/assets/images/premium_piggy_bank_illust_1783983266778.jpg</image:loc>
       <image:title>【飛田新地でのお給料の使い道】20代で1000万円貯めた女の子の貯金術とモチベーション維持の秘訣</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-friends-recruit</loc>
+    <lastmod>2026-07-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/premium_women_friends_illust_1783983040476.jpg</image:loc>
+      <image:title>【飛田新地は友達同士の応募もOK】1人じゃ不安なあなたへ！友達と一緒に面接・体験入店するメリット</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-tennoji-shopping-cafe</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/premium_luxury_shopping_illust_1783983163266.jpg</image:loc>
+      <image:title>【飛田新地と天王寺エリアの魅力】お仕事前後に楽しめる！女子に大人気のおしゃれカフェ＆お買い物スポット</image:title>
     </image:image>
   </url>
   <url>
@@ -652,6 +902,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-youth-charm</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/premium_beauty_mirror_illust_1783983011517.jpg</image:loc>
+      <image:title>【飛田新地で活かす20代前半の強み】未経験から最速で稼ぎ頭になるための、愛され笑顔と愛嬌の磨き方</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-mature-ladies-success</loc>
     <lastmod>2026-07-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -659,6 +919,16 @@
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/assets/images/premium_tea_time_illust_1783983101716.jpg</image:loc>
       <image:title>【飛田新地で20代後半からのリスタート】「今さら遅い？」なんてない！大人の色気と落ち着きで稼ぐノウハウ</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-dreams-and-future-funding</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_entrepreneur_girl_35_1785507303961.jpg</image:loc>
+      <image:title>【自立した女性へ】飛田新地のバイトをステップアップに！将来起業・独立したい夢を叶える資金作り</image:title>
     </image:image>
   </url>
   <url>
@@ -683,7 +953,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-daytime-shift-advantage</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-07-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -692,8 +962,28 @@
     </image:image>
   </url>
   <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-self-care-detox</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/premium_peaceful_yoga_illust_1783983173190.jpg</image:loc>
+      <image:title>【飛田新地キャストのセルフケア】お仕事の疲れを翌日に残さない！現役キャスト愛用のデトックス＆リラックス法</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-easy-kimono-dressing</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/premium_kimono_dress_illust_1783983134104.jpg</image:loc>
+      <image:title>【飛田新地なら和装が初めてでも安心】5分でパッと着こなせる！お店で用意している簡単で可愛い着物・浴衣の仕組み</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-vs-other-night-jobs</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -702,8 +992,28 @@
     </image:image>
   </url>
   <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-tax-save-20s-guide</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/premium_cute_desk_illust_1783983276314.jpg</image:loc>
+      <image:title>【飛田新地・20代のための税金対策】年間いくらから納税が必要？税務署からお尋ねが来ないための基礎知識</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-motivation-and-goal-roadmap</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/premium_planner_flow_illust_1783983081126.jpg</image:loc>
+      <image:title>【飛田新地でモチベーションを保つコツ】「なんとなく勤務」はもったいない！夢を最速で叶える目標金額のロードマップ</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-no-resume-quick-trial</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -713,7 +1023,7 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-friendly-support-staff-real</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -722,8 +1032,208 @@
     </image:image>
   </url>
   <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-resort-style-work-holiday</loc>
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_resort_stay_46_1785507334215.jpg</image:loc>
+      <image:title>【短期でサクッと！】リゾートバイト感覚で大阪・飛田新地へ！1ヶ月限定で賢く稼ぐ地方女子の選択肢</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-privacy-protection-tips-1</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_privacy_shield_47_1785495714291.jpg</image:loc>
+      <image:title>【これで安心】飛田新地で身バレせずに働く！徹底したプライバシー保護の秘訣</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-mibare-taisaku-guide-1</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_discreet_commute_48_1785495730427.jpg</image:loc>
+      <image:title>【安心】飛田新地で身バレが不安なあなたへ！プロが教える徹底対策4選</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-privacy-protection-tips</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_secret_account_49_1785495743866.jpg</image:loc>
+      <image:title>【身バレ防止の秘訣】飛田新地で安心して働く！プライバシーを守る5つの方法</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-salary-system-explained</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_gold_reward_50_1785495755977.jpg</image:loc>
+      <image:title>【日給10万円も夢じゃない！】飛田新地の給料システムと計算式を徹底解説！稼ぎの秘密を大公開</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-daily-work-flow-for-beginners</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_daily_routine_51_1785495767020.jpg</image:loc>
+      <image:title>飛田新地のお仕事ってどんな感じ？未経験さんが知っておきたい「お仕事の一日の流れ」</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-privacy-security</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_guardian_heart_52_1785495778194.jpg</image:loc>
+      <image:title>【身バレ徹底ガード】飛田新地で安心して働く！プライバシー保護の秘訣とお店のサポート</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-salary-guide</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_daily_cash_53_1785495791484.jpg</image:loc>
+      <image:title>【日払いOK？】飛田新地の給料システムと計算式を徹底解説！未経験でも高収入の秘密とは？</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-beginner-workday</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_welcome_booklet_54_1785495804984.jpg</image:loc>
+      <image:title>【初めてでも大丈夫】飛田新地のお仕事ってどんな感じ？未経験さん向け1日の流れと安心ポイント</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-mibare-taisaku-guide</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_incognito_cute_55_1785495817237.jpg</image:loc>
+      <image:title>「もしかしてバレる？」飛田新地で安心して働く！身バレ防止の徹底ガイド</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-salary-system-guide</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_savings_chart_56_1785495838818.jpg</image:loc>
+      <image:title>飛田新地のお給料システム徹底解説！計算式とコース別バック額で見る高収入の秘訣</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-beginner-work-flow-taiken</loc>
+    <lastmod>2026-07-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_trial_step_57_1785495851341.jpg</image:loc>
+      <image:title>【完全ガイド】飛田新地未経験者が安心する、お仕事の流れと「体入」のすべて</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/cafe-line-counseling-support-guide</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/new_col_coffee_laptop_1785378489412.jpg</image:loc>
+      <image:title>【カフェで気軽に相談】対面・LINEでOK！飛田新地の不安を全部解消する個別カウンセリング</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/free-makeup-costume-rental-support</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/new_col_makeup_bag_1785378503353.jpg</image:loc>
+      <image:title>【飛田新地は手ぶらでOK】完全無料！お店で借りられるメイク道具＆ドレス・和装の充実サポート</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/commute-access-tennoji-namba-guide</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/new_col_train_commute_1785378515110.jpg</image:loc>
+      <image:title>【通勤・アクセス快適】天王寺・難波からすぐ！飛田新地のお仕事への通いやすさをチェック</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/fast-savings-plan-goal-sheet-guide</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/new_col_gold_piggy_1785378525722.jpg</image:loc>
+      <image:title>【飛田新地なら貯金スピード10倍？】短期間で目標額を達成するための目標設定と資金計画シート</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/beauty-salon-support-self-care</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/new_col_hair_salon_1785378540259.jpg</image:loc>
+      <image:title>【飛田新地で自分磨き】稼いだ収入での美容投資＆サポート相談のポイント</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/mental-care-after-work-refresh-guide</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_mental_relax_63_1785509298139.jpg</image:loc>
+      <image:title>【飛田新地で心穏やかに働く】お仕事後のリフレッシュ法と無理なく長く続けるメンタルコンディショニング</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/night-shift-taxi-pickup-safety-system</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/new_col_night_city_1785378564307.jpg</image:loc>
+      <image:title>【夜勤・遅番の帰宅配慮】終電に合わせたシフト調整と帰り道の安全対策ガイド</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/sns-privacy-protection-rules</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/new_col_heart_shield_1785378576575.jpg</image:loc>
+      <image:title>【飛田新地のSNS・身バレ対策】Instagram・TikTokの鍵アカウント運用とお顔非公開徹底ルール</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://tobitashinchi-recruit.com/blog/local-travel-work-hotel-support</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -733,12 +1243,312 @@
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/flexible-shift-work-style-guide</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/assets/images/new_col_cozy_sofa_1785378602940.jpg</image:loc>
       <image:title>【飛田新地は完全自由シフト制】週1日・3時間〜OK！自分のライフスタイルを崩さずに高収入を得るコツ</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/osaka-gourmet-spot-after-work-guide</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_gourmet_takoyaki_1785380270711.jpg</image:loc>
+      <image:title>【飛田新地帰りのおすすめスポット】お仕事終わりに立ち寄りたい！天王寺・新世界・難波のグルメ＆観光ガイド</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/seasonal-kimono-yukata-coordination-guide</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_seasonal_kimono_1785380285577.jpg</image:loc>
+      <image:title>【飛田新地の季節おすすめ着物スタイル】春夏秋冬で楽しむ料亭のお着物・和装コーディネート術</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/shift-schedule-app-management-tips</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_digital_calendar_1785380297293.jpg</image:loc>
+      <image:title>【飛田新地と本業を賢く両立】シフト管理アプリ＆スケジュール管理で無理なく高収入を得るコツ</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/friends-pair-apply-support-system</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_friendship_tea_1785380310316.jpg</image:loc>
+      <image:title>【飛田新地は友達同士の応募大歓迎】ペア相談・見学と安心サポート案内</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/self-reward-motivation-savings-habit</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_savings_ribbon_1785380323578.jpg</image:loc>
+      <image:title>【飛田新地で稼いだお金のご褒美習慣】目標達成ごとに自分を褒めてモチベーションUP</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/night-relax-sleep-quality-home-time</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_starry_window_1785380333938.jpg</image:loc>
+      <image:title>【飛田新地出勤後のプライベート時間】お仕事後の上質な睡眠＆おうち時間の過ごし方</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/skincare-glowing-skin-makeup-lesson</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_beauty_skincare_1785380345912.jpg</image:loc>
+      <image:title>【飛田新地で映えるスキンケア講座】ノーファンデでも美肌見え！接客で好印象を与えるツヤ肌づくり</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/self-confidence-growth-story-cast-voice</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_confidence_mirror_1785380357158.jpg</image:loc>
+      <image:title>【自己肯定感がアップする】飛田新地のお仕事で変わった「私の自信と将来の夢」</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/overseas-travel-study-abroad-savings-plan</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_travel_map_1785380368965.jpg</image:loc>
+      <image:title>【飛田新地で貯める海外旅行・留学資金】短期間で目標額を貯めて夢を叶えるキャストの資金活用術</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/bath-time-relaxation-reset-care</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_relax_bath_1785380379937.jpg</image:loc>
+      <image:title>【飛田新地キャストの至福ケア】バスタイムで疲れをリセット！お休み日のバスソルト＆癒やし習慣</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/cafe-sweets-holiday-enjoyment-guide</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_strawberry_parfait_1785381001_1785380565566.jpg</image:loc>
+      <image:title>【飛田新地で稼いだ休日のご褒美】天王寺・心斎橋のおすすめおしゃれカフェ＆映えスイーツ5選</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/morning-routine-coffee-mindfulness-guide</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_morning_coffee_1785381002_1785380579731.jpg</image:loc>
+      <image:title>【飛田新地キャストのモーニングルーティン】出勤前や休日の朝を優雅に過ごすモーニング習慣</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/room-interior-flowers-good-luck-tips</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_hydrangea_vase_1785381003_1785380592566.jpg</image:loc>
+      <image:title>【飛田新地で一人暮らしを彩る】季節のお花でお部屋を飾って運気を上げるプチインテリア術</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/bank-account-hand-cash-safe-management</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_bank_envelope_1785381004_1785380605532.jpg</image:loc>
+      <image:title>【飛田新地の日払い現金を安全管理】銀行口座・手渡し徹底比較とお金をしっかり残すコツ</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/night-routine-starry-sky-reset-guide</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_starlit_moon_1785381005_1785380618892.jpg</image:loc>
+      <image:title>【飛田新地キャストのナイトルーティン】出勤後の心を落ち着かせる夜の過ごし方とリセット習慣</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/ryotei-culture-japanese-manner-elegance</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_folding_fan_1785381006_1785380633214.jpg</image:loc>
+      <image:title>【飛田新地・料亭文化の奥深さ】伝統と品格を感じる「和の所作・マナー」が自然と身につく理由</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/room-wear-relaxation-home-care</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_fluffy_slippers_1785381007_1785380647936.jpg</image:loc>
+      <image:title>【飛田新地のお仕事終わりに】おうち時間を快適にする癒やしのルームウェア＆リラクゼーション</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/mirror-smile-self-love-cast-story</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_peony_mirror_1785381008_1785380660996.jpg</image:loc>
+      <image:title>【飛田新地で自信がついた私の話】お仕事を通して「自分の顔や雰囲気が好きになれた」秘密</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/photo-travel-hobby-lifestyle-cast</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_vintage_camera_1785381009_1785380673843.jpg</image:loc>
+      <image:title>【飛田新地キャストの休日ライフ】稼いだ収入でカメラや写真旅・趣味を思いきり楽しむ生き方</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/aroma-diffuser-scent-relaxation-care</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_aroma_diffuser_1785381010_1785380691227.jpg</image:loc>
+      <image:title>【飛田新地のお仕事終わりを心地よく】お部屋を満たすアロマと香りのリフレッシュ習慣</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/pancake-cafe-holiday-reward-guide</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_pancake_cafe_1785381370662.jpg</image:loc>
+      <image:title>【飛田新地で頑張った自分への甘いご褒美】休日に味わうふわふわパンケーキ＆極上カフェタイム</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/yukata-obi-ribbon-elegance-styling</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_obi_ribbon_89_1785507575434.jpg</image:loc>
+      <image:title>【飛田新地料亭の上品な和装術】帯結び・リボンアレンジで一目置かれる可愛い着こなしのコツ</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/savings-jar-step-by-step-guide</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_savings_jar_90_1785507594531.jpg</image:loc>
+      <image:title>【飛田新地で半年100万円貯金】みるみるお金が貯まる無理のない現実的ステップ</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/herbal-tea-relaxation-night-care</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_herbal_tea_91_1785507611571.jpg</image:loc>
+      <image:title>【飛田新地出勤後のセルフケア】ハーブティーでほっと一息つくオーガニック温活習慣</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/skincare-beauty-routine-clear-skin</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_skincare_glow_92_1785507628390.jpg</image:loc>
+      <image:title>【飛田新地で映える透明感美肌】毎日のメイク映えを叶えるスキンケア見直し術</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/cozy-blanket-room-interior-comfort</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_cozy_room_93_1785507643387.jpg</image:loc>
+      <image:title>【飛田新地キャストのお部屋づくり】ふんわり毛布と間接照明で最高の癒やし空間をつくるコツ</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/stationery-planner-goal-setting-guide</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_planner_dreams_94_1785507661072.jpg</image:loc>
+      <image:title>【飛田新地で夢を叶える手帳術】目標額・欲しいものリストを書いてモチベーションUP</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/non-alcoholic-juice-smart-hospitality</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_mocktail_toast_95_1785507679077.jpg</image:loc>
+      <image:title>【飛田新地ならお酒不要！】乾杯シーンでも可愛くスマートに魅せるノンアルコールのコツ</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/foot-bath-care-relax-refreshment</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_foot_bath_96_1785507695229.jpg</image:loc>
+      <image:title>【飛田新地出勤後のフットケア】一日頑張った足を労わる自宅でできる足湯リフレッシュ</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/star-pendant-jewelry-confidence-charm</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/assets/images/col_star_necklace_97_1785507710568.jpg</image:loc>
+      <image:title>【飛田新地で自分へのご褒美ジュエリー】首元でキラリと光る星モチーフアクセサリーの魅力</image:title>
     </image:image>
   </url>
   <url>
@@ -778,7 +1588,17 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_job_guide_tea_1788153000519.jpg</image:loc>
-      <image:title>飛田新地の仕事内容とは？出勤から接客・退勤までの1日の流れを解説</image:title>
+      <image:title>飛田新地求人の仕事内容とは？出勤から接客・退勤までの1日の流れを解説</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-work-flow-simulation</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_vanity_flow_101_1788073784449.jpg</image:loc>
+      <image:title>【飛田新地の1日完全シミュレーション】出勤・玄関待機から接客・日払い退勤までの全手順</image:title>
     </image:image>
   </url>
   <url>
@@ -792,13 +1612,33 @@
     </image:image>
   </url>
   <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-interview-requirements-documents</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_doc_folder_102_1788073795462.jpg</image:loc>
+      <image:title>【飛田新地・面接と応募資格】本籍地記載の住民票が必須な理由と必要書類・年齢基準</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobita-first-guide</loc>
     <lastmod>2026-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_doc_checklist_1788153025641.jpg</image:loc>
-      <image:title>飛田新地の応募資格と必要書類｜本籍地記載の住民票が必要な理由</image:title>
+      <image:title>飛田新地求人の応募資格と必要書類｜本籍地記載の住民票が必要な理由</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-dorm-life-support-truth</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_dorm_interior_103_1788073809146.jpg</image:loc>
+      <image:title>【飛田新地・寮の真実】家具家電付き個室マンション寮の設備と事前確認ポイント完全公開</image:title>
     </image:image>
   </url>
   <url>
@@ -808,7 +1648,17 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_beginner_support_1788153037569.jpg</image:loc>
-      <image:title>飛田新地は未経験でも働ける？研修内容と初心者が安心できる理由を解説</image:title>
+      <image:title>飛田新地求人は未経験でも働ける？研修内容と初心者が安心できる理由を解説</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-tax-sole-proprietor-guide</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_smart_tax_104_1788073821808.jpg</image:loc>
+      <image:title>【税金と確定申告ガイド】飛田新地で働く個人事業主の納税義務・経費計上と扶養対策</image:title>
     </image:image>
   </url>
   <url>
@@ -818,7 +1668,17 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_wwork_privacy_1788153051081.jpg</image:loc>
-      <image:title>飛田新地で会社にバレない副業ノウハウ｜住民税の普通徴収と身バレ防止策</image:title>
+      <image:title>飛田新地求人で会社にバレない副業ノウハウ｜住民税の普通徴収と身バレ防止策</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-identity-alibi-safety-measures</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_city_privacy_105_1788073834014.jpg</image:loc>
+      <image:title>【飛田新地の身バレ配慮と賃貸・副業対策】普通徴収・源氏名・生活との切り分けポイント</image:title>
     </image:image>
   </url>
   <url>
@@ -828,7 +1688,17 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_shift_schedule_1788153063163.jpg</image:loc>
-      <image:title>飛田新地のシフトと勤務時間｜短時間・週末のみの働き方を解説</image:title>
+      <image:title>飛田新地求人のシフトと勤務時間｜短時間・週末のみの働き方を解説</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-recruitment-scout-fraud-prevention</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_scout_warning_123_1788788941774.jpg</image:loc>
+      <image:title>【飛田新地の求人詐欺・悪質スカウトの見分け方】「高額時給」の罠と安全な直営店選び</image:title>
     </image:image>
   </url>
   <url>
@@ -842,6 +1712,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-stamina-mental-care-100k</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_evening_care_107_1788073859312.jpg</image:loc>
+      <image:title>【飛田新地の体力・メンタル管理】日給10万円を無理なく達成する現役キャストのセルフケア術</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobita-trial-guide</loc>
     <lastmod>2026-08-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -849,6 +1729,16 @@
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_interview_flow_1792405357895.jpg</image:loc>
       <image:title>飛田新地の体験入店と面接の流れ｜当日の手順と即日全額日払いの仕組み</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-official-salary-formula-breakdown</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/salary_formula_art_1788092801369.jpg</image:loc>
+      <image:title>【公式給与計算式】飛田新地のバック率・手取り額を全暴露！15分〜60分の実収入と日給10万円の内訳</image:title>
     </image:image>
   </url>
   <url>
@@ -862,13 +1752,43 @@
     </image:image>
   </url>
   <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-street-recruitment-standards-comparison</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/street_compare_art_1788092817287.jpg</image:loc>
+      <image:title>【飛田新地・通り別採用基準】メイン通り・青春通り・妖怪通りの違いと年齢・日給相場の完全比較</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobita-safe-recruitment</loc>
     <lastmod>2026-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/tobita_security_shield_1788153117089.jpg</image:loc>
-      <image:title>飛田新地の安全管理とよくある質問｜衛生ルールと危険な求人の見分け方を解説</image:title>
+      <image:title>飛田新地求人の安全管理とよくある質問｜衛生ルールと悪質求人の見分け方を解説</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-resident-record-requirement-checklist</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_resident_cert_127_1788788957856.jpg</image:loc>
+      <image:title>飛田新地で本籍地記載の住民票が必須な理由と必要書類チェックリスト｜免許証だけで働けない背景</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-work-rules-hygiene-no-shower-reality</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/hygiene_security_art_1788092845494.jpg</image:loc>
+      <image:title>【飛田新地・現場ルール徹底解説】キス禁止・ゴム必須・シャワーなしの理由と衛生管理のリアル</image:title>
     </image:image>
   </url>
   <url>
@@ -882,6 +1802,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-apartment-dorm-support-guide</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/luxury_dorm_art_1788092872585.jpg</image:loc>
+      <image:title>【飛田新地の家具家電付き個室寮】生活支援サポートの仕組み・空き状況や条件の確認ガイド</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-scout-fraud-avoidance-safe-recruitment</loc>
     <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -892,8 +1822,18 @@
     </image:image>
   </url>
   <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-tax-return-sole-proprietor-expenses-guide</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/tax_return_art_1788092900789.jpg</image:loc>
+      <image:title>飛田新地の確定申告と税金マニュアル｜個人事業主の経費計上・住民税普通徴収で副業バレを防ぐ方法</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-training-lecture-no-practical-exam</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -909,106 +1849,6 @@
     <image:image>
       <image:loc>https://tobitashinchi-recruit.com/images/stamina_smile_art_1788092931773.jpg</image:loc>
       <image:title>【飛田新地】1日15〜20人接客の体力管理と稼ぐコツ｜仲居さんとの連携・笑顔が日給を左右する理由</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-work-flow-simulation</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/col_vanity_flow_101_1788073784449.jpg</image:loc>
-      <image:title>【飛田新地の1日完全シミュレーション】出勤・玄関待機から接客・日払い退勤までの全手順</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-interview-requirements-documents</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/col_doc_folder_102_1788073795462.jpg</image:loc>
-      <image:title>【飛田新地・面接と応募資格】本籍地記載の住民票が必須な理由と必要書類・年齢基準</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-dorm-life-support-truth</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/col_dorm_interior_103_1788073809146.jpg</image:loc>
-      <image:title>【飛田新地・寮の真実】家具家電付き個室マンション寮の設備と事前確認ポイント完全公開</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-tax-sole-proprietor-guide</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/col_smart_tax_104_1788073821808.jpg</image:loc>
-      <image:title>【税金と確定申告ガイド】飛田新地で働く個人事業主の納税義務・経費計上と扶養対策</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-identity-alibi-safety-measures</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/col_city_privacy_105_1788073834014.jpg</image:loc>
-      <image:title>【飛田新地の身バレ配慮と賃貸・副業対策】普通徴収・源氏名・生活との切り分けポイント</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-recruitment-scout-fraud-prevention</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/col_scout_warning_123_1788788941774.jpg</image:loc>
-      <image:title>【飛田新地の求人詐欺・悪質スカウトの見分け方】「高額時給」の罠と安全な直営店選び</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-stamina-mental-care-100k</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/col_evening_care_107_1788073859312.jpg</image:loc>
-      <image:title>【飛田新地の体力・メンタル管理】日給10万円を無理なく達成する現役キャストのセルフケア術</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-official-salary-formula-breakdown</loc>
-    <lastmod>2026-08-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/salary_formula_art_1788092801369.jpg</image:loc>
-      <image:title>【公式給与計算式】飛田新地のバック率・手取り額を全暴露！15分〜60分の実収入と日給10万円の内訳</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-street-recruitment-standards-comparison</loc>
-    <lastmod>2026-08-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/street_compare_art_1788092817287.jpg</image:loc>
-      <image:title>【飛田新地・通り別採用基準】メイン通り・青春通り・妖怪通りの違いと年齢・日給相場の完全比較</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-resident-record-requirement-checklist</loc>
-    <lastmod>2026-08-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/col_resident_cert_127_1788788957856.jpg</image:loc>
-      <image:title>飛田新地で本籍地記載の住民票が必須な理由と必要書類チェックリスト｜免許証だけで働けない背景</image:title>
     </image:image>
   </url>
   <url>
@@ -1132,6 +1972,66 @@
     </image:image>
   </url>
   <url>
+    <loc>https://tobitashinchi-recruit.com/blog/real-workstyle-and-daily-routine-in-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_traditional_work_japanese_140_1793175503653.jpg</image:loc>
+      <image:title>高収入の仕事なのに、意外と知られていない飛田新地のリアルな働き方</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/no-nightwork-experience-first-steps-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_trial_guide_unique_1793097748251.jpg</image:loc>
+      <image:title>夜職の経験がまったくなくても大丈夫？飛田新地で働く女性が最初に知るべき安心ポイント</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/non-alcoholic-work-in-tobitashinchi-vs-cabaret</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_mocktail_sparkle_142.jpg</image:loc>
+      <image:title>お酒が苦手でも夜の仕事はできる？飛田新地ならキャバクラと違って飲酒ゼロで働ける理由</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/shy-women-hospitality-safety-secrets-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_mentor_support_japanese_143_1793175370437.jpg</image:loc>
+      <image:title>「稼ぎたいけど接客は不安」そんな女性が飛田新地の仕事選びで見落としがちな安心の仕組み</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/beauty-self-investment-and-lifestyle-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_cosmetic_vanity_144.jpg</image:loc>
+      <image:title>美容にお金をかけたい女性へ！飛田新地で収入を増やして自分磨きを楽しむ働き方</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/daytime-job-savings-limit-tobitashinchi-wwork</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_daytime_sidejob_japanese_145_1793175487839.jpg</image:loc>
+      <image:title>昼職だけでは貯金が増えない…そんなときに考えたい飛田新地での収入アップという選択肢</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://tobitashinchi-recruit.com/blog/avoid-shop-selection-mistakes-in-tobitashinchi</loc>
     <lastmod>2026-10-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -1142,62 +2042,372 @@
     </image:image>
   </url>
   <url>
-    <loc>https://tobitashinchi-recruit.com/blog/mens-esthe-to-tobitashinchi-transfer</loc>
-    <lastmod>2026-11-21</lastmod>
+    <loc>https://tobitashinchi-recruit.com/blog/salary-system-truth-and-calculation-in-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/aroma_relax_lounge_1794999705933.jpg</image:loc>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_salary_calculation_147.jpg</image:loc>
+      <image:title>飛田新地で高収入求人の数字だけを信じて大丈夫？応募前に確認したい給料システムの裏側</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/comparing-shops-key-differences-in-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_shop_compare_japanese_148_1793175523125.jpg</image:loc>
+      <image:title>飛田新地ならどのお店でも同じ？入店前に比較すべき意外なチェックポイント</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/high-daily-income-pitfall-safety-first-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/premium_safety_heart_illust_1783983030211.jpg</image:loc>
+      <image:title>「日給が高いから」で決めるのは危険？飛田新地の求人選びで見落としがちな安心条件</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/things-to-decide-before-starting-in-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_interview_lady_japanese_150_1793175456912.jpg</image:loc>
+      <image:title>飛田新地で働き始めてから困らないために、最初の面接で決めておきたいこと</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/money-management-and-savings-plan-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_savings_plant_151.jpg</image:loc>
+      <image:title>飛田新地で稼いでいるのにお金が貯まらない？働く前に知っておきたい収入と支出の話</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/interview-questions-checklist-tobitashinchi-recruitment</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_interview_questions_152.jpg</image:loc>
+      <image:title>飛田新地の求人に書かれた待遇、どこまで確認した？面接で聞きにくい質問リスト</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/instant-cash-daily-pay-reality-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_salary_system_2_1785509800002_1785509761827.jpg</image:loc>
+      <image:title>飛田新地は「すぐ稼げる」と思って応募する前に！知っておきたい日払いの現実と安心の仕組み</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/cabaret-not-for-you-tobitashinchi-alternative</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_dressing_relax_japanese_154_1793175472877.jpg</image:loc>
+      <image:title>キャバクラが合わない女性へ！飛田新地で自分に合った高収入の仕事を見つける方法</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/girls-bar-concept-cafe-vs-tobitashinchi-comparison</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_cafe_comparison_155.jpg</image:loc>
+      <image:title>ガルバ・コンカフェ・飛田新地、働き方や収入の違いを知ってから選びたい！</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/sugar-dating-vs-tobitashinchi-safety-and-income</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_privacy_secret_3_1785510003_1785509820357.jpg</image:loc>
+      <image:title>パパ活と飛田新地で働くこと、収入や安全性では比較できない大きな違い</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/daytime-side-job-vs-tobitashinchi-savings-guide</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_salary_system_2_1785510002_1785509778431.jpg</image:loc>
+      <image:title>昼職・副業・飛田新地、効率よく貯金したい女性は何を基準に選ぶべき？</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/no-alcohol-no-sales-messages-tobitashinchi-comfort</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_stressfree_rest_japanese_158_1793175561720.jpg</image:loc>
+      <image:title>お酒・営業連絡・ノルマが苦手な女性へ！飛田新地で確認したいストレスフリーなポイント</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/freedom-shift-and-high-income-balance-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_planner_shift_159.jpg</image:loc>
+      <image:title>飛田新地なら「自由に働きたい」と「しっかり稼ぎたい」を両立できる？シフトの考え方</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/short-time-work-smart-criteria-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_shorttime_watch_160.jpg</image:loc>
+      <image:title>短時間で収入を増やしたい女性へ！飛田新地の求人を見るときの新しい基準</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/stop-job-hopping-finding-best-ryotei-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_welcome_flowers_161.jpg</image:loc>
+      <image:title>夜職を転々とする前に知っておきたい、飛田新地で自分にピッタリ合うお店の見つけ方</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/want-money-fear-exposure-privacy-first-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_privacy_safe_japanese_162_1793175321318.jpg</image:loc>
+      <image:title>お金は欲しい、でも身バレは怖い…飛田新地で仕事を探す女性が最初に確認すべき安心対策</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/can-i-really-work-here-anxiety-checklist-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_support_anxiety_japanese_163_1793175335526.jpg</image:loc>
+      <image:title>「私でも働けるのかな…」飛田新地に興味がある女性のリアルな不安を整理してみた</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/discreet-work-and-complete-privacy-secrets-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_privacy_rules_3_1785509800003_1785509777603.jpg</image:loc>
+      <image:title>周りに知られずに働きたい！飛田新地に応募する前に確認しておきたいプライバシー対策</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/urgent-money-needs-calm-decision-guide-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_emergency_fund_165.jpg</image:loc>
+      <image:title>急な出費でお金が必要…焦って飛田新地の仕事を決める前に確認したいチェックポイント</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/looks-and-charm-truth-what-matters-most-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_charm_smile_japanese_166_1793175351052.jpg</image:loc>
+      <image:title>見た目に自信がないと稼げない？飛田新地の仕事選びで外見以上に大切なこと</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/tired-of-workplace-drama-stress-free-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_spa_relaxation_167.jpg</image:loc>
+      <image:title>人間関係に疲れて仕事を辞めたい女性へ！飛田新地で人間関係に悩まない職場選び</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/financial-worries-female-counseling-support-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_warm_tea_reflection_168.jpg</image:loc>
+      <image:title>お金の悩みを誰にも相談できない女性へ！飛田新地の仕事を選ぶ前に整理したいこと</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/change-your-life-setting-clear-goals-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/premium_morning_breakfast_illust_1783983222167.jpg</image:loc>
+      <image:title>「今の生活を変えたい」と思ったら！飛田新地で収入を増やす前に決めておきたい目標</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/shop-chemistry-and-environment-fit-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/premium_flower_vase_illust_1783983192676.jpg</image:loc>
+      <image:title>飛田新地で働くなら、入店前に知っておきたい「お店との相性」の話</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/beyond-looks-key-factors-for-success-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_traditional_fabric_171.jpg</image:loc>
+      <image:title>飛田新地で稼ぐために大切なのは見た目だけ？働きやすさを左右する意外な要素</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/how-smart-women-choose-their-shop-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_housing_support_4_1785509800004_1785509791751.jpg</image:loc>
+      <image:title>飛田新地で働く女性は何を基準にお店を選ぶ？後悔しないための比較ポイント</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/first-day-checklist-and-mindset-prep-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_first_day_prep_japanese_173_1793175425116.jpg</image:loc>
+      <image:title>初出勤で慌てないために！飛田新地で働く前に準備しておきたい持ち物と心構え</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/job-interview-wishes-and-conditions-tips-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/premium_lucky_keys_illust_1783983202689.jpg</image:loc>
+      <image:title>飛田新地の面接で「何でも大丈夫です」はもったいない？自分の希望を上手に伝えるコツ</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/my-rules-for-stress-free-work-balance-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_peaceful_bedroom_175.jpg</image:loc>
+      <image:title>飛田新地で働く前に決めておきたい、無理なくマイペースに続けるためのマイルール</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/savings-habits-and-budgeting-smart-tobitashinchi</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_star_pendant_reward_176.jpg</image:loc>
+      <image:title>飛田新地で稼いだお金を全部使ってしまう前に！しっかり貯金できる人が決めていること</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/hidden-comfort-and-safety-criteria-tobitashinchi-recruitment</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/premium_warm_fireplace_illust_1783983182824.jpg</image:loc>
+      <image:title>飛田新地の求人を比較するとき、意外と見落とされる「働きやすさ」の正体</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://tobitashinchi-recruit.com/blog/mens-esthe-to-tobitashinchi-transfer</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_stressfree_rest_japanese_158_1793175561720.jpg</image:loc>
       <image:title>メンズエステから飛田新地への移籍を考える前に知っておきたい違い</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/soap-health-to-tobitashinchi-rules</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/japanese_tatami_tea_1794999706239.jpg</image:loc>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_traditional_work_japanese_140_1793175503653.jpg</image:loc>
       <image:title>ソープ・ヘルス経験者が移籍前に確認したい仕事内容と接客ルール</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/cabaret-to-tobitashinchi-workstyle</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/elegant_lady_smile_1794999707759.jpg</image:loc>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_mature_grace_japanese_139_1793175388580.jpg</image:loc>
       <image:title>キャバクラ経験者が知っておきたい接客スタイルと働き方の違い</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-shop-transfer-7-points</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/bright_reception_hall_1794999708598.jpg</image:loc>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_shop_compare_japanese_148_1793175523125.jpg</image:loc>
       <image:title>飛田新地で他店から移籍する前に確認したい7つのポイント</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-treatment-comparison-guide</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/notebook_planning_tea_1794999707922.jpg</image:loc>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_privacy_safe_japanese_162_1793175321318.jpg</image:loc>
       <image:title>飛田新地の求人で待遇を比較するときに確認したいこと</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-workplace-relationships-guide</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/friends_support_chat_1794999709411.jpg</image:loc>
+      <image:loc>https://tobitashinchi-recruit.com/images/col_mentor_support_japanese_143_1793175370437.jpg</image:loc>
       <image:title>飛田新地で働くなら人間関係も大切？お店選びのポイント</image:title>
     </image:image>
   </url>
@@ -1207,478 +2417,88 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/merit_demerit_guide_1794999697467.jpg</image:loc>
+      <image:loc>https://tobitashinchi-recruit.com/images/card_cafe-line-counseling-support-guide.jpg</image:loc>
       <image:title>飛田新地のメリット・デメリットを正直に解説｜「きつい・やめとけ」と言われる理由と向き・不向き</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-chubby-body-height-guide</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/kimono_style_guide_1794999697860.jpg</image:loc>
+      <image:loc>https://tobitashinchi-recruit.com/images/card_free-makeup-costume-rental-support.jpg</image:loc>
       <image:title>飛田新地はぽっちゃり体型・低身長・胸のサイズでも働ける？見た目の基準と選ばれるコツ</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-tattoo-scar-surgery-guide</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/skin_makeup_care_1794999697983.jpg</image:loc>
+      <image:loc>https://tobitashinchi-recruit.com/images/card_aroma-diffuser-scent-relaxation-care.jpg</image:loc>
       <image:title>飛田新地はタトゥー・傷跡・整形・歯列矯正があっても応募できる？事前確認のポイント</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-std-pill-hygiene-check</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/hygiene_wellness_care_1794999698693.jpg</image:loc>
+      <image:loc>https://tobitashinchi-recruit.com/images/card_bath-time-relaxation-reset-care.jpg</image:loc>
       <image:title>飛田新地の衛生管理と健康配慮｜性病対策・ピル相談・ゴム着用ルールを解説</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-access-stations-interview-guide</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/osaka_station_walk_1794999700052.jpg</image:loc>
+      <image:loc>https://tobitashinchi-recruit.com/images/card_commute-access-tennoji-namba-guide.jpg</image:loc>
       <image:title>飛田新地への行き方・アクセスガイド｜動物園前駅・新今宮駅・天王寺駅からの徒歩ルートと面接待ち合わせ</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-housewife-single-mother-parttime</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/daytime_work_balance_1794999703229.jpg</image:loc>
+      <image:loc>https://tobitashinchi-recruit.com/images/card_flexible-shift-work-style-guide.jpg</image:loc>
       <image:title>主婦・人妻・シングルマザーが飛田新地で働く前に知っておきたい時間帯・扶養・家族バレ対策</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-holiday-short-term-gw-summer</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/holiday_travel_stay_1794999700723.jpg</image:loc>
+      <image:loc>https://tobitashinchi-recruit.com/images/card_fast-savings-plan-goal-sheet-guide.jpg</image:loc>
       <image:title>夏休み・GW・年末年始だけの短期はできる？飛田新地の連休・期間限定ワーク確認ガイド</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-quit-early-no-penalty-policy</loc>
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/cafe_support_talk_1794999701178.jpg</image:loc>
+      <image:loc>https://tobitashinchi-recruit.com/images/card_cozy-blanket-room-interior-comfort.jpg</image:loc>
       <image:title>飛田新地を「辞めたい」「体入だけで終わりにしたい」ときの退店ルールとペナルティの有無</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-juminhyo-convenience-store-guide</loc>
+    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-average-daily-pay-reality</loc>
     <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/official_paper_guide_1794999703670.jpg</image:loc>
-      <image:title>飛田新地の応募に必要な本籍地入り住民票の取り方｜マイナンバーカードでコンビニ交付する手順</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-seasonal-heat-cold-care</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/warm_tea_seasons_1794999703812.jpg</image:loc>
-      <image:title>飛田新地の夏・冬の待機環境と防寒・暑さ対策｜季節ごとの働きやすさと体調管理</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-parent-family-privacy-guide</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/home_privacy_desk_1794999704140.jpg</image:loc>
-      <image:title>実家暮らし・同居家族に知られずに飛田新地で働く工夫｜服装・お金・連絡管理のポイント</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-legal-compliance-ryotei-guide</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/traditional_lantern_alley_1794999704650.jpg</image:loc>
-      <image:title>飛田新地は違法？なぜ長く営業できているのか｜料亭組合の規約と安全管理をわかりやすく解説</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-hair-makeup-nail-lighting-guide</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/vanity_mirror_cosmetics_1794999705156.jpg</image:loc>
-      <image:title>飛田新地の照明に映えるメイク・髪型・ネイルのコツ｜濃い化粧はNG？上品に見える仕上げ方</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-chiebukuro-rumors-vs-reality</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/smartphone_search_cafe_1794999705682.jpg</image:loc>
-      <image:title>飛田新地に関する知恵袋やSNSの噂と現場のリアル｜怖い噂の真相を女性スタッフが回答</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-interview-rejection-criteria-truth</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/interview_notes_tea_1795000227544.jpg</image:loc>
-      <image:title>飛田新地の面接に落ちることはある？採用基準と「通りやすい・見送られやすい」特徴を正直に解説</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-foreign-guest-english-guide</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/osaka_lantern_evening_1795000226956.jpg</image:loc>
-      <image:title>飛田新地に外国人・インバウンド客は来る？英語が話せなくても大丈夫な理由と＋2,500円手当</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-standby-ochahiki-reality</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/cozy_lounge_break_1795000227707.jpg</image:loc>
-      <image:title>飛田新地の待機時間・お茶ひきはどんな感じ？スマホは触れる？玄関と控室の過ごし方</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-returning-after-blank-guide</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/spring_sakura_walk_1795000228211.jpg</image:loc>
-      <image:title>ブランクあり・出戻りで飛田新地に復帰したい方へ｜以前と変わった点と再スタートの流れ</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-shy-introvert-communication-tips</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/gentle_tea_listening_1795000231478.jpg</image:loc>
-      <image:title>人見知り・口下手でも飛田新地で働ける？トーク力がなくても愛される「聞き上手」接客術</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-commute-kansai-nearby-prefectures</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/kansai_train_sunset_1795000228768.jpg</image:loc>
-      <image:title>京都・神戸・奈良・和歌山から飛田新地へ通える？関西圏の終電・車・自転車通勤ガイド</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-glasses-contact-wig-underwear-guide</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/pastel_dressing_items_1795000229332.jpg</image:loc>
-      <image:title>メガネ・カラコン・ウィッグ・自前下着はどうする？飛田新地の身だしなみ細かすぎるQ&amp;A</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-how-to-refuse-rude-guest-rules</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/warm_hallway_safety_1795000229775.jpg</image:loc>
-      <image:title>変な客・マナー違反や苦手なタイプが来たら断れる？飛田新地のNG客対応と仲居さんの見守り</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-period-pill-health-management</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/herbal_tea_cushion_1795000805573.jpg</image:loc>
-      <image:title>飛田新地で生理中はどうする？お休み相談・ピルでの周期調整と体調ケアのリアル</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-bridal-premarriage-single-restart</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/bouquet_ribbon_desk_1795000806204.jpg</image:loc>
-      <image:title>結婚前・ブライダル資金やバツイチからの再スタート｜ライフステージに合わせた飛田新地の働き方</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-40s-50s-mature-charm-guide</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/mature_kimono_elegance_1795000807593.jpg</image:loc>
-      <image:title>40代・50代でも飛田新地で働ける？大人の魅力と落ち着きが求められる客層・エリアの選び方</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-rent-credit-card-tax-money-guide</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/home_finance_organizer_1795000808271.jpg</image:loc>
-      <image:title>賃貸審査・クレジットカード・確定申告はどうする？飛田新地で働く女性のリアルなお金管理術</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-remote-tokyo-nagoya-fukuoka-guide</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/shinkansen_travel_bag_1795001493346.jpg</image:loc>
-      <image:title>東京・名古屋・福岡など遠方から飛田新地で働くには？新幹線・夜行バス移動と滞在サポートの確認点</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-haircolor-pierce-hair-removal-etiquette</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/salon_hair_pearl_care_1795001493374.jpg</image:loc>
-      <image:title>髪色・インナーカラー・ピアス・ムダ毛・タバコは大丈夫？飛田新地の身だしなみとにおい対策</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-bakusai-keijiban-scam-vs-direct</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/tablet_checklist_tea_1795001494366.jpg</image:loc>
-      <image:title>掲示板（爆サイ等）や匿名SNSの書き込みを信じていい？求人情報の見分け方と直営窓口の安心点</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-repeat-guests-nakaizan-relationship</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/tea_room_greeting_bow_1795001495786.jpg</image:loc>
-      <image:title>飛田新地に本指名や常連（リピーター）はある？営業連絡なしでまた会いに来てもらえる理由</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-body-fatigue-edema-backpain-care</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/stretching_relax_room_1795001496102.jpg</image:loc>
-      <image:title>座りっぱなしの腰痛・足のむくみ対策｜飛田新地で体調を崩さず働く現役キャストのセルフケア</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-resume-not-needed-interview-outfit</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/casual_coat_cafe_talk_1795001496683.jpg</image:loc>
-      <image:title>履歴書・職務経歴書は本当に不要？飛田新地の面接時の服装と当日聞かれることまとめ</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-downtime-surgery-bodytype-skin-guide</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/pastel_silk_wellness_1795001496477.jpg</image:loc>
-      <image:title>痩せ型・バストサイズ・美容整形のダウンタイム中…体型の悩みがあっても飛田新地で働ける？</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-dressing-room-locker-valuables</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/tidy_dressing_lockers_1795002784114.jpg</image:loc>
-      <image:title>更衣室・ロッカー・貴重品管理はどうなってる？他の女の子と顔を合わせる？</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-meal-break-restroom-timing</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/cozy_bento_tea_break_1795002784660.jpg</image:loc>
-      <image:title>食事・休憩・トイレのタイミングってどうしてる？1日働くときのリアルな過ごし方</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-rainy-day-payday-shift-strategy</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/rainy_window_planner_1795002784998.jpg</image:loc>
-      <image:title>雨の日・台風・給料日前後やイベント時期で客足は変わる？天気・季節とシフトの組み方</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-hygiene-sti-check-condom-rules</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/clean_hygiene_wellness_1795002785762.jpg</image:loc>
-      <image:title>性病検査や避妊・コンドーム着用ルールは本当？自分の身体を守るための衛生チェック</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-partner-boyfriend-privacy-tips</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/evening_home_serenity_1795002785914.jpg</image:loc>
-      <image:title>彼氏・パートナーに知られずに働く女性の工夫｜時間・連絡・香りの違和感を出さないコツ</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-sns-instagram-location-privacy-guide</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/phone_privacy_desk_1795002786820.jpg</image:loc>
-      <image:title>SNS・インスタ・位置情報で身バレしないためのスマホ設定チェックリスト</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-passport-id-without-juminhyo-guide</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/red_passport_documents_1795002788147.jpg</image:loc>
-      <image:title>住民票がすぐ取れないときは？日本国パスポートを使った年齢確認と書類準備の裏ワザ</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-after-graduation-next-career-plan</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/tulip_future_workspace_1795002787782.jpg</image:loc>
-      <image:title>飛田新地を卒業したあとは？目標達成後のキャリアと一般就職・転職での空白期間の考え方</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-clean-freak-hygiene-room-guide</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/crisp_tatami_oshibori_1795006901845.jpg</image:loc>
-      <image:title>きれい好き・ちょっと潔癖気味でも働ける？お部屋の清掃とおしぼり・清拭のリアル</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-standard-japanese-dialect-charm</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/friendly_cafe_smile_talk_1795006902221.jpg</image:loc>
-      <image:title>関西弁が話せない標準語・地方出身でも大丈夫？声や方言が逆に魅力になる理由</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-tall-petite-athletic-body-outfit-guide</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/boutique_pastel_wardrobe_1795006903125.jpg</image:loc>
-      <image:title>高身長（165cm以上）・小柄（150cm未満）・スポーツ体型を魅力に変える衣装と魅せ方</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-tour-only-visit-no-pressure-guide</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/welcome_tour_teacup_1795006903907.jpg</image:loc>
-      <image:title>『話だけ聞いて見学だけで帰っても本当に嫌な顔されない？』初めての店舗見学リアルガイド</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-schedule-change-train-delay-cancel-rules</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/planner_latte_reschedule_1795006903770.jpg</image:loc>
-      <image:title>体調不良や電車遅延で面接・体験入店をキャンセル・日程変更したいときの連絡方法と罰金の有無</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-job-hunting-leave-freelance-balance</loc>
-    <lastmod>2026-11-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/freelance_sunlit_desk_1795006904300.jpg</image:loc>
-      <image:title>就活・休学中・派遣やフリーランスと掛け持ちするときの自由シフト活用術</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://tobitashinchi-recruit.com/blog/tobitashinchi-cashless-era-daily-cash-safety-guide</loc>
-    <lastmod>2026-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://tobitashinchi-recruit.com/images/blush_wallet_cash_tidy_1795006904500.jpg</image:loc>
-      <image:title>キャッシュレス時代の『全額現金手渡し』管理術｜帰宅時の防犯と銀行預金のコツ</image:title>
+      <image:loc>https://tobitashinchi-recruit.com/images/card_bank-account-hand-cash-safe-management.jpg</image:loc>
+      <image:title>飛田新地の平均日給・手取り相場の考え方｜50%バックで収入が決まる仕組みと時間帯の違い</image:title>
     </image:image>
   </url>
 </urlset>

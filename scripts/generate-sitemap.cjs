@@ -8,8 +8,8 @@ const path = require('path');
 
 const HOST = 'tobitashinchi-recruit.com';
 const DOMAIN = `https://${HOST}`;
-const STABLE_UPDATED_LASTMOD = '2026-11-21';
-const DEFAULT_STATIC_LASTMOD = '2026-11-21';
+const STABLE_UPDATED_LASTMOD = '2026-11-22';
+const DEFAULT_STATIC_LASTMOD = '2026-11-22';
 
 function formatLastMod(dateStr) {
   if (!dateStr || typeof dateStr !== 'string') return DEFAULT_STATIC_LASTMOD;
@@ -41,7 +41,7 @@ function escapeXml(str) {
 }
 
 const staticRoutes = [
-  { path: '', priority: '1.0', freq: 'daily', lastmod: STABLE_UPDATED_LASTMOD, img: '/images/tobita_dream_hero_banner_v2.jpg', title: '飛田新地求人｜飛田ガールズ【公式・店舗グループ直営】' },
+  { path: '', priority: '1.0', freq: 'daily', lastmod: STABLE_UPDATED_LASTMOD, img: '/images/home_hero_ryotei_1795337037663.jpg', title: '飛田新地求人｜飛田ガールズ【公式・料亭直営の女性採用窓口】' },
   { path: '/about', priority: '0.8', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '運営者情報・店舗体制' },
   { path: '/glossary', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地 用語集・用語辞典' },
   { path: '/site-compare', priority: '0.9', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地と他業種の違いを比較｜他業種・応募方法比較｜飛田ガールズ' },

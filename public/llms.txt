@@ -1,7 +1,7 @@
-# 飛田新地求人｜飛田ガールズ【公式・店舗グループ直営】
+# 飛田新地求人｜飛田ガールズ【公式・料亭直営】
 
-> 飛田新地の求人を探している女性へ。飛田ガールズは、飛田新地で複数店舗を運営するグループの公式求人サイトです。未経験・経験者向けの募集情報、仕事内容、給与・待遇、勤務条件、応募方法を詳しくご案内。応募前のLINE相談も受け付けています。
-> 最終更新日: 2026-11-21
+> 飛田新地で働くか迷っている女性へ。飛田ガールズは料亭直営の求人案内サイトです。仕事内容や接客方法、給料・全額日払いの仕組み、応募条件、身バレ対策まで詳しく解説。未経験の方も経験者の方も、応募前に知っておきたい情報を分かりやすく紹介しています。
+> 最終更新日: 2026-11-15
 
 ## 飛田ガールズについて
 - **サイト名**: 飛田ガールズ（料理組合加盟料亭 直営公式採用窓口）
@@ -88,9 +88,9 @@ WebサイトやSNSへの顔写真掲載は行わず、街全体で写真・動�
 - [飛田新地と他業種の違いを比較（メンズエステ・ソープ・デリヘル・キャバクラ・応募方法）](https://tobitashinchi-recruit.com/site-compare) ([テキスト版](/site-compare.md))
 - [目的・働き方別求人ガイド](https://tobitashinchi-recruit.com/compare) ([テキスト版](/compare.md))
 - [飛田新地 用語集・用語辞典](https://tobitashinchi-recruit.com/glossary) ([テキスト版](/glossary.md))
-- [お仕事コラム一覧（全128記事）](https://tobitashinchi-recruit.com/blog) ([テキスト版](/blog.md))
+- [お仕事コラム一覧（128記事）](https://tobitashinchi-recruit.com/blog) ([テキスト版](/blog.md))
 
-### 働き方・求人比較（主要11ページ）
+### 働き方・求人比較（5カテゴリー）
 #### A. 経験・年齢
 - [未経験](https://tobitashinchi-recruit.com/compare/beginner) ([テキスト版](/compare/beginner.md)): 初めての方も安心。仕事の流れやサポート体制を確認できます。
 - [経験者・移籍](https://tobitashinchi-recruit.com/compare/experienced) ([テキスト版](/compare/experienced.md)): 他業種や他店からの移籍向けに環境・条件を比較できます。
@@ -99,13 +99,30 @@ WebサイトやSNSへの顔写真掲載は行わず、街全体で写真・動�
 - [40代](https://tobitashinchi-recruit.com/compare/40s) ([テキスト版](/compare/40s.md)): 40代の働きやすさや、応募前に確認したい点をご案内します。
 #### B. 収入・働く目的
 - [高収入を目指したい](https://tobitashinchi-recruit.com/compare/high-income) ([テキスト版](/compare/high-income.md)): 売上50%バック・日払いの仕組みと働き方を詳しく確認できます。
+- [貯金したい](https://tobitashinchi-recruit.com/compare/savings) ([テキスト版](/compare/savings.md)): 計画的に貯蓄を増やすための働き方や支出管理を確認できます。
+- [生活費を補いたい](https://tobitashinchi-recruit.com/compare/living-expenses) ([テキスト版](/compare/living-expenses.md)): 家賃や日々の出費を無理なく補える働き方を確認できます。
+- [目標金額がある](https://tobitashinchi-recruit.com/compare/target-income) ([テキスト版](/compare/target-income.md)): 目標額や期限から逆算した働き方の考え方を確認できます。
 #### C. 勤務スタイル
 - [週1日〜](https://tobitashinchi-recruit.com/compare/one-day-week) ([テキスト版](/compare/one-day-week.md)): 週1日からの無理ないシフトや両立方法を確認できます。
+- [短時間勤務](https://tobitashinchi-recruit.com/compare/short-time) ([テキスト版](/compare/short-time.md)): スキマ時間で効率よく働きたい方に合う条件を確認できます。
+- [昼間勤務](https://tobitashinchi-recruit.com/compare/daytime) ([テキスト版](/compare/daytime.md)): 朝〜夕方の時間帯で生活リズムを保って働けます。
+- [夜間勤務](https://tobitashinchi-recruit.com/compare/nighttime) ([テキスト版](/compare/nighttime.md)): 仕事終わりや夕方からのピーク帯を活かした働き方です。
+- [土日祝のみ](https://tobitashinchi-recruit.com/compare/weekends) ([テキスト版](/compare/weekends.md)): 週末・祝日だけ集中して効率よく稼ぐ働き方です。
+- [レギュラー勤務](https://tobitashinchi-recruit.com/compare/regular) ([テキスト版](/compare/regular.md)): しっかりシフトに入って安定した高水準を目指す働き方です。
 - [短期・出稼ぎ](https://tobitashinchi-recruit.com/compare/short-term) ([テキスト版](/compare/short-term.md)): 短期集中や遠方からの出稼ぎ向けの条件を確認できます。
 #### D. 生活環境
 - [学生](https://tobitashinchi-recruit.com/compare/student) ([テキスト版](/compare/student.md)): 学業や長期休みと両立できる働き方を確認できます。
 - [会社員](https://tobitashinchi-recruit.com/compare/office-worker) ([テキスト版](/compare/office-worker.md)): 本業と両立しやすい働き方や身バレ配慮を確認できます。
+- [フリーター](https://tobitashinchi-recruit.com/compare/freeter) ([テキスト版](/compare/freeter.md)): バイトの掛け持ちや本業化など自由度の高い働き方です。
 - [主婦](https://tobitashinchi-recruit.com/compare/housewife) ([テキスト版](/compare/housewife.md)): 家庭や生活リズムを大切にしながら働ける条件を確認できます。
+- [子育て中](https://tobitashinchi-recruit.com/compare/parenting) ([テキスト版](/compare/parenting.md)): お子さまの予定や急な都合に配慮しやすい働き方を確認できます。
+- [自営業](https://tobitashinchi-recruit.com/compare/self-employed) ([テキスト版](/compare/self-employed.md)): フリーランスや個人事業の収入を補う柔軟な働き方です。
+#### E. 不安・希望
+- [身バレ対策重視](https://tobitashinchi-recruit.com/compare/privacy) ([テキスト版](/compare/privacy.md)): 顔写真非公開やプライバシーへの配慮点を確認できます。
+- [接客が不安](https://tobitashinchi-recruit.com/compare/customer-service-anxiety) ([テキスト版](/compare/customer-service-anxiety.md)): 人見知り・会話が苦手な方向けに接客の仕組みを解説します。
+- [ブランクあり](https://tobitashinchi-recruit.com/compare/returning) ([テキスト版](/compare/returning.md)): しばらく仕事から離れていた方の再スタートを支援します。
+- [他店から移籍](https://tobitashinchi-recruit.com/compare/transfer) ([テキスト版](/compare/transfer.md)): 現在の人間関係や条件を見直したい移籍相談に対応します。
+- [相談から始めたい](https://tobitashinchi-recruit.com/compare/consultation) ([テキスト版](/compare/consultation.md)): 応募を決める前の質問・見学だけでも気軽に相談できます。
 
 ### よくある質問（FAQ 全119問・12カテゴリー別）
 - [FAQ総合トップ（全119問）](https://tobitashinchi-recruit.com/faq) ([テキスト版](/faq.md))

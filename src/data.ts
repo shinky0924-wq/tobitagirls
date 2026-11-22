@@ -11,7 +11,7 @@ const tobitaCastYukiSelfie = '/images/tobita_cast_yuki_selfie.jpg';
 const tobitaCastOne = tobitaCastYukiSelfie;
 const tobitaCastTwo = tobitaCastMaiSelfie;
 const tobitaCastThree = tobitaCastHinaSelfie;
-const tobitaDreamHeroBanner = '/images/tobita_dream_hero_banner_v2.jpg';
+const tobitaDreamHeroBanner = '/images/home_hero_ryotei_1795337037663.jpg';
 const tobitaAdvisorAvatar = '/images/sakura_advisor_portrait_1788920514818.jpg';
 
 // ==========================================
@@ -453,10 +453,10 @@ export const JOB_FACTS: JobFactItem[] = [
 ];
 
 export const FLOW_STEPS: FlowStep[] = [
-  { number: '01', title: 'LINE相談' },
-  { number: '02', title: 'ご希望の相談・確認' },
-  { number: '03', title: '条件確認・店内見学' },
-  { number: '04', title: '面接' },
-  { number: '05', title: '体験入店' },
-  { number: '06', title: 'お仕事スタート' }
+  { number: '01', title: 'LINEで無料相談' },
+  { number: '02', title: 'ご希望・条件の確認' },
+  { number: '03', title: '私服で見学・ご説明' },
+  { number: '04', title: '必要書類確認・お仕度' },
+  { number: '05', title: '1日体験入店（全額日払い）' },
+  { number: '06', title: 'ご納得のうえ開始' }
 ];

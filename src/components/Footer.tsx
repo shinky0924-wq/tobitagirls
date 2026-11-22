@@ -39,15 +39,18 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
   }, []);
 
   const navLinks = [
+    { name: '飛田ガールズとは', action: 'section', target: '/#about' },
+    { name: '選ばれる6つの理由', action: 'section', target: '/#reasons' },
+    { name: '仕事内容・1日の流れ', action: 'section', target: '/#job' },
+    { name: '給料・報酬システム', action: 'section', target: '/#salary' },
+    { name: '働く環境・設備紹介', action: 'section', target: '/#environment' },
+    { name: '募集要項・アクセス', action: 'section', target: '/#requirements' },
+    { name: '働く女性のリアルな声', action: 'section', target: '/#voice' },
+    { name: '応募前のFAQ（全119問）', action: 'faq', target: '/faq' },
     { name: 'お仕事コラム一覧', action: 'blog', target: '/blog' },
-    { name: '求人総合ガイド', action: 'section', target: '/#hub' },
     { name: '目的・働き方別求人ガイド', action: 'compare', target: '/compare' },
-    { name: '選ばれる理由', action: 'section', target: '/#reasons' },
-    { name: '女性の声・体験談', action: 'section', target: '/#voice' },
-    { name: 'よくある質問 FAQ（全119問）', action: 'faq', target: '/faq' },
-    { name: '応募・面接の流れ', action: 'section', target: '/#flow' },
-    { name: '飛田新地求人サイト徹底比較', action: 'site-compare', target: '/site-compare' },
-    { name: '運営者情報・お店のご案内', action: 'about', target: '/about' },
+    { name: '他業種・サイト徹底比較', action: 'site-compare', target: '/site-compare' },
+    { name: '運営者情報・店舗体制', action: 'about', target: '/about' },
   ];
 
   const targetCategoryLinks = [
@@ -103,8 +106,8 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
   };
 
   return (
-    <footer className="bg-surface-container-low border-t border-rose-100/40 pt-16 pb-8" id="app-footer">
-      <div className="max-w-[1100px] mx-auto px-6">
+    <footer className="bg-surface-container-low border-t border-outline-variant pt-16 pb-8" id="app-footer">
+      <div className="max-w-[1160px] mx-auto px-6">
         
         {/* Upper footer grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
