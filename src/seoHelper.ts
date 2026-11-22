@@ -101,7 +101,7 @@ function buildHomeNoscript(): string {
         <div class="ssr-hero-visual">
           <div class="ssr-hero-card">
             <picture>
-              <source srcset="/images/tobita_dream_hero_banner_v2.webp" type="image/webp" />
+              <source srcset="/images/tobita_dream_hero_banner_v3.webp" type="image/webp" />
               <img src="/images/tobita_dream_hero_banner_v2.jpg" alt="飛田新地のお仕事・料亭直営求人で夢を叶える場所" class="ssr-hero-img" width="800" height="450" />
             </picture>
             <div class="ssr-hero-stamp">

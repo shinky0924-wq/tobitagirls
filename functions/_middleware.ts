@@ -48,7 +48,18 @@ export async function onRequest(context: CfContext): Promise<Response> {
     /\.(png|jpe?g|gif|webp|svg|css|js|map|ico|woff2?|xml|json)$/i.test(pathname);
 
   if (isStaticAsset && !isMarkdownDirect && !isLlmsFile) {
-    return next();
+    const assetResponse = await next();
+    const assetCt = (assetResponse.headers.get('content-type') || '').toLowerCase();
+    if (assetCt.includes('text/html')) {
+      return new Response('Not Found', {
+        status: 404,
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'Cache-Control': 'no-store',
+        },
+      });
+    }
+    return assetResponse;
   }
 
   if (isAiBot || isMarkdownDirect || isLlmsFile) {
