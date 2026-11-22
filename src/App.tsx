@@ -235,9 +235,12 @@ export default function App() {
     if (typeof document === 'undefined') return;
     trackAiSearchPageView(cleanPath || '/');
 
-    let pageTitle = '飛田新地求人｜飛田ガールズ【公式・料亭直営】未経験歓迎・即日日払い';
-    let pageDesc = '飛田新地で働くか迷っている女性へ。飛田ガールズは料亭直営の求人案内サイトです。仕事内容や接客方法、給料・全額日払いの仕組み、応募条件、身バレ対策まで詳しく解説。未経験の方も経験者の方も、応募前に知っておきたい情報を分かりやすく紹介しています。';
+    let pageTitle = '飛田新地求人｜飛田ガールズ【公式・店舗グループ直営】';
+    let pageDesc = '飛田新地の求人を探している女性へ。飛田ガールズは、飛田新地で複数店舗を運営するグループの公式求人サイトです。未経験・経験者向けの募集情報、仕事内容、給与・待遇、勤務条件、応募方法を詳しくご案内。応募前のLINE相談も受け付けています。';
+    let ogTitleText: string | null = null;
+    let ogDescText: string | null = null;
     let canonicalUrl = 'https://tobitashinchi-recruit.com/';
+    const defaultOgImg = 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_v2.jpg';
 
     if (currentTab === 'cluster') {
       canonicalUrl = `https://tobitashinchi-recruit.com${TOPIC_ROUTE_PATHS[clusterTopic] || `/${clusterTopic}`}`;
@@ -248,17 +251,28 @@ export default function App() {
       import('./topicClusterData').then(({ TOPIC_CLUSTERS }) => {
         const topic = TOPIC_CLUSTERS[clusterTopic];
         if (topic) {
+          const topicImgUrl = topic.heroImage
+            ? `https://tobitashinchi-recruit.com${topic.heroImage.startsWith('/') ? '' : '/'}${topic.heroImage}`
+            : defaultOgImg;
           document.title = topic.seoTitle;
           const md = document.querySelector('meta[name="description"]');
           if (md) md.setAttribute('content', topic.metaDescription);
+          const ou = document.querySelector('meta[property="og:url"]');
+          if (ou) ou.setAttribute('content', canonicalUrl);
           const ot = document.querySelector('meta[property="og:title"]');
           if (ot) ot.setAttribute('content', topic.seoTitle);
           const od = document.querySelector('meta[property="og:description"]');
           if (od) od.setAttribute('content', topic.metaDescription);
+          const oi = document.querySelector('meta[property="og:image"]');
+          if (oi) oi.setAttribute('content', topicImgUrl);
+          const ois = document.querySelector('meta[property="og:image:secure_url"]');
+          if (ois) ois.setAttribute('content', topicImgUrl);
           const tt = document.querySelector('meta[name="twitter:title"]');
           if (tt) tt.setAttribute('content', topic.seoTitle);
           const td = document.querySelector('meta[name="twitter:description"]');
           if (td) td.setAttribute('content', topic.metaDescription);
+          const ti = document.querySelector('meta[name="twitter:image"]');
+          if (ti) ti.setAttribute('content', topicImgUrl);
         }
       }).catch(() => {});
     } else if (currentTab === 'site-compare') {
@@ -270,26 +284,28 @@ export default function App() {
         ? `https://tobitashinchi-recruit.com/compare/${selectedCategorySlug}`
         : 'https://tobitashinchi-recruit.com/compare';
     } else if (currentTab === 'glossary') {
-      pageTitle = '飛田新地 用語集・用語辞典｜上がり框・仲居・清拭・通り別の意味を徹底解説【公式】';
-      pageDesc = '飛田新地求人の専門用語辞典。上がり框、仲居さん、清拭（シャワーなしルール）、メイン通り・青春通り・妖怪通りの違い、給料計算（50%バック）など、働く前に知っておきたい用語を料亭直営スタッフが分かりやすく解説。';
+      pageTitle = '飛田新地 用語集・用語辞典｜上がり框・仲居・通り別解説｜飛田ガールズ';
+      pageDesc = '飛田新地求人の専門用語辞典。上がり框、仲居さん、清拭（シャワーなしルール）、メイン通り・青春通り・裏通りの違い、給料計算（50%バック）など、働く前に知っておきたい用語を料亭直営スタッフが分かりやすく解説。';
       canonicalUrl = 'https://tobitashinchi-recruit.com/glossary';
     } else if (currentTab === 'about') {
-      pageTitle = '飛田ガールズについて｜運営者情報・料亭直営体制・安心の情報発信について【公式】';
+      pageTitle = '飛田ガールズについて｜運営者情報・料亭直営体制【公式】';
       pageDesc = '飛田新地料理組合公認の老舗料亭直営公式求人「飛田ガールズ」の店舗情報、創業歴、運営体制、女性スタッフによるサポート方針、安心の情報発信ポリシーをご紹介します。';
       canonicalUrl = 'https://tobitashinchi-recruit.com/about';
     } else if (currentTab === 'blog') {
       if (!selectedSlug) {
-        pageTitle = '飛田新地お仕事コラム・給与・面接ガイド一覧｜飛田ガールズ【公式】';
+        pageTitle = '飛田新地お仕事コラム一覧｜給与・面接・体験談ガイド｜飛田ガールズ';
         pageDesc = '飛田新地のお仕事、給料システム、面接・体入の流れ、寮生活、安全対策など、現場の女性スタッフによる役立つ最新コラム一覧。';
         canonicalUrl = 'https://tobitashinchi-recruit.com/blog';
       }
     } else if (currentTab === 'faq') {
-      pageTitle = '飛田新地のよくある質問｜仕事内容・給料・応募条件をQ&Aで解説｜飛田ガールズ';
+      pageTitle = '飛田新地のよくある質問｜仕事・給料・応募条件Q&A｜飛田ガールズ';
       pageDesc = '飛田新地で働く前に知っておきたい仕事内容・給料・応募条件・身バレ対策などの疑問をQ&A形式で分かりやすくまとめました。未経験・経験者どちらも確認できます。';
       canonicalUrl = selectedFaqCategory ? `https://tobitashinchi-recruit.com/faq/${selectedFaqCategory}` : 'https://tobitashinchi-recruit.com/faq';
     } else if (currentTab === 'recruit') {
-      pageTitle = '飛田新地求人｜飛田ガールズ【公式・料亭直営】未経験歓迎・即日日払い';
-      pageDesc = '飛田新地で働くか迷っている女性へ。飛田ガールズは料亭直営の求人案内サイトです。仕事内容や接客方法、給料・全額日払いの仕組み、応募条件、身バレ対策まで詳しく解説。未経験の方も経験者の方も、応募前に知っておきたい情報を分かりやすく紹介しています。';
+      pageTitle = '飛田新地求人｜飛田ガールズ【公式・店舗グループ直営】';
+      pageDesc = '飛田新地の求人を探している女性へ。飛田ガールズは、飛田新地で複数店舗を運営するグループの公式求人サイトです。未経験・経験者向けの募集情報、仕事内容、給与・待遇、勤務条件、応募方法を詳しくご案内。応募前のLINE相談も受け付けています。';
+      ogTitleText = '飛田新地求人｜飛田ガールズ公式採用サイト';
+      ogDescText = '飛田新地の店舗グループが直接運営する公式求人サイト。仕事内容・給与・待遇・未経験者向け情報をご案内しています。';
       canonicalUrl = 'https://tobitashinchi-recruit.com/';
     } else if (currentTab === 'admin') {
       pageTitle = '管理パネル｜飛田ガールズ';
@@ -317,25 +333,30 @@ export default function App() {
         document.head.appendChild(canonicalLink);
       }
 
+      const finalOgTitle = ogTitleText || pageTitle;
+      const finalOgDesc = ogDescText || pageDesc;
+
       const ogUrl = document.querySelector('meta[property="og:url"]');
       if (ogUrl) ogUrl.setAttribute('content', canonicalUrl);
       const ogTitle = document.querySelector('meta[property="og:title"]');
-      if (ogTitle) ogTitle.setAttribute('content', pageTitle);
+      if (ogTitle) ogTitle.setAttribute('content', finalOgTitle);
       const ogDesc = document.querySelector('meta[property="og:description"]');
-      if (ogDesc) ogDesc.setAttribute('content', pageDesc);
+      if (ogDesc) ogDesc.setAttribute('content', finalOgDesc);
       const ogImage = document.querySelector('meta[property="og:image"]');
-      if (ogImage) ogImage.setAttribute('content', 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg');
+      if (ogImage) ogImage.setAttribute('content', defaultOgImg);
+      const ogImageSec = document.querySelector('meta[property="og:image:secure_url"]');
+      if (ogImageSec) ogImageSec.setAttribute('content', defaultOgImg);
       const ogType = document.querySelector('meta[property="og:type"]');
       if (ogType) ogType.setAttribute('content', 'website');
 
       const twCard = document.querySelector('meta[name="twitter:card"]');
       if (twCard) twCard.setAttribute('content', 'summary_large_image');
       const twTitle = document.querySelector('meta[name="twitter:title"]');
-      if (twTitle) twTitle.setAttribute('content', pageTitle);
+      if (twTitle) twTitle.setAttribute('content', finalOgTitle);
       const twDesc = document.querySelector('meta[name="twitter:description"]');
-      if (twDesc) twDesc.setAttribute('content', pageDesc);
+      if (twDesc) twDesc.setAttribute('content', finalOgDesc);
       const twImg = document.querySelector('meta[name="twitter:image"]');
-      if (twImg) twImg.setAttribute('content', 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg');
+      if (twImg) twImg.setAttribute('content', defaultOgImg);
 
       if (currentTab === 'recruit') {
         restoreHomeJsonLd();

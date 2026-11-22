@@ -37,7 +37,7 @@ export default function GlossaryPage({ onNavigateHome, onCtaclick }: GlossaryPag
   useEffect(() => {
     if (typeof document === 'undefined') return;
     const prevTitle = document.title;
-    const pageTitle = '飛田新地 用語集・用語辞典｜上がり框・仲居・清拭・通り別の意味を解説【公式】';
+    const pageTitle = '飛田新地 用語集・用語辞典｜上がり框・仲居・通り別解説｜飛田ガールズ';
     const pageDesc = '飛田新地求人の専門用語辞典。上がり框、仲居さん、清拭（シャワーなしルール）、通り別の違い、給料計算（50%バック）など、働く前に知っておきたい用語を料亭直営スタッフが分かりやすく解説。';
     document.title = pageTitle;
     const metaDesc = document.querySelector('meta[name="description"]');
@@ -46,6 +46,10 @@ export default function GlossaryPage({ onNavigateHome, onCtaclick }: GlossaryPag
     if (ogTitle) ogTitle.setAttribute('content', pageTitle);
     const ogDesc = document.querySelector('meta[property="og:description"]');
     if (ogDesc) ogDesc.setAttribute('content', pageDesc);
+    const twTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twTitle) twTitle.setAttribute('content', pageTitle);
+    const twDesc = document.querySelector('meta[name="twitter:description"]');
+    if (twDesc) twDesc.setAttribute('content', pageDesc);
 
     updatePageJsonLd({
       '@context': 'https://schema.org',

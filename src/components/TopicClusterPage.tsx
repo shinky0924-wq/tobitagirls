@@ -406,7 +406,7 @@ export default function TopicClusterPage({
                       loading="eager"
                       onError={(e) => {
                         const target = e.currentTarget;
-                        target.src = '/images/tobita_dream_hero_banner_1782557055526.jpg';
+                        target.src = '/images/tobita_dream_hero_banner_v2.jpg';
                       }}
                     />
                   </div>

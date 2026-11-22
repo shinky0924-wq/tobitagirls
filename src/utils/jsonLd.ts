@@ -40,14 +40,14 @@ const FALLBACK_HOME_JSON_LD = {
       '@type': 'WebPage',
       '@id': 'https://tobitashinchi-recruit.com/#webpage',
       url: 'https://tobitashinchi-recruit.com/',
-      name: '飛田新地求人｜飛田ガールズ【公式・料亭直営】',
-      description: '飛田新地で働くか迷っている女性へ。飛田ガールズは料亭直営の求人案内サイトです。仕事内容や接客方法、給料・全額日払いの仕組み、応募条件、身バレ対策まで詳しく解説。未経験の方も経験者の方も、応募前に知っておきたい情報を分かりやすく紹介しています。',
+      name: '飛田新地求人｜飛田ガールズ【公式・店舗グループ直営】',
+      description: '飛田新地の求人を探している女性へ。飛田ガールズは、飛田新地で複数店舗を運営するグループの公式求人サイトです。未経験・経験者向けの募集情報、仕事内容、給与・待遇、勤務条件、応募方法を詳しくご案内。応募前のLINE相談も受け付けています。',
       isPartOf: {
         '@id': 'https://tobitashinchi-recruit.com/#website',
       },
       primaryImageOfPage: {
         '@type': 'ImageObject',
-        url: 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg',
+        url: 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_v2.jpg',
         width: 1376,
         height: 768,
       },

@@ -57,9 +57,51 @@ export function resolveFullImageUrl(eyeCatch?: string): string {
   return 'https://tobitashinchi-recruit.com/images/col_beginner_guide_art_1787803245812.jpg';
 }
 
-const DEFAULT_TITLE = '飛田新地求人｜飛田ガールズ【公式・料亭直営】未経験歓迎・即日日払い';
-const DEFAULT_DESC = '飛田新地で働くか迷っている女性へ。飛田ガールズは料亭直営の求人案内サイトです。仕事内容や接客方法、給料・全額日払いの仕組み、応募条件、身バレ対策まで詳しく解説。未経験の方も経験者の方も、応募前に知っておきたい情報を分かりやすく紹介しています。';
-const DEFAULT_IMAGE = 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg';
+function getJpegOrImageDimensions(imgUrl: string): { width: number; height: number; mimeType: string } {
+  try {
+    const filename = imgUrl.split('/').pop()?.split('?')[0];
+    if (filename) {
+      const localPath = path.join(process.cwd(), 'public', 'images', filename);
+      if (fs.existsSync(localPath)) {
+        const buf = fs.readFileSync(localPath);
+        if (filename.toLowerCase().endsWith('.png') && buf.length >= 24 && buf.readUInt32BE(0) === 0x89504e47) {
+          return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20), mimeType: 'image/png' };
+        }
+        // Scan JPEG SOF0/SOF2 markers for width/height
+        if (buf.length > 4 && buf[0] === 0xff && buf[1] === 0xd8) {
+          let offset = 2;
+          while (offset + 9 < buf.length) {
+            if (buf[offset] !== 0xff) { offset++; continue; }
+            const marker = buf[offset + 1];
+            if (marker === 0xc0 || marker === 0xc1 || marker === 0xc2) {
+              const height = buf.readUInt16BE(offset + 5);
+              const width = buf.readUInt16BE(offset + 7);
+              if (width > 0 && height > 0) {
+                return { width, height, mimeType: 'image/jpeg' };
+              }
+            }
+            if (marker === 0xd8 || marker === 0xd9 || marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) {
+              offset += 2;
+            } else {
+              const segLen = buf.readUInt16BE(offset + 2);
+              if (segLen < 2) break;
+              offset += 2 + segLen;
+            }
+          }
+        }
+      }
+    }
+  } catch {
+    // fallback below
+  }
+  return { width: 1376, height: 768, mimeType: 'image/jpeg' };
+}
+
+const DEFAULT_TITLE = '飛田新地求人｜飛田ガールズ【公式・店舗グループ直営】';
+const DEFAULT_DESC = '飛田新地の求人を探している女性へ。飛田ガールズは、飛田新地で複数店舗を運営するグループの公式求人サイトです。未経験・経験者向けの募集情報、仕事内容、給与・待遇、勤務条件、応募方法を詳しくご案内。応募前のLINE相談も受け付けています。';
+const DEFAULT_OG_TITLE = '飛田新地求人｜飛田ガールズ公式採用サイト';
+const DEFAULT_OG_DESC = '飛田新地の店舗グループが直接運営する公式求人サイト。仕事内容・給与・待遇・未経験者向け情報をご案内しています。';
+const DEFAULT_IMAGE = 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_v2.jpg';
 
 function buildHomeNoscript(): string {
   return `
@@ -864,7 +906,7 @@ function buildGlossaryNoscript(): string {
 
   return `
     <header>
-      <p>飛田新地 用語集・用語辞典｜上がり框・仲居・清拭・通り別の意味を徹底解説【公式】</p>
+      <p>飛田新地 用語集・用語辞典｜上がり框・仲居・通り別解説｜飛田ガールズ</p>
       <p><a href="/">トップページ（飛田ガールズ）</a> ／ 料亭直営公式採用ポータル</p>
     </header>
     <main>
@@ -891,12 +933,12 @@ function buildGlossaryNoscript(): string {
 function buildAboutNoscript(): string {
   return `
     <header>
-      <p>飛田ガールズについて｜運営者情報・料亭直営体制・安心の情報発信について【公式】</p>
+      <p>飛田ガールズについて｜運営者情報・料亭直営体制【公式】</p>
       <p><a href="/">トップページ（飛田ガールズ）</a> ／ 24時間受付中・相談無料・完全秘密厳守</p>
     </header>
     <main>
       <article>
-        <h1>飛田ガールズについて｜運営者情報・料亭直営体制・安心の情報発信について【公式】</h1>
+        <h1>飛田ガールズについて｜運営者情報・料亭直営体制【公式】</h1>
         <p class="lead">飛田新地料理組合公認の老舗料亭直営公式採用窓口「飛田ガールズ」の店舗情報、創業歴、運営理念、女性スタッフによるサポート方針、安心の情報発信ポリシーをご紹介します。</p>
 
         <section>
@@ -1156,6 +1198,8 @@ function buildTopicNoscript(topic: string): string {
 export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html: string; status: number } {
   let title = DEFAULT_TITLE;
   let description = DEFAULT_DESC;
+  let ogTitle: string | null = null;
+  let ogDescription: string | null = null;
   let canonicalUrl = 'https://tobitashinchi-recruit.com/';
   let ogType = 'website';
   let ogImageUrl = DEFAULT_IMAGE;
@@ -1345,7 +1389,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
       }
     }
   } else if (cleanPath === '/blog' || cleanPath === '/blog/') {
-    title = '飛田新地お仕事コラム・給与・面接ガイド一覧｜飛田ガールズ【公式】';
+    title = '飛田新地お仕事コラム一覧｜給与・面接・体験談ガイド｜飛田ガールズ';
     description = '飛田新地のお仕事、給料システム、面接・体入の流れ、寮生活、安全対策など、現場の女性スタッフによる役立つ最新コラム一覧。';
     canonicalUrl = 'https://tobitashinchi-recruit.com/blog';
     ogImageUrl = DEFAULT_IMAGE;
@@ -1415,7 +1459,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
       ]
     }, null, 2);
   } else if (cleanPath === '/glossary' || cleanPath === '/terms') {
-    title = '飛田新地 用語集・用語辞典｜上がり框・仲居・清拭・通り別の意味を徹底解説【公式】';
+    title = '飛田新地 用語集・用語辞典｜上がり框・仲居・通り別解説｜飛田ガールズ';
     description = '飛田新地求人の専門用語辞典。上がり框、仲居さん、清拭（シャワーなしルール）、メイン通り・青春通り・裏通りの違い、給料計算（50%バック）など、働く前に知っておきたい用語を料亭直営スタッフが分かりやすく解説。';
     canonicalUrl = 'https://tobitashinchi-recruit.com/glossary';
     ogImageUrl = DEFAULT_IMAGE;
@@ -1491,7 +1535,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
       ]
     }, null, 2);
   } else if (cleanPath === '/about' || cleanPath === '/company') {
-    title = '飛田ガールズについて｜運営者情報・料亭直営体制・安心の情報発信について【公式】';
+    title = '飛田ガールズについて｜運営者情報・料亭直営体制【公式】';
     description = '飛田新地料理組合公認の老舗料亭直営公式求人「飛田ガールズ」の店舗情報、創業歴、運営体制、女性スタッフによるサポート方針、安心の情報発信ポリシーをご紹介します。';
     canonicalUrl = 'https://tobitashinchi-recruit.com/about';
     ogImageUrl = DEFAULT_IMAGE;
@@ -1504,7 +1548,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
           '@type': 'AboutPage',
           '@id': 'https://tobitashinchi-recruit.com/about#aboutpage',
           'url': 'https://tobitashinchi-recruit.com/about',
-          'name': '飛田ガールズについて｜運営者情報・料亭直営体制・安心の情報発信について【公式】',
+          'name': '飛田ガールズについて｜運営者情報・料亭直営体制【公式】',
           'description': '飛田新地料理組合公認の老舗料亭直営公式求人「飛田ガールズ」の店舗情報、創業歴、運営体制、女性スタッフによるサポート方針、安心の情報発信ポリシーをご紹介します。',
           'dateModified': FAQ_LAST_UPDATED_ISO,
           'inLanguage': 'ja-JP',
@@ -1797,7 +1841,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
 
     if (catDef) {
       const catQuestions = FAQ_100_LIST.filter(f => f.category12 === catDef.id);
-      title = `【${catDef.label}】飛田新地のよくある質問（全${catQuestions.length}問）｜飛田ガールズ`;
+      title = `【${catDef.label}】飛田新地のQ&A（全${catQuestions.length}問）｜飛田ガールズ`;
       description = `${catDef.description}。飛田新地の働き方に関する「${catDef.label}」のよくある質問と回答をまとめました。`;
       canonicalUrl = `https://tobitashinchi-recruit.com/faq/${catDef.slug}`;
       customNoscript = buildFaqNoscript(catDef.slug);
@@ -1860,7 +1904,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
         ]
       }, null, 2);
     } else {
-      title = '飛田新地のよくある質問｜仕事内容・給料・応募条件をQ&Aで解説｜飛田ガールズ';
+      title = '飛田新地のよくある質問｜仕事・給料・応募条件Q&A｜飛田ガールズ';
       description = '飛田新地で働く前に知っておきたい仕事内容・給料・応募条件・身バレ対策などの疑問をQ&A形式で分かりやすくまとめました。未経験・経験者どちらも確認できます。';
       canonicalUrl = 'https://tobitashinchi-recruit.com/faq';
       customNoscript = buildFaqNoscript();
@@ -2019,6 +2063,8 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
     } else if (cleanPath === '/' || cleanPath === '') {
       title = DEFAULT_TITLE;
       description = DEFAULT_DESC;
+      ogTitle = DEFAULT_OG_TITLE;
+      ogDescription = DEFAULT_OG_DESC;
       canonicalUrl = 'https://tobitashinchi-recruit.com/';
       ogImageUrl = DEFAULT_IMAGE;
       ogImageAlt = '飛田新地求人 飛田ガールズ';
@@ -2087,21 +2133,25 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
   }
 
   // OGP and Twitter Card Tags (for X/Twitter note-style cards, LINE, and Facebook)
+  const effectiveOgTitle = ogTitle || title;
+  const effectiveOgDesc = ogDescription || description;
+  const ogImgMeta = getJpegOrImageDimensions(ogImageUrl);
   const metaMappings: { regex: RegExp; tag: string }[] = [
-    { regex: /<meta\s+property=["']og:title["'][^>]*>/i, tag: `<meta property="og:title" content="${escapeHtml(title)}" />` },
-    { regex: /<meta\s+property=["']og:description["'][^>]*>/i, tag: `<meta property="og:description" content="${escapeHtml(description)}" />` },
+    { regex: /<meta\s+property=["']og:title["'][^>]*>/i, tag: `<meta property="og:title" content="${escapeHtml(effectiveOgTitle)}" />` },
+    { regex: /<meta\s+property=["']og:description["'][^>]*>/i, tag: `<meta property="og:description" content="${escapeHtml(effectiveOgDesc)}" />` },
     { regex: /<meta\s+property=["']og:url["'][^>]*>/i, tag: `<meta property="og:url" content="${canonicalUrl}" />` },
     { regex: /<meta\s+property=["']og:type["'][^>]*>/i, tag: `<meta property="og:type" content="${ogType}" />` },
+    { regex: /<meta\s+property=["']og:locale["'][^>]*>/i, tag: `<meta property="og:locale" content="ja_JP" />` },
     { regex: /<meta\s+property=["']og:image["'][^>]*>/i, tag: `<meta property="og:image" content="${escapeHtml(ogImageUrl)}" />` },
     { regex: /<meta\s+property=["']og:image:secure_url["'][^>]*>/i, tag: `<meta property="og:image:secure_url" content="${escapeHtml(ogImageUrl)}" />` },
-    { regex: /<meta\s+property=["']og:image:type["'][^>]*>/i, tag: `<meta property="og:image:type" content="image/jpeg" />` },
-    { regex: /<meta\s+property=["']og:image:width["'][^>]*>/i, tag: `<meta property="og:image:width" content="1200" />` },
-    { regex: /<meta\s+property=["']og:image:height["'][^>]*>/i, tag: `<meta property="og:image:height" content="630" />` },
+    { regex: /<meta\s+property=["']og:image:type["'][^>]*>/i, tag: `<meta property="og:image:type" content="${ogImgMeta.mimeType}" />` },
+    { regex: /<meta\s+property=["']og:image:width["'][^>]*>/i, tag: `<meta property="og:image:width" content="${ogImgMeta.width}" />` },
+    { regex: /<meta\s+property=["']og:image:height["'][^>]*>/i, tag: `<meta property="og:image:height" content="${ogImgMeta.height}" />` },
     { regex: /<meta\s+property=["']og:image:alt["'][^>]*>/i, tag: `<meta property="og:image:alt" content="${escapeHtml(ogImageAlt)}" />` },
     { regex: /<meta\s+name=["']thumbnail["'][^>]*>/i, tag: `<meta name="thumbnail" content="${escapeHtml(ogImageUrl)}" />` },
     { regex: /<meta\s+name=["']twitter:card["'][^>]*>/i, tag: `<meta name="twitter:card" content="${twitterCard}" />` },
-    { regex: /<meta\s+name=["']twitter:title["'][^>]*>/i, tag: `<meta name="twitter:title" content="${escapeHtml(title)}" />` },
-    { regex: /<meta\s+name=["']twitter:description["'][^>]*>/i, tag: `<meta name="twitter:description" content="${escapeHtml(description)}" />` },
+    { regex: /<meta\s+name=["']twitter:title["'][^>]*>/i, tag: `<meta name="twitter:title" content="${escapeHtml(effectiveOgTitle)}" />` },
+    { regex: /<meta\s+name=["']twitter:description["'][^>]*>/i, tag: `<meta name="twitter:description" content="${escapeHtml(effectiveOgDesc)}" />` },
     { regex: /<meta\s+name=["']twitter:image["'][^>]*>/i, tag: `<meta name="twitter:image" content="${escapeHtml(ogImageUrl)}" />` },
     { regex: /<meta\s+name=["']twitter:image:alt["'][^>]*>/i, tag: `<meta name="twitter:image:alt" content="${escapeHtml(ogImageAlt)}" />` },
   ];

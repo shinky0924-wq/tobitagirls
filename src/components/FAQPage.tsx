@@ -353,8 +353,8 @@ export default function FAQPage({
     const prevTitle = document.title;
     const catCount = activeCategoryDef ? faqsByCategory[activeCategoryDef.id].length : FAQ_100_LIST.length;
     const pageTitle = activeCategoryDef
-      ? `【${activeCategoryDef.label}】飛田新地のよくある質問（全${catCount}問）｜飛田ガールズ`
-      : '飛田新地のよくある質問｜仕事内容・給料・応募条件をQ&Aで解説｜飛田ガールズ';
+      ? `【${activeCategoryDef.label}】飛田新地のQ&A（全${catCount}問）｜飛田ガールズ`
+      : '飛田新地のよくある質問｜仕事・給料・応募条件Q&A｜飛田ガールズ';
     const pageDesc = activeCategoryDef
       ? `${activeCategoryDef.description}。飛田新地の働き方に関する「${activeCategoryDef.label}」のよくある質問と回答をまとめました。`
       : '飛田新地で働く前に知っておきたい仕事内容・給料・応募条件・身バレ対策などの疑問をQ&A形式で分かりやすくまとめました。未経験・経験者どちらも確認できます。';
@@ -366,6 +366,10 @@ export default function FAQPage({
     if (ogTitle) ogTitle.setAttribute('content', pageTitle);
     const ogDesc = document.querySelector('meta[property="og:description"]');
     if (ogDesc) ogDesc.setAttribute('content', pageDesc);
+    const twTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twTitle) twTitle.setAttribute('content', pageTitle);
+    const twDesc = document.querySelector('meta[name="twitter:description"]');
+    if (twDesc) twDesc.setAttribute('content', pageDesc);
 
     return () => {
       document.title = prevTitle;
@@ -413,8 +417,8 @@ export default function FAQPage({
           '@id': `${currentUrl}#webpage`,
           url: currentUrl,
           name: activeCategoryDef
-            ? `【${activeCategoryDef.label}】飛田新地求人のよくある質問｜飛田ガールズ`
-            : '飛田新地求人のよくある質問｜仕事内容・給料・応募条件をQ&Aで解説',
+            ? `【${activeCategoryDef.label}】飛田新地のQ&A｜飛田ガールズ`
+            : '飛田新地のよくある質問｜仕事・給料・応募条件Q&A｜飛田ガールズ',
           description: activeCategoryDef
             ? activeCategoryDef.description
             : '飛田新地で働く前に知っておきたい仕事内容・給料・応募条件・身バレ対策などの疑問をQ&A形式で分かりやすくまとめました。',

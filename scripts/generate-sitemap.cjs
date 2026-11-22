@@ -41,10 +41,10 @@ function escapeXml(str) {
 }
 
 const staticRoutes = [
-  { path: '', priority: '1.0', freq: 'daily', lastmod: STABLE_UPDATED_LASTMOD, img: '/images/tobita_dream_hero_banner_1782557055526.jpg', title: '飛田新地求人｜飛田ガールズ【公式・料亭直営】' },
+  { path: '', priority: '1.0', freq: 'daily', lastmod: STABLE_UPDATED_LASTMOD, img: '/images/tobita_dream_hero_banner_v2.jpg', title: '飛田新地求人｜飛田ガールズ【公式・店舗グループ直営】' },
   { path: '/about', priority: '0.8', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '運営者情報・店舗体制' },
   { path: '/glossary', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地 用語集・用語辞典' },
-  { path: '/site-compare', priority: '0.9', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地と他業種の違いを比較｜メンズエステ・ソープ・デリヘル・応募方法も解説' },
+  { path: '/site-compare', priority: '0.9', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地と他業種の違いを比較｜他業種・応募方法比較｜飛田ガールズ' },
   { path: '/compare', priority: '0.9', freq: 'weekly', lastmod: STABLE_UPDATED_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '働き方・条件別の応募ガイド｜飛田ガールズ' },
   { path: '/compare/beginner', priority: '0.85', freq: 'weekly', lastmod: STABLE_UPDATED_LASTMOD, img: '/images/tobita_beginner_support_1788153037569.jpg', title: '【未経験向け】飛田新地での働き方' },
   { path: '/compare/experienced', priority: '0.85', freq: 'weekly', lastmod: STABLE_UPDATED_LASTMOD, img: '/images/tobita_experienced_cast_1792411797671.jpg', title: '【経験者・移籍向け】飛田新地での働き方' },
@@ -62,7 +62,7 @@ const staticRoutes = [
   { path: '/faq/beginner', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '未経験・初心者向けFAQ' },
   { path: '/faq/experienced', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '経験者・移籍・他業種比較FAQ' },
   { path: '/faq/job', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '仕事内容・接客に関するFAQ' },
-  { path: '/faq/salary', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '給料・日払い・費用に関するFAQ' },
+  { path: '/faq/salary', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地の給料・日払いに関するFAQ' },
   { path: '/faq/hours', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '出勤・シフト・営業時間に関するFAQ' },
   { path: '/faq/interview', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '面接・体験入店・応募方法に関するFAQ' },
   { path: '/faq/privacy', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '身バレ対策・プライバシー・税金に関するFAQ' },
@@ -72,7 +72,7 @@ const staticRoutes = [
   { path: '/faq/support', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '不安・トラブル・退店・相談に関するFAQ' },
   { path: '/blog', priority: '0.85', freq: 'weekly', lastmod: STABLE_UPDATED_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地お仕事コラム一覧' },
   { path: '/job', priority: '0.85', freq: 'weekly', lastmod: STABLE_UPDATED_LASTMOD, img: '/images/tobita_job_guide_tea_1788153000519.jpg', title: '飛田新地の仕事内容・1日の流れ' },
-  { path: '/salary', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_salary_calculator_1788153012478.jpg', title: '給料システムと即日日払い' },
+  { path: '/salary', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_salary_calculator_1788153012478.jpg', title: '飛田新地の給料・報酬システムと即日日払い' },
   { path: '/beginner', priority: '0.85', freq: 'weekly', lastmod: STABLE_UPDATED_LASTMOD, img: '/images/tobita_beginner_support_1788153037569.jpg', title: '未経験スタート完全マニュアル' },
   { path: '/experienced', priority: '0.85', freq: 'weekly', lastmod: STABLE_UPDATED_LASTMOD, img: '/images/experienced_hero_woman_1794551773329.jpg', title: '飛田新地への移籍・経験者向け案内' },
   { path: '/requirements', priority: '0.85', freq: 'weekly', lastmod: STABLE_UPDATED_LASTMOD, img: '/images/tobita_interview_flow_1788153075249.jpg', title: '飛田新地の募集要項と応募条件' },

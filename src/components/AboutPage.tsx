@@ -16,7 +16,7 @@ interface AboutPageProps {
 
 export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }: AboutPageProps) {
   useEffect(() => {
-    document.title = '飛田ガールズについて｜運営者情報・料亭直営体制・安心の情報発信について【公式】';
+    document.title = '飛田ガールズについて｜運営者情報・料亭直営体制【公式】';
     const desc = '飛田新地料理組合公認の老舗料亭直営公式求人「飛田ガールズ」の店舗情報、創業歴、運営体制、女性スタッフによるサポート方針、安心の情報発信ポリシーをご紹介します。';
     const canonicalUrl = 'https://tobitashinchi-recruit.com/about';
 
@@ -37,6 +37,12 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
     if (ogUrl) ogUrl.setAttribute('content', canonicalUrl);
     const ogTitle = document.querySelector('meta[property="og:title"]');
     if (ogTitle) ogTitle.setAttribute('content', document.title);
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute('content', desc);
+    const twTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twTitle) twTitle.setAttribute('content', document.title);
+    const twDesc = document.querySelector('meta[name="twitter:description"]');
+    if (twDesc) twDesc.setAttribute('content', desc);
 
     updatePageJsonLd({
       '@context': 'https://schema.org',

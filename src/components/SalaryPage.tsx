@@ -1404,7 +1404,7 @@ export default function SalaryPage({
                   loading="lazy"
                   onError={(e) => {
                     const target = e.currentTarget;
-                    target.src = '/images/tobita_dream_hero_banner_1782557055526.jpg';
+                    target.src = '/images/tobita_dream_hero_banner_v2.jpg';
                   }}
                 />
                 <div className="absolute bottom-2.5 left-2.5 bg-black/65 backdrop-blur-xs text-white text-[11px] font-bold px-3 py-1 rounded-lg">

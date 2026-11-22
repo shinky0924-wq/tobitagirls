@@ -349,10 +349,10 @@ export default function BlogSection({
         jsonLdScript.remove();
       }
     } else {
-      const defaultTitle = '飛田新地お仕事コラム・給与・面接ガイド一覧｜飛田ガールズ【公式】';
+      const defaultTitle = '飛田新地お仕事コラム一覧｜給与・面接・体験談ガイド｜飛田ガールズ';
       const defaultDesc = '飛田新地のお仕事、給料システム、面接・体入の流れ、寮生活、安全対策など、現場の女性スタッフによる役立つ最新コラム一覧。';
       const defaultUrl = 'https://tobitashinchi-recruit.com/blog';
-      const defaultImg = 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg';
+      const defaultImg = 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_v2.jpg';
 
       document.title = defaultTitle;
       const metaRobots = document.querySelector('meta[name="robots"]');
