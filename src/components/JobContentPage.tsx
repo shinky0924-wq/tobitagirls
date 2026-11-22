@@ -144,7 +144,7 @@ export default function JobContentPage({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left: Main Copy & Sub Copy */}
             <div className="lg:col-span-7 space-y-5">
-              <h1 className="font-display font-black text-2xl sm:text-3xl md:text-[34px] text-[#38242B] leading-snug tracking-tight">
+              <h1 className="font-display font-black text-2xl sm:text-3xl md:text-[34px] text-[#38242B] leading-snug tracking-tight text-balance max-w-xl lg:max-w-none">
                 初めてだからこそ、知っておきたい。<br />
                 <span className="text-[#E84B78]">飛田新地のお仕事内容。</span>
               </h1>
@@ -259,7 +259,7 @@ export default function JobContentPage({
             <span className="text-[11px] font-bold text-[#E84B78] bg-[#FFF8F9] border border-[#F3E1E6] px-3.5 py-1 rounded-full inline-block mb-2">
               全体の流れ
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] leading-snug tracking-tight text-balance max-w-xl sm:max-w-2xl mx-auto">
               仕事内容の全体像（3つの段階）
             </h2>
             <p className="text-xs sm:text-sm text-[#66545A] mt-2 leading-relaxed">
@@ -342,7 +342,7 @@ export default function JobContentPage({
             <span className="text-[11px] font-bold text-[#E84B78] bg-[#FFF8F9] border border-[#F3E1E6] px-3.5 py-1 rounded-full inline-block mb-2">
               業務の明確化
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] leading-snug tracking-tight text-balance max-w-2xl">
               女性（あなた）が担当するお仕事
             </h2>
             <p className="text-xs sm:text-sm text-[#66545A] mt-2 leading-relaxed">
@@ -480,7 +480,7 @@ export default function JobContentPage({
             <span className="text-[11px] font-bold text-[#E84B78] bg-[#FFF8F9] border border-[#F3E1E6] px-3.5 py-1 rounded-full inline-block mb-2">
               ステップ解説
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] leading-snug tracking-tight text-balance max-w-2xl">
               6つのステップで見る接客の流れ
             </h2>
             <p className="text-xs sm:text-sm text-[#66545A] mt-2 leading-relaxed">
@@ -641,7 +641,7 @@ export default function JobContentPage({
             <span className="text-[11px] font-bold text-zinc-600 bg-zinc-100 border border-zinc-200 px-3.5 py-1 rounded-full inline-block mb-2">
               頼れるサポート役
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] leading-snug tracking-tight text-balance max-w-2xl">
               仲居さん（おばちゃん）が担当するお仕事
             </h2>
             <p className="text-xs sm:text-sm text-[#66545A] mt-2 leading-relaxed">
@@ -722,7 +722,7 @@ export default function JobContentPage({
             <span className="text-[11px] font-bold text-[#E84B78] bg-[#FFF8F9] border border-[#F3E1E6] px-3.5 py-1 rounded-full inline-block mb-2">
               不安解消
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] leading-snug tracking-tight text-balance max-w-2xl">
               未経験者の方が気になる6つのこと
             </h2>
             <p className="text-xs sm:text-sm text-[#66545A] mt-2 leading-relaxed">
@@ -808,7 +808,7 @@ export default function JobContentPage({
             <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3.5 py-1 rounded-full inline-block mb-2">
               安心・安全
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] leading-snug tracking-tight text-balance max-w-2xl">
               衛生面についての取り組み
             </h2>
             <p className="text-xs sm:text-sm text-[#66545A] mt-2 leading-relaxed">
@@ -876,7 +876,7 @@ export default function JobContentPage({
             <span className="text-[11px] font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 px-3.5 py-1 rounded-full inline-block mb-2">
               身バレ防止
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] leading-snug tracking-tight text-balance max-w-2xl">
               プライバシー・身バレ対策について
             </h2>
             <p className="text-xs sm:text-sm text-[#66545A] mt-2 leading-relaxed">
@@ -948,7 +948,7 @@ export default function JobContentPage({
             <span className="text-[11px] font-bold text-[#E84B78] bg-[#FFF8F9] border border-[#F3E1E6] px-3.5 py-1 rounded-full inline-block mb-2">
               疑問を解決
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] leading-snug tracking-tight text-balance max-w-2xl">
               お仕事内容に関するよくある質問
             </h2>
             <p className="text-xs sm:text-sm text-[#66545A] mt-2 leading-relaxed">
@@ -1010,7 +1010,7 @@ export default function JobContentPage({
               LINE無料相談・ご質問窓口
             </span>
 
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B]">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] leading-snug text-balance max-w-xl sm:max-w-2xl mx-auto">
               まずは気軽にお話ししてみませんか？
             </h2>
 

@@ -13,7 +13,7 @@ export const COMPARE_GUIDES_PART2: CompareSubpageItem[] = [
     categoryTitle: 'C. 勤務スタイル',
     itemName: '週1日〜',
     cardDescription: '週1日からの無理ないシフトや両立方法を確認できます。',
-    seoTitle: '飛田新地求人【週1日〜勤務】｜自由シフト・掛け持ち両立のポイント｜飛田ガールズ',
+    seoTitle: '【週1日〜勤務】飛田新地の自由シフト｜掛け持ち・Wワーク両立のポイント｜飛田ガールズ',
     metaDescription:
       '週1日〜・月数回から飛田新地で働きたい女性向けページ。自由出勤シフトの仕組みや、出勤ノルマ・罰金なしの環境、本業や学業と両立しながら効率よく稼ぐ考え方を分かりやすく紹介します。',
     h1: '週1日〜から働ける飛田新地｜自由出勤で無理なく両立',
@@ -76,11 +76,12 @@ export const COMPARE_GUIDES_PART2: CompareSubpageItem[] = [
   },
   {
     slug: 'short-time',
+    seoNoindex: true,
     categoryCode: 'C',
     categoryTitle: 'C. 勤務スタイル',
     itemName: '短時間勤務',
     cardDescription: 'スキマ時間で効率よく働きたい方に合う条件を確認できます。',
-    seoTitle: '飛田新地求人【短時間勤務】｜1日3〜4時間相談・10:00〜16:00等のスキマ時間ワーク｜飛田ガールズ',
+    seoTitle: '【短時間勤務】飛田新地のスキマ時間ワーク｜1日3〜4時間・10:00〜16:00相談｜飛田ガールズ',
     metaDescription:
       '1日3〜4時間程度の短時間勤務相談や10:00〜16:00の昼シフトなど、スキマ時間を活かして飛田新地で働きたい女性向けページ。時間帯ごとの条件と仕事内容を分かりやすく解説します。',
     h1: '短時間勤務で飛田新地で働く｜限られた時間で効率よく',
@@ -143,11 +144,12 @@ export const COMPARE_GUIDES_PART2: CompareSubpageItem[] = [
   },
   {
     slug: 'daytime',
+    seoNoindex: true,
     categoryCode: 'C',
     categoryTitle: 'C. 勤務スタイル',
     itemName: '昼間勤務',
     cardDescription: '朝〜夕方の時間帯で生活リズムを保って働けます。',
-    seoTitle: '飛田新地求人【昼間勤務】｜10:00〜16:00・17:00の朝昼シフト｜飛田ガールズ',
+    seoTitle: '【昼間勤務】飛田新地の朝昼シフト｜10:00〜16:00・17:00の働き方｜飛田ガールズ',
     metaDescription:
       '飛田新地の昼間勤務（10:00〜16:00 / 10:00〜17:00）を希望する女性向けページ。夜遅くならず生活リズムを整えながら働ける昼シフトの特徴や客層、報酬の仕組みを分かりやすく紹介します。',
     h1: '昼間勤務（朝〜夕方）で働く｜生活リズムを守りながら高収入へ',
@@ -210,11 +212,12 @@ export const COMPARE_GUIDES_PART2: CompareSubpageItem[] = [
   },
   {
     slug: 'nighttime',
+    seoNoindex: true,
     categoryCode: 'C',
     categoryTitle: 'C. 勤務スタイル',
     itemName: '夜間勤務',
     cardDescription: '仕事終わりや夕方からのピーク帯を活かした働き方です。',
-    seoTitle: '飛田新地求人【夜間勤務】｜17:00〜24:00・仕事終わりの効率稼働｜飛田ガールズ',
+    seoTitle: '【夜間勤務】飛田新地の夜シフト｜17:00〜24:00・仕事終わりの効率稼働｜飛田ガールズ',
     metaDescription:
       '飛田新地の夜間勤務（17:00〜24:00等）を希望する女性向けページ。会社帰りや学校帰りの出勤、客足が増えやすい夕方〜夜の時間帯のメリット・終電配慮・安全帰宅のポイントを解説します。',
     h1: '夜間勤務（夕方〜24時）で働く｜仕事帰り・学校帰りの効率シフト',
@@ -277,11 +280,12 @@ export const COMPARE_GUIDES_PART2: CompareSubpageItem[] = [
   },
   {
     slug: 'weekends',
+    seoNoindex: true,
     categoryCode: 'C',
     categoryTitle: 'C. 勤務スタイル',
     itemName: '土日祝のみ',
     cardDescription: '週末・祝日だけ集中して効率よく稼ぐ働き方です。',
-    seoTitle: '飛田新地求人【土日祝のみ】｜週末限定ワーク・効率とWワーク両立｜飛田ガールズ',
+    seoTitle: '【土日祝のみ】飛田新地の週末限定ワーク｜効率とWワーク両立のポイント｜飛田ガールズ',
     metaDescription:
       '土曜日・日曜日・祝日のみ飛田新地で働きたい女性向けページ。平日は本業や学校を優先しながら、来店客が増えやすい週末・連休だけに集中して働くメリットや注意点を分かりやすく紹介します。',
     h1: '土日祝のみで働く｜平日を優先しながら週末で効率よく',
@@ -344,11 +348,12 @@ export const COMPARE_GUIDES_PART2: CompareSubpageItem[] = [
   },
   {
     slug: 'regular',
+    seoNoindex: true,
     categoryCode: 'C',
     categoryTitle: 'C. 勤務スタイル',
     itemName: 'レギュラー勤務',
     cardDescription: 'しっかりシフトに入って安定した高水準を目指す働き方です。',
-    seoTitle: '飛田新地求人【レギュラー勤務】｜週3〜5日・しっかり稼ぐ安定シフト｜飛田ガールズ',
+    seoTitle: '【レギュラー勤務】飛田新地の安定シフト｜週3〜5日でしっかり稼ぐ働き方｜飛田ガールズ',
     metaDescription:
       '週3日〜週5日以上のレギュラー勤務で飛田新地でしっかり稼ぎたい女性向けページ。通しシフトや無理のない休日確保のコツ、控除0円の給与体系、寮やサポート環境について分かりやすく案内します。',
     h1: 'レギュラー勤務（週3〜5日以上）で働く｜無理なく安定した高収入へ',
@@ -415,7 +420,7 @@ export const COMPARE_GUIDES_PART2: CompareSubpageItem[] = [
     categoryTitle: 'C. 勤務スタイル',
     itemName: '短期・出稼ぎ',
     cardDescription: '短期集中や遠方からの出稼ぎ向けの条件を確認できます。',
-    seoTitle: '飛田新地求人【短期・出稼ぎ】｜期間集中・個室寮・交通費相談のポイント｜飛田ガールズ',
+    seoTitle: '【短期・出稼ぎ】飛田新地の期間集中ワーク｜個室寮・交通費相談のポイント｜飛田ガールズ',
     metaDescription:
       '数日〜数週間の短期勤務や地方からの出稼ぎで飛田新地を検討している女性向けページ。交通費サポートや個室寮の事前確認事項、荷物や必要書類、即日日払いの流れを分かりやすく解説します。',
     h1: '短期・出稼ぎで飛田新地で働く｜期間を決めて集中できるサポート体制',
@@ -484,7 +489,7 @@ export const COMPARE_GUIDES_PART2: CompareSubpageItem[] = [
     categoryTitle: 'D. 生活環境',
     itemName: '学生',
     cardDescription: '学業や長期休みと両立できる働き方を確認できます。',
-    seoTitle: '飛田新地求人【学生向け（20歳以上）】｜学業・就活との両立と秘密厳守｜飛田ガールズ',
+    seoTitle: '【学生向け（20歳以上）】飛田新地のバイト事情｜学業・就活との両立と秘密厳守｜飛田ガールズ',
     metaDescription:
       '満20歳以上の大学生・専門学校生向けの飛田新地求人案内ページ。講義後の夕方シフトや土日・春休み夏休みの短期集中、友人や就職先に配慮した身バレ対策・扶養や税金の注意点を解説します。',
     h1: '学生（満20歳以上）の働き方｜学業・長期休みとの賢い両立',
@@ -551,7 +556,7 @@ export const COMPARE_GUIDES_PART2: CompareSubpageItem[] = [
     categoryTitle: 'D. 生活環境',
     itemName: '会社員',
     cardDescription: '本業と両立しやすい働き方や身バレ配慮を確認できます。',
-    seoTitle: '飛田新地求人【会社員・OLのWワーク】｜本業バレ配慮・普通徴収と両立シフト｜飛田ガールズ',
+    seoTitle: '【会社員・OLのWワーク】飛田新地の副業対策｜本業バレ配慮・普通徴収と両立シフト｜飛田ガールズ',
     metaDescription:
       '昼職の会社員・OLがWワーク・副業として飛田新地を検討する際の案内ページ。週末や定時後の働き方、ネット顔写真非掲載・私服通勤・住民税「普通徴収」等の会社バレ配慮ポイントを分かりやすく解説します。',
     h1: '会社員（OL）のWワーク・副業｜本業と両立するための配慮と確認事項',
@@ -614,11 +619,12 @@ export const COMPARE_GUIDES_PART2: CompareSubpageItem[] = [
   },
   {
     slug: 'freeter',
+    seoNoindex: true,
     categoryCode: 'D',
     categoryTitle: 'D. 生活環境',
     itemName: 'フリーター',
     cardDescription: 'バイトの掛け持ちや本業化など自由度の高い働き方です。',
-    seoTitle: '飛田新地求人【フリーター向け】｜収入の柱作り・バイト掛け持ち両立｜飛田ガールズ',
+    seoTitle: '【フリーター向け】飛田新地の自由出勤｜収入の柱作り・掛け持ち両立｜飛田ガールズ',
     metaDescription:
       'アルバイトやパートをしているフリーター女性向けの飛田新地求人案内ページ。今のバイトとの掛け持ちや、週3〜5日のメイン収入化、自由シフト・即日全額現金手渡しのメリットを分かりやすく解説します。',
     h1: 'フリーターからの働き方｜バイト掛け持ちからしっかり稼ぐまで自由に選択',
@@ -685,7 +691,7 @@ export const COMPARE_GUIDES_PART2: CompareSubpageItem[] = [
     categoryTitle: 'D. 生活環境',
     itemName: '主婦',
     cardDescription: '家庭や生活リズムを大切にしながら働ける条件を確認できます。',
-    seoTitle: '飛田新地求人【主婦向け】｜昼間シフト・家庭との両立・秘密配慮｜飛田ガールズ',
+    seoTitle: '【主婦向け】飛田新地の昼間シフト｜家庭との両立・秘密配慮のポイント｜飛田ガールズ',
     metaDescription:
       '既婚・主婦の方で飛田新地の求人を検討している女性向けページ。10:00〜16:00・17:00など夕方前に帰宅できる昼シフト、家族バレを防ぐ現金手渡し・連絡先交換禁止など家庭と両立するためのポイントを案内します。',
     h1: '主婦の方の働き方｜家庭の時間を守りながら昼間に効率よく',
@@ -748,11 +754,12 @@ export const COMPARE_GUIDES_PART2: CompareSubpageItem[] = [
   },
   {
     slug: 'parenting',
+    seoNoindex: true,
     categoryCode: 'D',
     categoryTitle: 'D. 生活環境',
     itemName: '子育て中',
     cardDescription: 'お子さまの予定や急な都合に配慮しやすい働き方を確認できます。',
-    seoTitle: '飛田新地求人【子育て中・ママさん向け】｜昼短時間・急な予定調整｜飛田ガールズ',
+    seoTitle: '【子育て中・ママさん向け】飛田新地の昼短時間｜急な予定調整・両立ガイド｜飛田ガールズ',
     metaDescription:
       '子育て中の女性・シングルマザーの方へ。保育園・幼稚園・学校の時間帯に合わせた昼短時間勤務、お子さまの急な体調不良への柔軟な配慮、教育費・生活費を補う給料システムを分かりやすくご案内します。',
     h1: '子育て中（ママさん）の働き方｜お子さまの予定を最優先にできる環境',
@@ -815,11 +822,12 @@ export const COMPARE_GUIDES_PART2: CompareSubpageItem[] = [
   },
   {
     slug: 'self-employed',
+    seoNoindex: true,
     categoryCode: 'D',
     categoryTitle: 'D. 生活環境',
     itemName: '自営業',
     cardDescription: 'フリーランスや個人事業の収入を補う柔軟な働き方です。',
-    seoTitle: '飛田新地求人【自営業・フリーランス向け】｜自由シフト・資金繰りサポート｜飛田ガールズ',
+    seoTitle: '【自営業・フリーランス向け】飛田新地の自由シフト｜資金繰りサポート｜飛田ガールズ',
     metaDescription:
       'フリーランス・個人事業主・クリエイターなど自営業の女性向けページ。仕事の繁閑期に合わせた自由な出勤調整や、即日現金手渡しによる資金繰り補填、確定申告時の整理ポイントを分かりやすく案内します。',
     h1: '自営業・フリーランスの方の働き方｜本業の繁閑期に合わせて自由に両立',

@@ -43,7 +43,7 @@ export default function AccessGuide({ onCtaclick }: AccessGuideProps) {
           <LucideIcon name="MapPin" size={13} />
           <span>交通アクセス・最寄り駅案内</span>
         </div>
-        <h3 className="text-xl sm:text-2xl font-extrabold text-zinc-900 font-display mb-2">
+        <h3 className="text-xl sm:text-2xl font-extrabold text-zinc-900 font-display leading-snug mb-2 text-balance max-w-lg sm:max-w-xl mx-auto">
           面接店舗へのアクセス・主要駅からの徒歩ルート
         </h3>
         <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">

@@ -53,6 +53,7 @@ interface BlogArticle {
     headers?: string[];
     rows?: string[][];
   }>;
+  seoNoindex?: boolean;
 }
 
 let cachedArticles: BlogArticle[] | null = null;
@@ -105,7 +106,7 @@ function getMarkdownMetaFooter(): string {
     `- お給料は完全歩合制・売上50%バックで、その日の勤務終了後に全額を現金でお渡しします（※収入は出勤時間帯や来店状況により変動します）。`,
     `- 勤務時間は選べる5つの時間帯（10:00〜17:00 / 10:00〜16:00 / 17:00〜24:00 / 14:00〜24:00 / 12:00〜24:00）から、週1日・短時間からご相談いただけます。`,
     `- 疑問や不安がある場合は、公式LINEから24時間いつでも女性スタッフに無料で相談できます（相談だけでも大丈夫です）。`,
-    `- 関連ページ: [飛田新地求人トップ（飛田ガールズ）](${BASE_URL}/) | [よくある質問](${BASE_URL}/faq) | [お仕事コラム](${BASE_URL}/blog) | [サイト全体ガイド](/llms.txt)`,
+    `- 関連ページ: [トップページ（飛田ガールズ）](${BASE_URL}/) | [よくある質問](${BASE_URL}/faq) | [お仕事コラム](${BASE_URL}/blog) | [サイト全体ガイド](/llms.txt)`,
     ``,
     `*© 2026 飛田ガールズ All Rights Reserved.*`
   ].join('\n');
@@ -243,10 +244,10 @@ function renderBlogArticleMarkdown(slug: string): { markdown: string; status: nu
  * Render Markdown for Blog Index (/blog)
  */
 function renderBlogIndexMarkdown(): string {
-  const articles = getArticles();
+  const articles = getArticles().filter((a) => !a.seoNoindex);
   const lines: string[] = [
     getMarkdownMetaHeader(
-      '飛田新地求人 コラム・お役立ちブログ記事一覧 (Knowledge Base)',
+      '飛田ガールズ お仕事コラム・解説記事一覧 (Knowledge Base)',
       '/blog',
       '飛田新地の料亭求人、給与システム、お仕事内容、身バレ防止、面接対策、副業事情について現役女性スタッフとキャストが執筆・監修した解説記事一覧。'
     ),
@@ -372,7 +373,7 @@ function renderFaqMarkdown(subpath?: string): string {
 
   const lines: string[] = [
     getMarkdownMetaHeader(
-      `飛田新地求人のよくある質問｜仕事内容・給料・応募条件をQ&Aで解説${subpath ? ` (${subpath})` : ''}`,
+      `飛田新地のよくある質問｜仕事内容・給料・応募条件をQ&Aで解説${subpath ? ` (${subpath})` : ''}`,
       subpath ? `/faq/${subpath}` : '/faq',
       '飛田新地で働く前に知っておきたい仕事内容・給料・応募条件・身バレ対策などの疑問を12カテゴリー別にQ&A形式で分かりやすくまとめました。'
     ),
@@ -518,7 +519,7 @@ export function renderRouteMarkdown(urlPath: string): { markdown: string; status
         ``,
         `**補足キーワード**: ${COMPARE_PARENT_COPY.keywords}`,
         ``,
-        `## 5つのカテゴリー・全27項目から働き方を探す`,
+        `## 5つのカテゴリーから働き方を探す`,
         ...COMPARE_CATEGORY_GROUPS.flatMap((group) => [
           `### ${group.title}`,
           `${group.description}`,
@@ -586,7 +587,7 @@ export function renderRouteMarkdown(urlPath: string): { markdown: string; status
         `## 関連ページ`,
         ...relatedCompareItems.map((rel) => `- [${rel.itemName}](/compare/${rel.slug}): ${rel.cardDescription}`),
         ...item.relatedSitePaths.map((guide) => `- [${guide.label}](${guide.path}): ${guide.desc}`),
-        `- [働き方・求人比較一覧（27項目）へ戻る](/compare)`,
+        `- [働き方・求人比較一覧へ戻る](/compare)`,
         ``,
         `## ${COMPARE_LINE_CTA.heading}`,
         `${COMPARE_LINE_CTA.description}`,

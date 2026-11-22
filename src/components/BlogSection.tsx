@@ -5,6 +5,13 @@ import { ArticleCardImage } from './ArticleCardImage';
 import { BookOpen, Calendar, Clock, Search, ArrowLeft, Tag, MessageCircle, ChevronRight, ChevronLeft, Sparkles, Send, ShieldCheck, HeartHandshake, CheckCircle2, RefreshCw } from 'lucide-react';
 import LucideIcon from './LucideIcon';
 import { updatePageJsonLd } from '../utils/jsonLd';
+import { FAQ_LAST_UPDATED_ISO } from '../faq100Data';
+import {
+  resolveAuthorPersonNode,
+  buildGlossaryMentions,
+  buildArticleCitations,
+  calculateArticleWordCount,
+} from '../utils/knowledgeGraph';
 
 function AvatarDisplay({
   avatar,
@@ -96,9 +103,10 @@ export default function BlogSection({
     return !!selectedSlug && articles.length === 0;
   }, [selectedSlug, articles]);
 
-  // Filter & Search & Sort articles
+  // Filter & Search & Sort articles (exclude seoNoindex thin/duplicate articles from listing)
   const filteredArticles = useMemo(() => {
     const list = articles.filter((article) => {
+      if (article.seoNoindex) return false;
       const matchesCategory = selectedCategory === 'all' || article.category === selectedCategory;
       const matchesSearch = 
         article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -163,7 +171,7 @@ export default function BlogSection({
     const ogImage = document.querySelector('meta[property="og:image"]');
 
     if (currentArticle) {
-      const pageTitle = `${currentArticle.title}｜飛田新地求人 飛田ガールズ`;
+      const pageTitle = `${currentArticle.title}｜飛田ガールズ`;
       document.title = pageTitle;
       const articleUrl = `https://tobitashinchi-recruit.com/blog/${currentArticle.slug}`;
 
@@ -178,6 +186,11 @@ export default function BlogSection({
           el.setAttribute(attr, value);
         }
       };
+
+      const robotsContent = currentArticle.seoNoindex
+        ? 'noindex, follow'
+        : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1';
+      setMetaTag('meta[name="robots"]', 'content', robotsContent, { key: 'name', val: 'robots' });
 
       const imgFname = currentArticle.eyeCatch ? currentArticle.eyeCatch.split('/').pop()?.split('?')[0] : '';
       const fullImgUrl = currentArticle.eyeCatch
@@ -209,6 +222,23 @@ export default function BlogSection({
         document.head.appendChild(jsonLdScript);
       }
 
+      const combinedTextForGraph = [
+        currentArticle.title,
+        currentArticle.summary,
+        ...(currentArticle.tags || []),
+        ...(Array.isArray(currentArticle.content)
+          ? currentArticle.content.map((b: any) => [b.text, b.question, b.answer, ...(b.items || [])].filter(Boolean).join(' '))
+          : []),
+      ].join(' ');
+      const glossaryMentions = buildGlossaryMentions(combinedTextForGraph);
+      const articleCitations = buildArticleCitations(combinedTextForGraph);
+      const wordCount = calculateArticleWordCount(currentArticle.summary, currentArticle.content);
+      const personAuthor = resolveAuthorPersonNode(
+        currentAuthorProfile?.name || currentArticle.author?.name,
+        currentAuthorProfile?.role || currentArticle.author?.role,
+        currentAuthorProfile?.bio
+      );
+
       const graphItems: any[] = [
         {
           "@type": "BlogPosting",
@@ -222,21 +252,13 @@ export default function BlogSection({
           "headline": currentArticle.title,
           "description": currentArticle.summary,
           "image": fullImgUrl,
+          "wordCount": wordCount,
           "datePublished": currentArticle.publishedAt ? currentArticle.publishedAt.replace(/\./g, '-') : '2026-07-01',
-          "dateModified": (currentArticle as any).updatedAt ? String((currentArticle as any).updatedAt).replace(/\./g, '-') : ((currentArticle.publishedAt && currentArticle.publishedAt.replace(/\./g, '-') > '2026-11-14') ? currentArticle.publishedAt.replace(/\./g, '-') : '2026-11-14'),
+          "dateModified": (currentArticle as any).updatedAt ? String((currentArticle as any).updatedAt).replace(/\./g, '-') : ((currentArticle.publishedAt && currentArticle.publishedAt.replace(/\./g, '-') > FAQ_LAST_UPDATED_ISO) ? currentArticle.publishedAt.replace(/\./g, '-') : FAQ_LAST_UPDATED_ISO),
           "articleSection": currentArticle.categoryLabel,
           "keywords": (currentArticle.tags || []).join(', '),
           "inLanguage": "ja-JP",
-          "author": {
-            "@type": "Person",
-            "name": currentAuthorProfile?.name || currentArticle.author?.name || "さくら",
-            "jobTitle": currentAuthorProfile?.role || currentArticle.author?.role || "女性サポートスタッフ",
-            "description": currentAuthorProfile?.bio || undefined,
-            "url": "https://tobitashinchi-recruit.com/about",
-            "worksFor": {
-              "@id": "https://tobitashinchi-recruit.com/#organization"
-            }
-          },
+          "author": personAuthor,
           "reviewedBy": {
             "@type": "Organization",
             "@id": "https://tobitashinchi-recruit.com/#organization",
@@ -253,6 +275,8 @@ export default function BlogSection({
               "url": "https://tobitashinchi-recruit.com/icon.png"
             }
           },
+          ...(glossaryMentions.length > 0 ? { "mentions": glossaryMentions, "about": glossaryMentions.slice(0, 3) } : {}),
+          "citation": articleCitations,
           "speakable": {
             "@type": "SpeakableSpecification",
             "cssSelector": ["h1", ".ai-direct-summary", ".summary"]
@@ -368,7 +392,7 @@ export default function BlogSection({
             'url': defaultUrl,
             'name': defaultTitle,
             'description': defaultDesc,
-            'dateModified': '2026-11-15',
+            'dateModified': FAQ_LAST_UPDATED_ISO,
             'inLanguage': 'ja-JP',
             'isPartOf': {
               '@id': 'https://tobitashinchi-recruit.com/#website',
@@ -385,23 +409,26 @@ export default function BlogSection({
             '@type': 'BreadcrumbList',
             '@id': 'https://tobitashinchi-recruit.com/blog#breadcrumb',
             'itemListElement': [
-              { '@type': 'ListItem', 'position': 1, 'name': '飛田新地求人トップ', 'item': 'https://tobitashinchi-recruit.com/' },
+              { '@type': 'ListItem', 'position': 1, 'name': 'トップページ', 'item': 'https://tobitashinchi-recruit.com/' },
               { '@type': 'ListItem', 'position': 2, 'name': 'お仕事コラム', 'item': defaultUrl },
             ],
           },
-          {
-            '@type': 'ItemList',
-            '@id': 'https://tobitashinchi-recruit.com/blog#itemlist',
-            'name': '飛田新地 お仕事コラム・解説記事一覧',
-            'numberOfItems': articles.length,
-            'itemListElement': articles.slice(0, 50).map((a, idx) => ({
-              '@type': 'ListItem',
-              'position': idx + 1,
-              'name': a.title,
-              'url': `https://tobitashinchi-recruit.com/blog/${a.slug}`,
-              'description': a.summary || a.title,
-            })),
-          },
+          (() => {
+            const indexableArticles = articles.filter((a) => a && a.slug && a.title && !a.seoNoindex);
+            return {
+              '@type': 'ItemList',
+              '@id': 'https://tobitashinchi-recruit.com/blog#itemlist',
+              'name': '飛田新地 お仕事コラム・解説記事一覧',
+              'numberOfItems': indexableArticles.length,
+              'itemListElement': indexableArticles.map((a, idx) => ({
+                '@type': 'ListItem',
+                'position': idx + 1,
+                'name': a.title,
+                'url': `https://tobitashinchi-recruit.com/blog/${a.slug}`,
+                'description': a.summary || a.title,
+              })),
+            };
+          })(),
         ],
       });
     }
@@ -424,7 +451,7 @@ export default function BlogSection({
     const currentTags = new Set(currentArticle.tags || []);
     
     const candidates = articles
-      .filter(a => a.slug !== currentArticle.slug)
+      .filter(a => a.slug !== currentArticle.slug && !a.seoNoindex)
       .map(article => {
         let score = 0;
         // Same category: +5 points
@@ -608,7 +635,7 @@ export default function BlogSection({
                 <BookOpen size={13} />
                 お仕事コラム & ブログ
               </span>
-              <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight text-[#2c1a1e]">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold tracking-tight leading-snug text-[#2c1a1e] text-balance max-w-xl sm:max-w-2xl mx-auto">
                 安心してお仕事を始めるための<br />
                 <span className="text-secondary relative inline-block">
                   完全解説ガイド
@@ -689,7 +716,12 @@ export default function BlogSection({
             </div>
 
             {/* Articles Grid */}
-            {filteredArticles.length > 0 ? (
+            {articles.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-20 text-center">
+                <div className="w-10 h-10 border-4 border-rose-100 border-t-secondary rounded-full animate-spin mb-3" />
+                <p className="text-on-surface-variant text-sm font-sans">コラムを読み込んでいます...</p>
+              </div>
+            ) : filteredArticles.length > 0 ? (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {paginatedArticles.map((article, idx) => (
@@ -876,7 +908,7 @@ export default function BlogSection({
             <div className="w-16 h-16 bg-rose-50 text-secondary rounded-full flex items-center justify-center mx-auto mb-6">
               <Search size={32} />
             </div>
-            <h2 className="text-xl md:text-2xl font-bold text-[#2c1a1e] mb-3">コラムが見つかりませんでした</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-[#2c1a1e] leading-snug mb-3 text-balance max-w-md mx-auto">コラムが見つかりませんでした</h2>
             <p className="text-on-surface-variant text-sm mb-8 leading-relaxed">
               お探しの記事は削除されたか、URLが変更された可能性があります。
             </p>
@@ -969,7 +1001,7 @@ export default function BlogSection({
                 </span>
               </div>
 
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold leading-snug text-[#2c1a1e] tracking-tight">
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold leading-snug text-[#2c1a1e] tracking-tight text-balance max-w-2xl">
                 {currentArticle!.title}
               </h1>
 
@@ -1048,7 +1080,7 @@ export default function BlogSection({
                     この記事のポイント（30秒でわかる要点）
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-zinc-800 leading-relaxed font-sans font-medium pl-1">
+                <p className="ai-direct-summary summary text-xs sm:text-sm text-zinc-800 leading-relaxed font-sans font-medium pl-1">
                   {currentArticle?.summary || (currentArticle as any)?.description}
                 </p>
                 {currentArticle.tags && currentArticle.tags.length > 0 && (
@@ -1076,9 +1108,9 @@ export default function BlogSection({
                     );
                   case 'h2':
                     return (
-                      <h2 key={idx} className="text-xl md:text-2xl font-bold text-[#2c1a1e] mt-10 mb-4 pt-4 pb-2 border-b-2 border-secondary/20 flex items-center gap-2">
-                        <span className="inline-block w-1.5 h-6 bg-secondary rounded-full" />
-                        {block.text}
+                      <h2 key={idx} className="text-xl md:text-2xl font-bold text-[#2c1a1e] leading-snug mt-10 mb-4 pt-4 pb-2 border-b-2 border-secondary/20 flex items-center gap-2 text-balance">
+                        <span className="inline-block w-1.5 h-6 bg-secondary rounded-full shrink-0" />
+                        <span>{block.text}</span>
                       </h2>
                     );
                   case 'h3':

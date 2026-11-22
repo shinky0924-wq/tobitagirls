@@ -242,7 +242,7 @@ export default function CompareDiagnostic({
 
           <h2 
             id="diagnostic-heading"
-            className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-on-surface leading-tight mb-3"
+            className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-on-surface leading-snug mb-3 text-balance max-w-xl sm:max-w-2xl mx-auto"
           >
             「結局、自分にはどれが合ってる？」
           </h2>

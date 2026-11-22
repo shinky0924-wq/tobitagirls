@@ -6,6 +6,7 @@
 import { MouseEvent, useState, useEffect } from 'react';
 import LucideIcon from './LucideIcon';
 import { getStoredSiteContent } from '../siteContent';
+import { FAQ_LAST_UPDATED } from '../faq100Data';
 
 interface FooterProps {
   currentTab: string;
@@ -21,7 +22,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
   const [showAdminLink, setShowAdminLink] = useState(false);
   const [activeModal, setActiveModal] = useState<'policy' | 'company' | null>(null);
   const siteContent = getStoredSiteContent();
-  const lastUpdated = siteContent.lastUpdated || '2026年11月15日';
+  const lastUpdated = siteContent.lastUpdated || FAQ_LAST_UPDATED;
 
   useEffect(() => {
     try {
@@ -254,7 +255,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
               { id: 'compare', name: '🎯 目的・働き方別求人', path: '/compare' },
               { id: 'site-compare', name: '⚖️ 飛田新地求人サイト徹底比較', path: '/site-compare' },
               { id: 'glossary', name: '📖 専門用語集', path: '/glossary' },
-              { id: 'blog', name: '📚 お仕事コラム (100本超)', path: '/blog' },
+              { id: 'blog', name: '📚 お仕事コラム (128本)', path: '/blog' },
             ].map((topic) => (
               <a
                 key={topic.id}
@@ -295,7 +296,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
         {/* Lower copyright & Admin link */}
         <div className="pt-8 border-t border-rose-100/40 flex flex-col sm:flex-row justify-between items-center gap-4 text-center">
           <p className="font-sans text-xs text-on-surface-variant opacity-60">
-            © Tobita Girls All Rights Reserved. 飛田新地求人なら飛田ガールズ
+            © Tobita Girls All Rights Reserved. 飛田ガールズ（料亭直営採用窓口）
           </p>
           <button 
             onClick={onOpenAdmin}

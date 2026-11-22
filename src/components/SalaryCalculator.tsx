@@ -337,7 +337,7 @@ export default function SalaryCalculator({ onCtaclick }: SalaryCalculatorProps) 
           <LucideIcon name="Calculator" size={13} />
           <span>売上50%即日全額日払いシミュレーター</span>
         </div>
-        <h3 className="text-xl sm:text-2xl font-extrabold text-zinc-900 font-display mb-2">
+        <h3 className="text-xl sm:text-2xl font-extrabold text-zinc-900 font-display leading-snug mb-2 text-balance max-w-lg sm:max-w-xl mx-auto">
           飛田新地 手取り給与リアルタイム計算機
         </h3>
         <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">

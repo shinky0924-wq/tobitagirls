@@ -107,7 +107,7 @@ export default function AIFactSummary() {
             <LucideIcon name="HeartHandshake" size={13} className="text-secondary" />
             <span>料亭直営スタッフが教える安心ガイド</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-on-surface tracking-tight font-display">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-on-surface tracking-tight font-display leading-snug text-balance max-w-xl sm:max-w-2xl mx-auto">
             飛田新地求人Q＆A
           </h2>
           <p className="mt-2 text-xs sm:text-sm text-on-surface-variant max-w-2xl mx-auto leading-relaxed">

@@ -22,6 +22,16 @@ import {
   COMPARE_SUBPAGE_MAP,
   LEGACY_COMPARE_SLUG_REDIRECTS,
 } from './data/compareGuides';
+import {
+  OFFICIAL_DOMAIN,
+  OFFICIAL_LINE_URL,
+  OFFICIAL_SAME_AS_URLS,
+  CANONICAL_AUTHORS,
+  resolveAuthorPersonNode,
+  buildGlossaryMentions,
+  buildArticleCitations,
+  calculateArticleWordCount,
+} from './utils/knowledgeGraph';
 
 export function escapeHtml(str: string): string {
   return String(str || '')
@@ -73,12 +83,12 @@ function buildHomeNoscript(): string {
 
     <section class="ssr-hero">
       <div class="ssr-hero-inner">
-        <p class="ssr-hero-pill"><span class="ssr-hero-dot"></span>飛田新地の求人案内｜当店の公式採用情報</p>
-        <h1 class="ssr-hero-h1">
-          <span>飛田新地で働くことを</span>
-          <span class="ssr-hero-accent">考えている女性へ。</span>
+        <p class="ssr-hero-pill"><span class="ssr-hero-dot"></span>飛田新地の求人案内｜料亭直営の公式採用窓口</p>
+        <h1 id="hero-title" class="ssr-hero-h1">
+          <span>飛田新地の求人案内｜</span>
+          <span class="ssr-hero-accent">働くことを考えている女性へ。</span>
         </h1>
-        <div class="ssr-hero-desc">
+        <div id="hero-description" class="ssr-hero-desc">
           <p>当店では、仕事内容や給料の仕組み、未経験から働くまでの流れ、お店選びのポイントなど、求人を探すうえで知っておきたい情報をわかりやすくまとめています。</p>
           <p class="ssr-hero-questions">
             <span>・「未経験でも大丈夫？」</span>
@@ -90,37 +100,50 @@ function buildHomeNoscript(): string {
         </div>
         <div class="ssr-hero-visual">
           <div class="ssr-hero-card">
-            <img src="https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg" alt="飛田新地のお仕事・料亭直営求人で夢を叶える場所" class="ssr-hero-img" width="800" height="450" />
+            <picture>
+              <source srcset="/images/tobita_dream_hero_banner_1782557055526.webp" type="image/webp" />
+              <img src="https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_1782557055526.jpg" alt="飛田新地のお仕事・料亭直営求人で夢を叶える場所" class="ssr-hero-img" width="800" height="450" />
+            </picture>
             <div class="ssr-hero-stamp">
               <span>飛田新地で</span>
               <strong>夢を叶えよう！</strong>
             </div>
           </div>
         </div>
+        <section class="ssr-hero-pickup" aria-label="人気のお仕事コラム（おすすめ5選）">
+          <h2>人気のお仕事コラム（おすすめ5選）</h2>
+          <ol>
+            <li><a href="/blog/tobitashinchi-beginner-guide">【未経験者必読】飛田新地のお仕事とは？業界一わかりやすい初心者ガイド</a></li>
+            <li><a href="/blog/tobita-job-guide">飛田新地の仕事内容とは？出勤から接客・退勤までの1日の流れを解説</a></li>
+            <li><a href="/blog/tobitashinchi-salary-system">【給料システム公開】飛田新地って本当に稼げる？日給10万円超えの仕組みと計算式</a></li>
+            <li><a href="/blog/tobitashinchi-privacy-guide">【飛田新地の秘密厳守】友達・家族に知られにくく働くための5つの「身バレ対策」ルール</a></li>
+            <li><a href="/blog/tobitashinchi-interview-guide">【飛田新地・面接ガイド】面接の服装は？持ち物は？採用担当者がチェックする3つのポイント</a></li>
+          </ol>
+        </section>
       </div>
     </section>
 
     <main class="ssr-below-fold">
       <article>
         <section>
-          <h2>飛田新地求人の基本条件・募集要項</h2>
+          <h2>募集要項・基本条件</h2>
           <table border="1">
             <tbody>
               <tr>
                 <th>職種</th>
-                <td>飛田新地 料亭接客スタッフ</td>
+                <td>料亭接客スタッフ（大阪市西成区山王）</td>
               </tr>
               <tr>
                 <th>給与・報酬</th>
-                <td>完全歩合制・売上50%バック・即日全額現金日払い（※時間帯・来店状況により変動）</td>
+                <td>完全歩合制・売上50%バック・即日全額現金日払い（雑費天引きなし ※時間帯・来店状況により変動）</td>
               </tr>
               <tr>
                 <th>応募資格</th>
                 <td>満20歳以上の女性（未経験歓迎・学歴経験不問 ※20歳未満不可）</td>
               </tr>
               <tr>
-                <th>勤務地</th>
-                <td>大阪府大阪市西成区山王（飛田新地 / 動物園前駅・天王寺駅・新今宮駅 徒歩圏内）</td>
+                <th>勤務地・アクセス</th>
+                <td>Osaka Metro「動物園前駅」徒歩5分 / JR・南海「新今宮駅」徒歩7分 / 各線「天王寺駅」徒歩10分</td>
               </tr>
               <tr>
                 <th>勤務時間</th>
@@ -128,32 +151,63 @@ function buildHomeNoscript(): string {
               </tr>
               <tr>
                 <th>待遇・サポート</th>
-                <td>WEB顔出しなし・衣装無料貸出・女性スタッフ対応（寮・交通費サポートは事前確認）</td>
+                <td>WEB顔出しなし・衣装無料貸出・女性スタッフ対応（個室寮・交通費は事前確認）</td>
               </tr>
             </tbody>
           </table>
+
+          <h3>コース別の手取り目安（売上50%バック・全額現金日払い）</h3>
+          <table border="1">
+            <thead>
+              <tr>
+                <th>コース時間</th>
+                <th>女性手取り目安（雑費天引き0円）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th>15分コース</th><td>5,000円</td></tr>
+              <tr><th>20分コース</th><td>7,500円</td></tr>
+              <tr><th>30分コース</th><td>10,000円</td></tr>
+              <tr><th>45分コース</th><td>15,000円</td></tr>
+              <tr><th>60分コース</th><td>20,000円</td></tr>
+              <tr><th>外国人客対応手当</th><td>1組あたり ＋2,500円</td></tr>
+            </tbody>
+          </table>
+
+          <h3>通りの違い・最寄り駅からのアクセス</h3>
+          <ul>
+            <li><strong>メイン通り・青春通り</strong>：エリアの中でも人通りが多く活気のある中心エリア。当店もメイン・青春通りエリアにあり、雰囲気を確認しやすい立地です。</li>
+            <li><strong>大門通り・裏通り</strong>：大門通りはエリア入口付近、裏通りは落ち着いた常連客・ビジネス層中心の静かな通りです。</li>
+            <li><strong>主要3駅からの徒歩ルート</strong>：動物園前駅（徒歩5分）・新今宮駅（徒歩7分）・天王寺駅（徒歩10分）。希望時は最寄り駅周辺での待ち合わせ案内にも対応します。</li>
+          </ul>
+
+          <div class="ssr-trust-box">
+            <h3>料亭直営公式窓口・情報監修について</h3>
+            <p>所在地：大阪府大阪市西成区山王（飛田新地料理組合加盟料亭）。当サイト「飛田ガールズ」は、外部スカウトや仲介業者を介さない料亭直営の公式採用窓口です。紹介料・手数料は一切かからず、現場に常駐する女性サポートスタッフ（さくら）・採用管理担当（木村）が、事前見学から体験入店・安全管理まで事実ベースでご案内しています。</p>
+            <p><a href="/about">運営者情報・直営体制を見る</a> / <a href="/site-compare">他業種・応募ルート徹底比較</a> / <a href="/compare">働き方・条件別ガイド（5カテゴリー）</a> / <a href="/glossary">用語集・業界知識辞典</a></p>
+          </div>
         </section>
 
-        <section id="section-topics">
-          <h2>飛田新地求人 総合ガイド（全12カテゴリー）</h2>
+        <section id="recruit-hub">
+          <h2>お仕事・総合ガイド（全12カテゴリー）</h2>
           <ol>
-            <li><h3><a href="/job">仕事内容｜未経験でもできる？お仕事の流れ</a></h3><p>笑顔での接客・お酒不要・呼び込みは店舗スタッフが担当。</p></li>
-            <li><h3><a href="/salary">給料・待遇｜売上バック率と日払いの仕組み</a></h3><p>売上に応じた明確なバック率で働いたその日に全額日払い。</p></li>
-            <li><h3><a href="/beginner">未経験｜初めてでも安心のサポート体制</a></h3><p>在籍キャストの約9割が未経験からスタート。女性スタッフが個別対応。</p></li>
-            <li><h3><a href="/experienced">経験者｜より良い環境で働くための移籍優遇</a></h3><p>営業連絡・ノルマ・お風呂掃除なしの働きやすい環境。</p></li>
+            <li><h3><a href="/job">仕事内容｜未経験でもできる？お仕事の流れ</a></h3><p>笑顔での接客・お酒不要・呼び込みは仲居さんが担当。</p></li>
+            <li><h3><a href="/salary">給料・待遇｜売上バック率と日払いの仕組み</a></h3><p>売上50%バックで働いたその日に全額現金日払い。</p></li>
+            <li><h3><a href="/beginner">未経験｜初めてでも安心のサポート体制</a></h3><p>在籍キャストの多くが未経験からスタート。女性スタッフが個別対応。</p></li>
+            <li><h3><a href="/experienced">経験者｜より良い環境で働くための移籍優遇</a></h3><p>営業連絡・ノルマ・お酒・お風呂掃除なしの働きやすい環境。</p></li>
             <li><h3><a href="/requirements">募集要項｜応募条件と面接・体験時の必要書類</a></h3><p>満20歳以上の女性対象。履歴書不要・私服で面接OK（※体験・勤務時は住民票原本または日本国パスポート必須）。</p></li>
-            <li><h3><a href="/flow">面接・体験入店｜応募から体験入店までの流れ</a></h3><p>LINE相談・私服見学・希望に応じた体験入店に対応。</p></li>
-            <li><h3><a href="/workstyle">働き方｜自分のペースで選べるシフト</a></h3><p>朝・昼・夕方から選べる自由シフト制。週1日〜・Wワーク対応。</p></li>
+            <li><h3><a href="/flow">面接・体験入店｜応募から体験入店までの流れ</a></h3><p>LINE相談・私服見学・希望に応じた1日体験入店に対応。</p></li>
+            <li><h3><a href="/workstyle">働き方｜自分のペースで選べるシフト</a></h3><p>10:00〜24:00の自由シフト制。週1日〜・Wワーク対応。</p></li>
             <li><h3><a href="/shops">お店選び｜通りの特徴と当直営料亭</a></h3><p>各通りの特徴・確認ポイントと当直営料亭のご案内。</p></li>
             <li><h3><a href="/dekasegi">寮・出稼ぎ｜個室寮相談と交通費規定支給</a></h3><p>家具家電・Wi-Fi付き個室寮の相談や遠方交通費サポート（規定あり）。</p></li>
             <li><h3><a href="/safety">プライバシー対策｜身バレを防ぐ安全対策</a></h3><p>撮影禁止ルール・完全源氏名・住民税普通徴収の案内。</p></li>
-            <li><h3><a href="/faq">よくある質問｜応募前の不安を解消するQ&A</a></h3><p>未経験・給料・身バレなど全119問のQ&A。</p></li>
-            <li><h3><a href="/blog">お仕事コラム｜働く前に知りたい体験談とノウハウ</a></h3><p>100本以上の解説記事・実例コラム。</p></li>
+            <li><h3><a href="/faq">よくある質問｜応募前の不安を解消するQ&amp;A</a></h3><p>未経験・給料・身バレなど全${FAQ_100_LIST.length}問のQ&amp;A。</p></li>
+            <li><h3><a href="/blog">お仕事コラム｜働く前に知りたい体験談とノウハウ</a></h3><p>厳選128本の解説記事・実例コラム。</p></li>
           </ol>
-          <p><a href="/site-compare">飛田新地求人サイト徹底比較を見る</a> / <a href="/compare">目的・働き方別求人ガイドを見る</a> / <a href="/glossary">用語集を見る</a> / <a href="/about">運営者情報を見る</a></p>
+          <p><a href="/site-compare">他業種・応募方法徹底比較を見る</a> / <a href="/compare">目的・働き方別求人ガイドを見る</a> / <a href="/glossary">用語集を見る</a> / <a href="/about">運営者情報を見る</a></p>
         </section>
 
-        <section id="section-reasons">
+        <section id="reasons">
           <h2>選ばれる6つの理由</h2>
           <ul>
             <li>集客力へのこだわり（新規・リピーターの獲得）</li>
@@ -162,6 +216,14 @@ function buildHomeNoscript(): string {
             <li>いじめや派閥のない働きやすい環境</li>
             <li>分かりやすい給与・待遇システム</li>
             <li>顔出しなし・個人情報保護などのプライバシー配慮</li>
+          </ul>
+        </section>
+
+        <section id="voice">
+          <h2>在籍キャストのリアル体験談</h2>
+          <ul>
+            <li><strong>未経験スタート（20代前半・週3日勤務）</strong>：仲居さんが隣で優しく声をかけてくれるため、初日の不安がすぐ消えました。退勤時にその場で全額現金手渡しで受け取れるので安心です。</li>
+            <li><strong>Wワーク・副業（20代後半・週末のみ）</strong>：顔写真掲載や連絡先交換がなく、住民税の普通徴収についても事前に案内してもらえたため、昼職と無理なく両立できています。</li>
           </ul>
         </section>
 
@@ -177,12 +239,12 @@ function buildHomeNoscript(): string {
             <dt>Q. 体験入店（1日だけ）でも大丈夫ですか？</dt>
             <dd>A. はい、大歓迎です。日給はその場で全額日払いとなり、合わないと感じた場合はその日だけで終了しても問題ありません。</dd>
           </dl>
-          <p><a href="/faq">よくある質問（FAQ全119問）を見る</a></p>
+          <p><a href="/faq">よくある質問（FAQ全${FAQ_100_LIST.length}問）を見る</a></p>
         </section>
 
-        <section>
+        <section id="flow">
           <h2>応募からお仕事開始までの流れ・LINE相談</h2>
-          <p>LINE応募・相談 → 面接・見学 → 条件確認・説明 → 衣装合わせ・研修 → 体験入店 → お仕事スタート。</p>
+          <p>①公式LINEで無料相談・見学予約 → ②私服・履歴書不要で見学＆条件説明 → ③貸出衣装で1日体験入店 → ④退勤時に売上50%バックを即日全額現金手渡し受取。</p>
           <p>応募するか迷っている方も、まずはお気軽に公式LINEよりご相談ください（24時間受付中・相談無料）。</p>
         </section>
       </article>
@@ -196,55 +258,37 @@ function buildHomeJsonLd(): string {
     '@graph': [
       {
         '@type': 'WebSite',
-        '@id': 'https://tobitashinchi-recruit.com/#website',
-        'url': 'https://tobitashinchi-recruit.com/',
+        '@id': `${OFFICIAL_DOMAIN}/#website`,
+        'url': `${OFFICIAL_DOMAIN}/`,
         'name': '飛田ガールズ',
+        'alternateName': ['飛田ガールズ公式', 'Tobita Girls'],
         'description': '飛田新地の女性向け求人情報サイト。仕事内容や給料の仕組み（完全歩合制・売上50%バック即日日払い）、応募条件、面接・体験入店の流れ、身バレ対策を網羅。',
         'inLanguage': 'ja-JP',
         'publisher': {
-          '@type': 'Organization',
-          '@id': 'https://tobitashinchi-recruit.com/#organization',
-          'name': '飛田ガールズ（料亭直営求人・女性採用サポート）',
-          'url': 'https://tobitashinchi-recruit.com/',
-          'sameAs': ['https://tobitashinchi-recruit.com/'],
-          'publishingPrinciples': 'https://tobitashinchi-recruit.com/about',
-          'areaServed': '大阪府大阪市',
-          'knowsAbout': [
-            '飛田新地の仕事内容・接客ルール',
-            '料亭直営の女性向け求人案内',
-            '売上50%バック・全額日払いの仕組み',
-            '身バレ対策・プライバシー配慮',
-            '未経験・地方出稼ぎのサポート体制'
-          ],
-          'address': {
-            '@type': 'PostalAddress',
-            'streetAddress': '山王3丁目',
-            'addressLocality': '大阪市西成区',
-            'addressRegion': '大阪府',
-            'postalCode': '557-0001',
-            'addressCountry': 'JP'
+          '@id': `${OFFICIAL_DOMAIN}/#organization`
+        },
+        'potentialAction': {
+          '@type': 'SearchAction',
+          'target': {
+            '@type': 'EntryPoint',
+            'urlTemplate': `${OFFICIAL_DOMAIN}/faq?search={search_term_string}`
           },
-          'logo': {
-            '@type': 'ImageObject',
-            'url': 'https://tobitashinchi-recruit.com/icon.png',
-            'width': 384,
-            'height': 384
-          }
+          'query-input': 'required name=search_term_string'
         }
       },
       {
         '@type': 'WebPage',
-        '@id': 'https://tobitashinchi-recruit.com/#webpage',
-        'url': 'https://tobitashinchi-recruit.com/',
+        '@id': `${OFFICIAL_DOMAIN}/#webpage`,
+        'url': `${OFFICIAL_DOMAIN}/`,
         'name': DEFAULT_TITLE,
         'description': DEFAULT_DESC,
         'dateModified': FAQ_LAST_UPDATED_ISO,
         'inLanguage': 'ja-JP',
         'isPartOf': {
-          '@id': 'https://tobitashinchi-recruit.com/#website'
+          '@id': `${OFFICIAL_DOMAIN}/#website`
         },
         'publisher': {
-          '@id': 'https://tobitashinchi-recruit.com/#organization'
+          '@id': `${OFFICIAL_DOMAIN}/#organization`
         },
         'primaryImageOfPage': {
           '@type': 'ImageObject',
@@ -265,76 +309,168 @@ function buildHomeJsonLd(): string {
         }
       },
       {
-        '@type': 'JobPosting',
-        '@id': 'https://tobitashinchi-recruit.com/#jobposting',
-        'title': '飛田新地 料亭接客キャスト（未経験歓迎・お酒不要・売上50%日払い手渡し）',
-        'description': '飛田新地料理組合加盟料亭での接客キャスト募集。玄関でのお迎えと個室での短時間接客（15〜20分基本）。完全歩合制（売上50%即日日払い手渡し）、ノルマ・罰金なし、WEB顔写真非掲載、女性スタッフサポート体制。',
-        'identifier': {
-          '@type': 'PropertyValue',
-          'name': '飛田ガールズ 料亭直営採用窓口',
-          'value': 'TOBITA-GIRLS-MAIN-RECRUIT'
+        '@type': 'Organization',
+        '@id': `${OFFICIAL_DOMAIN}/#organization`,
+        'name': '飛田ガールズ（料亭直営求人・女性採用サポート）',
+        'url': `${OFFICIAL_DOMAIN}/`,
+        'sameAs': OFFICIAL_SAME_AS_URLS,
+        'publishingPrinciples': `${OFFICIAL_DOMAIN}/about`,
+        'areaServed': '大阪府大阪市',
+        'knowsAbout': [
+          '飛田新地の仕事内容・接客ルール',
+          '料亭直営の女性向け求人案内',
+          '売上50%バック・全額日払いの仕組み',
+          '身バレ対策・プライバシー配慮',
+          '未経験・地方出稼ぎのサポート体制'
+        ],
+        'address': {
+          '@type': 'PostalAddress',
+          'streetAddress': '山王3丁目',
+          'addressLocality': '大阪市西成区',
+          'addressRegion': '大阪府',
+          'postalCode': '557-0001',
+          'addressCountry': 'JP'
         },
-        'datePosted': '2026-10-01T00:00:00+09:00',
-        'validThrough': '2027-12-31T23:59:59+09:00',
-        'employmentType': 'PART_TIME',
-        'hiringOrganization': {
-          '@type': 'Organization',
-          'name': '飛田新地料理組合公認料亭直営 飛田ガールズ',
-          'sameAs': 'https://tobitashinchi-recruit.com',
-          'logo': 'https://tobitashinchi-recruit.com/icon.png'
+        'logo': {
+          '@type': 'ImageObject',
+          'url': `${OFFICIAL_DOMAIN}/icon.png`,
+          'width': 384,
+          'height': 384
         },
-        'jobLocation': {
-          '@type': 'Place',
-          'address': {
-            '@type': 'PostalAddress',
-            'streetAddress': '山王3丁目',
-            'addressLocality': '大阪市西成区',
-            'addressRegion': '大阪府',
-            'postalCode': '557-0001',
-            'addressCountry': 'JP'
-          }
-        },
-        'baseSalary': {
-          '@type': 'MonetaryAmount',
-          'currency': 'JPY',
-          'value': {
-            '@type': 'QuantitativeValue',
-            'minValue': 30000,
-            'maxValue': 100000,
-            'unitText': 'DAY'
-          }
-        },
-        'directApply': true
+        'contactPoint': {
+          '@type': 'ContactPoint',
+          'contactType': 'customer support',
+          'url': OFFICIAL_LINE_URL,
+          'availableLanguage': ['Japanese']
+        }
       },
       {
-        '@type': 'HowTo',
-        '@id': 'https://tobitashinchi-recruit.com/#howto',
-        'name': '飛田新地料亭直営求人・お仕事スタートの4ステップ',
-        'description': '飛田新地料理組合加盟の当直営料亭でのお仕事開始手順。公式LINE無料相談から私服面接、体験入店、即日全額日払い受取までの流れを解説。',
-        'step': [
+        '@type': 'Place',
+        '@id': `${OFFICIAL_DOMAIN}/#place`,
+        'name': '飛田新地料理組合公認 料亭街',
+        'address': {
+          '@type': 'PostalAddress',
+          'streetAddress': '山王3丁目',
+          'addressLocality': '大阪市西成区',
+          'addressRegion': '大阪府',
+          'postalCode': '557-0001',
+          'addressCountry': 'JP'
+        },
+        'geo': {
+          '@type': 'GeoCoordinates',
+          'latitude': 34.6468,
+          'longitude': 135.5085
+        },
+        'hasMap': 'https://maps.google.com/?q=34.6468,135.5085'
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${OFFICIAL_DOMAIN}/#breadcrumb`,
+        'itemListElement': [
           {
-            '@type': 'HowToStep',
+            '@type': 'ListItem',
             'position': 1,
-            'name': '公式LINEで無料相談・質問',
-            'text': '履歴書不要。24時間365日受付の公式LINEから女性スタッフへ気になる点や希望シフトをご相談ください。'
+            'name': 'トップページ',
+            'item': `${OFFICIAL_DOMAIN}/`
           },
           {
-            '@type': 'HowToStep',
+            '@type': 'ListItem',
             'position': 2,
-            'name': '面接・店舗見学（私服でOK）',
-            'text': '私服でご来店可能。女性スタッフが店舗や控室をご案内し、給料システムや身バレ対策、寮や交通費などの条件を具体的に説明します。'
+            'name': `よくある質問（FAQ全${FAQ_100_LIST.length}問）`,
+            'item': `${OFFICIAL_DOMAIN}/faq`
           },
           {
-            '@type': 'HowToStep',
+            '@type': 'ListItem',
             'position': 3,
-            'name': '体験入店（体入）',
-            'text': 'お店の着物・浴衣（無料貸出）に着替えて1日お試し勤務。仲居さんが隣でサポートします。'
+            'name': 'お仕事コラム・解説記事一覧',
+            'item': `${OFFICIAL_DOMAIN}/blog`
+          }
+        ]
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${OFFICIAL_DOMAIN}/#faq`,
+        'dateModified': FAQ_LAST_UPDATED_ISO,
+        'mainEntity': [
+          {
+            '@type': 'Question',
+            'name': '飛田新地は未経験でも求人に応募できますか？',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'はい、未経験から応募できます。在籍女性の多くが夜職未経験からのスタートです。接客の流れや衛生管理・身だしなみのポイントも、事前の丁寧な説明・レクチャーで一から確認できますのでご安心ください。'
+            }
           },
           {
-            '@type': 'HowToStep',
-            'position': 4,
-            'name': '即日全額現金日払い手渡し',
-            'text': '勤務終了後、その日の手取り報酬（完全歩合制・売上50%バック）を全額現金でその場で手渡し受取できます。'
+            '@type': 'Question',
+            'name': '飛田新地の求人は何歳から応募できますか？なぜ20歳以上限定なのですか？',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': '応募資格は満20歳以上の女性です（20歳未満・高校生不可）。法令および飛田新地料理組合の規約により20歳未満の就労を固く禁じているため、体験入店・勤務開始時には本籍地記載の住民票原本（マイナンバー記載なし）または有効期限内の日本国パスポート（＋顔写真付き公的身分証明書）による年齢確認を行っています。'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': '飛田新地のお給料は全額日払いですか？計算の仕組みは？',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'はい、完全歩合制（売上50%バック）で退勤時にその日の手取り分を全額現金でお渡しします。ロッカー代や更衣室代などの雑費天引きはありません（※完全歩合制のため収入は出勤時間帯や来店状況により変動します）。'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': '飛田新地の仕事内容は何ですか？',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': '料亭の玄関に座り、仲居さんの呼び込みに合わせて来店されたお客様を2階の個室へご案内し、15〜20分ほどおもてなし接客を行う業務です。お酒の飲酒やお客様との連絡先交換、お茶出しなどの雑用もありません。'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': '身バレ対策やプライバシー保護はありますか？',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'WebサイトやSNSへの顔写真掲載は行わず、エリア全体で写真・動画撮影を禁止しています。完全源氏名での勤務や私服通勤、住民税の普通徴収の案内などでプライバシーに配慮しています。'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': '会社員（OL）や学生のWワーク・副業でも大丈夫ですか？',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'はい、週末のみ・週1日・昼シフトなど自由出勤が可能です。確定申告で住民税を「普通徴収（自分で納付）」にすることで、本業の会社に副業の通知が届きにくい方法もご案内しています。'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': '寮や生活支援、出稼ぎの交通費はありますか？',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'はい、遠方からの出稼ぎや滞在希望向けの寮案内や交通費サポートのご相談が可能です。具体的な物件条件・利用料・交通費の支給条件は時期や出発地、勤務予定により異なるため、応募・面接前にLINE等で事前確認を行っています。'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': '面接や体験入店の流れを教えてください。',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'LINEでご連絡後、履歴書不要・私服で面接・見学が可能です。女性スタッフがお店の雰囲気や条件を説明し、納得いただければ1日体験入店（即日全額日払い）も可能です。'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': 'ノルマや罰金・ペナルティはありますか？',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'いいえ、指名ノルマ・同伴ノルマ・売上ペナルティや理不尽な罰金・雑費天引きはありません。'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': '相談や見学だけで実際に働かなくても大丈夫ですか？',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'はい、大歓迎です。無理な勧誘や強要は一切ございません。条件や雰囲気を聞いて納得できなかった場合は、その場でお断りいただいて問題ありません。'
+            }
           }
         ]
       }
@@ -455,13 +591,13 @@ function buildCompareNoscript(slug?: string): string {
     if (!item) {
       return `
         <header>
-          <p>飛田新地求人 働き方・求人比較｜飛田ガールズ【公式】</p>
+          <p>働き方・求人比較｜飛田ガールズ【公式】</p>
           <p><a href="/">トップページ</a> ／ <a href="/compare">働き方・求人比較一覧</a></p>
         </header>
         <main>
           <article>
             <h1>お探しのページが見つかりませんでした</h1>
-            <p>指定されたURLは存在しないか移動した可能性があります。<a href="/compare">働き方・求人比較一覧（27カテゴリー）</a>よりご希望の働き方をお選びください。</p>
+            <p>指定されたURLは存在しないか移動した可能性があります。<a href="/compare">働き方・求人比較一覧</a>よりご希望の働き方をお選びください。</p>
           </article>
         </main>
       `;
@@ -469,15 +605,15 @@ function buildCompareNoscript(slug?: string): string {
 
     const parentGroup = COMPARE_CATEGORY_GROUPS.find((g) => g.code === item.categoryCode);
     const sameGroupSiblings = COMPARE_SUBPAGES.filter(
-      (s) => s.categoryCode === item.categoryCode && s.slug !== item.slug
+      (s) => s.categoryCode === item.categoryCode && s.slug !== item.slug && !s.seoNoindex
     );
     const relatedSubpages = item.relatedCompareSlugs
       .map((rs) => COMPARE_SUBPAGE_MAP[rs])
-      .filter((x): x is NonNullable<typeof x> => Boolean(x));
+      .filter((x): x is NonNullable<typeof x> => Boolean(x) && !x.seoNoindex);
 
     return `
       <header>
-        <p>飛田新地求人｜働き方・求人比較｜飛田ガールズ【公式】</p>
+        <p>働き方・求人比較｜飛田ガールズ【公式】</p>
         <nav aria-label="パンくずリスト">
           <a href="/">トップページ</a> ＞ <a href="/compare">働き方・求人比較</a> ＞ <span>${escapeHtml(item.itemName)}</span>
         </nav>
@@ -547,7 +683,7 @@ function buildCompareNoscript(slug?: string): string {
                 ${sameGroupSiblings.map((sib) => `<li><a href="/compare/${escapeHtml(sib.slug)}">${escapeHtml(sib.itemName)}：${escapeHtml(sib.cardDescription)}</a></li>`).join('')}
               </ul>
             ` : ''}
-            <p><a href="/compare">働き方・求人比較トップ（27項目一覧）へ戻る</a> ／ <a href="/faq">よくある質問を見る</a> ／ <a href="/site-compare">飛田新地求人サイト徹底比較を見る</a></p>
+            <p><a href="/compare">働き方・求人比較トップへ戻る</a> ／ <a href="/faq">よくある質問を見る</a> ／ <a href="/site-compare">飛田新地求人サイト徹底比較を見る</a></p>
           </section>
 
           <section>
@@ -564,7 +700,7 @@ function buildCompareNoscript(slug?: string): string {
   // Parent page: /compare
   return `
     <header>
-      <p>飛田新地求人｜働き方・求人比較｜飛田ガールズ【公式】</p>
+      <p>働き方・求人比較｜飛田ガールズ【公式】</p>
       <p><a href="/">トップページ</a> ／ <a href="/site-compare">他業種・応募方法比較</a> ／ <a href="/faq">よくある質問</a></p>
     </header>
 
@@ -579,7 +715,7 @@ function buildCompareNoscript(slug?: string): string {
         </section>
 
         <section id="categories-directory">
-          <h2>5つのカテゴリー・全27項目から働き方を探す</h2>
+          <h2>5つのカテゴリー・働き方・条件別から探す</h2>
           ${COMPARE_CATEGORY_GROUPS.map((group) => {
             const items = group.slugs
               .map((s) => COMPARE_SUBPAGE_MAP[s])
@@ -634,15 +770,15 @@ function buildFaqNoscript(categorySlug?: string): string {
 
     return `
       <header>
-        <p>【${escapeHtml(cat.label)}】飛田新地求人のよくある質問（全${items.length}問）｜飛田ガールズ</p>
-        <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ 更新日：${escapeHtml(FAQ_LAST_UPDATED)} ／ 24時間LINE相談受付中</p>
+        <p>【${escapeHtml(cat.label)}】飛田新地のよくある質問（全${items.length}問）｜飛田ガールズ</p>
+        <p><a href="/">トップページ（飛田ガールズ）</a> ／ 更新日：${escapeHtml(FAQ_LAST_UPDATED)} ／ 24時間LINE相談受付中</p>
       </header>
       <main>
         <article>
-          <h1>${escapeHtml(cat.seoHeading)}（全${items.length}問）</h1>
-          <p class="lead">${escapeHtml(cat.description)}。飛田新地料理組合加盟料亭の直営採用窓口スタッフが事実に基づき回答しています。</p>
+          <h1 id="faq-hero-heading">${escapeHtml(cat.seoHeading)}（全${items.length}問）</h1>
+          <p id="faq-hero-lead" class="lead">${escapeHtml(cat.description)}。飛田新地料理組合加盟料亭の直営採用窓口スタッフが事実に基づき回答しています。</p>
           <section>
-            <h2>${escapeHtml(cat.seoHeading)}</h2>
+            <h2 id="faq-essential-heading">${escapeHtml(cat.seoHeading)}</h2>
             <dl>
               ${faqsHtml}
             </dl>
@@ -685,15 +821,15 @@ function buildFaqNoscript(categorySlug?: string): string {
 
   return `
     <header>
-      <p>飛田新地求人のよくある質問｜仕事内容・給料・応募条件をQ&amp;Aで解説</p>
-      <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ 全${FAQ_100_LIST.length}問・12カテゴリー整理 ／ 最終更新日：${escapeHtml(FAQ_LAST_UPDATED)}</p>
+      <p>飛田新地のよくある質問｜仕事内容・給料・応募条件をQ&amp;Aで解説｜飛田ガールズ</p>
+      <p><a href="/">トップページ（飛田ガールズ）</a> ／ 全${FAQ_100_LIST.length}問・12カテゴリー整理 ／ 最終更新日：${escapeHtml(FAQ_LAST_UPDATED)}</p>
     </header>
     <main>
       <article>
-        <h1>飛田新地の疑問を、ここですべて解決。（全${FAQ_100_LIST.length}問）</h1>
-        <p class="lead">求人・応募条件・仕事内容・給料・働き方・身バレ対策まで。飛田新地で働く前に知っておきたい疑問をQ&amp;A形式で分かりやすくまとめました。</p>
+        <h1 id="faq-hero-heading">飛田新地の疑問を、ここですべて解決。（全${FAQ_100_LIST.length}問）</h1>
+        <p id="faq-hero-lead" class="lead">求人・応募条件・仕事内容・給料・働き方・身バレ対策まで。飛田新地で働く前に知っておきたい疑問をQ&amp;A形式で分かりやすくまとめました。</p>
         <section>
-          <h2>12カテゴリー一覧</h2>
+          <h2 id="faq-essential-heading">12カテゴリー一覧</h2>
           <ul>
             ${FAQ_12_CATEGORIES.map(c => `<li><a href="/faq/${c.slug}"><strong>${escapeHtml(c.number)}. ${escapeHtml(c.label)}</strong>：${escapeHtml(c.description)}</a></li>`).join('')}
           </ul>
@@ -729,16 +865,18 @@ function buildGlossaryNoscript(): string {
   return `
     <header>
       <p>飛田新地 用語集・用語辞典｜上がり框・仲居・清拭・通り別の意味を徹底解説【公式】</p>
-      <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ 料亭直営公式採用ポータル</p>
+      <p><a href="/">トップページ（飛田ガールズ）</a> ／ 料亭直営公式採用ポータル</p>
     </header>
     <main>
       <article>
-        <h1>飛田新地 用語集・用語辞典（専門用語・ルール・システム解説）</h1>
-        <p class="lead">飛田新地で働きたい女性のための公式用語集です。上がり框（あがりかまち）、仲居さん、清拭（シャワーなしルール）、メイン通り・青春通り・裏通りの違い、売上50%即日全額日払いシステムなど、知っておきたい専門用語とルールを分かりやすく解説しています。</p>
+        <h1 id="glossary-hero-heading">飛田新地 用語集・用語辞典（専門用語・ルール・システム解説）</h1>
+        <p id="glossary-lead" class="lead">飛田新地で働きたい女性のための公式用語集です。上がり框（あがりかまち）、仲居さん、清拭（シャワーなしルール）、メイン通り・青春通り・裏通りの違い、売上50%即日全額日払いシステムなど、知っておきたい専門用語とルールを分かりやすく解説しています。</p>
 
         <section>
           <h2>収録用語一覧（50音・カテゴリ順）</h2>
-          ${termsHtml}
+          <div id="glossary-terms-list">
+            ${termsHtml}
+          </div>
         </section>
 
         <section>
@@ -754,7 +892,7 @@ function buildAboutNoscript(): string {
   return `
     <header>
       <p>飛田ガールズについて｜運営者情報・料亭直営体制・安心の情報発信について【公式】</p>
-      <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ 24時間受付中・相談無料・完全秘密厳守</p>
+      <p><a href="/">トップページ（飛田ガールズ）</a> ／ 24時間受付中・相談無料・完全秘密厳守</p>
     </header>
     <main>
       <article>
@@ -808,26 +946,46 @@ function buildAboutNoscript(): string {
 }
 
 function buildBlogIndexNoscript(articles: any[] = []): string {
-  const listItems = articles.slice(0, 30).map((a: any) => `
+  const validArticles = articles.filter((a: any) => a && a.slug && a.title && !a.seoNoindex);
+  const byCategory = new Map<string, { label: string; items: any[] }>();
+  for (const a of validArticles) {
+    const key = a.category || 'general';
+    const label = a.categoryLabel || 'お仕事コラム';
+    if (!byCategory.has(key)) {
+      byCategory.set(key, { label, items: [] });
+    }
+    byCategory.get(key)!.items.push(a);
+  }
+
+  const categorySections = Array.from(byCategory.entries())
+    .map(([key, group]) => {
+      const itemsHtml = group.items
+        .map(
+          (a: any) => `
     <li>
       <h3><a href="/blog/${escapeHtml(a.slug)}">${escapeHtml(a.title)}</a></h3>
       <p>${escapeHtml(a.summary || '')}</p>
-    </li>
-  `).join('');
+    </li>`
+        )
+        .join('');
+      return `
+        <section id="blog-category-${escapeHtml(key)}">
+          <h2>${escapeHtml(group.label)}（全${group.items.length}記事）</h2>
+          <ul>${itemsHtml}</ul>
+        </section>`;
+    })
+    .join('');
 
   return `
     <header>
       <p>飛田新地お仕事コラム・給与・面接ガイド一覧｜飛田ガールズ【公式】</p>
-      <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ 24時間受付中・相談無料・完全秘密厳守</p>
+      <p><a href="/">トップページ（飛田ガールズ）</a> ／ 全${validArticles.length}記事 ／ 24時間受付中・相談無料・完全秘密厳守</p>
     </header>
     <main>
       <article>
-        <h1>飛田新地お仕事コラム・給与・面接ガイド一覧</h1>
-        <p class="lead">飛田新地のお仕事、給料システム、面接・体入の流れ、寮生活、安全対策など、現場の女性スタッフによる役立つ最新コラム一覧です。</p>
-        <section>
-          <h2>コラム記事一覧</h2>
-          <ul>${listItems}</ul>
-        </section>
+        <h1>飛田新地お仕事コラム・給与・面接ガイド一覧（全${validArticles.length}記事）</h1>
+        <p class="lead">飛田新地のお仕事、給料システム、面接・体入の流れ、寮生活、安全対策など、現場の女性スタッフによる役立つ最新コラム全${validArticles.length}記事の一覧です。</p>
+        ${categorySections}
       </article>
     </main>
   `;
@@ -874,7 +1032,7 @@ function buildBlogArticleNoscript(article: any): string {
         </div>
         <p class="meta">公開日: ${escapeHtml(article.publishedAt || '2026.07.01')} | 執筆: ${escapeHtml(article.author?.name || 'さくら')}（${escapeHtml(article.author?.role || '女性サポートスタッフ')}）</p>
         <h1>${escapeHtml(article.title)}</h1>
-        <p class="summary">${escapeHtml(article.summary || '')}</p>
+        <p class="summary ai-direct-summary">${escapeHtml(article.summary || '')}</p>
         ${bodyText}
         <section>
           <h2>飛田新地 料亭直営採用の募集要項</h2>
@@ -898,8 +1056,8 @@ function buildTopicNoscript(topic: string): string {
 
   if (!cluster) {
     return `
-      <header><p>飛田新地求人サイト「飛田ガールズ」【公式】</p></header>
-      <main><article><h1>飛田新地求人ガイド【${escapeHtml(topic)}】</h1><p class="lead">飛田新地料亭直営公式求人の解説ページです。</p></article></main>
+      <header><p>飛田ガールズ【公式】専門解説ガイド</p></header>
+      <main><article><h1>飛田新地のお仕事ガイド【${escapeHtml(topic)}】</h1><p class="lead">飛田新地料亭直営公式採用窓口の解説ページです。</p></article></main>
     `;
   }
 
@@ -942,8 +1100,8 @@ function buildTopicNoscript(topic: string): string {
 
   return `
     <header>
-      <p>飛田新地求人【公式】飛田ガールズ 専門解説ガイド</p>
-      <p><a href="/">飛田新地求人トップ（飛田ガールズ）</a> ／ 24時間受付中・相談無料・完全秘密厳守</p>
+      <p>飛田ガールズ【公式】専門解説ガイド</p>
+      <p><a href="/">トップページ（飛田ガールズ）</a> ／ 24時間受付中・相談無料・完全秘密厳守</p>
     </header>
 
     <main>
@@ -951,7 +1109,7 @@ function buildTopicNoscript(topic: string): string {
         <h1>${escapeHtml(cluster.seoTitle)}</h1>
         <p class="lead">${escapeHtml(cluster.tagline)}。${escapeHtml(cluster.metaDescription)}</p>
 
-        <section>
+        <section id="points-section">
           <h2>【要点・結論】${escapeHtml(cluster.title)}の概要</h2>
           <p><strong>${escapeHtml(cluster.llmDirectAnswer)}</strong></p>
           <ul>${keyPointsHtml}</ul>
@@ -966,15 +1124,14 @@ function buildTopicNoscript(topic: string): string {
           </table>
         </section>
 
-        <section>
+        <section id="details-section">
           <h2>詳しい解説</h2>
           <p>${escapeHtml(cluster.overview)}</p>
+          ${sectionsHtml}
         </section>
 
-        ${sectionsHtml}
-
         ${faqsHtml ? `
-        <section>
+        <section id="faq-section">
           <h2>よくある質問（FAQ）</h2>
           <dl>${faqsHtml}</dl>
         </section>
@@ -1005,6 +1162,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
   let ogImageAlt = '飛田新地求人 飛田ガールズ';
   let twitterCard = 'summary_large_image';
   let status = 200;
+  let isNoindex = false;
   let prerenderContent = '';
   let customJsonLd: string | null = null;
   let customNoscript: string | null = null;
@@ -1058,14 +1216,29 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
         }
         const article = articles.find((a: any) => a.slug === slug);
         if (article) {
-          title = `${article.title}｜飛田新地求人 飛田ガールズ`;
+          title = `${article.title}｜飛田ガールズ`;
           description = article.summary || description;
           canonicalUrl = `https://tobitashinchi-recruit.com/blog/${article.slug}`;
+          if (article.seoNoindex) {
+            isNoindex = true;
+          }
           ogType = 'article';
           ogImageUrl = resolveFullImageUrl(article.eyeCatch);
           ogImageAlt = article.title;
 
           const articleUrl = `https://tobitashinchi-recruit.com/blog/${article.slug}`;
+          const combinedTextForGraph = [
+            article.title,
+            article.summary,
+            ...(article.tags || []),
+            ...(Array.isArray(article.content)
+              ? article.content.map((b: any) => [b.text, b.question, b.answer, ...(b.items || [])].filter(Boolean).join(' '))
+              : []),
+          ].join(' ');
+          const glossaryMentions = buildGlossaryMentions(combinedTextForGraph);
+          const articleCitations = buildArticleCitations(combinedTextForGraph);
+          const wordCount = calculateArticleWordCount(article.summary, article.content);
+          const personAuthor = resolveAuthorPersonNode(article.author?.name, article.author?.role);
 
           const graphItems: any[] = [
             {
@@ -1080,20 +1253,13 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
               "headline": article.title,
               "description": article.summary,
               "image": ogImageUrl,
+              "wordCount": wordCount,
               "datePublished": article.publishedAt ? article.publishedAt.replace(/\./g, '-') : '2026-07-01',
               "dateModified": article.updatedAt ? article.updatedAt.replace(/\./g, '-') : ((article.publishedAt && article.publishedAt.replace(/\./g, '-') > FAQ_LAST_UPDATED_ISO) ? article.publishedAt.replace(/\./g, '-') : FAQ_LAST_UPDATED_ISO),
               "articleSection": article.categoryLabel,
               "keywords": (article.tags || []).join(', '),
               "inLanguage": "ja-JP",
-              "author": {
-                "@type": "Person",
-                "name": article.author?.name || "さくら",
-                "jobTitle": article.author?.role || "女性サポートスタッフ",
-                "url": "https://tobitashinchi-recruit.com/about",
-                "worksFor": {
-                  "@id": "https://tobitashinchi-recruit.com/#organization"
-                }
-              },
+              "author": personAuthor,
               "reviewedBy": {
                 "@type": "Organization",
                 "@id": "https://tobitashinchi-recruit.com/#organization",
@@ -1110,6 +1276,8 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
                   "url": "https://tobitashinchi-recruit.com/icon.png"
                 }
               },
+              ...(glossaryMentions.length > 0 ? { "mentions": glossaryMentions, "about": glossaryMentions.slice(0, 3) } : {}),
+              "citation": articleCitations,
               "speakable": {
                 "@type": "SpeakableSpecification",
                 "cssSelector": ["h1", ".ai-direct-summary", ".summary"]
@@ -1186,7 +1354,8 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
     try {
       const articlesFile = path.join(process.cwd(), 'data', 'blogArticles.json');
       if (fs.existsSync(articlesFile)) {
-        blogArticlesList = JSON.parse(fs.readFileSync(articlesFile, 'utf-8'));
+        const rawList = JSON.parse(fs.readFileSync(articlesFile, 'utf-8'));
+        blogArticlesList = Array.isArray(rawList) ? rawList.filter((a: any) => a && !a.seoNoindex) : [];
       }
       customNoscript = buildBlogIndexNoscript(blogArticlesList);
     } catch (_e) {
@@ -1233,13 +1402,15 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
           '@id': 'https://tobitashinchi-recruit.com/blog#itemlist',
           'name': '飛田新地 お仕事コラム・解説記事一覧',
           'numberOfItems': blogArticlesList.length,
-          'itemListElement': blogArticlesList.slice(0, 50).map((a: any, idx: number) => ({
-            '@type': 'ListItem',
-            'position': idx + 1,
-            'name': a.title,
-            'url': `https://tobitashinchi-recruit.com/blog/${a.slug}`,
-            'description': a.summary || a.title
-          }))
+          'itemListElement': blogArticlesList
+            .filter((a: any) => a && a.slug && a.title)
+            .map((a: any, idx: number) => ({
+              '@type': 'ListItem',
+              'position': idx + 1,
+              'name': a.title,
+              'url': `https://tobitashinchi-recruit.com/blog/${a.slug}`,
+              'description': a.summary || a.title
+            }))
         }
       ]
     }, null, 2);
@@ -1356,7 +1527,15 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
           '@id': 'https://tobitashinchi-recruit.com/#organization',
           'name': '飛田ガールズ（料理組合公認 料亭直営採用窓口）',
           'url': 'https://tobitashinchi-recruit.com/',
+          'sameAs': OFFICIAL_SAME_AS_URLS,
+          'publishingPrinciples': 'https://tobitashinchi-recruit.com/about',
           'logo': 'https://tobitashinchi-recruit.com/icon.png',
+          'contactPoint': {
+            '@type': 'ContactPoint',
+            'contactType': 'customer support',
+            'url': OFFICIAL_LINE_URL,
+            'availableLanguage': ['Japanese']
+          },
           'address': {
             '@type': 'PostalAddress',
             'streetAddress': '山王3丁目',
@@ -1365,7 +1544,19 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
             'postalCode': '557-0001',
             'addressCountry': 'JP'
           }
-        }
+        },
+        ...CANONICAL_AUTHORS.map((a) => ({
+          '@type': 'Person',
+          '@id': a.idUrl,
+          'name': a.name,
+          'jobTitle': a.jobTitle,
+          'description': a.description,
+          'url': 'https://tobitashinchi-recruit.com/about',
+          'knowsAbout': a.knowsAbout,
+          'worksFor': {
+            '@id': 'https://tobitashinchi-recruit.com/#organization'
+          }
+        }))
       ]
     }, null, 2);
   } else if (cleanPath === '/site-compare' || cleanPath === '/site-compare/' || cleanPath === '/site-comparison' || cleanPath === '/site-comparison/') {
@@ -1483,17 +1674,20 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
             '@type': 'SpeakableSpecification',
             'cssSelector': ['h1', '#compare-hero', '#categories-directory']
           },
-          'mainEntity': {
-            '@type': 'ItemList',
-            'name': '飛田新地求人 働き方・希望別カテゴリー一覧（27項目）',
-            'numberOfItems': COMPARE_SUBPAGES.length,
-            'itemListElement': COMPARE_SUBPAGES.map((item, idx) => ({
-              '@type': 'ListItem',
-              'position': idx + 1,
-              'name': item.itemName,
-              'url': `https://tobitashinchi-recruit.com/compare/${item.slug}`
-            }))
-          }
+          'mainEntity': (() => {
+            const indexableCompareSubpages = COMPARE_SUBPAGES.filter((item) => !item.seoNoindex);
+            return {
+              '@type': 'ItemList',
+              'name': `働き方・希望別カテゴリー一覧（主要${indexableCompareSubpages.length}項目）`,
+              'numberOfItems': indexableCompareSubpages.length,
+              'itemListElement': indexableCompareSubpages.map((item, idx) => ({
+                '@type': 'ListItem',
+                'position': idx + 1,
+                'name': item.itemName,
+                'url': `https://tobitashinchi-recruit.com/compare/${item.slug}`
+              }))
+            };
+          })()
         },
         {
           '@type': 'BreadcrumbList',
@@ -1527,6 +1721,9 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
     } else {
       const item = COMPARE_SUBPAGE_MAP[slug];
       if (item) {
+        if (item.seoNoindex) {
+          isNoindex = true;
+        }
         title = item.seoTitle;
         description = item.metaDescription;
         canonicalUrl = `https://tobitashinchi-recruit.com/compare/${item.slug}`;
@@ -1600,8 +1797,8 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
 
     if (catDef) {
       const catQuestions = FAQ_100_LIST.filter(f => f.category12 === catDef.id);
-      title = `【${catDef.label}】飛田新地求人のよくある質問（全${catQuestions.length}問）｜飛田ガールズ`;
-      description = `${catDef.description}。飛田新地求人のよくある質問から「${catDef.label}」に関するQ&Aを分かりやすくまとめました。`;
+      title = `【${catDef.label}】飛田新地のよくある質問（全${catQuestions.length}問）｜飛田ガールズ`;
+      description = `${catDef.description}。飛田新地の働き方に関する「${catDef.label}」のよくある質問と回答をまとめました。`;
       canonicalUrl = `https://tobitashinchi-recruit.com/faq/${catDef.slug}`;
       customNoscript = buildFaqNoscript(catDef.slug);
 
@@ -1663,7 +1860,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
         ]
       }, null, 2);
     } else {
-      title = '飛田新地求人のよくある質問｜仕事内容・給料・応募条件をQ&Aで解説';
+      title = '飛田新地のよくある質問｜仕事内容・給料・応募条件をQ&Aで解説｜飛田ガールズ';
       description = '飛田新地で働く前に知っておきたい仕事内容・給料・応募条件・身バレ対策などの疑問をQ&A形式で分かりやすくまとめました。未経験・経験者どちらも確認できます。';
       canonicalUrl = 'https://tobitashinchi-recruit.com/faq';
       customNoscript = buildFaqNoscript();
@@ -1847,7 +2044,7 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
     html = html.replace(/<\/head>/i, `  <meta name="description" content="${escapeHtml(description)}" />\n</head>`);
   }
 
-  // Replace Canonical URL & Robots for 404 and 301
+  // Replace Canonical URL & Robots for 404, 301, and noindex articles
   if (status === 404) {
     if (/<meta\s+name=["']robots["'][^>]*>/i.test(html)) {
       html = html.replace(/<meta\s+name=["']robots["'][^>]*>/i, '<meta name="robots" content="noindex, nofollow" />');
@@ -1863,6 +2060,13 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
       html = html.replace(/<\/head>/i, `  <link rel="canonical" href="${canonicalUrl}" />\n</head>`);
     }
   } else {
+    if (isNoindex) {
+      if (/<meta\s+name=["']robots["'][^>]*>/i.test(html)) {
+        html = html.replace(/<meta\s+name=["']robots["'][^>]*>/i, '<meta name="robots" content="noindex, follow" />');
+      } else {
+        html = html.replace(/<\/head>/i, '  <meta name="robots" content="noindex, follow" />\n</head>');
+      }
+    }
     if (/<link\s+rel=["']canonical["'][^>]*>/i.test(html)) {
       html = html.replace(/<link\s+rel=["']canonical["'][^>]*>/i, `<link rel="canonical" href="${canonicalUrl}" />`);
     } else {
@@ -1956,6 +2160,11 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
   [data-ssr-content="true"] .ssr-hero-stamp { position: absolute; bottom: 24px; right: 24px; background: rgba(255, 255, 255, 0.95); padding: 10px 14px; border-radius: 14px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12); border: 1px solid #ffe4e6; display: flex; flex-direction: column; align-items: center; line-height: 1.2; }
   [data-ssr-content="true"] .ssr-hero-stamp span { font-size: 11px; font-weight: 800; color: #d2547b; }
   [data-ssr-content="true"] .ssr-hero-stamp strong { font-size: 14px; font-weight: 800; color: #a13762; }
+  [data-ssr-content="true"] .ssr-hero-pickup { width: 100%; max-width: 852px; margin: 0 auto 24px; background: rgba(255, 255, 255, 0.92); border: 1px solid #ffe4e6; border-radius: 24px; padding: 20px; text-align: left; box-shadow: 0 4px 16px rgba(44, 26, 30, 0.05); box-sizing: border-box; }
+  [data-ssr-content="true"] .ssr-hero-pickup h2 { font-size: 14px; font-weight: 800; color: #2c1a1e; margin: 0 0 12px; padding: 0; border-left: none; }
+  [data-ssr-content="true"] .ssr-hero-pickup ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  [data-ssr-content="true"] .ssr-hero-pickup li { margin: 0; }
+  [data-ssr-content="true"] .ssr-hero-pickup a { display: block; padding: 8px 10px; border-radius: 10px; color: #2c1a1e; text-decoration: none; border-bottom: none; font-size: 13px; font-weight: 700; line-height: 1.45; }
   [data-ssr-content="true"] main { max-width: 900px; margin: 0 auto; padding: 88px 16px 56px; box-sizing: border-box; }
   [data-ssr-content="true"] main.ssr-below-fold { padding-top: 24px; }
   [data-ssr-content="true"] main.ssr-blog-shell { max-width: 768px; padding-top: 96px; }
@@ -1979,6 +2188,10 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
   [data-ssr-content="true"] th, [data-ssr-content="true"] td { border: 1px solid #f3dce2; padding: 10px 14px; text-align: left; vertical-align: top; }
   [data-ssr-content="true"] th { background: #fff0f4; color: #2c1a1e; font-weight: 700; width: 28%; }
   [data-ssr-content="true"] td { background: #ffffff; color: #4a3b40; }
+  [data-ssr-content="true"] .ssr-trust-box { background: #fff5f8; border: 1px solid #ffe4e6; border-radius: 16px; padding: 16px 18px; margin: 16px 0 22px; }
+  [data-ssr-content="true"] .ssr-trust-box h3 { margin: 0 0 8px; font-size: 1rem; color: #2c1a1e; }
+  [data-ssr-content="true"] .ssr-trust-box p { margin: 0 0 8px; font-size: 13.5px; }
+  [data-ssr-content="true"] .ssr-trust-box p:last-child { margin-bottom: 0; }
   [data-ssr-content="true"] dl { margin: 12px 0 18px; }
   [data-ssr-content="true"] dt { font-weight: 700; color: #2c1a1e; margin: 14px 0 4px; padding-top: 10px; border-top: 1px dashed #f3dce2; }
   [data-ssr-content="true"] dt:first-child { border-top: none; padding-top: 0; }

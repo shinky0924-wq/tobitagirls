@@ -5,7 +5,7 @@
 
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import * as LucideIcons from 'lucide-react';
+import LucideIcon from './LucideIcon';
 import {
   FAQ100Item,
   FAQ12Category,
@@ -30,8 +30,7 @@ function OutlineIcon({
   size?: number;
   className?: string;
 }) {
-  const IconComponent = (LucideIcons as any)[name] || LucideIcons.HelpCircle;
-  return <IconComponent size={size} strokeWidth={1.75} className={className} />;
+  return <LucideIcon name={name || 'HelpCircle'} size={size} strokeWidth={1.75} className={className} />;
 }
 
 const POPULAR_KEYWORDS = [
@@ -161,7 +160,15 @@ export default function FAQPage({
   const [selectedCategory, setSelectedCategory] = useState<FAQ12Category | 'all'>(() => {
     return resolveFaq12Category(initialCategory) || 'all';
   });
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(() => {
+    if (typeof window === 'undefined') return '';
+    try {
+      const sp = new URLSearchParams(window.location.search);
+      const q = sp.get('search') || sp.get('q') || '';
+      if (q && !q.includes('search_term_string')) return q;
+    } catch {}
+    return '';
+  });
   const [openQuestionKeys, setOpenQuestionKeys] = useState<Set<string>>(() => new Set(['starter-faq-rec-1']));
   const [openCategoryIds, setOpenCategoryIds] = useState<Set<string>>(() => {
     const resolved = resolveFaq12Category(initialCategory);
@@ -346,10 +353,10 @@ export default function FAQPage({
     const prevTitle = document.title;
     const catCount = activeCategoryDef ? faqsByCategory[activeCategoryDef.id].length : FAQ_100_LIST.length;
     const pageTitle = activeCategoryDef
-      ? `【${activeCategoryDef.label}】飛田新地求人のよくある質問（全${catCount}問）｜飛田ガールズ`
-      : '飛田新地求人のよくある質問｜仕事内容・給料・応募条件をQ&Aで解説';
+      ? `【${activeCategoryDef.label}】飛田新地のよくある質問（全${catCount}問）｜飛田ガールズ`
+      : '飛田新地のよくある質問｜仕事内容・給料・応募条件をQ&Aで解説｜飛田ガールズ';
     const pageDesc = activeCategoryDef
-      ? `${activeCategoryDef.description}。飛田新地求人のよくある質問から「${activeCategoryDef.label}」に関するQ&Aを分かりやすくまとめました。`
+      ? `${activeCategoryDef.description}。飛田新地の働き方に関する「${activeCategoryDef.label}」のよくある質問と回答をまとめました。`
       : '飛田新地で働く前に知っておきたい仕事内容・給料・応募条件・身バレ対策などの疑問をQ&A形式で分かりやすくまとめました。未経験・経験者どちらも確認できます。';
 
     document.title = pageTitle;
@@ -703,7 +710,7 @@ export default function FAQPage({
 
                 <h1
                   id="faq-hero-heading"
-                  className="font-display font-bold text-2xl sm:text-3xl md:text-[32px] text-[#383038] leading-[1.35] [text-wrap:balance]"
+                  className="font-display font-bold text-2xl sm:text-3xl md:text-[32px] text-[#383038] leading-[1.35] text-balance max-w-xl lg:max-w-none"
                 >
                   飛田新地の疑問を、ここですべて解決。
                 </h1>
@@ -791,7 +798,7 @@ export default function FAQPage({
           className="bg-[#FFFFFF] border border-[#F0E5E9] rounded-2xl p-5 sm:p-7 shadow-[0_1px_4px_rgba(56,48,56,0.03)] space-y-4"
         >
           <div>
-            <h2 id="faq-search-heading" className="text-lg sm:text-xl font-bold text-[#383038]">
+            <h2 id="faq-search-heading" className="text-lg sm:text-xl font-bold text-[#383038] leading-snug text-balance max-w-2xl">
               知りたい言葉から検索
             </h2>
             <p className="text-xs sm:text-sm text-[#777078] mt-1">
@@ -914,7 +921,7 @@ export default function FAQPage({
         {selectedCategory === 'all' && (
           <section aria-labelledby="faq-essential-heading" className="space-y-4">
             <div>
-              <h2 id="faq-essential-heading" className="text-xl sm:text-2xl font-bold text-[#383038]">
+              <h2 id="faq-essential-heading" className="text-xl sm:text-2xl font-bold text-[#383038] leading-snug text-balance max-w-2xl">
                 初めての方へ｜まず知っておきたい基本の5問
               </h2>
               <p className="text-xs sm:text-sm text-[#777078] mt-1">
@@ -936,7 +943,7 @@ export default function FAQPage({
         <section id="faq-theme-directory" className="scroll-mt-24 space-y-6" aria-labelledby="faq-directory-heading">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
             <div>
-              <h2 id="faq-directory-heading" className="text-xl sm:text-2xl font-bold text-[#383038]">
+              <h2 id="faq-directory-heading" className="text-xl sm:text-2xl font-bold text-[#383038] leading-snug text-balance max-w-2xl">
                 {activeCategoryDef
                   ? `${activeCategoryDef.number}. ${activeCategoryDef.label}の質問一覧`
                   : 'カテゴリー別にQ&Aを探す'}
@@ -1177,7 +1184,7 @@ export default function FAQPage({
            ============================================================ */}
         <section aria-labelledby="faq-related-pages-heading" className="space-y-4">
           <div>
-            <h2 id="faq-related-pages-heading" className="text-xl sm:text-2xl font-bold text-[#383038]">
+            <h2 id="faq-related-pages-heading" className="text-xl sm:text-2xl font-bold text-[#383038] leading-snug text-balance max-w-2xl">
               あわせて確認したい求人ガイド
             </h2>
             <p className="text-xs sm:text-sm text-[#777078] mt-1">
@@ -1219,7 +1226,7 @@ export default function FAQPage({
           <div className="bg-[#FFFFFF] border border-[#F0E5E9] rounded-2xl p-6 sm:p-8 text-center shadow-[0_1px_4px_rgba(56,48,56,0.03)]">
             <h2
               id="faq-final-cta-heading"
-              className="text-lg sm:text-2xl font-bold text-[#383038] mb-2"
+              className="text-lg sm:text-2xl font-bold text-[#383038] leading-snug mb-2 text-balance max-w-xl sm:max-w-2xl mx-auto"
             >
               まだ解決していない疑問はありませんか？
             </h2>

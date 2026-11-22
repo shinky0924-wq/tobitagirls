@@ -3,33 +3,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { HERO_IMAGE_URL } from '../data';
 import LucideIcon from './LucideIcon';
 import { SiteContent } from '../siteContent';
-import { BlogArticle, getValidArticleEyeCatch } from '../blogData';
 import { ArticleCardImage } from './ArticleCardImage';
+import { FEATURED_HERO_ARTICLES, HERO_IMAGE_WEBP_URL } from '../featuredArticles';
 
 interface HeroProps {
   content: SiteContent['hero'];
   onCtaclick: () => void;
   onBlogClick?: () => void;
-  articles?: BlogArticle[];
   onArticleClick?: (slug: string) => void;
 }
 
-export default function Hero({ content, onCtaclick, onBlogClick, articles, onArticleClick }: HeroProps) {
-  const [randomArticles, setRandomArticles] = useState<BlogArticle[]>([]);
-
-  useEffect(() => {
-    if (articles && articles.length > 0) {
-      // Shuffle and pick 5 articles
-      const shuffled = [...articles].sort(() => 0.5 - Math.random());
-      setRandomArticles(shuffled.slice(0, 5));
-    }
-  }, [articles]);
-
+export default function Hero({ content, onBlogClick, onArticleClick }: HeroProps) {
   return (
     <section className="relative pt-28 md:pt-36 pb-16 md:pb-24 overflow-hidden hero-pattern bg-radial from-rose-50/20 via-transparent to-transparent">
       {/* Backdrops */}
@@ -45,19 +33,19 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
           id="hero-tagline"
         >
           <span className="relative flex h-2 w-2 inline-block mr-2 rounded-full bg-secondary animate-ping align-middle" />
-          {content.tagline && !content.tagline.includes('店舗直営公式求人') && !content.tagline.includes('24時間受付中') ? content.tagline : '飛田新地の求人案内｜当店の公式採用情報'}
+          {content.tagline && !content.tagline.includes('店舗直営公式求人') && !content.tagline.includes('24時間受付中') ? content.tagline : '飛田新地の求人案内｜料亭直営の公式採用窓口'}
         </motion.div>
 
         {/* Main Display Title */}
         <motion.h1 
-          className="font-display font-extrabold text-2xl md:text-5xl lg:text-5xl text-on-surface leading-tight mb-6 break-words"
+          className="font-display font-extrabold text-2xl md:text-5xl lg:text-5xl text-on-surface leading-tight mb-6 break-words text-balance max-w-xl sm:max-w-3xl mx-auto"
           initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
           id="hero-title"
         >
-          <span className="block text-on-surface">飛田新地で働くことを</span>
-          <span className="block text-secondary">考えている女性へ。</span>
+          <span className="block text-on-surface">飛田新地の求人案内｜</span>
+          <span className="block text-secondary">働くことを考えている女性へ。</span>
         </motion.h1>
 
         {/* Sub description */}
@@ -102,26 +90,29 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
           <div className="absolute -inset-4 bg-gradient-to-tr from-secondary/10 to-rose-200/20 rounded-[44px] blur-2xl pointer-events-none" />
 
           <div className="relative bg-white p-3 rounded-[28px] sm:rounded-[36px] shadow-2xl border border-rose-50/50 overflow-hidden transform hover:scale-[1.01] transition-transform duration-500">
-            <img 
-              src={HERO_IMAGE_URL} 
-              alt="飛田新地のお仕事・料亭直営求人で夢を叶える場所" 
-              className="w-full h-auto rounded-[20px] sm:rounded-[28px] object-cover aspect-[16/9] object-center bg-gray-100"
-              decoding="async"
-              fetchPriority="high"
-              width={800}
-              height={450}
-              referrerPolicy="no-referrer"
-              id="hero-img-element"
-              onError={(e) => {
-                const target = e.currentTarget;
-                if (!target.dataset.triedFallback) {
-                  target.dataset.triedFallback = '1';
-                  target.src = '/images/tobita_dream_hero_banner_1782557055526.jpg';
-                } else {
-                  target.onerror = null;
-                }
-              }}
-            />
+            <picture>
+              <source srcSet={HERO_IMAGE_WEBP_URL} type="image/webp" />
+              <img 
+                src={HERO_IMAGE_URL} 
+                alt="飛田新地のお仕事・料亭直営求人で夢を叶える場所" 
+                className="w-full h-auto rounded-[20px] sm:rounded-[28px] object-cover aspect-[16/9] object-center bg-gray-100"
+                decoding="async"
+                fetchPriority="high"
+                width={800}
+                height={450}
+                referrerPolicy="no-referrer"
+                id="hero-img-element"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.dataset.triedFallback) {
+                    target.dataset.triedFallback = '1';
+                    target.src = '/images/tobita_dream_hero_banner_1782557055526.jpg';
+                  } else {
+                    target.onerror = null;
+                  }
+                }}
+              />
+            </picture>
             
             {/* Overlapping Glassmorphism Stamp */}
             <div className="absolute bottom-6 right-6 md:bottom-8 md:right-8 bg-white/95 backdrop-blur-md p-3 md:p-4 rounded-xl md:rounded-2xl shadow-xl border border-rose-100 flex flex-col items-center z-10">
@@ -136,96 +127,94 @@ export default function Hero({ content, onCtaclick, onBlogClick, articles, onArt
           <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-rose-50 rounded-full border border-rose-100/30 flex items-center justify-center -z-10 shadow-sm" />
         </motion.div>
 
-        {/* Hero Recommendation Columns */}
-        {randomArticles.length > 0 && (
-          <motion.div 
-            className="flex flex-col gap-5 justify-center items-center w-full max-w-xl"
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            id="hero-cta-container"
-          >
-            <div className="w-full text-left bg-gradient-to-br from-white to-[#fffbfd] p-5 md:p-6 rounded-3xl border border-secondary/20 shadow-xl shadow-rose-100/30 relative mt-2" id="hero-random-columns">
-              {/* Elegant floating accent sparkles */}
-              <div className="absolute -top-3 -right-3 bg-secondary text-white text-[10px] px-3 py-1 rounded-full font-black shadow-sm flex items-center gap-1 border border-secondary/10 tracking-widest animate-pulse">
-                <LucideIcon name="Sparkles" size={11} />
-                <span>PICK UP</span>
-              </div>
-              
-              <h2 className="font-sans font-extrabold text-sm md:text-base text-secondary mb-4 flex items-center gap-2 border-b border-rose-100 pb-3">
-                <span className="bg-secondary text-white text-[9px] tracking-wider px-2 py-0.5 rounded-md font-black">RECOMMEND</span>
-                <span className="bg-gradient-to-r from-secondary to-[#a13762] bg-clip-text text-transparent font-black">人気のお仕事コラム（おすすめ5選）</span>
-              </h2>
-              
-              <div className="flex flex-col gap-2.5">
-                {randomArticles.map((art, index) => (
-                  <a
-                    key={art.id}
-                    href={`/blog/${art.slug}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (onArticleClick) onArticleClick(art.slug);
-                    }}
-                    className="w-full text-left font-sans text-xs md:text-sm text-on-surface bg-white hover:bg-secondary-container/10 p-2.5 sm:p-3 rounded-2xl border border-rose-100 hover:border-secondary-container/50 transition-all flex items-center justify-between gap-3 cursor-pointer group shadow-[0_2px_8px_-3px_rgba(210,84,123,0.06)] hover:shadow-[0_4px_12px_-2px_rgba(210,84,123,0.12)] hover:-translate-y-0.5"
-                    id={`hero-col-item-${art.id}`}
-                  >
-                    <div className="flex items-center gap-3 overflow-hidden flex-1">
-                      {/* Eyecatch thumbnail */}
-                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden bg-rose-50 border border-rose-100/60 shrink-0 relative flex items-center justify-center shadow-xs">
-                        <ArticleCardImage
-                          src={getValidArticleEyeCatch(art)}
-                          alt={art.title}
-                          category={art.category}
-                          categoryLabel={art.categoryLabel}
-                          className="w-full h-full"
-                        />
-                      </div>
-
-                      {/* Title & category */}
-                      <div className="overflow-hidden flex-1">
-                        <div className="flex items-center gap-1.5 mb-0.5">
-                          <span className="text-[10px] font-black text-secondary bg-rose-50 px-1.5 py-0.2 rounded border border-rose-100/80">
-                            {art.categoryLabel || '解説'}
-                          </span>
-                          <span className="text-[10px] text-gray-400 font-mono">
-                            No.{String(index + 1).padStart(2, '0')}
-                          </span>
-                        </div>
-                        <span className="truncate block text-gray-800 group-hover:text-secondary transition-colors font-bold text-xs sm:text-sm leading-snug">
-                          {art.title}
-                        </span>
-                      </div>
+        {/* Hero Recommendation Columns (Deterministic, Zero CLS) */}
+        <motion.div 
+          className="flex flex-col gap-5 justify-center items-center w-full max-w-xl"
+          initial={false}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          id="hero-cta-container"
+        >
+          <div className="w-full text-left bg-gradient-to-br from-white to-[#fffbfd] p-5 md:p-6 rounded-3xl border border-secondary/20 shadow-xl shadow-rose-100/30 relative mt-2" id="hero-random-columns">
+            {/* Elegant floating accent sparkles */}
+            <div className="absolute -top-3 -right-3 bg-secondary text-white text-[10px] px-3 py-1 rounded-full font-black shadow-sm flex items-center gap-1 border border-secondary/10 tracking-widest animate-pulse">
+              <LucideIcon name="Sparkles" size={11} />
+              <span>PICK UP</span>
+            </div>
+            
+            <h2 className="font-sans font-extrabold text-sm md:text-base text-secondary mb-4 flex items-center gap-2 border-b border-rose-100 pb-3">
+              <span className="bg-secondary text-white text-[9px] tracking-wider px-2 py-0.5 rounded-md font-black">RECOMMEND</span>
+              <span className="bg-gradient-to-r from-secondary to-[#a13762] bg-clip-text text-transparent font-black">人気のお仕事コラム（おすすめ5選）</span>
+            </h2>
+            
+            <div className="flex flex-col gap-2.5">
+              {FEATURED_HERO_ARTICLES.map((art, index) => (
+                <a
+                  key={art.id}
+                  href={`/blog/${art.slug}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (onArticleClick) onArticleClick(art.slug);
+                  }}
+                  className="w-full text-left font-sans text-xs md:text-sm text-on-surface bg-white hover:bg-secondary-container/10 p-2.5 sm:p-3 rounded-2xl border border-rose-100 hover:border-secondary-container/50 transition-all flex items-center justify-between gap-3 cursor-pointer group shadow-[0_2px_8px_-3px_rgba(210,84,123,0.06)] hover:shadow-[0_4px_12px_-2px_rgba(210,84,123,0.12)] hover:-translate-y-0.5"
+                  id={`hero-col-item-${art.id}`}
+                >
+                  <div className="flex items-center gap-3 overflow-hidden flex-1">
+                    {/* Eyecatch thumbnail */}
+                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden bg-rose-50 border border-rose-100/60 shrink-0 relative flex items-center justify-center shadow-xs">
+                      <ArticleCardImage
+                        src={art.eyeCatch}
+                        alt={art.title}
+                        category={art.category}
+                        categoryLabel={art.categoryLabel}
+                        className="w-full h-full"
+                      />
                     </div>
 
-                      <div className="flex items-center gap-1.5 shrink-0 pl-1">
-                        <span className="hidden sm:inline text-[10px] text-secondary font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                          読む
+                    {/* Title & category */}
+                    <div className="overflow-hidden flex-1">
+                      <div className="flex items-center gap-1.5 mb-0.5">
+                        <span className="text-[10px] font-black text-secondary bg-rose-50 px-1.5 py-0.2 rounded border border-rose-100/80">
+                          {art.categoryLabel || '解説'}
                         </span>
-                        <LucideIcon name="ChevronRight" className="text-secondary/40 group-hover:text-secondary group-hover:translate-x-0.5 transition-all shrink-0" size={16} />
+                        <span className="text-[10px] text-gray-400 font-mono">
+                          No.{String(index + 1).padStart(2, '0')}
+                        </span>
                       </div>
-                  </a>
-                ))}
-              </div>
-              
-              {onBlogClick && (
-                <div className="mt-4 text-center border-t border-rose-100/50 pt-4">
-                  <a
-                    href="/blog"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onBlogClick();
-                    }}
-                    className="inline-flex items-center gap-2 text-xs md:text-sm font-extrabold text-white bg-gradient-to-r from-secondary to-[#e2628b] hover:from-[#c2446c] hover:to-[#d2547b] px-6 py-2.5 rounded-full shadow-md shadow-rose-200/50 hover:shadow-lg transition-all cursor-pointer group"
-                    id="hero-all-columns-link"
-                  >
-                    <span>すべてのコラムを見る</span>
-                    <LucideIcon name="ChevronRight" className="group-hover:translate-x-1 transition-transform" size={14} />
-                  </a>
-                </div>
-              )}
+                      <span className="truncate block text-gray-800 group-hover:text-secondary transition-colors font-bold text-xs sm:text-sm leading-snug">
+                        {art.title}
+                      </span>
+                    </div>
+                  </div>
+
+                    <div className="flex items-center gap-1.5 shrink-0 pl-1">
+                      <span className="hidden sm:inline text-[10px] text-secondary font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                        読む
+                      </span>
+                      <LucideIcon name="ChevronRight" className="text-secondary/40 group-hover:text-secondary group-hover:translate-x-0.5 transition-all shrink-0" size={16} />
+                    </div>
+                </a>
+              ))}
             </div>
-          </motion.div>
-        )}
+            
+            {onBlogClick && (
+              <div className="mt-4 text-center border-t border-rose-100/50 pt-4">
+                <a
+                  href="/blog"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onBlogClick();
+                  }}
+                  className="inline-flex items-center gap-2 text-xs md:text-sm font-extrabold text-white bg-gradient-to-r from-secondary to-[#e2628b] hover:from-[#c2446c] hover:to-[#d2547b] px-6 py-2.5 rounded-full shadow-md shadow-rose-200/50 hover:shadow-lg transition-all cursor-pointer group"
+                  id="hero-all-columns-link"
+                >
+                  <span>すべてのコラムを見る</span>
+                  <LucideIcon name="ChevronRight" className="group-hover:translate-x-1 transition-transform" size={14} />
+                </a>
+              </div>
+            )}
+          </div>
+        </motion.div>
 
         {/* Guarantee Badge */}
         <motion.div 

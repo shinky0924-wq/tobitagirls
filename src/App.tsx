@@ -26,13 +26,14 @@ import {
   LazySiteComparisonPage,
   LazyTopicClusterPage,
 } from './routeLoaders';
-import { TOPIC_CLUSTERS } from './topicClusterData';
 import { SITE_COMPARE_SEO } from './compareData';
 import LucideIcon from './components/LucideIcon';
-import { getStoredArticles, BlogArticle, BLOG_ARTICLES, getValidArticleEyeCatch, mergeWithDefaultArticles } from './blogData';
+import type { BlogArticle } from './blogData';
+import { TOPIC_ROUTE_PATHS } from './featuredArticles';
 import { getStoredSiteContent, SiteContent } from './siteContent';
-import { getBlogArticlesFromFirestore, getSiteContentFromFirestore, saveBlogArticlesToFirestore, saveSiteContentToFirestore } from './firebase';
+import { HomeRequirementsSummary, HomeFaqPreview } from './components/HomeRequirementsAndFaq';
 import { captureInitialHomeJsonLd, restoreHomeJsonLd } from './utils/jsonLd';
+import { trackAiSearchReferral, trackAiSearchPageView } from './utils/aiAnalytics';
 
 if (typeof window !== 'undefined') {
   captureInitialHomeJsonLd();
@@ -51,6 +52,7 @@ export default function App() {
   });
 
   useEffect(() => {
+    trackAiSearchReferral();
     const handlePopState = () => {
       setPath(window.location.pathname + window.location.hash);
     };
@@ -231,18 +233,34 @@ export default function App() {
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
+    trackAiSearchPageView(cleanPath || '/');
 
     let pageTitle = '飛田新地求人｜飛田ガールズ【公式・料亭直営】未経験歓迎・即日日払い';
     let pageDesc = '飛田新地で働くか迷っている女性へ。飛田ガールズは料亭直営の求人案内サイトです。仕事内容や接客方法、給料・全額日払いの仕組み、応募条件、身バレ対策まで詳しく解説。未経験の方も経験者の方も、応募前に知っておきたい情報を分かりやすく紹介しています。';
     let canonicalUrl = 'https://tobitashinchi-recruit.com/';
 
     if (currentTab === 'cluster') {
-      const topic = TOPIC_CLUSTERS[clusterTopic];
-      if (topic) {
-        pageTitle = topic.seoTitle;
-        pageDesc = topic.metaDescription;
-        canonicalUrl = `https://tobitashinchi-recruit.com${topic.path}`;
+      canonicalUrl = `https://tobitashinchi-recruit.com${TOPIC_ROUTE_PATHS[clusterTopic] || `/${clusterTopic}`}`;
+      let canonicalLink = document.querySelector('link[rel="canonical"]');
+      if (canonicalLink) {
+        canonicalLink.setAttribute('href', canonicalUrl);
       }
+      import('./topicClusterData').then(({ TOPIC_CLUSTERS }) => {
+        const topic = TOPIC_CLUSTERS[clusterTopic];
+        if (topic) {
+          document.title = topic.seoTitle;
+          const md = document.querySelector('meta[name="description"]');
+          if (md) md.setAttribute('content', topic.metaDescription);
+          const ot = document.querySelector('meta[property="og:title"]');
+          if (ot) ot.setAttribute('content', topic.seoTitle);
+          const od = document.querySelector('meta[property="og:description"]');
+          if (od) od.setAttribute('content', topic.metaDescription);
+          const tt = document.querySelector('meta[name="twitter:title"]');
+          if (tt) tt.setAttribute('content', topic.seoTitle);
+          const td = document.querySelector('meta[name="twitter:description"]');
+          if (td) td.setAttribute('content', topic.metaDescription);
+        }
+      }).catch(() => {});
     } else if (currentTab === 'site-compare') {
       pageTitle = SITE_COMPARE_SEO.title;
       pageDesc = SITE_COMPARE_SEO.description;
@@ -266,7 +284,7 @@ export default function App() {
         canonicalUrl = 'https://tobitashinchi-recruit.com/blog';
       }
     } else if (currentTab === 'faq') {
-      pageTitle = '飛田新地求人のよくある質問｜仕事内容・給料・応募条件をQ&Aで解説';
+      pageTitle = '飛田新地のよくある質問｜仕事内容・給料・応募条件をQ&Aで解説｜飛田ガールズ';
       pageDesc = '飛田新地で働く前に知っておきたい仕事内容・給料・応募条件・身バレ対策などの疑問をQ&A形式で分かりやすくまとめました。未経験・経験者どちらも確認できます。';
       canonicalUrl = selectedFaqCategory ? `https://tobitashinchi-recruit.com/faq/${selectedFaqCategory}` : 'https://tobitashinchi-recruit.com/faq';
     } else if (currentTab === 'recruit') {
@@ -277,9 +295,14 @@ export default function App() {
       pageTitle = '管理パネル｜飛田ガールズ';
     }
 
-    // Only update if not handled by dedicated page components (BlogSection detail / ComparisonPage)
-    if ((currentTab !== 'blog' || !selectedSlug) && currentTab !== 'compare') {
+    // Only update if not handled by dedicated page components (BlogSection detail / ComparisonPage / Cluster)
+    if ((currentTab !== 'blog' || !selectedSlug) && currentTab !== 'compare' && currentTab !== 'cluster') {
       document.title = pageTitle;
+
+      const metaRobots = document.querySelector('meta[name="robots"]');
+      if (metaRobots) {
+        metaRobots.setAttribute('content', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
+      }
 
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) metaDesc.setAttribute('content', pageDesc);
@@ -353,7 +376,7 @@ export default function App() {
     }
   }, [currentTab, pendingScrollTarget]);
 
-  const [blogArticles, setBlogArticles] = useState<BlogArticle[]>(() => getStoredArticles());
+  const [blogArticles, setBlogArticles] = useState<BlogArticle[]>([]);
   const [siteContent, setSiteContent] = useState<SiteContent>(getStoredSiteContent());
   const [isAdminMode, setIsAdminMode] = useState(false);
 
@@ -372,39 +395,38 @@ export default function App() {
   }, []);
 
   const fetchArticles = async () => {
+    const blogMod = await import('./blogData');
     try {
-      // 1. Try to fetch from Firestore first
-      const firestoreData = await getBlogArticlesFromFirestore();
+      const fbMod = await import('./firebase');
+      const firestoreData = await fbMod.getBlogArticlesFromFirestore();
       if (firestoreData && firestoreData.length > 0) {
-        const { merged } = mergeWithDefaultArticles(firestoreData);
+        const { merged } = blogMod.mergeWithDefaultArticles(firestoreData);
         setBlogArticles(merged);
         return;
       }
 
-      // 2. Fallback to API if not in Firestore
       const res = await fetch('/api/cms/articles');
       if (res.ok) {
         const data = await res.json();
-        const { merged } = mergeWithDefaultArticles(data);
+        const { merged } = blogMod.mergeWithDefaultArticles(data);
         setBlogArticles(merged);
       } else {
-        setBlogArticles(getStoredArticles());
+        setBlogArticles(blogMod.getStoredArticles());
       }
     } catch (e) {
-      setBlogArticles(getStoredArticles());
+      setBlogArticles(blogMod.getStoredArticles());
     }
   };
 
   const fetchSiteContent = async () => {
     try {
-      // 1. Try to fetch from Firestore first
-      const firestoreData = await getSiteContentFromFirestore();
+      const fbMod = await import('./firebase');
+      const firestoreData = await fbMod.getSiteContentFromFirestore();
       if (firestoreData) {
         setSiteContent(firestoreData);
         return;
       }
 
-      // 2. Fallback to API if not in Firestore
       const res = await fetch('/api/cms/site');
       if (res.ok) {
         const data = await res.json();
@@ -418,7 +440,12 @@ export default function App() {
   };
 
   useEffect(() => {
-    fetchArticles();
+    if ((currentTab === 'blog' || currentTab === 'admin') && blogArticles.length === 0) {
+      fetchArticles();
+    }
+  }, [currentTab]);
+
+  useEffect(() => {
     fetchSiteContent();
   }, []);
 
@@ -452,7 +479,7 @@ export default function App() {
         onCtaclick={handleScrollToForm} 
         onScrollToSection={handleScrollToSection}
         onNavigateTopic={(tid) => {
-          navigate(TOPIC_CLUSTERS[tid]?.path || `/${tid}`);
+          navigate(TOPIC_ROUTE_PATHS[tid] || `/${tid}`);
           window.scrollTo(0, 0);
         }}
         isAdminMode={isAdminMode}
@@ -480,9 +507,20 @@ export default function App() {
                   setCurrentTab('blog');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                articles={blogArticles}
                 onArticleClick={(slug) => {
                   navigate(`/blog/${slug}`);
+                }}
+              />
+
+              {/* Basic Conditions & Recruitment Summary (SSR Parity) */}
+              <HomeRequirementsSummary
+                onNavigateTopic={(topicId) => {
+                  navigate(TOPIC_ROUTE_PATHS[topicId] || `/${topicId}`);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                onNavigatePath={(targetPath) => {
+                  navigate(targetPath);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
               />
 
@@ -510,7 +548,7 @@ export default function App() {
                       }
                     }}
                     onNavigateTopic={(topicId) => {
-                      navigate(TOPIC_CLUSTERS[topicId]?.path || `/${topicId}`);
+                      navigate(TOPIC_ROUTE_PATHS[topicId] || `/${topicId}`);
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
                     onNavigateFaq={() => {
@@ -536,6 +574,13 @@ export default function App() {
                 />
               </div>
 
+              {/* Pick Up FAQ (SSR & FAQPage JSON-LD Parity) */}
+              <HomeFaqPreview
+                onNavigateFaq={() => {
+                  navigate('/faq');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
 
               {/* Onboarding steps list - お仕事までの流れ (WORKFLOW) */}
               <div id="flow">
@@ -707,7 +752,7 @@ export default function App() {
                     navigate('/');
                   }}
                   onNavigateTopic={(tid) => {
-                    navigate(TOPIC_CLUSTERS[tid]?.path || `/${tid}`);
+                    navigate(TOPIC_ROUTE_PATHS[tid] || `/${tid}`);
                   }}
                   onNavigateBlog={(slug) => {
                     if (slug) {
@@ -764,7 +809,7 @@ export default function App() {
           }
         }}
         onNavigateTopic={(tid) => {
-          navigate(TOPIC_CLUSTERS[tid]?.path || `/${tid}`);
+          navigate(TOPIC_ROUTE_PATHS[tid] || `/${tid}`);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
         onScrollToSection={handleScrollToSection}

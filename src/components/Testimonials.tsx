@@ -165,7 +165,7 @@ export default function Testimonials({ onNavigateFaq }: TestimonialsProps = {}) 
             REAL VOICE
           </div>
           
-          <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-[#38242B] leading-tight mb-4 tracking-tight">
+          <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-[#38242B] leading-snug mb-4 tracking-tight text-balance max-w-xl sm:max-w-2xl mx-auto">
             飛田新地で働く女性の声
           </h2>
           

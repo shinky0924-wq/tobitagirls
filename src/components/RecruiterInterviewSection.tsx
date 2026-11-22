@@ -186,7 +186,7 @@ export default function RecruiterInterviewSection() {
             <LucideIcon name="MessageSquareText" size={14} className="text-rose-600" />
             <span>採用担当直撃インタビュー・生の声</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-black text-zinc-900 tracking-tight">
+          <h3 className="text-xl sm:text-2xl font-black text-zinc-900 tracking-tight leading-snug text-balance max-w-2xl">
             実際にお店の求人担当者へのインタビュー
           </h3>
           <p className="text-xs sm:text-sm text-zinc-600 mt-1">

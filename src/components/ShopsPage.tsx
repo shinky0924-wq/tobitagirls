@@ -492,7 +492,7 @@ export default function ShopsPage({
                 <span>満20歳以上の女性対象</span>
               </div>
 
-              <h1 className="text-[26px] sm:text-[32px] lg:text-[34px] font-bold text-[#29252A] leading-[1.35] tracking-tight">
+              <h1 className="text-[25px] sm:text-[32px] lg:text-[34px] font-bold text-[#29252A] leading-[1.35] tracking-tight text-balance max-w-xl lg:max-w-none">
                 自分に合うお店、
                 <br />
                 どうやって選べばいい？
@@ -629,7 +629,7 @@ export default function ShopsPage({
             <p className="text-[13px] font-bold text-[#B83B67]">
               お店選びの基本
             </p>
-            <h2 className="text-[22px] sm:text-[27px] font-bold text-[#29252A] tracking-tight">
+            <h2 className="text-[21px] sm:text-[27px] font-bold text-[#29252A] leading-snug tracking-tight text-balance max-w-2xl">
               お店選びで確認しておきたい4つのポイント
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#888087] leading-relaxed">
@@ -696,7 +696,7 @@ export default function ShopsPage({
               <p className="text-[13px] font-bold text-[#B83B67]">
                 通りごとの違いを知る
               </p>
-              <h2 className="text-[22px] sm:text-[27px] font-bold text-[#29252A] tracking-tight">
+              <h2 className="text-[21px] sm:text-[27px] font-bold text-[#29252A] leading-snug tracking-tight text-balance max-w-2xl">
                 飛田新地の主な通りと特徴を比較
               </h2>
               <p className="text-[15px] sm:text-[16px] text-[#888087] leading-relaxed">
@@ -869,7 +869,7 @@ export default function ShopsPage({
             <p className="text-[13px] font-bold text-[#B83B67]">
               希望条件の整理
             </p>
-            <h2 className="text-[22px] sm:text-[27px] font-bold text-[#29252A] tracking-tight">
+            <h2 className="text-[21px] sm:text-[27px] font-bold text-[#29252A] leading-snug tracking-tight text-balance max-w-2xl">
               あなたに合うお店を見つけるために
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#888087] leading-relaxed">
@@ -961,7 +961,7 @@ export default function ShopsPage({
               <LucideIcon name="AlertTriangle" size={16} className="text-[#D78A75]" />
               <span>応募・相談前の注意ポイント</span>
             </div>
-            <h2 className="text-[22px] sm:text-[27px] font-bold text-[#29252A] tracking-tight">
+            <h2 className="text-[21px] sm:text-[27px] font-bold text-[#29252A] leading-snug tracking-tight text-balance max-w-2xl">
               悪質な求人やスカウトには注意しましょう
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#29252A]/85 leading-relaxed">
@@ -1026,7 +1026,7 @@ export default function ShopsPage({
               <p className="text-[13px] font-bold text-[#B83B67]">
                 10項目のチェックリスト
               </p>
-              <h2 className="text-[22px] sm:text-[27px] font-bold text-[#29252A] tracking-tight">
+              <h2 className="text-[21px] sm:text-[27px] font-bold text-[#29252A] leading-snug tracking-tight text-balance max-w-2xl">
                 相談や面接の前に確認しておきたいこと
               </h2>
               <p className="text-[15px] sm:text-[16px] text-[#888087] leading-relaxed">
@@ -1120,7 +1120,7 @@ export default function ShopsPage({
         >
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div className="space-y-2">
-              <h2 className="text-[22px] sm:text-[27px] font-bold text-[#29252A] tracking-tight">
+              <h2 className="text-[21px] sm:text-[27px] font-bold text-[#29252A] leading-snug tracking-tight text-balance max-w-2xl">
                 お店選びについて、もっと詳しく知りたい方へ
               </h2>
               <p className="text-[15px] text-[#888087] leading-relaxed">
@@ -1200,7 +1200,7 @@ export default function ShopsPage({
            ========================================================= */}
         <section id="shops-faq" className="scroll-mt-20 space-y-6">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[22px] sm:text-[27px] font-bold text-[#29252A] tracking-tight">
+            <h2 className="text-[21px] sm:text-[27px] font-bold text-[#29252A] leading-snug tracking-tight text-balance max-w-2xl">
               お店選びについてよくある質問
             </h2>
             <p className="text-[15px] text-[#888087] leading-relaxed">
@@ -1297,7 +1297,7 @@ export default function ShopsPage({
           </div>
 
           <div className="max-w-2xl mx-auto space-y-3">
-            <h2 className="text-[22px] sm:text-[27px] font-bold text-[#29252A] tracking-tight leading-snug">
+            <h2 className="text-[21px] sm:text-[27px] font-bold text-[#29252A] tracking-tight leading-snug text-balance max-w-xl sm:max-w-2xl mx-auto">
               自分に合うお店を、一緒に考えてみませんか？
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#29252A]/85 leading-relaxed">

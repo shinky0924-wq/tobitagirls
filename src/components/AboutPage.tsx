@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import LucideIcon from './LucideIcon';
 import { updatePageJsonLd } from '../utils/jsonLd';
+import {
+  OFFICIAL_DOMAIN,
+  OFFICIAL_LINE_URL,
+  OFFICIAL_SAME_AS_URLS,
+  CANONICAL_AUTHORS,
+} from '../utils/knowledgeGraph';
 
 interface AboutPageProps {
   onNavigateHome: () => void;
@@ -34,11 +40,52 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
 
     updatePageJsonLd({
       '@context': 'https://schema.org',
-      '@type': 'AboutPage',
-      '@id': 'https://tobitashinchi-recruit.com/about#webpage',
-      'url': canonicalUrl,
-      'name': document.title,
-      'description': desc,
+      '@graph': [
+        {
+          '@type': 'AboutPage',
+          '@id': `${OFFICIAL_DOMAIN}/about#aboutpage`,
+          url: canonicalUrl,
+          name: document.title,
+          description: desc,
+          inLanguage: 'ja-JP',
+          isPartOf: {
+            '@type': 'WebSite',
+            '@id': `${OFFICIAL_DOMAIN}/#website`,
+            name: '飛田ガールズ',
+            url: `${OFFICIAL_DOMAIN}/`,
+          },
+          publisher: {
+            '@id': `${OFFICIAL_DOMAIN}/#organization`,
+          },
+        },
+        {
+          '@type': 'Organization',
+          '@id': `${OFFICIAL_DOMAIN}/#organization`,
+          name: '飛田ガールズ（料理組合公認 料亭直営採用窓口）',
+          url: `${OFFICIAL_DOMAIN}/`,
+          sameAs: OFFICIAL_SAME_AS_URLS,
+          publishingPrinciples: canonicalUrl,
+          logo: `${OFFICIAL_DOMAIN}/icon.png`,
+          contactPoint: {
+            '@type': 'ContactPoint',
+            contactType: 'customer support',
+            url: OFFICIAL_LINE_URL,
+            availableLanguage: ['Japanese'],
+          },
+        },
+        ...CANONICAL_AUTHORS.map((a) => ({
+          '@type': 'Person',
+          '@id': a.idUrl,
+          name: a.name,
+          jobTitle: a.jobTitle,
+          description: a.description,
+          url: canonicalUrl,
+          knowsAbout: a.knowsAbout,
+          worksFor: {
+            '@id': `${OFFICIAL_DOMAIN}/#organization`,
+          },
+        })),
+      ],
     });
   }, []);
 
@@ -71,7 +118,7 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center mb-6">
             <div className="order-2 lg:order-1 lg:col-span-7">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 leading-tight mb-4 font-display">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 leading-snug mb-4 font-display text-balance max-w-xl lg:max-w-none">
                 歴史と伝統に守られた安心の環境<br />
                 <span className="text-rose-600">飛田新地 直営老舗料亭</span>
               </h1>
@@ -131,8 +178,8 @@ export default function AboutPage({ onNavigateHome, onNavigateBlog, onCtaclick }
 
         {/* 3 Core Commitments */}
         <div className="space-y-6 mb-10">
-          <h2 className="text-xl sm:text-2xl font-black text-zinc-900 flex items-center gap-2">
-            <LucideIcon name="Sparkles" size={22} className="text-rose-600" />
+          <h2 className="text-xl sm:text-2xl font-black text-zinc-900 flex items-center gap-2 leading-snug text-balance max-w-2xl">
+            <LucideIcon name="Sparkles" size={22} className="text-rose-600 shrink-0" />
             <span>女性ファーストを貫く3つの運営理念</span>
           </h2>
 

@@ -38,6 +38,7 @@ async function runPrerender() {
 
   let count = 0;
   let mdCount = 0;
+  const trailingSlashRedirects: string[] = [];
 
   const emitMarkdown = (routePath: string, outMdRelPath: string) => {
     const { markdown, status } = renderRouteMarkdown(routePath);
@@ -47,49 +48,44 @@ async function runPrerender() {
     }
   };
 
+  const emitStaticRoute = (routePath: string, htmlOutRel: string, mdOutRel: string) => {
+    const { html } = injectSeoMetadata(template, routePath);
+    writeFileEnsureDir(path.join(distDir, htmlOutRel), html);
+    // Remove duplicate nested <route>/index.html if present from an earlier build so /route and /route/ don't both return 200
+    const routeDir = path.join(distDir, routePath.replace(/^\//, ''));
+    const nestedDirIndex = path.join(routeDir, 'index.html');
+    if (fs.existsSync(nestedDirIndex)) {
+      fs.rmSync(nestedDirIndex, { force: true });
+      if (fs.existsSync(routeDir) && fs.readdirSync(routeDir).length === 0) {
+        fs.rmdirSync(routeDir);
+      }
+    }
+    emitMarkdown(routePath, mdOutRel);
+    trailingSlashRedirects.push(`${routePath}/ ${routePath} 301`);
+    count++;
+  };
+
   // 1. Top page
   const home = injectSeoMetadata(template, '/');
   writeFileEnsureDir(path.join(distDir, 'index.html'), home.html);
   emitMarkdown('/', 'index.md');
   count++;
 
-  // 2. Pre-render every blog article
+  // 2. Pre-render every blog article (including noindex articles so crawlers see <meta name="robots" content="noindex, follow">)
   for (const article of articles) {
     if (!article.slug) continue;
-    const url = `/blog/${article.slug}`;
-    const { html } = injectSeoMetadata(template, url);
-    writeFileEnsureDir(path.join(distDir, 'blog', article.slug, 'index.html'), html);
-    writeFileEnsureDir(path.join(distDir, 'blog', `${article.slug}.html`), html);
-    emitMarkdown(url, path.join('blog', `${article.slug}.md`));
-    count++;
+    emitStaticRoute(`/blog/${article.slug}`, path.join('blog', `${article.slug}.html`), path.join('blog', `${article.slug}.md`));
   }
 
   // 3. Pre-render Blog Index
-  const blogList = injectSeoMetadata(template, '/blog');
-  writeFileEnsureDir(path.join(distDir, 'blog', 'index.html'), blogList.html);
-  writeFileEnsureDir(path.join(distDir, 'blog.html'), blogList.html);
-  emitMarkdown('/blog', 'blog.md');
-  count++;
+  emitStaticRoute('/blog', 'blog.html', 'blog.md');
 
-  // 4. Pre-render About, Glossary, and Company
-  const about = injectSeoMetadata(template, '/about');
-  writeFileEnsureDir(path.join(distDir, 'about', 'index.html'), about.html);
-  writeFileEnsureDir(path.join(distDir, 'about.html'), about.html);
-  emitMarkdown('/about', 'about.md');
-  count++;
+  // 4. Pre-render About and Glossary
+  emitStaticRoute('/about', 'about.html', 'about.md');
+  emitStaticRoute('/glossary', 'glossary.html', 'glossary.md');
 
-  const glossary = injectSeoMetadata(template, '/glossary');
-  writeFileEnsureDir(path.join(distDir, 'glossary', 'index.html'), glossary.html);
-  writeFileEnsureDir(path.join(distDir, 'glossary.html'), glossary.html);
-  emitMarkdown('/glossary', 'glossary.md');
-  count++;
-
-  // 5. Pre-render FAQ Index, all 12 Category pages, and legacy category slugs
-  const faq = injectSeoMetadata(template, '/faq');
-  writeFileEnsureDir(path.join(distDir, 'faq', 'index.html'), faq.html);
-  writeFileEnsureDir(path.join(distDir, 'faq.html'), faq.html);
-  emitMarkdown('/faq', 'faq.md');
-  count++;
+  // 5. Pre-render FAQ Index and all Category pages
+  emitStaticRoute('/faq', 'faq.html', 'faq.md');
 
   const faqCategories = [
     'qualification', 'beginner', 'experienced', 'job',
@@ -98,33 +94,16 @@ async function runPrerender() {
     'recruit', 'dorm', 'wwork', 'leaving'
   ];
   for (const cat of faqCategories) {
-    const faqCatPage = injectSeoMetadata(template, `/faq/${cat}`);
-    writeFileEnsureDir(path.join(distDir, 'faq', cat, 'index.html'), faqCatPage.html);
-    writeFileEnsureDir(path.join(distDir, 'faq', `${cat}.html`), faqCatPage.html);
-    emitMarkdown(`/faq/${cat}`, path.join('faq', `${cat}.md`));
-    count++;
+    emitStaticRoute(`/faq/${cat}`, path.join('faq', `${cat}.html`), path.join('faq', `${cat}.md`));
   }
 
   // 6. Pre-render Site Compare, Compare Main & all 27 Subpages
-  const siteCompare = injectSeoMetadata(template, '/site-compare');
-  writeFileEnsureDir(path.join(distDir, 'site-compare', 'index.html'), siteCompare.html);
-  writeFileEnsureDir(path.join(distDir, 'site-compare.html'), siteCompare.html);
-  emitMarkdown('/site-compare', 'site-compare.md');
-  count++;
-
-  const compare = injectSeoMetadata(template, '/compare');
-  writeFileEnsureDir(path.join(distDir, 'compare', 'index.html'), compare.html);
-  writeFileEnsureDir(path.join(distDir, 'compare.html'), compare.html);
-  emitMarkdown('/compare', 'compare.md');
-  count++;
+  emitStaticRoute('/site-compare', 'site-compare.html', 'site-compare.md');
+  emitStaticRoute('/compare', 'compare.html', 'compare.md');
 
   const compareSlugs = COMPARE_SUBPAGES.map((item) => item.slug);
   for (const slug of compareSlugs) {
-    const compPage = injectSeoMetadata(template, `/compare/${slug}`);
-    writeFileEnsureDir(path.join(distDir, 'compare', slug, 'index.html'), compPage.html);
-    writeFileEnsureDir(path.join(distDir, 'compare', `${slug}.html`), compPage.html);
-    emitMarkdown(`/compare/${slug}`, path.join('compare', `${slug}.md`));
-    count++;
+    emitStaticRoute(`/compare/${slug}`, path.join('compare', `${slug}.html`), path.join('compare', `${slug}.md`));
   }
 
   // 7. Pre-render Topic Clusters (11 routes including interview)
@@ -134,11 +113,7 @@ async function runPrerender() {
     'shops', 'dekasegi', 'safety'
   ];
   for (const t of topics) {
-    const topicPage = injectSeoMetadata(template, `/${t}`);
-    writeFileEnsureDir(path.join(distDir, t, 'index.html'), topicPage.html);
-    writeFileEnsureDir(path.join(distDir, `${t}.html`), topicPage.html);
-    emitMarkdown(`/${t}`, `${t}.md`);
-    count++;
+    emitStaticRoute(`/${t}`, `${t}.html`, `${t}.md`);
   }
 
   // 8. Legacy URLs are handled via HTTP 301 in vercel.json, _redirects, .htaccess, and server.ts.
@@ -173,10 +148,23 @@ async function runPrerender() {
     if (fs.existsSync(stubDir)) fs.rmSync(stubDir, { recursive: true, force: true });
   }
 
-  // 9. Ensure _redirects and .htaccess in dist
+  // 9. Ensure _redirects (with explicit trailing-slash 301s before SPA fallback) and .htaccess in dist
   const rootRedirects = path.join(process.cwd(), '_redirects');
   if (fs.existsSync(rootRedirects)) {
-    fs.copyFileSync(rootRedirects, path.join(distDir, '_redirects'));
+    const rawRedirects = fs.readFileSync(rootRedirects, 'utf-8');
+    const lines = rawRedirects.split('\n');
+    const fallbackIdx = lines.findIndex((line) => line.trim().startsWith('/*'));
+    if (fallbackIdx !== -1) {
+      const merged = [
+        ...lines.slice(0, fallbackIdx),
+        '# Canonicalize trailing slashes to non-trailing-slash URLs',
+        ...trailingSlashRedirects,
+        ...lines.slice(fallbackIdx),
+      ].join('\n');
+      fs.writeFileSync(path.join(distDir, '_redirects'), merged, 'utf-8');
+    } else {
+      fs.writeFileSync(path.join(distDir, '_redirects'), `${rawRedirects.trim()}\n${trailingSlashRedirects.join('\n')}\n`, 'utf-8');
+    }
   }
   const rootHtaccess = path.join(process.cwd(), '.htaccess');
   if (fs.existsSync(rootHtaccess)) {

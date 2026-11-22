@@ -345,8 +345,8 @@ export default function RecruitHub({
       bannerHeadline: "知っておきたいお仕事情報",
       bannerSubtext: "女性のためのお役立ちコラム",
       questionTitle: "お仕事コラム｜働く前に知りたい体験談とノウハウ",
-      tagline: "100本以上の解説記事・テーマ別実務ノウハウ",
-      badge: "100本超",
+      tagline: "128本の厳選解説記事・テーマ別実務ノウハウ",
+      badge: "128本",
       icon: "BookOpen",
       image: "/images/cat_12_column_1794165007745.jpg",
       summary: "実際に働くキャストの体験談や日常の過ごし方など、役立つ情報をコラム形式でお届けしています。働く前のイメージ作りにぜひお役立てください。",
@@ -394,7 +394,7 @@ export default function RecruitHub({
             <span>公式分野別案内（全12カテゴリー）</span>
           </div>
           
-          <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-[#333333] leading-tight mb-4 tracking-tight">
+          <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-[#333333] leading-snug mb-4 tracking-tight text-balance max-w-xl sm:max-w-2xl mx-auto">
             <span className="text-[#333333]">
               飛田新地求人 総合ガイド
             </span>

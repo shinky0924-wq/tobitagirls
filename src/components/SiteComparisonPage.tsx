@@ -19,6 +19,7 @@ import {
   type ApplicationMethodBadge,
 } from '../compareData';
 import { updatePageJsonLd } from '../utils/jsonLd';
+import { FAQ_LAST_UPDATED_ISO } from '../faq100Data';
 
 interface SiteComparisonPageProps {
   onNavigateHome: () => void;
@@ -57,7 +58,7 @@ export default function SiteComparisonPage({
           url: canonicalUrl,
           name: title,
           description,
-          dateModified: '2026-11-16',
+          dateModified: FAQ_LAST_UPDATED_ISO,
           inLanguage: 'ja-JP',
           isPartOf: {
             '@id': 'https://tobitashinchi-recruit.com/#website',
@@ -101,7 +102,7 @@ export default function SiteComparisonPage({
           description:
             '飛田新地（当店）とメンズエステ・ソープランド・デリヘル・キャバクラ／ラウンジの仕事内容・接客場所・接客時間・報酬体系・勤務形態の比較、ならびに公式求人サイト・SNS・個人スカウト・求人ポータル・仲介ネットワークの応募方法比較データ。',
           url: canonicalUrl,
-          dateModified: '2026-11-16',
+          dateModified: FAQ_LAST_UPDATED_ISO,
           inLanguage: 'ja-JP',
           isAccessibleForFree: true,
           keywords: [
@@ -248,7 +249,7 @@ export default function SiteComparisonPage({
         {/* Section 1: 飛田新地と他業種の仕事内容・働き方を比較 */}
         <section id="industry-comparison" className="scroll-mt-24 space-y-6">
           <div className="space-y-3">
-            <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-[#383038]">
+            <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-[#383038] leading-snug text-balance max-w-2xl">
               飛田新地と他業種の違いを比較
             </h2>
             <p className="text-sm sm:text-[15px] text-[#383038] font-medium leading-relaxed">
@@ -395,7 +396,7 @@ export default function SiteComparisonPage({
         {/* Section 2: 業種ごとの詳しい違い */}
         <section id="industry-details" className="scroll-mt-24 space-y-6">
           <div className="space-y-2">
-            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#383038]">
+            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#383038] leading-snug text-balance max-w-2xl">
               業種ごとの仕事内容・働き方の違い
             </h2>
             <p className="text-sm sm:text-[15px] text-[#5E5560] leading-relaxed">
@@ -449,7 +450,7 @@ export default function SiteComparisonPage({
         {/* Section 3: 求人サイト・応募方法を比較 */}
         <section id="application-methods" className="scroll-mt-24 space-y-6">
           <div className="space-y-3">
-            <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-[#383038]">
+            <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-[#383038] leading-snug text-balance max-w-2xl">
               飛田新地の求人はどこから応募する？応募方法・求人サイトを比較
             </h2>
             <p className="text-sm sm:text-[15px] text-[#383038] font-medium leading-relaxed">
@@ -587,7 +588,7 @@ export default function SiteComparisonPage({
         {/* Section 4: 応募前に確認しておきたい7つのポイント */}
         <section id="pre-apply-checklist" className="scroll-mt-24 space-y-6">
           <div className="space-y-2">
-            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#383038]">
+            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#383038] leading-snug text-balance max-w-2xl">
               飛田新地の求人に応募する前に確認したいこと
             </h2>
             <p className="text-sm sm:text-[15px] text-[#5E5560] leading-relaxed">
@@ -621,7 +622,7 @@ export default function SiteComparisonPage({
         {/* Section 5: よくある質問 */}
         <section id="site-compare-faq" className="scroll-mt-24 space-y-6">
           <div className="space-y-2">
-            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#383038]">
+            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#383038] leading-snug text-balance max-w-2xl">
               よくある質問
             </h2>
             <p className="text-sm sm:text-[15px] text-[#5E5560] leading-relaxed">
@@ -646,7 +647,7 @@ export default function SiteComparisonPage({
 
         {/* Related Internal Links (Section 11) */}
         <section id="related-guides" className="scroll-mt-24 space-y-5">
-          <h2 className="font-display text-lg sm:text-xl font-bold text-[#383038]">
+          <h2 className="font-display text-lg sm:text-xl font-bold text-[#383038] leading-snug text-balance max-w-2xl">
             あわせて確認できる公式ガイド一覧
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
@@ -677,7 +678,7 @@ export default function SiteComparisonPage({
           id="site-compare-cta"
           className="bg-[#FFF0F4] border border-[#F3D4DF] rounded-2xl sm:rounded-3xl p-7 sm:p-11 text-center space-y-5"
         >
-          <h2 className="font-display text-xl sm:text-2xl font-bold text-[#383038]">
+          <h2 className="font-display text-xl sm:text-2xl font-bold text-[#383038] leading-snug text-balance max-w-xl sm:max-w-2xl mx-auto">
             当店で働くことを考えている方へ
           </h2>
           <div className="max-w-xl mx-auto space-y-2 text-sm sm:text-[15px] text-[#5E5560] leading-relaxed">

@@ -56,9 +56,24 @@ export default function ComparisonPage({
       return;
     }
 
+    const setMetaRobots = (val: string) => {
+      let el = document.querySelector('meta[name="robots"]');
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute('name', 'robots');
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', val);
+    };
+
     if (activeSubpage) {
       const url = `${DOMAIN}/compare/${activeSubpage.slug}`;
       document.title = activeSubpage.seoTitle;
+      setMetaRobots(
+        activeSubpage.seoNoindex
+          ? 'noindex, follow'
+          : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
+      );
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) metaDesc.setAttribute('content', activeSubpage.metaDescription);
       const canonical = document.querySelector('link[rel="canonical"]');
@@ -97,9 +112,13 @@ export default function ComparisonPage({
           },
         ],
       });
-    } else if (!isUnknownSlug) {
+    } else if (isUnknownSlug) {
+      setMetaRobots('noindex, nofollow');
+    } else {
       const url = `${DOMAIN}/compare`;
+      const indexableCompareItems = Object.values(COMPARE_SUBPAGE_MAP).filter((item) => !item.seoNoindex);
       document.title = COMPARE_PARENT_COPY.seoTitle;
+      setMetaRobots('index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) metaDesc.setAttribute('content', COMPARE_PARENT_COPY.metaDescription);
       const canonical = document.querySelector('link[rel="canonical"]');
@@ -119,8 +138,9 @@ export default function ComparisonPage({
             publisher: { '@id': `${DOMAIN}/#organization` },
             mainEntity: {
               '@type': 'ItemList',
-              name: '働き方・希望別求人カテゴリー一覧（27項目）',
-              itemListElement: Object.values(COMPARE_SUBPAGE_MAP).map((item, idx) => ({
+              name: `働き方・希望別カテゴリー一覧（主要${indexableCompareItems.length}項目）`,
+              numberOfItems: indexableCompareItems.length,
+              itemListElement: indexableCompareItems.map((item, idx) => ({
                 '@type': 'ListItem',
                 position: idx + 1,
                 name: item.itemName,
@@ -229,7 +249,7 @@ export default function ComparisonPage({
             <p className="text-xs sm:text-sm font-semibold text-[#C96D8C]">
               {activeSubpage.categoryTitle}｜{activeSubpage.itemName}
             </p>
-            <h1 className="font-display text-2xl sm:text-3xl font-bold text-[#383038] leading-snug tracking-tight">
+            <h1 className="font-display text-2xl sm:text-3xl font-bold text-[#383038] leading-snug tracking-tight text-balance max-w-2xl">
               {activeSubpage.h1}
             </h1>
             <p className="text-sm sm:text-base text-[#777078] leading-relaxed">
@@ -239,7 +259,7 @@ export default function ComparisonPage({
 
           {/* ② このような女性に向けたページです */}
           <section className="bg-white border border-[#EFE2E7] rounded-2xl p-6 sm:p-8 shadow-xs space-y-4">
-            <h2 className="font-display text-lg sm:text-xl font-bold text-[#383038] border-b border-[#EFE2E7] pb-3">
+            <h2 className="font-display text-lg sm:text-xl font-bold text-[#383038] border-b border-[#EFE2E7] pb-3 leading-snug text-balance">
               このような女性に向けたページです
             </h2>
             <ul className="space-y-3">
@@ -256,7 +276,7 @@ export default function ComparisonPage({
 
           {/* ③ 知っておきたい仕事内容・働き方 */}
           <section className="bg-white border border-[#EFE2E7] rounded-2xl p-6 sm:p-8 shadow-xs space-y-5">
-            <h2 className="font-display text-lg sm:text-xl font-bold text-[#383038] border-b border-[#EFE2E7] pb-3">
+            <h2 className="font-display text-lg sm:text-xl font-bold text-[#383038] border-b border-[#EFE2E7] pb-3 leading-snug text-balance">
               知っておきたい仕事内容・働き方
             </h2>
             <p className="text-sm sm:text-[15px] text-[#777078] leading-relaxed">
@@ -281,7 +301,7 @@ export default function ComparisonPage({
 
           {/* ④ 給料・報酬・勤務条件 */}
           <section className="bg-white border border-[#EFE2E7] rounded-2xl p-6 sm:p-8 shadow-xs space-y-5">
-            <h2 className="font-display text-lg sm:text-xl font-bold text-[#383038] border-b border-[#EFE2E7] pb-3">
+            <h2 className="font-display text-lg sm:text-xl font-bold text-[#383038] border-b border-[#EFE2E7] pb-3 leading-snug text-balance">
               給料・報酬・勤務条件
             </h2>
             <p className="text-sm sm:text-[15px] text-[#777078] leading-relaxed">
@@ -319,7 +339,7 @@ export default function ComparisonPage({
 
           {/* ⑤ 応募前に確認しておきたいこと */}
           <section className="bg-[#FFF0F4] border border-[#F3D4DF] rounded-2xl p-6 sm:p-8 space-y-4">
-            <h2 className="font-display text-lg sm:text-xl font-bold text-[#383038]">
+            <h2 className="font-display text-lg sm:text-xl font-bold text-[#383038] leading-snug text-balance max-w-2xl">
               応募前に確認しておきたいこと
             </h2>
             <ul className="space-y-3">
@@ -339,7 +359,7 @@ export default function ComparisonPage({
 
           {/* ⑥ よくある質問 */}
           <section className="bg-white border border-[#EFE2E7] rounded-2xl p-6 sm:p-8 shadow-xs space-y-5">
-            <h2 className="font-display text-lg sm:text-xl font-bold text-[#383038] border-b border-[#EFE2E7] pb-3">
+            <h2 className="font-display text-lg sm:text-xl font-bold text-[#383038] border-b border-[#EFE2E7] pb-3 leading-snug text-balance">
               よくある質問
             </h2>
             <div className="space-y-4">
@@ -361,7 +381,7 @@ export default function ComparisonPage({
 
           {/* ⑦ 関連ページ */}
           <section className="bg-white border border-[#EFE2E7] rounded-2xl p-6 sm:p-8 shadow-xs space-y-5">
-            <h2 className="font-display text-lg sm:text-xl font-bold text-[#383038] border-b border-[#EFE2E7] pb-3">
+            <h2 className="font-display text-lg sm:text-xl font-bold text-[#383038] border-b border-[#EFE2E7] pb-3 leading-snug text-balance">
               関連ページ
             </h2>
 
@@ -429,14 +449,14 @@ export default function ComparisonPage({
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#C96D8C] hover:underline"
               >
                 <LucideIcon name="ArrowLeft" size={15} />
-                <span>働き方・求人比較トップ（27項目一覧）へ戻る</span>
+                <span>働き方・求人比較トップへ戻る</span>
               </a>
             </div>
           </section>
 
           {/* ⑧ LINE相談CTA */}
           <section className="bg-[#FFF0F4] border border-[#F3D4DF] rounded-2xl p-6 sm:p-10 text-center space-y-4">
-            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#383038]">
+            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#383038] leading-snug text-balance max-w-xl sm:max-w-2xl mx-auto">
               {COMPARE_LINE_CTA.heading}
             </h2>
             <p className="text-sm sm:text-[15px] text-[#777078] max-w-xl mx-auto leading-relaxed">
@@ -489,7 +509,7 @@ export default function ComparisonPage({
 
         {/* First View (Calm, Uncluttered, Warm Feminine Editorial Design) */}
         <header className="bg-white border border-[#EFE2E7] rounded-2xl sm:rounded-3xl px-6 py-9 sm:px-12 sm:py-14 shadow-xs text-center space-y-6">
-          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-[#383038] leading-snug tracking-tight">
+          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-[#383038] leading-snug tracking-tight text-balance max-w-xl sm:max-w-3xl mx-auto">
             {COMPARE_PARENT_COPY.h1}
           </h1>
 
@@ -549,7 +569,7 @@ export default function ComparisonPage({
               className="space-y-6 scroll-mt-24"
             >
               <div className="space-y-2 border-b border-[#EFE2E7] pb-4">
-                <h2 className="font-display text-xl sm:text-2xl font-bold text-[#383038]">
+                <h2 className="font-display text-xl sm:text-2xl font-bold text-[#383038] leading-snug text-balance max-w-2xl">
                   {group.title}
                 </h2>
                 <p className="text-sm sm:text-[15px] text-[#777078] leading-relaxed">
@@ -594,7 +614,7 @@ export default function ComparisonPage({
         {/* Helpful Secondary Link to Site/Industry Comparison Page */}
         <section className="bg-white border border-[#EFE2E7] rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
           <div className="space-y-1">
-            <h2 className="text-base sm:text-lg font-bold text-[#383038]">
+            <h2 className="text-base sm:text-lg font-bold text-[#383038] leading-snug text-balance max-w-2xl">
               他業種や応募方法の違いを比較したい方へ
             </h2>
             <p className="text-xs sm:text-sm text-[#777078] leading-relaxed">
@@ -619,7 +639,7 @@ export default function ComparisonPage({
 
         {/* Bottom Consultation CTA */}
         <section className="bg-[#FFF0F4] border border-[#F3D4DF] rounded-2xl sm:rounded-3xl p-7 sm:p-11 text-center space-y-4">
-          <h2 className="font-display text-xl sm:text-2xl font-bold text-[#383038]">
+          <h2 className="font-display text-xl sm:text-2xl font-bold text-[#383038] leading-snug text-balance max-w-xl sm:max-w-2xl mx-auto">
             {COMPARE_LINE_CTA.heading}
           </h2>
           <p className="text-sm sm:text-[15px] text-[#777078] max-w-xl mx-auto leading-relaxed">

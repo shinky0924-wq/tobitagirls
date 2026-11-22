@@ -171,8 +171,8 @@ export default function ExperiencedPage({
               </div>
 
               <div className="space-y-2.5">
-                <h1 className="font-display font-bold text-[26px] sm:text-[32px] text-[#333333] leading-[1.3] tracking-tight text-balance">
-                  <span className="block text-[13px] sm:text-[14px] font-semibold text-[#666666] mb-2">
+                <h1 className="font-display font-bold text-[24px] sm:text-[32px] text-[#333333] leading-[1.35] tracking-tight text-balance max-w-xl lg:max-w-none">
+                  <span className="block text-[13px] sm:text-[14px] font-semibold text-[#666666] mb-2 text-balance">
                     飛田新地の経験者求人｜他業種・他店からの移籍を検討している方へ
                   </span>
                   今までの経験を活かして、
@@ -301,7 +301,7 @@ export default function ExperiencedPage({
            ========================================================= */}
         <section id="transfer-guide" className="scroll-mt-20 space-y-8">
           <div className="max-w-2xl space-y-2.5">
-            <h2 className="text-[22px] sm:text-[26px] font-bold text-[#333333] tracking-tight text-balance">
+            <h2 className="text-[21px] sm:text-[26px] font-bold text-[#333333] leading-snug tracking-tight text-balance max-w-2xl">
               あなたの経験に合わせた移籍のご案内
             </h2>
             <p className="text-[14px] sm:text-[15px] text-[#666666] leading-relaxed">
@@ -429,7 +429,7 @@ export default function ExperiencedPage({
            ========================================================= */}
         <section id="burdens" className="bg-white rounded-2xl p-6 sm:p-9 border border-[#F0DCE4] scroll-mt-20 space-y-6">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+            <h2 className="text-[20px] sm:text-[25px] font-bold text-[#333333] leading-snug tracking-tight text-balance max-w-2xl">
               今の仕事で感じている負担
             </h2>
             <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
@@ -471,7 +471,7 @@ export default function ExperiencedPage({
            ========================================================= */}
         <section id="comparison" className="bg-white rounded-2xl p-6 sm:p-9 border border-[#F0DCE4] scroll-mt-20 space-y-6">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+            <h2 className="text-[20px] sm:text-[25px] font-bold text-[#333333] leading-snug tracking-tight text-balance max-w-2xl">
               他業種との仕事内容・接客スタイル比較
             </h2>
             <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
@@ -563,7 +563,7 @@ export default function ExperiencedPage({
            ========================================================= */}
         <section id="merit-other-industry" className="scroll-mt-20 space-y-6">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+            <h2 className="text-[20px] sm:text-[25px] font-bold text-[#333333] leading-snug tracking-tight text-balance max-w-2xl">
               他業種から移籍するメリット
             </h2>
             <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
@@ -601,7 +601,7 @@ export default function ExperiencedPage({
            ========================================================= */}
         <section id="merit-other-shop" className="bg-white rounded-2xl p-6 sm:p-9 border border-[#F0DCE4] scroll-mt-20 space-y-7">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+            <h2 className="text-[20px] sm:text-[25px] font-bold text-[#333333] leading-snug tracking-tight text-balance max-w-2xl">
               飛田新地の他店から移籍するメリット
             </h2>
             <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
@@ -716,7 +716,7 @@ export default function ExperiencedPage({
            ========================================================= */}
         <section id="conditions" className="scroll-mt-20 space-y-6">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+            <h2 className="text-[20px] sm:text-[25px] font-bold text-[#333333] leading-snug tracking-tight text-balance max-w-2xl">
               当店の待遇・条件
             </h2>
             <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
@@ -753,7 +753,7 @@ export default function ExperiencedPage({
            ========================================================= */}
         <section id="shop-comparison" className="bg-white rounded-2xl p-6 sm:p-9 border border-[#F0DCE4] scroll-mt-20 space-y-6">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+            <h2 className="text-[20px] sm:text-[25px] font-bold text-[#333333] leading-snug tracking-tight text-balance max-w-2xl">
               今のお店と当店の比較
             </h2>
             <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
@@ -803,7 +803,7 @@ export default function ExperiencedPage({
            ========================================================= */}
         <section id="access" className="bg-white rounded-2xl p-6 sm:p-9 border border-[#F0DCE4] scroll-mt-20 space-y-7">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+            <h2 className="text-[20px] sm:text-[25px] font-bold text-[#333333] leading-snug tracking-tight text-balance max-w-2xl">
               立地の良さ・周辺環境
             </h2>
             <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
@@ -912,7 +912,7 @@ export default function ExperiencedPage({
            ========================================================= */}
         <section id="transfer-flow" className="bg-white rounded-2xl p-6 sm:p-9 border border-[#F0DCE4] scroll-mt-20 space-y-6">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+            <h2 className="text-[20px] sm:text-[25px] font-bold text-[#333333] leading-snug tracking-tight text-balance max-w-2xl">
               移籍までの流れ
             </h2>
             <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
@@ -961,7 +961,7 @@ export default function ExperiencedPage({
            ========================================================= */}
         <section id="check-points" className="scroll-mt-20 space-y-6">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+            <h2 className="text-[20px] sm:text-[25px] font-bold text-[#333333] leading-snug tracking-tight text-balance max-w-2xl">
               移籍前に確認したいポイント
             </h2>
             <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
@@ -997,7 +997,7 @@ export default function ExperiencedPage({
         <section id="columns" className="bg-white rounded-2xl p-6 sm:p-9 border border-[#F0DCE4] scroll-mt-20 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div className="space-y-1.5">
-              <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+              <h2 className="text-[20px] sm:text-[25px] font-bold text-[#333333] leading-snug tracking-tight text-balance max-w-2xl">
                 経験者向けコラム
               </h2>
               <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
@@ -1079,7 +1079,7 @@ export default function ExperiencedPage({
            ========================================================= */}
         <section id="faq" className="scroll-mt-20 space-y-8">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[25px] font-bold text-[#333333] tracking-tight">
+            <h2 className="text-[20px] sm:text-[25px] font-bold text-[#333333] leading-snug tracking-tight text-balance max-w-2xl">
               よくある質問
             </h2>
             <p className="text-[15px] sm:text-[16px] font-bold text-[#C23B6B]">
@@ -1171,7 +1171,7 @@ export default function ExperiencedPage({
           className="bg-[#FFF0F5] rounded-2xl p-7 sm:p-11 border border-[#F5B5C9] text-center space-y-5 scroll-mt-20"
         >
           <div className="max-w-2xl mx-auto space-y-3">
-            <h2 className="text-[21px] sm:text-[26px] font-bold text-[#333333] tracking-tight">
+            <h2 className="text-[20px] sm:text-[26px] font-bold text-[#333333] leading-snug tracking-tight text-balance max-w-xl sm:max-w-2xl mx-auto">
               今の働き方を変えたいと思ったら、まずは相談から。
             </h2>
             <p className="text-[14px] sm:text-[15.5px] text-[#666666] leading-relaxed">

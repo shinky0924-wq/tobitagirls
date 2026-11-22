@@ -23,11 +23,11 @@ export default function Concerns({ content }: ConcernsProps) {
     <section className="py-20 bg-white" id="concerns">
       <div className="max-w-[1100px] mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="font-display font-extrabold text-2xl md:text-3xl lg:text-4xl mb-4 text-on-surface">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <h2 className="font-display font-extrabold text-2xl md:text-3xl lg:text-4xl mb-4 text-on-surface leading-snug text-balance max-w-xl sm:max-w-2xl mx-auto">
             {content.title}
           </h2>
-          <p className="font-sans text-sm md:text-base text-on-surface-variant">
+          <p className="font-sans text-sm md:text-base text-on-surface-variant max-w-2xl mx-auto">
             {content.subtitle}
           </p>
         </div>

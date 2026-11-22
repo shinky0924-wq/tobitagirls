@@ -72,6 +72,9 @@
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    {
+      "source": "/((?!api/|assets/|images/|fonts/|favicon|apple-touch-icon|icon\\.png|.*\\.(?:md|xml|txt|json|ico|png|jpe?g|webp|svg|css|js|map|woff2?)$).*)",
+      "destination": "/index.html"
+    }
   ]
 }

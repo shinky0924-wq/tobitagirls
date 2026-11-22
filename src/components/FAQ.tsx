@@ -5,7 +5,7 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import * as LucideIcons from 'lucide-react';
+import LucideIcon from './LucideIcon';
 import {
   SEARCH_INTENT_CATEGORIES,
   HIGH_INTENT_FAQS,
@@ -15,11 +15,6 @@ import {
   FAQ_100_LIST
 } from '../faq100Data';
 import { CONSULTANT_AVATAR_URL } from '../data';
-
-function LucideIcon({ name, size = 16, className = '' }: { name: string; size?: number; className?: string }) {
-  const IconComponent = (LucideIcons as any)[name] || LucideIcons.HelpCircle;
-  return <IconComponent size={size} className={className} />;
-}
 
 interface FAQProps {
   content?: any;
@@ -183,7 +178,7 @@ export default function FAQ({ content, onCtaclick, onNavigateToFaq }: FAQProps) 
             <span>料亭直営スタッフが教える安心ガイド</span>
           </div>
 
-          <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-on-surface leading-tight mb-4">
+          <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-on-surface leading-snug mb-4 text-balance max-w-xl sm:max-w-2xl mx-auto">
             飛田新地求人 Q＆A
           </h2>
 

@@ -367,9 +367,9 @@ export default function TopicClusterPage({
             {/* Main 2-Column: Title & Overview (Left) + Clean Photo (Right) */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-8">
               <div className="order-2 lg:order-1 lg:col-span-7 space-y-4">
-                <h1 className="text-[27px] sm:text-[30px] md:text-[34px] font-black text-[#35313A] leading-[1.3] tracking-tight">
+                <h1 className="text-[24px] sm:text-[30px] md:text-[34px] font-black text-[#35313A] leading-[1.35] tracking-tight text-balance max-w-xl lg:max-w-none">
                   {data.title}
-                  <span className="block text-base sm:text-lg font-bold text-[#D94B7A] mt-1.5">
+                  <span className="block text-base sm:text-lg font-bold text-[#D94B7A] mt-1.5 text-balance">
                     {data.tagline}
                   </span>
                 </h1>
@@ -461,8 +461,8 @@ export default function TopicClusterPage({
               CHECK POINTS
             </span>
           </div>
-          <h2 className="text-[21px] sm:text-[24px] font-black text-[#35313A] mb-5 flex items-center gap-2">
-            <LucideIcon name="CheckCircle2" size={20} className="text-[#D94B7A]" />
+          <h2 className="text-[20px] sm:text-[24px] font-black text-[#35313A] leading-snug mb-5 flex items-center gap-2 text-balance max-w-2xl">
+            <LucideIcon name="CheckCircle2" size={20} className="text-[#D94B7A] shrink-0" />
             <span>{data.title}で絶対に押さえておくべきポイント</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
@@ -485,8 +485,8 @@ export default function TopicClusterPage({
         <section id="details-section" className="space-y-6 scroll-mt-20">
           {data.sections.map((sec, i) => (
             <div key={i} className="bg-white rounded-3xl p-6 sm:p-9 border border-[#F0E5EA] shadow-2xs space-y-4">
-              <h2 className="text-[20px] sm:text-[22px] font-black text-[#35313A] flex items-center gap-2.5">
-                <span className="w-2.5 h-6 bg-[#D94B7A] rounded-full inline-block" />
+              <h2 className="text-[19px] sm:text-[22px] font-black text-[#35313A] leading-snug flex items-center gap-2.5 text-balance max-w-2xl">
+                <span className="w-2.5 h-6 bg-[#D94B7A] rounded-full inline-block shrink-0" />
                 <span>{sec.title}</span>
               </h2>
               
@@ -573,9 +573,9 @@ export default function TopicClusterPage({
            ========================================================= */}
         {featuredArticles.length > 0 && (
           <section className="bg-white rounded-3xl p-6 sm:p-9 border border-[#F0E5EA] shadow-2xs">
-            <div className="flex items-center justify-between mb-5">
-              <h2 className="text-[18px] sm:text-[20px] font-black text-[#35313A] flex items-center gap-2">
-                <LucideIcon name="BookOpen" size={18} className="text-[#D94B7A]" />
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-5">
+              <h2 className="text-[18px] sm:text-[20px] font-black text-[#35313A] leading-snug flex items-center gap-2 text-balance max-w-2xl">
+                <LucideIcon name="BookOpen" size={18} className="text-[#D94B7A] shrink-0" />
                 <span>「{data.title}」に関する解説コラム</span>
               </h2>
               <a
@@ -632,9 +632,9 @@ export default function TopicClusterPage({
             8. トピック別よくある質問（アコーディオン）
            ========================================================= */}
         <section id="faq-section" className="bg-white rounded-3xl p-6 sm:p-9 border border-[#F0E5EA] shadow-2xs scroll-mt-20">
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="text-[18px] sm:text-[20px] font-black text-[#35313A] flex items-center gap-2">
-              <LucideIcon name="HelpCircle" size={18} className="text-[#D94B7A]" />
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-5">
+            <h2 className="text-[18px] sm:text-[20px] font-black text-[#35313A] leading-snug flex items-center gap-2 text-balance max-w-2xl">
+              <LucideIcon name="HelpCircle" size={18} className="text-[#D94B7A] shrink-0" />
               <span>「{data.title}」についてよくある質問</span>
             </h2>
             <a

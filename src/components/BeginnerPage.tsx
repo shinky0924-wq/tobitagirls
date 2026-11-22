@@ -215,7 +215,7 @@ export default function BeginnerPage({
               </div>
 
               {/* メインコピー（27〜30px） */}
-              <h1 className="text-[27px] sm:text-[30px] font-black text-[#35313A] leading-[1.3] tracking-tight">
+              <h1 className="text-[25px] sm:text-[30px] font-black text-[#35313A] leading-[1.35] tracking-tight text-balance max-w-xl lg:max-w-none">
                 初めてだから不安。<br />
                 <span className="text-[#D94B7A]">その気持ちから、一緒に考えます。</span>
               </h1>
@@ -374,7 +374,7 @@ export default function BeginnerPage({
             <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block mb-2">
               POINT CHECK
             </span>
-            <h2 className="text-[21px] sm:text-[24px] font-black text-[#35313A] tracking-tight">
+            <h2 className="text-[20px] sm:text-[24px] font-black text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               初めて働く前に、知っておきたい4つのこと
             </h2>
             <p className="text-xs sm:text-[14px] text-[#85818A] mt-2 leading-relaxed">
@@ -484,7 +484,7 @@ export default function BeginnerPage({
             <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block">
               飛田新地料亭の運営体制
             </span>
-            <h2 className="text-[21px] sm:text-[24px] font-black text-[#35313A] tracking-tight">
+            <h2 className="text-[20px] sm:text-[24px] font-black text-[#35313A] leading-snug tracking-tight text-balance max-w-xl sm:max-w-2xl mx-auto">
               未経験の女性が働く前に知っておきたい6つの特徴
             </h2>
             <p className="text-xs sm:text-[14px] text-[#85818A] leading-relaxed">
@@ -614,7 +614,7 @@ export default function BeginnerPage({
             <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block mb-2">
               FIRST DAY TIMELINE
             </span>
-            <h2 className="text-[21px] sm:text-[24px] font-black text-[#35313A] tracking-tight">
+            <h2 className="text-[20px] sm:text-[24px] font-black text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               初日はどんなことをするの？
             </h2>
             <p className="text-xs sm:text-[14px] text-[#85818A] mt-2 leading-relaxed">
@@ -754,7 +754,7 @@ export default function BeginnerPage({
             <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block">
               BEFORE START
             </span>
-            <h2 className="text-[21px] sm:text-[24px] font-black text-[#35313A] tracking-tight">
+            <h2 className="text-[20px] sm:text-[24px] font-black text-[#35313A] leading-snug tracking-tight text-balance max-w-xl sm:max-w-2xl mx-auto">
               働き始める前に確認しておきたいこと
             </h2>
             <p className="text-xs sm:text-[14px] text-[#85818A] leading-relaxed">
@@ -829,7 +829,7 @@ export default function BeginnerPage({
               <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block mb-2">
                 COLUMNS
               </span>
-              <h2 className="text-[21px] sm:text-[24px] font-black text-[#35313A] tracking-tight">
+              <h2 className="text-[20px] sm:text-[24px] font-black text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
                 未経験から始める前に読んでおきたい記事
               </h2>
               <p className="text-xs sm:text-[14px] text-[#85818A] mt-1 leading-relaxed">
@@ -895,7 +895,7 @@ export default function BeginnerPage({
             <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block">
               Q&A
             </span>
-            <h2 className="text-[21px] sm:text-[24px] font-black text-[#35313A] tracking-tight">
+            <h2 className="text-[20px] sm:text-[24px] font-black text-[#35313A] leading-snug tracking-tight text-balance max-w-xl sm:max-w-2xl mx-auto">
               未経験についてよくある質問
             </h2>
             <p className="text-xs sm:text-[14px] text-[#85818A] leading-relaxed">
@@ -973,7 +973,7 @@ export default function BeginnerPage({
           </div>
 
           <div className="max-w-xl mx-auto space-y-2">
-            <h2 className="text-[20px] sm:text-[23px] font-black text-[#35313A] tracking-tight">
+            <h2 className="text-[20px] sm:text-[23px] font-black text-[#35313A] leading-snug tracking-tight text-balance max-w-lg sm:max-w-xl mx-auto">
               未経験について、どんな些細な疑問もLINEで相談できます
             </h2>
             <p className="text-xs sm:text-sm text-[#85818A] leading-relaxed pt-1">

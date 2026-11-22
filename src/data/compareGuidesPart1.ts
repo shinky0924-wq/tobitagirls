@@ -29,6 +29,7 @@ export interface CompareSubpageItem {
   faqs: { q: string; a: string }[];
   relatedCompareSlugs: string[];
   relatedSitePaths: { path: string; label: string; desc: string }[];
+  seoNoindex?: boolean;
 }
 
 export interface CompareCategoryGroup {
@@ -78,7 +79,7 @@ export const COMPARE_CATEGORY_GROUPS: CompareCategoryGroup[] = [
 ];
 
 export const COMPARE_PARENT_COPY = {
-  seoTitle: '飛田新地求人｜未経験・経験者・希望の働き方から探す｜飛田ガールズ',
+  seoTitle: '働き方・条件別の応募ガイド｜未経験・経験者・希望条件から探す｜飛田ガールズ',
   metaDescription:
     '飛田新地で働きたい女性へ。未経験・経験者・20代〜40代・高収入・週1日勤務・短期出稼ぎ・Wワークなど、希望する働き方から求人情報を探せます。仕事内容や給料、勤務条件、身バレ対策も分かりやすく紹介します。',
   h1: 'あなたに合った働き方を、一緒に考えませんか？',
@@ -105,7 +106,7 @@ export const COMPARE_GUIDES_PART1: CompareSubpageItem[] = [
     categoryTitle: 'A. 経験・年齢',
     itemName: '未経験',
     cardDescription: '初めての方も安心。仕事の流れやサポート体制を確認できます。',
-    seoTitle: '飛田新地求人【未経験向け】｜仕事の流れ・サポート体制・応募前チェック｜飛田ガールズ',
+    seoTitle: '【未経験向け】飛田新地での働き方｜仕事の流れ・サポート体制・応募前チェック｜飛田ガールズ',
     metaDescription:
       '飛田新地で初めて働く未経験の女性向け案内ページ。玄関でのお迎えから個室での短時間接客まで、仲居さんのサポート体制・衛生ルール・売上50%即日日払いの仕組みを分かりやすく紹介します。',
     h1: '未経験から飛田新地で働く｜仕事の流れと安心サポート',
@@ -179,7 +180,7 @@ export const COMPARE_GUIDES_PART1: CompareSubpageItem[] = [
     categoryTitle: 'A. 経験・年齢',
     itemName: '経験者・移籍',
     cardDescription: '他業種や他店からの移籍向けに環境・条件を比較できます。',
-    seoTitle: '飛田新地求人【経験者・移籍向け】｜他業種・他店との働き方と待遇比較｜飛田ガールズ',
+    seoTitle: '【経験者・移籍向け】飛田新地での働き方｜他業種・他店との待遇比較｜飛田ガールズ',
     metaDescription:
       'キャバクラ・メンズエステ・ソープ・ヘルスなど他業種からの移籍や、飛田新地の他店からの移籍を検討中の経験者向けページ。接客ルール・人間関係・控除0円・立地条件を分かりやすく紹介します。',
     h1: '経験者・移籍で飛田新地を選ぶ｜他業種・他店との違いと条件',
@@ -248,7 +249,7 @@ export const COMPARE_GUIDES_PART1: CompareSubpageItem[] = [
     categoryTitle: 'A. 経験・年齢',
     itemName: '20代',
     cardDescription: '学業や仕事と両立しやすい、20代女性向けの環境を確認できます。',
-    seoTitle: '飛田新地求人【20代女性向け】｜通りの選び方・両立シフト・安心の条件｜飛田ガールズ',
+    seoTitle: '【20代女性向け】飛田新地の働き方｜通りの選び方・両立シフト・安心の条件｜飛田ガールズ',
     metaDescription:
       '20代女性（20歳〜29歳）で飛田新地の求人を探している方向けページ。メイン通り・青春通りの違いや、学生・会社員・フリーターが無理なく両立できるシフトと給料の仕組みを解説します。',
     h1: '20代で飛田新地を検討する方へ｜働きやすい通りと両立スタイル',
@@ -316,7 +317,7 @@ export const COMPARE_GUIDES_PART1: CompareSubpageItem[] = [
     categoryTitle: 'A. 経験・年齢',
     itemName: '30代',
     cardDescription: '大人の落ち着きや気配りを活かした働き方を確認できます。',
-    seoTitle: '飛田新地求人【30代女性向け】｜落ち着いた接客と選ばれる理由・通りの特徴｜飛田ガールズ',
+    seoTitle: '【30代女性向け】飛田新地の働き方｜落ち着いた接客と選ばれる理由・通りの特徴｜飛田ガールズ',
     metaDescription:
       '30代で飛田新地の求人を検討している女性向けページ。大人の落ち着きや聞き上手な対応が求められる理由、働きやすい通りやシフト、事前確認事項を正直に分かりやすく案内します。',
     h1: '30代から飛田新地で働く｜大人の落ち着きを活かせる環境',
@@ -384,7 +385,7 @@ export const COMPARE_GUIDES_PART1: CompareSubpageItem[] = [
     categoryTitle: 'A. 経験・年齢',
     itemName: '40代',
     cardDescription: '40代の働きやすさや、応募前に確認したい点をご案内します。',
-    seoTitle: '飛田新地求人【40代女性向け】｜事前に確認したい条件と相談方法｜飛田ガールズ',
+    seoTitle: '【40代女性向け】飛田新地の働き方｜事前に確認したい条件と相談方法｜飛田ガールズ',
     metaDescription:
       '40代で飛田新地での働き方を検討している女性向けページ。年齢だけで一律に判断せず、ご希望の勤務時間や当店の現在の募集状況を踏まえて事前にご相談いただけるポイントを正直にご案内します。',
     h1: '40代で飛田新地をご検討の方へ｜事前のご確認と働き方のご案内',
@@ -452,7 +453,7 @@ export const COMPARE_GUIDES_PART1: CompareSubpageItem[] = [
     categoryTitle: 'B. 収入・働く目的',
     itemName: '高収入を目指したい',
     cardDescription: '売上50%バック・日払いの仕組みと働き方を詳しく確認できます。',
-    seoTitle: '飛田新地求人【高収入を目指したい方へ】｜報酬の仕組み・控除0円・計算例｜飛田ガールズ',
+    seoTitle: '【高収入を目指したい方へ】飛田新地の報酬システム｜控除0円・計算例｜飛田ガールズ',
     metaDescription:
       '飛田新地で効率よく高収入を目指したい女性向けページ。売上50%バック・天引き0円・即日現金手渡しの給与システムと、計算式に基づく収入の考え方、時間帯や通りの特徴を分かりやすく解説します。',
     h1: '高収入を目指したい方へ｜売上50%バックと明朗な計算システム',
@@ -515,11 +516,12 @@ export const COMPARE_GUIDES_PART1: CompareSubpageItem[] = [
   },
   {
     slug: 'savings',
+    seoNoindex: true,
     categoryCode: 'B',
     categoryTitle: 'B. 収入・働く目的',
     itemName: '貯金したい',
     cardDescription: '計画的に貯蓄を増やすための働き方や支出管理を確認できます。',
-    seoTitle: '飛田新地求人【貯金したい方へ】｜現金日払いを活かした計画的な貯蓄と働き方｜飛田ガールズ',
+    seoTitle: '【貯金したい方へ】飛田新地の現金日払い｜計画的な貯蓄と働き方｜飛田ガールズ',
     metaDescription:
       '将来のため・引っ越し・留学・開業資金などのために貯金をしたい女性向けページ。即日全額現金手渡しのメリットや雑費0円の環境を活かし、計画的に手元資金を残すポイントを解説します。',
     h1: '貯金したい方へ｜出費を抑えながら手元にしっかり残す働き方',
@@ -582,11 +584,12 @@ export const COMPARE_GUIDES_PART1: CompareSubpageItem[] = [
   },
   {
     slug: 'living-expenses',
+    seoNoindex: true,
     categoryCode: 'B',
     categoryTitle: 'B. 収入・働く目的',
     itemName: '生活費を補いたい',
     cardDescription: '家賃や日々の出費を無理なく補える働き方を確認できます。',
-    seoTitle: '飛田新地求人【生活費を補いたい方へ】｜週1日・短時間からできる収入の補填｜飛田ガールズ',
+    seoTitle: '【生活費を補いたい方へ】飛田新地の短時間シフト｜週1日からできる収入補填｜飛田ガールズ',
     metaDescription:
       '家賃・光熱費・食費・学費・ローンの支払いなど、毎月の生活費を無理なく補いたい女性向けページ。スキマ時間の活用や即日現金払いの仕組み、無理のないシフト例を紹介します。',
     h1: '生活費を補いたい方へ｜スキマ時間・即日日払いで家計にゆとりを',
@@ -649,11 +652,12 @@ export const COMPARE_GUIDES_PART1: CompareSubpageItem[] = [
   },
   {
     slug: 'target-income',
+    seoNoindex: true,
     categoryCode: 'B',
     categoryTitle: 'B. 収入・働く目的',
     itemName: '目標金額がある',
     cardDescription: '目標額や期限から逆算した働き方の考え方を確認できます。',
-    seoTitle: '飛田新地求人【目標金額がある方へ】｜計算基準から逆算する現実的な計画｜飛田ガールズ',
+    seoTitle: '【目標金額がある方へ】飛田新地の収入目安｜計算基準から逆算する計画｜飛田ガールズ',
     metaDescription:
       '返済・学費・開業・美容・旅行など明確な目標金額と期限がある女性向けページ。売上50%バック・控除0円の計算式をもとに、無理のない日数・時間帯の計画の立て方を分かりやすく案内します。',
     h1: '目標金額がある方へ｜明確な計算基準で計画を立てる働き方',

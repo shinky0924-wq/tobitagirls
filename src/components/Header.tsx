@@ -56,7 +56,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
     { id: 'dorm', name: '寮・出稼ぎ', icon: 'Home', desc: '家具家電付き個室寮の相談・往復交通費支給（規定確認）', badge: '寮・交通費' },
     { id: 'safety', name: '身バレ・安全', icon: 'EyeOff', desc: 'ネット写真ゼロ・完全源氏名・住民税普通徴収対策', badge: '秘密厳守' },
     { id: 'faq', name: 'よくある質問 FAQ', icon: 'HelpCircle', desc: '知りたい疑問がすべてわかる・全119問のQ&A', badge: '全119問' },
-    { id: 'blog', name: 'お仕事コラム', icon: 'BookOpen', desc: '100本以上の解説記事・未経験者向けのお役立ち情報', badge: '100本超' },
+    { id: 'blog', name: 'お仕事コラム', icon: 'BookOpen', desc: '128本の厳選解説記事・未経験者向けのお役立ち情報', badge: '128本' },
   ];
 
   // Top level menu items requested by user

@@ -2,6 +2,10 @@
   X-Content-Type-Options: nosniff
   Cache-Control: public, max-age=0, must-revalidate
 
+/
+  Link: </llms.txt>; rel="alternate"; type="text/markdown", </llms-full.txt>; rel="alternate"; type="text/markdown", </index.md>; rel="alternate"; type="text/markdown"
+  Vary: Accept
+
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 
@@ -11,4 +15,39 @@
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
+  Link: </llms.txt>; rel="alternate"; type="text/markdown", </llms-full.txt>; rel="alternate"; type="text/markdown"
+  Vary: Accept
 
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  X-Robots-Tag: noindex, follow
+  Cache-Control: public, max-age=3600
+
+/llms-full.txt
+  Content-Type: text/plain; charset=utf-8
+  X-Robots-Tag: noindex, follow
+  Cache-Control: public, max-age=3600
+
+/*.md
+  Content-Type: text/markdown; charset=utf-8
+  X-Robots-Tag: noindex, follow
+  Vary: Accept
+  Cache-Control: public, max-age=3600
+
+/blog/*.md
+  Content-Type: text/markdown; charset=utf-8
+  X-Robots-Tag: noindex, follow
+  Vary: Accept
+  Cache-Control: public, max-age=3600
+
+/compare/*.md
+  Content-Type: text/markdown; charset=utf-8
+  X-Robots-Tag: noindex, follow
+  Vary: Accept
+  Cache-Control: public, max-age=3600
+
+/faq/*.md
+  Content-Type: text/markdown; charset=utf-8
+  X-Robots-Tag: noindex, follow
+  Vary: Accept
+  Cache-Control: public, max-age=3600

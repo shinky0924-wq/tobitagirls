@@ -63,7 +63,11 @@ function isAiBotOrMarkdownRequest(req: express.Request): boolean {
     'diffbot',
     'bytespider',
     'cohere-ai',
-    'meta-externalagent'
+    'meta-externalagent',
+    'grokbot',
+    'xai-grok',
+    'deepseekbot',
+    'ai2bot'
   ];
 
   if (aiBotSignatures.some((bot) => userAgent.includes(bot))) {
@@ -125,6 +129,13 @@ async function startServer() {
       return res.redirect(301, isMdReq ? `${targetRedirect}.md` : targetRedirect);
     }
 
+    // 3. Canonicalize trailing slashes on non-root page routes (avoid duplicate /job and /job/)
+    if (req.path.length > 1 && req.path.endsWith('/') && !req.path.startsWith('/api')) {
+      const qsIndex = req.originalUrl.indexOf('?');
+      const qs = qsIndex !== -1 ? req.originalUrl.slice(qsIndex) : '';
+      return res.redirect(301, `${req.path.replace(/\/+$/, '')}${qs}`);
+    }
+
     next();
   });
 
@@ -154,7 +165,7 @@ async function startServer() {
         articles = JSON.parse(fs.readFileSync(ARTICLES_FILE, 'utf-8'));
       }
       const esc = (s: string) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
-      const sorted = [...articles].filter((a) => a.slug && a.title).slice(0, 50);
+      const sorted = [...articles].filter((a) => a.slug && a.title && !a.seoNoindex).slice(0, 50);
       const itemsXml = sorted.map((a) => `    <item>
       <title>${esc(a.title)}</title>
       <link>https://tobitashinchi-recruit.com/blog/${esc(a.slug)}</link>

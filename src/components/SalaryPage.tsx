@@ -639,7 +639,7 @@ export default function SalaryPage({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left: Main Copy & Sub Copy */}
             <div className="lg:col-span-7 space-y-4">
-              <h1 className="font-display font-black text-2xl sm:text-3xl md:text-[32px] text-[#35313A] leading-snug tracking-tight">
+              <h1 className="font-display font-black text-2xl sm:text-3xl md:text-[32px] text-[#35313A] leading-snug tracking-tight text-balance max-w-xl lg:max-w-none">
                 頑張り方も、収入の目安も。<br />
                 <span className="text-[#D94B7A]">自分のペースで考えられる給与システム。</span>
               </h1>
@@ -736,7 +736,7 @@ export default function SalaryPage({
             <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block mb-2">
               計算の仕組み
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               給料はどうやって決まるの？
             </h2>
             <p className="text-xs sm:text-[14px] text-[#85818A] mt-2 leading-relaxed">
@@ -824,7 +824,7 @@ export default function SalaryPage({
             <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block mb-2">
               報酬一覧
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               コース別の給与一覧
             </h2>
             <p className="text-xs sm:text-[14px] text-[#85818A] mt-2 leading-relaxed">
@@ -912,7 +912,7 @@ export default function SalaryPage({
             <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block mb-2">
               試算ツール
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               あなたの希望に合わせた収入シミュレーション
             </h2>
             <p className="text-xs sm:text-[14px] text-[#85818A] mt-2 leading-relaxed">
@@ -1164,7 +1164,7 @@ export default function SalaryPage({
             <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block mb-2">
               モデルケース
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               働き方によって、収入の目安は変わります
             </h2>
             <p className="text-xs sm:text-[14px] text-[#85818A] mt-2 leading-relaxed">
@@ -1368,7 +1368,7 @@ export default function SalaryPage({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left: Main Copy & Sub Copy */}
             <div className="lg:col-span-7 space-y-4">
-              <h2 className="font-display font-black text-2xl sm:text-3xl md:text-[30px] text-[#35313A] leading-snug tracking-tight">
+              <h2 className="font-display font-black text-2xl sm:text-3xl md:text-[30px] text-[#35313A] leading-snug tracking-tight text-balance max-w-xl lg:max-w-none">
                 働く前に知っておきたいこと。<br />
                 <span className="text-[#D94B7A]">安心して働くための待遇・サポートをご紹介します。</span>
               </h2>
@@ -1424,7 +1424,7 @@ export default function SalaryPage({
             <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block mb-2">
               サポート体制
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               充実の6大待遇・サポート
             </h2>
             <p className="text-xs sm:text-[14px] text-[#85818A] mt-2 leading-relaxed">
@@ -1483,7 +1483,7 @@ export default function SalaryPage({
             <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block mb-2">
               客観的な違い
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               待遇の比較（当直営店と一般的な他店）
             </h2>
             <p className="text-xs sm:text-[14px] text-[#85818A] mt-2 leading-relaxed">
@@ -1548,7 +1548,7 @@ export default function SalaryPage({
             <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block mb-2">
               解説コラム
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               給料・待遇について、もっと詳しく知りたい方へ
             </h2>
             <p className="text-xs sm:text-[14px] text-[#85818A] mt-2 leading-relaxed">
@@ -1646,7 +1646,7 @@ export default function SalaryPage({
             <span className="text-[11px] font-bold text-[#D94B7A] bg-[#FCE8EF] border border-[#F0E5EA] px-3.5 py-1 rounded-full inline-block mb-2">
               よくある質問
             </span>
-            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-[23px] font-black text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               給料・待遇に関するよくある質問
             </h2>
             <p className="text-xs sm:text-[14px] text-[#85818A] mt-2 leading-relaxed">
@@ -1708,7 +1708,7 @@ export default function SalaryPage({
               LINE無料相談・ご質問窓口
             </span>
 
-            <h2 className="text-xl sm:text-2xl md:text-[26px] font-black text-[#35313A]">
+            <h2 className="text-xl sm:text-2xl md:text-[26px] font-black text-[#35313A] leading-snug text-balance max-w-xl sm:max-w-2xl mx-auto">
               給料や待遇について、分からないことはありませんか？
             </h2>
 

@@ -24,6 +24,17 @@ const FALLBACK_HOME_JSON_LD = {
       alternateName: ['飛田ガールズ公式', 'Tobita Girls'],
       description: '飛田新地の女性向け求人情報サイト。仕事内容や給料の仕組み（完全歩合制・売上50%バック即日日払い）、応募条件、面接・体験入店の流れ、身バレ対策を網羅。',
       inLanguage: 'ja-JP',
+      publisher: {
+        '@id': 'https://tobitashinchi-recruit.com/#organization',
+      },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: 'https://tobitashinchi-recruit.com/faq?search={search_term_string}',
+        },
+        'query-input': 'required name=search_term_string',
+      },
     },
     {
       '@type': 'WebPage',
@@ -57,7 +68,10 @@ const FALLBACK_HOME_JSON_LD = {
       '@id': 'https://tobitashinchi-recruit.com/#organization',
       name: '飛田ガールズ（料亭直営求人・女性採用サポート）',
       url: 'https://tobitashinchi-recruit.com/',
-      sameAs: ['https://tobitashinchi-recruit.com/'],
+      sameAs: [
+        'https://tobitashinchi-recruit.com/',
+        'https://line.me/R/ti/p/@836gukxh',
+      ],
       publishingPrinciples: 'https://tobitashinchi-recruit.com/about',
       areaServed: '大阪府大阪市',
       knowsAbout: [
@@ -80,6 +94,12 @@ const FALLBACK_HOME_JSON_LD = {
         url: 'https://tobitashinchi-recruit.com/icon.png',
         width: 384,
         height: 384,
+      },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'customer support',
+        url: 'https://line.me/R/ti/p/@836gukxh',
+        availableLanguage: ['Japanese'],
       },
     },
   ],

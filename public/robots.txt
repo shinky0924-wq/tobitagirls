@@ -1,6 +1,16 @@
 User-agent: *
 Allow: /
 Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
+
+# Bing / ChatGPT Search Grounding
+User-agent: Bingbot
+Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
 Disallow: /*{search_term_string}*
 Disallow: /admin
 Disallow: /api/
@@ -8,60 +18,198 @@ Disallow: /api/
 # OpenAI Search & Crawlers (ChatGPT / SearchGPT)
 User-agent: GPTBot
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 # Perplexity AI
 User-agent: PerplexityBot
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 User-agent: Perplexity-User
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 # Anthropic Claude
 User-agent: ClaudeBot
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 User-agent: Claude-User
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 User-agent: Claude-SearchBot
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 # Google AI
 User-agent: Google-Extended
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 User-agent: GoogleOther
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 # Apple Intelligence / Siri Search
+User-agent: Applebot
+Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
+
 User-agent: Applebot-Extended
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
+
+# xAI (Grok)
+User-agent: GrokBot
+Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
+
+User-agent: xAI-Grok
+Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 # Meta AI
 User-agent: Meta-ExternalAgent
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 # Amazon Alexa / AI Search
 User-agent: Amazonbot
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 # Cohere AI
 User-agent: Cohere-ai
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 # DuckDuckGo AI Search
 User-agent: DuckAssistBot
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 # Mistral AI
 User-agent: MistralAI-User
 Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
+
+# You.com / DeepSeek / Allen Institute / Common Crawl
+User-agent: YouBot
+Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
+
+User-agent: DeepSeekBot
+Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
+
+User-agent: AI2Bot
+Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
+
+User-agent: CCBot
+Allow: /
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*{search_term_string}*
+Disallow: /admin
+Disallow: /api/
 
 Sitemap: https://tobitashinchi-recruit.com/sitemap.xml
 

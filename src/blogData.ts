@@ -36,6 +36,7 @@ export interface BlogArticle {
     answer?: string;
   }[];
   tags: string[];
+  seoNoindex?: boolean;
 }
 
 export interface AuthorProfile {

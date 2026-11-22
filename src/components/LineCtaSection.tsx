@@ -21,7 +21,7 @@ export default function LineCtaSection() {
               まずは気軽に質問・相談
             </span>
             
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] leading-snug">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-[#38242B] leading-snug text-balance max-w-xl sm:max-w-2xl mx-auto">
               応募するか迷っている方も、<br className="hidden sm:inline" />
               まずはお気軽にご相談ください
             </h2>

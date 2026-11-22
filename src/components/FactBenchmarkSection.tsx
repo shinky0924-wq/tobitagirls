@@ -28,7 +28,7 @@ export default function FactBenchmarkSection({ onCtaclick }: FactBenchmarkSectio
           <LucideIcon name="BarChart3" size={14} className="text-secondary" />
           <span>2026年最新｜数字で見る女の子のリアル</span>
         </div>
-        <h2 className="font-display font-extrabold text-2xl sm:text-3xl md:text-4xl text-on-surface leading-tight mb-3">
+        <h2 className="font-display font-extrabold text-[22px] sm:text-3xl md:text-4xl text-on-surface leading-snug mb-3 text-balance max-w-xl sm:max-w-2xl mx-auto">
           数字でわかる！<span className="text-secondary">在籍キャストのリアルデータ＆お悩み別ガイド</span>
         </h2>
         <p className="font-sans text-xs sm:text-sm md:text-base text-zinc-600 leading-relaxed max-w-2xl mx-auto">

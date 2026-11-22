@@ -19,6 +19,7 @@ interface ArticleItem {
   publishedAt?: string;
   summary?: string;
   tags?: string[];
+  seoNoindex?: boolean;
 }
 
 function escapeXml(str: string): string {
@@ -75,7 +76,7 @@ function generateRssFeed(articles: ArticleItem[]): string {
       category: '公式トップ',
     },
     {
-      title: `飛田新地求人のよくある質問（全${FAQ_100_LIST.length}問）｜飛田ガールズ`,
+      title: `飛田新地のよくある質問（全${FAQ_100_LIST.length}問）｜飛田ガールズ`,
       link: `${DOMAIN}/faq`,
       description: '未経験の不安、お給料・日払い、応募条件、身バレ対策など、応募前によくある質問をわかりやすくまとめています。',
       category: 'よくある質問',
@@ -235,14 +236,17 @@ WebサイトやSNSへの顔写真掲載は行わず、街全体で写真・動�
 - [飛田新地 用語集・用語辞典](${DOMAIN}/glossary) ([テキスト版](/glossary.md))
 - [お仕事コラム一覧（全${articleCount}記事）](${DOMAIN}/blog) ([テキスト版](/blog.md))
 
-### 働き方・求人比較（5カテゴリー・全${COMPARE_SUBPAGES.length}ページ）
-${COMPARE_CATEGORY_GROUPS.flatMap((g) => [
-  `#### ${g.title}`,
-  ...g.slugs
+### 働き方・求人比較（主要${COMPARE_SUBPAGES.filter((c) => !c.seoNoindex).length}ページ）
+${COMPARE_CATEGORY_GROUPS.flatMap((g) => {
+  const indexableItems = g.slugs
     .map((s) => COMPARE_SUBPAGE_MAP[s])
-    .filter((item): item is NonNullable<typeof item> => Boolean(item))
-    .map((item) => `- [${item.itemName}](${DOMAIN}/compare/${item.slug}) ([テキスト版](/compare/${item.slug}.md)): ${item.cardDescription}`),
-]).join('\n')}
+    .filter((item): item is NonNullable<typeof item> => Boolean(item) && !item.seoNoindex);
+  if (indexableItems.length === 0) return [];
+  return [
+    `#### ${g.title}`,
+    ...indexableItems.map((item) => `- [${item.itemName}](${DOMAIN}/compare/${item.slug}) ([テキスト版](/compare/${item.slug}.md)): ${item.cardDescription}`),
+  ];
+}).join('\n')}
 
 ### よくある質問（FAQ 全${faqCount}問・12カテゴリー別）
 - [FAQ総合トップ（全${faqCount}問）](${DOMAIN}/faq) ([テキスト版](/faq.md))
@@ -269,7 +273,8 @@ function generateLlmsFullTxt(articles: ArticleItem[]): string {
     return `### ${cat.number}. ${cat.label}（全${items.length}問）\nURL: ${DOMAIN}/faq/${cat.slug}\n\n${qaText}`;
   }).join('\n---\n\n');
 
-  const targetCategorySections = COMPARE_SUBPAGES.map(
+  const indexableCompareSubpages = COMPARE_SUBPAGES.filter((c) => !c.seoNoindex);
+  const targetCategorySections = indexableCompareSubpages.map(
     (c) =>
       `### ${c.itemName}（${c.categoryTitle}）\n` +
       `- **URL**: ${DOMAIN}/compare/${c.slug}\n` +
@@ -355,7 +360,7 @@ function generateLlmsFullTxt(articles: ArticleItem[]): string {
 
 ---
 
-## 6. 働き方・状況別の比較ガイド（全${COMPARE_SUBPAGES.length}ページ）
+## 6. 働き方・状況別の比較ガイド（主要${indexableCompareSubpages.length}ページ）
 ${targetCategorySections}
 
 ---
@@ -404,7 +409,8 @@ ${articlesSection}
 }
 
 function run() {
-  const articles = loadArticles();
+  const allArticles = loadArticles();
+  const articles = allArticles.filter((a) => !a.seoNoindex);
   const publicDir = path.join(process.cwd(), 'public');
 
   const feedXml = generateRssFeed(articles);
@@ -417,7 +423,7 @@ function run() {
   fs.writeFileSync(path.join(publicDir, 'llms-full.txt'), llmsFullTxt, 'utf-8');
 
   console.log(
-    `[Feeds & LLMs] Generated public/feed.xml (${Math.min(articles.length, 50) + 4} items), public/llms.txt, and public/llms-full.txt (${FAQ_100_LIST.length} FAQs, ${articles.length} articles)`
+    `[Feeds & LLMs] Generated public/feed.xml (${Math.min(articles.length, 50) + 4} items), public/llms.txt, and public/llms-full.txt (${FAQ_100_LIST.length} FAQs, ${articles.length} indexable articles)`
   );
 }
 

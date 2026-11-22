@@ -143,7 +143,7 @@ export default function Reasons({ content }: ReasonsProps) {
           </div>
 
           {/* メインタイトル */}
-          <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-[#38242B] tracking-tight leading-tight mb-3">
+          <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-[#38242B] tracking-tight leading-snug mb-3 text-balance max-w-xl sm:max-w-2xl mx-auto">
             {title}
           </h2>
 

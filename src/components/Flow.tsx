@@ -16,11 +16,11 @@ export default function Flow({ content }: FlowProps) {
       <div className="max-w-[1100px] mx-auto px-6">
         
         {/* Title */}
-        <div className="text-center mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-secondary font-display font-bold tracking-widest text-xs md:text-sm block mb-2 uppercase">
             {content.subtitle}
           </span>
-          <h2 className="font-display font-extrabold text-2xl md:text-3xl lg:text-4xl mb-4 text-on-surface">
+          <h2 className="font-display font-extrabold text-2xl md:text-3xl lg:text-4xl mb-4 text-on-surface leading-snug text-balance max-w-xl sm:max-w-2xl mx-auto">
             {content.title}
           </h2>
           <div className="h-1 w-12 bg-gradient-to-r from-secondary to-rose-300 mx-auto rounded-full mt-4" />

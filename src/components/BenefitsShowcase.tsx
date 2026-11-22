@@ -175,9 +175,9 @@ export default function BenefitsShowcase({ onCtaclickWithData, onCtaclick }: Ben
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center mb-6">
           <div className="order-2 lg:order-1 lg:col-span-7">
             {/* Main Title H2 */}
-            <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-zinc-900 leading-tight mb-3">
+            <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-zinc-900 leading-snug mb-3 text-balance max-w-2xl">
               待遇
-              <span className="block text-base sm:text-xl font-bold text-rose-600 mt-1 font-sans">
+              <span className="block text-base sm:text-xl font-bold text-rose-600 mt-1 font-sans text-balance">
                 雑費天引きゼロ・家具家電付き個室寮・往復交通費規定支給・衣装無料
               </span>
             </h2>

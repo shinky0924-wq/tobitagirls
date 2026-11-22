@@ -240,7 +240,7 @@ export default function FlowPage({
               </div>
 
               {/* メインコピー（27〜30px） */}
-              <h1 className="text-[27px] sm:text-[30px] font-bold text-[#35313A] leading-[1.35] tracking-tight text-balance">
+              <h1 className="text-[25px] sm:text-[30px] font-bold text-[#35313A] leading-[1.35] tracking-tight text-balance max-w-xl lg:max-w-none">
                 面接だけでも大丈夫。<br />
                 <span className="text-[#D94B7A]">まずは話を聞いてから決められます。</span>
               </h1>
@@ -346,7 +346,7 @@ export default function FlowPage({
            ========================================================= */}
         <section id="four-points" className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 border border-[#F0E5EA] shadow-2xs scroll-mt-20 space-y-6">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[24px] font-bold text-[#35313A] tracking-tight">
+            <h2 className="text-[20px] sm:text-[24px] font-bold text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               面接・体験入店について、最初に知っておきたい4つのこと
             </h2>
             <p className="text-[15px] text-[#85818A] leading-relaxed">
@@ -448,7 +448,7 @@ export default function FlowPage({
            ========================================================= */}
         <section id="five-steps" className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 border border-[#F0E5EA] shadow-2xs scroll-mt-20 space-y-6">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[24px] font-bold text-[#35313A] tracking-tight">
+            <h2 className="text-[20px] sm:text-[24px] font-bold text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               応募から当日までの流れ
             </h2>
             <p className="text-[15px] text-[#35313A] leading-relaxed">
@@ -519,7 +519,7 @@ export default function FlowPage({
            ========================================================= */}
         <section id="interview-details" className="space-y-6 scroll-mt-20">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[24px] font-bold text-[#35313A] tracking-tight">
+            <h2 className="text-[20px] sm:text-[24px] font-bold text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               面接ではどんなことを確認するの？
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#35313A] leading-relaxed">
@@ -592,7 +592,7 @@ export default function FlowPage({
            ========================================================= */}
         <section id="belongings" className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 border border-[#F0E5EA] shadow-2xs scroll-mt-20 space-y-6">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[24px] font-bold text-[#35313A] tracking-tight">
+            <h2 className="text-[20px] sm:text-[24px] font-bold text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               面接当日の服装・持ち物について
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#35313A] leading-relaxed">
@@ -661,7 +661,7 @@ export default function FlowPage({
            ========================================================= */}
         <section id="trial-details" className="space-y-6 scroll-mt-20">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[24px] font-bold text-[#35313A] tracking-tight">
+            <h2 className="text-[20px] sm:text-[24px] font-bold text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               体験入店の内容について
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#35313A] leading-relaxed">
@@ -761,7 +761,7 @@ export default function FlowPage({
            ========================================================= */}
         <section id="after-trial" className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 border border-[#F0E5EA] shadow-2xs scroll-mt-20 space-y-6">
           <div className="max-w-3xl space-y-3">
-            <h2 className="text-[21px] sm:text-[24px] font-bold text-[#35313A] tracking-tight">
+            <h2 className="text-[20px] sm:text-[24px] font-bold text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               体験した後はどうなるの？
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#35313A] leading-relaxed">
@@ -816,7 +816,7 @@ export default function FlowPage({
            ========================================================= */}
         <section className="space-y-5">
           <div className="max-w-2xl space-y-1.5">
-            <h2 className="text-[21px] sm:text-[24px] font-bold text-[#35313A] tracking-tight">
+            <h2 className="text-[20px] sm:text-[24px] font-bold text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               相談環境・店内のイメージ
             </h2>
             <p className="text-[14px] text-[#85818A] leading-relaxed">
@@ -906,7 +906,7 @@ export default function FlowPage({
         <section id="columns" className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 border border-[#F0E5EA] shadow-2xs scroll-mt-20 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div className="space-y-1.5">
-              <h2 className="text-[21px] sm:text-[24px] font-bold text-[#35313A] tracking-tight">
+              <h2 className="text-[20px] sm:text-[24px] font-bold text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
                 面接・体験入店の前に読んでおきたい記事
               </h2>
               <p className="text-[14px] text-[#85818A] leading-relaxed">
@@ -968,7 +968,7 @@ export default function FlowPage({
            ========================================================= */}
         <section id="flow-faq" className="space-y-6 scroll-mt-20">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[21px] sm:text-[24px] font-bold text-[#35313A] tracking-tight">
+            <h2 className="text-[20px] sm:text-[24px] font-bold text-[#35313A] leading-snug tracking-tight text-balance max-w-2xl">
               面接・体験入店についてよくある質問
             </h2>
             <p className="text-[14px] text-[#85818A] leading-relaxed">
@@ -1047,7 +1047,7 @@ export default function FlowPage({
           </div>
 
           <div className="max-w-xl mx-auto space-y-3">
-            <h2 className="text-[21px] sm:text-[24px] font-bold text-[#35313A] tracking-tight">
+            <h2 className="text-[20px] sm:text-[24px] font-bold text-[#35313A] leading-snug tracking-tight text-balance max-w-lg sm:max-w-xl mx-auto">
               面接・体験入店について、気になることはありませんか？
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#35313A] leading-relaxed">

@@ -29,11 +29,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="format-detection" content="telephone=no" />
     
-    <!-- Preconnect for Google Fonts to prevent font flickering -->
+    <!-- Preload LCP Hero Image & Preconnect Google Fonts -->
+    <link rel="preload" as="image" href="/images/tobita_dream_hero_banner_1782557055526.webp" type="image/webp" fetchpriority="high" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
-    <!-- Google Structured Data (JSON-LD) for JobPosting, WebSite, Organization, BreadcrumbList & FAQPage -->
+    <!-- Google Structured Data (JSON-LD) for WebSite, WebPage, Place, Organization, BreadcrumbList & FAQPage -->
     <script id="seo-jsonld" type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -48,6 +49,14 @@
           "inLanguage": "ja-JP",
           "publisher": {
             "@id": "https://tobitashinchi-recruit.com/#organization"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://tobitashinchi-recruit.com/faq?search={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
           }
         },
         {
@@ -56,7 +65,7 @@
           "url": "https://tobitashinchi-recruit.com/",
           "name": "飛田新地求人｜飛田ガールズ【公式・料亭直営】未経験歓迎・即日日払い",
           "description": "飛田新地で働くか迷っている女性へ。飛田ガールズは料亭直営の求人案内サイトです。仕事内容や接客方法、給料・全額日払いの仕組み、応募条件、身バレ対策まで詳しく解説。未経験の方も経験者の方も、応募前に知っておきたい情報を分かりやすく紹介しています。",
-          "dateModified": "2026-11-18",
+          "dateModified": "2026-11-21",
           "inLanguage": "ja-JP",
           "isPartOf": {
             "@id": "https://tobitashinchi-recruit.com/#website"
@@ -83,43 +92,6 @@
           }
         },
         {
-          "@type": "HowTo",
-          "@id": "https://tobitashinchi-recruit.com/#howto-interview",
-          "name": "飛田新地求人 応募から面接・体験入店・日払い手渡しまでの流れ",
-          "description": "料亭直営公式採用「飛田ガールズ」でのお仕事スタート手順。私服・履歴書不要での面接から体験入店、全額手渡し日払いまでをステップ順に解説。",
-          "totalTime": "PT4H",
-          "step": [
-            {
-              "@type": "HowToStep",
-              "position": 1,
-              "name": "公式LINEで無料相談・見学予約",
-              "text": "完全匿名・履歴書不要で公式LINEよりお気軽にご連絡ください。女性スタッフが希望条件や疑問点に24時間丁寧にお答えします。",
-              "url": "https://tobitashinchi-recruit.com/flow#step1"
-            },
-            {
-              "@type": "HowToStep",
-              "position": 2,
-              "name": "私服で店舗見学・事前レクチャー",
-              "text": "私服でお越しいただき、控室や店舗の雰囲気を見学。お仕事の流れや衛生・防犯ルールを丁寧にレクチャーします。",
-              "url": "https://tobitashinchi-recruit.com/flow#step2"
-            },
-            {
-              "@type": "HowToStep",
-              "position": 3,
-              "name": "貸出衣装でお試し体験入店",
-              "text": "お店の着物や浴衣などに着替えてお試し体験入店。玄関では仲居さんと一緒に座り、無理のないペースでお仕事を確認できます。",
-              "url": "https://tobitashinchi-recruit.com/flow#step3"
-            },
-            {
-              "@type": "HowToStep",
-              "position": 4,
-              "name": "売上50%バックを即日全額現金手渡し受取",
-              "text": "勤務終了後、その日の手取り分（売上50%バック・ロッカー代等雑費天引きなし）を全額現金手渡しでお受け取りいただけます。",
-              "url": "https://tobitashinchi-recruit.com/flow#step4"
-            }
-          ]
-        },
-        {
           "@type": "Place",
           "@id": "https://tobitashinchi-recruit.com/#place",
           "name": "飛田新地料理組合公認 料亭街",
@@ -141,14 +113,17 @@
         {
           "@type": "Organization",
           "@id": "https://tobitashinchi-recruit.com/#organization",
-          "name": "飛田ガールズ（料亭直営求人・女性採用サポート）",
+          "name": "飛田ガールズ（料亭直営・女性採用窓口）",
           "url": "https://tobitashinchi-recruit.com/",
-          "sameAs": ["https://tobitashinchi-recruit.com/"],
+          "sameAs": [
+            "https://tobitashinchi-recruit.com/",
+            "https://line.me/R/ti/p/@836gukxh"
+          ],
           "publishingPrinciples": "https://tobitashinchi-recruit.com/about",
           "areaServed": "大阪府大阪市",
           "knowsAbout": [
             "飛田新地の仕事内容・接客ルール",
-            "料亭直営の女性向け求人案内",
+            "料亭直営の女性向け採用案内",
             "売上50%バック・全額日払いの仕組み",
             "身バレ対策・プライバシー配慮",
             "未経験・地方出稼ぎのサポート体制"
@@ -175,72 +150,13 @@
           }
         },
         {
-          "@type": "JobPosting",
-          "@id": "https://tobitashinchi-recruit.com/#jobposting",
-          "title": "【飛田新地料亭】女性キャスト接客スタッフ（未経験歓迎・売上50%即日日払い）",
-          "description": "飛田新地（大阪市西成区山王）の料理組合加盟料亭にて、玄関でのお迎えと和室での短時間おもてなし接客を担当していただきます。在籍女性の多くが未経験からのスタート。ノルマ・罰金・お酒の飲酒は不要です。女性スタッフが面接から入店後まで丁寧にサポートいたします。",
-          "identifier": {
-            "@type": "PropertyValue",
-            "name": "飛田ガールズ 料亭直営採用窓口",
-            "value": "TOBITA-RECRUIT-001"
-          },
-          "datePosted": "2026-10-01T00:00:00+09:00",
-          "validThrough": "2027-12-31T23:59:59+09:00",
-          "employmentType": ["FULL_TIME", "PART_TIME", "TEMPORARY"],
-          "hiringOrganization": {
-            "@type": "Organization",
-            "name": "飛田新地料理組合公認 料亭直営採用窓口（飛田ガールズ）",
-            "sameAs": "https://tobitashinchi-recruit.com/",
-            "logo": "https://tobitashinchi-recruit.com/icon.png"
-          },
-          "jobLocation": {
-            "@type": "Place",
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "山王3丁目",
-              "addressLocality": "大阪市西成区",
-              "addressRegion": "大阪府",
-              "postalCode": "557-0001",
-              "addressCountry": "JP"
-            }
-          },
-          "baseSalary": {
-            "@type": "MonetaryAmount",
-            "currency": "JPY",
-            "value": {
-              "@type": "QuantitativeValue",
-              "minValue": 30000,
-              "maxValue": 100000,
-              "unitText": "DAY"
-            }
-          },
-          "applicantLocationRequirements": {
-            "@type": "Country",
-            "name": "JP"
-          },
-          "jobBenefits": [
-            "売上50%バック・即日全額現金日払い（手渡し支給）",
-            "ロッカー代・更衣室代等の雑費天引きなし",
-            "衣装・着物・浴衣無料貸出",
-            "専任女性スタッフによるサポート体制",
-            "WEB顔写真非掲載・街全体撮影禁止によるプライバシー配慮",
-            "ノルマ・罰金・連絡先交換・お酒の飲酒一切なし",
-            "自由シフト制（週1日〜勤務相談可）"
-          ],
-          "incentiveCompensation": "完全歩合制（売上50%バック・1回5,000円〜20,000円目安 ※シフト・来店状況により変動）",
-          "industry": "飲食料亭・接客サービス",
-          "workHours": "10:00〜24:00（選べる5大シフト制・週1日〜勤務相談可）",
-          "qualifications": "満20歳以上の女性（未経験歓迎・学歴経験不問 ※料理組合規約により20歳未満不可）",
-          "directApply": true
-        },
-        {
           "@type": "BreadcrumbList",
           "@id": "https://tobitashinchi-recruit.com/#breadcrumb",
           "itemListElement": [
             {
               "@type": "ListItem",
               "position": 1,
-              "name": "トップページ（飛田新地求人）",
+              "name": "トップページ",
               "item": "https://tobitashinchi-recruit.com/"
             },
             {
@@ -260,7 +176,7 @@
         {
           "@type": "FAQPage",
           "@id": "https://tobitashinchi-recruit.com/#faq",
-          "dateModified": "2026-11-18",
+          "dateModified": "2026-11-21",
           "mainEntity": [
             {
               "@type": "Question",
@@ -436,7 +352,7 @@
               <li><h3><a href="/dekasegi">寮・出稼ぎ｜個室寮相談と交通費規定支給</a></h3><p>家具家電・Wi-Fi付き個室寮の相談や遠方交通費サポート（規定あり）。</p></li>
               <li><h3><a href="/safety">プライバシー対策｜身バレを防ぐ安全対策</a></h3><p>撮影禁止ルール・完全源氏名・住民税普通徴収の案内。</p></li>
               <li><h3><a href="/faq">よくある質問｜応募前の不安を解消するQ&A</a></h3><p>未経験・給料・身バレなど全119問のQ&A。</p></li>
-              <li><h3><a href="/blog">お仕事コラム｜働く前に知りたい体験談とノウハウ</a></h3><p>100本以上の解説記事・実例コラム。</p></li>
+              <li><h3><a href="/blog">お仕事コラム｜働く前に知りたい体験談とノウハウ</a></h3><p>厳選128本の解説記事・実例コラム。</p></li>
             </ol>
             <p><a href="/site-compare">飛田新地求人サイト徹底比較を見る</a> / <a href="/compare">目的・働き方別求人ガイドを見る</a> / <a href="/glossary">用語集を見る</a> / <a href="/about">運営者情報を見る</a></p>
           </section>

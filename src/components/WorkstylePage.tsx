@@ -444,7 +444,7 @@ export default function WorkstylePage({
                 </span>
               </div>
 
-              <h1 className="text-[26px] sm:text-[32px] lg:text-[34px] font-bold text-[#29252A] leading-[1.35] tracking-tight">
+              <h1 className="text-[25px] sm:text-[32px] lg:text-[34px] font-bold text-[#29252A] leading-[1.35] tracking-tight text-balance max-w-xl lg:max-w-none">
                 あなたの生活に合わせた
                 <br />
                 働き方、見つけませんか？
@@ -583,7 +583,7 @@ export default function WorkstylePage({
            ========================================================= */}
         <section id="basics" className="scroll-mt-20 space-y-6">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[22px] sm:text-[26px] font-bold text-[#29252A] tracking-tight">
+            <h2 className="text-[21px] sm:text-[26px] font-bold text-[#29252A] leading-snug tracking-tight text-balance max-w-2xl">
               まずは知っておきたい、働き方のこと
             </h2>
             <p className="text-[15px] text-[#888087] leading-relaxed">
@@ -624,7 +624,7 @@ export default function WorkstylePage({
             <span className="text-[13px] font-bold text-[#B83B67] block">
               5つのシフトパターン（A〜E）
             </span>
-            <h2 className="text-[22px] sm:text-[27px] font-bold text-[#29252A] tracking-tight">
+            <h2 className="text-[21px] sm:text-[27px] font-bold text-[#29252A] leading-snug tracking-tight text-balance max-w-2xl">
               あなたに合う働き方を見つけよう
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#888087] leading-relaxed">
@@ -878,7 +878,7 @@ export default function WorkstylePage({
                 <span className="inline-block text-[12.5px] font-bold text-[#B83B67] bg-[#F5DCE6]/65 px-3 py-1 rounded-lg">
                   シフト A・B に対応
                 </span>
-                <h2 className="text-[22px] sm:text-[25px] font-bold text-[#29252A] tracking-tight">
+                <h2 className="text-[21px] sm:text-[25px] font-bold text-[#29252A] leading-snug tracking-tight text-balance max-w-2xl">
                   昼間の時間を活用したい方へ
                 </h2>
                 <p className="text-[15px] text-[#888087] leading-relaxed">
@@ -952,7 +952,7 @@ export default function WorkstylePage({
                 <span className="inline-block text-[12.5px] font-bold text-[#B83B67] bg-[#F5DCE6]/65 px-3 py-1 rounded-lg">
                   シフト C・D に対応
                 </span>
-                <h2 className="text-[22px] sm:text-[25px] font-bold text-[#29252A] tracking-tight">
+                <h2 className="text-[21px] sm:text-[25px] font-bold text-[#29252A] leading-snug tracking-tight text-balance max-w-2xl">
                   夕方から夜の時間を活用したい方へ
                 </h2>
                 <p className="text-[15px] text-[#888087] leading-relaxed">
@@ -1072,7 +1072,7 @@ export default function WorkstylePage({
                 <span className="inline-block text-[12.5px] font-bold text-[#B83B67] bg-[#F5DCE6]/65 px-3 py-1 rounded-lg">
                   シフト E に対応（長時間勤務）
                 </span>
-                <h2 className="text-[22px] sm:text-[25px] font-bold text-[#29252A] tracking-tight">
+                <h2 className="text-[21px] sm:text-[25px] font-bold text-[#29252A] leading-snug tracking-tight text-balance max-w-2xl">
                   まとまった時間で、しっかり働きたい方へ
                 </h2>
                 <p className="text-[15px] text-[#888087] leading-relaxed">
@@ -1143,7 +1143,7 @@ export default function WorkstylePage({
            ========================================================= */}
         <section id="before-work" className="scroll-mt-20 space-y-6">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[22px] sm:text-[26px] font-bold text-[#29252A] tracking-tight">
+            <h2 className="text-[21px] sm:text-[26px] font-bold text-[#29252A] leading-snug tracking-tight text-balance max-w-2xl">
               安心して働くために、事前に確認しておきたいこと
             </h2>
             <p className="text-[15px] text-[#888087] leading-relaxed">
@@ -1198,7 +1198,7 @@ export default function WorkstylePage({
         >
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div className="space-y-2">
-              <h2 className="text-[22px] sm:text-[26px] font-bold text-[#29252A] tracking-tight">
+              <h2 className="text-[21px] sm:text-[26px] font-bold text-[#29252A] leading-snug tracking-tight text-balance max-w-2xl">
                 働き方について、もっと知りたい方へ
               </h2>
               <p className="text-[15px] text-[#888087] leading-relaxed">
@@ -1278,7 +1278,7 @@ export default function WorkstylePage({
            ========================================================= */}
         <section id="workstyle-faq" className="scroll-mt-20 space-y-6">
           <div className="max-w-2xl space-y-2">
-            <h2 className="text-[22px] sm:text-[26px] font-bold text-[#29252A] tracking-tight">
+            <h2 className="text-[21px] sm:text-[26px] font-bold text-[#29252A] leading-snug tracking-tight text-balance max-w-2xl">
               働き方についてよくある質問
             </h2>
             <p className="text-[15px] text-[#888087] leading-relaxed">
@@ -1372,7 +1372,7 @@ export default function WorkstylePage({
           </div>
 
           <div className="max-w-xl mx-auto space-y-3">
-            <h2 className="text-[22px] sm:text-[26px] font-bold text-[#29252A] tracking-tight leading-snug">
+            <h2 className="text-[21px] sm:text-[26px] font-bold text-[#29252A] tracking-tight leading-snug text-balance max-w-lg sm:max-w-xl mx-auto">
               あなたに合う働き方を、一緒に考えませんか？
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#29252A]/85 leading-relaxed">

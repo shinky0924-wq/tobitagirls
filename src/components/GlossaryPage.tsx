@@ -144,7 +144,7 @@ export default function GlossaryPage({ onNavigateHome, onCtaclick }: GlossaryPag
           </div>
           <h1
             id="glossary-hero-heading"
-            className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-on-surface tracking-tight font-display mb-3"
+            className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-on-surface tracking-tight font-display leading-snug mb-3 text-balance max-w-xl sm:max-w-2xl mx-auto"
           >
             飛田新地 用語集・用語辞典
           </h1>

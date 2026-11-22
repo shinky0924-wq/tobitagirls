@@ -79,7 +79,7 @@ export default function ScoutSafetyChecker({ onCtaclick }: ScoutSafetyCheckerPro
           <LucideIcon name="ShieldCheck" size={13} />
           <span>安心・安全チェック</span>
         </div>
-        <h3 className="text-xl sm:text-2xl font-extrabold text-zinc-900 font-display mb-2">
+        <h3 className="text-xl sm:text-2xl font-extrabold text-zinc-900 font-display leading-snug mb-2 text-balance max-w-lg sm:max-w-xl mx-auto">
           その求人、危なくない？危ないスカウトや嘘を見抜く簡単チェック
         </h3>
         <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed">

@@ -34,7 +34,7 @@ export default function JobDetails({ content, onCtaclickWithData, onNavigateRequ
             <span className="text-secondary font-display font-bold tracking-widest text-xs md:text-sm block mb-2 uppercase">
               {subtitleText}
             </span>
-            <h2 className="font-display font-extrabold text-2xl md:text-3xl lg:text-4xl text-on-surface">
+            <h2 className="font-display font-extrabold text-2xl md:text-3xl lg:text-4xl text-on-surface leading-snug text-balance max-w-2xl">
               募集要項
             </h2>
             <p className="text-xs md:text-sm text-on-surface-variant font-medium mt-2">
