@@ -78,6 +78,73 @@ export interface SiteContent {
 
 export const DEFAULT_SITE_CONTENT: SiteContent = siteContentJson as any;
 
+const STALE_HERO_TITLES = new Set([
+  '飛田新地 店舗直営求人',
+  '未経験から安心の高収入。',
+  '飛田新地で働くことを',
+  '飛田新地の女性向け求人',
+  '飛田新地で、自分らしい',
+  '働き方を見つけませんか。',
+]);
+
+export function normalizeSiteContent(rawContent: any): { content: SiteContent; migrated: boolean } {
+  if (!rawContent || typeof rawContent !== 'object') {
+    return { content: DEFAULT_SITE_CONTENT, migrated: false };
+  }
+
+  const customContent = { ...rawContent };
+  let migrated = false;
+
+  if (
+    !customContent.hero ||
+    STALE_HERO_TITLES.has(customContent.hero.titleLine1) ||
+    STALE_HERO_TITLES.has(customContent.hero.titleLine2) ||
+    customContent.hero.tagline !== DEFAULT_SITE_CONTENT.hero.tagline ||
+    customContent.hero.descriptionLine1 === '飛田ガールズは、大阪・飛田新地の料亭直営の求人窓口です。'
+  ) {
+    customContent.hero = { ...DEFAULT_SITE_CONTENT.hero };
+    migrated = true;
+  }
+
+  if (
+    customContent.reasons &&
+    (customContent.reasons.title !== DEFAULT_SITE_CONTENT.reasons.title ||
+      customContent.reasons.items?.[0]?.title !== DEFAULT_SITE_CONTENT.reasons.items[0].title)
+  ) {
+    customContent.reasons = { ...DEFAULT_SITE_CONTENT.reasons };
+    migrated = true;
+  }
+
+  if (
+    customContent.flow &&
+    (customContent.flow.subtitle !== DEFAULT_SITE_CONTENT.flow.subtitle ||
+      customContent.flow.items?.[0]?.title !== DEFAULT_SITE_CONTENT.flow.items[0].title)
+  ) {
+    customContent.flow = { ...DEFAULT_SITE_CONTENT.flow };
+    migrated = true;
+  }
+
+  if (
+    customContent.consultation &&
+    customContent.consultation.title !== DEFAULT_SITE_CONTENT.consultation.title
+  ) {
+    customContent.consultation = { ...DEFAULT_SITE_CONTENT.consultation };
+    migrated = true;
+  }
+
+  const merged = { ...DEFAULT_SITE_CONTENT };
+  merged.lastUpdated = DEFAULT_SITE_CONTENT.lastUpdated || customContent.lastUpdated;
+  if (customContent.hero) merged.hero = { ...merged.hero, ...customContent.hero };
+  if (customContent.concerns) merged.concerns = { ...merged.concerns, ...customContent.concerns };
+  if (customContent.reasons) merged.reasons = { ...merged.reasons, ...customContent.reasons };
+  if (customContent.jobs) merged.jobs = { ...merged.jobs, ...customContent.jobs };
+  if (customContent.flow) merged.flow = { ...merged.flow, ...customContent.flow };
+  if (customContent.faq) merged.faq = { ...merged.faq, ...customContent.faq };
+  if (customContent.consultation) merged.consultation = { ...merged.consultation, ...customContent.consultation };
+
+  return { content: merged as SiteContent, migrated };
+}
+
 export function getStoredSiteContent(): SiteContent {
   if (typeof window === 'undefined') return DEFAULT_SITE_CONTENT;
   try {
@@ -85,64 +152,18 @@ export function getStoredSiteContent(): SiteContent {
     if (!stored) {
       return DEFAULT_SITE_CONTENT;
     }
-    const customContent = JSON.parse(stored);
-    
-    // Auto-migrate: Reset stale hero/reasons/flow/consultation from pre-renewal versions
-    let migrated = false;
-    if (
-      customContent.hero &&
-      (customContent.hero.titleLine1 !== DEFAULT_SITE_CONTENT.hero.titleLine1 ||
-       customContent.hero.tagline !== DEFAULT_SITE_CONTENT.hero.tagline)
-    ) {
-      customContent.hero = { ...DEFAULT_SITE_CONTENT.hero };
-      migrated = true;
-    }
-
-    if (
-      customContent.reasons &&
-      customContent.reasons.title !== DEFAULT_SITE_CONTENT.reasons.title
-    ) {
-      customContent.reasons = { ...DEFAULT_SITE_CONTENT.reasons };
-      migrated = true;
-    }
-
-    if (
-      customContent.flow &&
-      (customContent.flow.subtitle !== DEFAULT_SITE_CONTENT.flow.subtitle ||
-       customContent.flow.items?.[0]?.title !== DEFAULT_SITE_CONTENT.flow.items[0].title)
-    ) {
-      customContent.flow = { ...DEFAULT_SITE_CONTENT.flow };
-      migrated = true;
-    }
-
-    if (
-      customContent.consultation &&
-      customContent.consultation.title !== DEFAULT_SITE_CONTENT.consultation.title
-    ) {
-      customContent.consultation = { ...DEFAULT_SITE_CONTENT.consultation };
-      migrated = true;
-    }
+    const parsed = JSON.parse(stored);
+    const { content, migrated } = normalizeSiteContent(parsed);
 
     if (migrated) {
       try {
-        localStorage.setItem('custom_site_content', JSON.stringify(customContent));
-      } catch (e) {
+        localStorage.setItem('custom_site_content', JSON.stringify(content));
+      } catch {
         // ignore
       }
     }
 
-    const merged = { ...DEFAULT_SITE_CONTENT };
-    
-    merged.lastUpdated = DEFAULT_SITE_CONTENT.lastUpdated || customContent.lastUpdated;
-    if (customContent.hero) merged.hero = { ...merged.hero, ...customContent.hero };
-    if (customContent.concerns) merged.concerns = { ...merged.concerns, ...customContent.concerns };
-    if (customContent.reasons) merged.reasons = { ...merged.reasons, ...customContent.reasons };
-    if (customContent.jobs) merged.jobs = { ...merged.jobs, ...customContent.jobs };
-    if (customContent.flow) merged.flow = { ...merged.flow, ...customContent.flow };
-    if (customContent.faq) merged.faq = { ...merged.faq, ...customContent.faq };
-    if (customContent.consultation) merged.consultation = { ...merged.consultation, ...customContent.consultation };
-    
-    return merged as SiteContent;
+    return content;
   } catch (e) {
     console.error('Error parsing custom site content:', e);
     return DEFAULT_SITE_CONTENT;

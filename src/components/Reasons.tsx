@@ -16,9 +16,11 @@ interface ReasonCardItem {
   number: string;
   iconName: string;
   title: string;
+  catchphrase: string;
   description: string;
   appealPoints: string[];
   image: string;
+  imageAlt: string;
   topicId: string;
   topicPath: string;
   linkLabel: string;
@@ -27,99 +29,111 @@ interface ReasonCardItem {
 const REASONS_DATA: ReasonCardItem[] = [
   {
     number: '01',
-    iconName: 'TrendingUp',
-    title: '料亭直営・集客への取り組み',
+    iconName: 'MapPin',
+    title: 'メイン通り・青春通りの好立地',
+    catchphrase: 'お店選びで大切な立地。お客様の目に留まりやすい場所。',
     description:
-      '外部の仲介を介さない料亭直営の運営だからこそ、新規のお客様だけでなくリピーターにも選ばれる清潔で落ち着いたお店づくりを行っています。',
+      'お店の立地は、働く環境を選ぶうえで大切なポイントのひとつです。飛田ガールズはメイン通り・青春通りの好立地を活かし、飛田新地で働きたい女性が安心して働きやすい集客環境づくりを大切にしています。',
     appealPoints: [
-      '紹介料・仲介手数料ゼロの直接募集',
-      '新規・リピーターともに来客を意識した運営',
-      '無理のないペースで働ける環境整備',
+      'メイン通り・青春通りの好立地',
+      'お客様の目に留まりやすい店舗環境',
+      '集客を意識した落ち着いた店舗運営',
     ],
-    image: '/images/home_reason_customer_attract_1795337038147.jpg',
+    image: '/images/reason_one_streetscape_1795428474828.jpg',
+    imageAlt: '飛田新地の落ち着いた街並みと和風料亭の正面外観イメージイラスト',
     topicId: 'shops',
     topicPath: '/shops',
-    linkLabel: '通りの特徴・お店案内を見る',
+    linkLabel: '直営店舗・通り別の案内を見る',
   },
   {
     number: '02',
-    iconName: 'Sparkles',
-    title: '無料衣装・美容サポート',
+    iconName: 'HeartHandshake',
+    title: 'ベテラン仲居さんによるトータルサポート',
+    catchphrase: '身だしなみの準備から接客中まで、経験豊富な仲居さんがサポート。',
     description:
-      'お仕事で使う着物やドレス・ワンピース等の衣装は無料で貸し出し。メイクや身だしなみに不安がある場合も女性スタッフが相談に乗ります。',
+      'メイクや髪型、衣装の着こなしといった身だしなみの相談から、お客様のご案内・接客時間の管理まで飛田新地の仲居さんが伴走します。初めて飛田新地の仕事内容を覚える方にも寄り添う未経験者サポート体制です。',
     appealPoints: [
-      '着物・ドレスなど衣装を無料用意',
-      '似合うメイクや髪型のアドバイス',
-      '店舗保管のため私服・手ぶらで通勤可',
+      'メイク・髪型や衣装に合わせた身だしなみ相談',
+      'お客様へのご案内や接客時間の管理を仲居が担当',
+      '未経験でもすぐ質問できる現場の見守りサポート',
     ],
-    image: '/images/home_reason_beauty_care_1795337038265.jpg',
-    topicId: 'beginner',
-    topicPath: '/beginner',
-    linkLabel: '未経験向け準備・衣装を見る',
+    image: '/images/reason_two_nakaido_care_1795428475060.jpg',
+    imageAlt: 'ベテランの仲居さんがメイクや身だしなみの相談に応じるイメージイラスト',
+    topicId: 'job',
+    topicPath: '/job',
+    linkLabel: '仕事内容・仲居サポートを見る',
   },
   {
     number: '03',
-    iconName: 'HeartHandshake',
-    title: '未経験から始めやすい丁寧な事前説明',
+    iconName: 'Shirt',
+    title: '衣装無料貸出・お店で保管',
+    catchphrase: '衣装の準備や持ち運びの負担を少なく。私服で通勤しやすい環境。',
     description:
-      '初めての方でも疑問や不安を残さないよう、お仕事の手順や衛生ルール、禁止事項を勤務前に一つずつ丁寧にお伝えしています。',
+      '着物やドレス、ワンピースなどの衣装を無料貸出しています。着用後の洗濯や店舗での保管にも対応しているため、飛田新地求人の中でも手荷物の負担を抑えて、普段通りの私服で通勤しやすい環境です。',
     appealPoints: [
-      '女性スタッフによる事前の個別説明',
-      '仲居さんが呼び込み・時間管理を担当',
-      '1日体験入店のみで続けるか判断OK',
+      '着物・ドレス・ワンピースなどの無料貸出',
+      '衣装の店舗保管と着用後の洗濯対応',
+      '大きな荷物を持たず私服でそのまま通勤可能',
     ],
-    image: '/images/home_reason_beginner_guide_1795337038025.jpg',
-    topicId: 'job',
-    topicPath: '/job',
-    linkLabel: 'お仕事の流れを詳しく見る',
+    image: '/images/reason_three_wardrobe_rack_1795428474306.jpg',
+    imageAlt: '着物やワンピースが整然と保管された無料貸出衣装ラックのイメージイラスト',
+    topicId: 'beginner',
+    topicPath: '/beginner',
+    linkLabel: '衣装貸出・初日の準備を見る',
   },
   {
     number: '04',
-    iconName: 'Smile',
-    title: '落ち着いた人間関係と働きやすい空気',
+    iconName: 'Coffee',
+    title: '快適に過ごせる女性専用待機スペース',
+    catchphrase: '接客の合間も、落ち着いて自分の時間を過ごせる場所。',
     description:
-      '派閥やギスギスした競争、理不尽なノルマを作らないよう配慮し、初めての方も移籍の方も落ち着いて過ごせる雰囲気を大切にしています。',
+      '冷暖房や空気清浄機、無料Wi-Fi、スマートフォンの充電環境、荷物保管スペースなど、飛田新地の女性専用待機スペースとして快適に過ごせる設備を整えています。待機中も落ち着いてお過ごしいただけます。',
     appealPoints: [
-      '指名競争・売上ノルマ・罰金なし',
-      'お客様との連絡先交換・営業LINEなし',
-      'お互いを尊重できる穏やかな職場環境',
+      '冷暖房完備・空気清浄機による快適な空調',
+      '無料Wi-Fi・スマートフォンの充電環境',
+      'お出かけ用バッグ等を保管できる専用スペース',
     ],
-    image: '/images/home_reason_harmony_team_1795337037995.jpg',
-    topicId: 'experienced',
-    topicPath: '/experienced',
-    linkLabel: '経験者・移籍の案内を見る',
+    image: '/images/reason_four_ladies_lounge_1795428474377.jpg',
+    imageAlt: '空調や充電環境を備えた女性専用待機スペースのイメージイラスト',
+    topicId: 'job',
+    topicPath: '/job',
+    linkLabel: '待機環境・1日の流れを見る',
   },
   {
     number: '05',
-    iconName: 'Coins',
-    title: '明朗な売上50％バック・即日日払い',
+    iconName: 'Sparkles',
+    title: '清潔で落ち着いた店内環境',
+    catchphrase: '気持ちよく過ごしていただけるよう、清潔な空間づくりを大切に。',
     description:
-      '報酬の計算方法やコース別の目安、お支払いタイミングを事前に明確にご説明します。その日に働いた分は退勤時に全額現金でお渡しします。',
+      '接客ごとの室内換気やリネン類の交換、日々の店内清掃まで、衛生管理をひとつずつ丁寧に行っています。清潔で落ち着いた空間づくりを大切にしており、初めて訪れる女性にも安心して過ごしていただけます。',
     appealPoints: [
-      '分かりやすい売上50％バックの計算',
-      'ロッカー代・更衣室代などの雑費天引きなし',
-      '毎回退勤時の全額現金手渡し',
+      '接客ごとのこまめな換気とリネン類の交換',
+      '室内の日常清掃と衛生管理の徹底',
+      '和の趣を感じる落ち着きある清潔な部屋',
     ],
-    image: '/images/home_reason_clear_salary_1795337038446.jpg',
-    topicId: 'salary',
-    topicPath: '/salary',
-    linkLabel: '給料計算・待遇の詳細を見る',
+    image: '/images/reason_five_clean_tatami_1795428475043.jpg',
+    imageAlt: '換気と清潔なリネンで整えられた和室店内のイメージイラスト',
+    topicId: 'safety',
+    topicPath: '/safety',
+    linkLabel: '衛生管理・安全への配慮を見る',
   },
   {
     number: '06',
     iconName: 'ShieldCheck',
-    title: '身バレ防止・プライバシーへの配慮',
+    title: 'プライバシーを大切にした働き方',
+    catchphrase: '仕事とプライベートを分けて、自分らしく働けるように。',
     description:
-      'Webサイト・SNSへの顔写真掲載は行わず、エリア全体の撮影禁止ルールや完全源氏名、郵送物なしなどプライバシー面に配慮しています。',
+      '源氏名での勤務や、Web・SNSへの顔写真非掲載、お客様との連絡先交換・営業LINEを行わないルールなど、プライバシー面に配慮した働き方を整えています。自宅への郵送物がない形での調整もご相談いただけます。',
     appealPoints: [
-      'ネット・SNSへの顔写真掲載ゼロ',
-      '自宅への郵送物なし・完全源氏名勤務',
-      '副業向け住民税「普通徴収」手続き案内',
+      '源氏名での勤務・Web/SNSへの顔写真掲載なし',
+      'お客様との連絡先交換や営業LINEなし',
+      '自宅への郵送物に関する事前相談・配慮',
     ],
-    image: '/images/home_reason_privacy_safe_1795337039122.jpg',
+    image: '/images/reason_six_back_view_1795428489475.jpg',
+    imageAlt: '仕事とプライベートを分けて自分らしく歩く女性後ろ姿のイメージイラスト',
     topicId: 'safety',
     topicPath: '/safety',
-    linkLabel: '身バレ・安全対策を見る',
+    linkLabel: '身バレ・プライバシー対策を見る',
   },
 ];
 
@@ -132,7 +146,7 @@ export default function Reasons({ onNavigateTopic }: ReasonsProps) {
     >
       <div className="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 md:mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-14">
           <span className="text-xs font-bold tracking-widest text-primary uppercase block mb-2">
             WHY TOBITA GIRLS
           </span>
@@ -142,15 +156,20 @@ export default function Reasons({ onNavigateTopic }: ReasonsProps) {
           >
             飛田ガールズが選ばれる6つの理由
           </h2>
-          <p className="font-sans text-sm sm:text-[15px] text-on-surface-variant leading-relaxed">
-            料亭直営の公式窓口だからこそ整えられる、安心感と分かりやすさを大切にしています。
-            <span className="block text-[11px] text-on-surface-variant/75 mt-1">
-              ※各カードの写真はイメージ画像です
-            </span>
+          <p className="font-display font-bold text-[15px] sm:text-[17px] text-on-surface leading-relaxed mb-3">
+            立地の良さから、毎日の身だしなみや接客のサポートまで。
+            <br className="hidden sm:inline" />
+            女性が気持ちよく働ける環境づくりを大切にしています。
+          </p>
+          <p className="font-sans text-sm sm:text-[15px] text-on-surface-variant leading-relaxed max-w-2xl mx-auto">
+            飛田ガールズでは、初めてお仕事を考えている女性にも安心して検討していただけるよう、店舗環境やサポート体制を整えています。ここで働くからこそ感じられる魅力を、6つのポイントでご紹介します。
+          </p>
+          <p className="font-sans text-[11.5px] text-on-surface-variant/80 mt-3">
+            ※各カードの画像は職場の雰囲気を伝えるイメージイラストです（実際の立地・衣装・控室は私服での店舗見学時に直接ご確認いただけます）。
           </p>
         </div>
 
-        {/* 3x2 Desktop / 1-col Mobile Grid */}
+        {/* 3x2 Desktop / 2-col Tablet / 1-col Mobile Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
           {REASONS_DATA.map((reason, idx) => (
             <motion.article
@@ -163,10 +182,10 @@ export default function Reasons({ onNavigateTopic }: ReasonsProps) {
               id={`reason-item-${reason.number}`}
             >
               <div>
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-surface-container-low">
+                <div className="relative aspect-video w-full overflow-hidden bg-surface-container-low border-b border-outline-variant/50">
                   <img
                     src={reason.image}
-                    alt={`${reason.title}（イメージ）`}
+                    alt={reason.imageAlt}
                     className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                     loading="lazy"
                     decoding="async"
@@ -174,18 +193,26 @@ export default function Reasons({ onNavigateTopic }: ReasonsProps) {
                     height={360}
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs text-primary font-sans font-bold text-[11px] px-2.5 py-1 rounded-lg border border-outline-variant shadow-2xs tracking-wider">
-                    REASON {reason.number}
-                  </div>
+                  <span className="absolute bottom-2 right-2.5 text-[10px] font-medium text-on-surface/80 bg-white/90 px-2 py-0.5 rounded border border-outline-variant/60">
+                    イメージイラスト
+                  </span>
                 </div>
 
                 <div className="p-5 sm:p-6">
-                  <div className="flex items-center gap-2 mb-2.5">
-                    <LucideIcon name={reason.iconName} size={18} className="text-primary shrink-0" />
-                    <h3 className="font-display font-bold text-[17px] sm:text-[18px] text-on-surface leading-snug">
-                      {reason.title}
-                    </h3>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-bold text-primary tracking-wider tabular-nums">
+                      REASON {reason.number}
+                    </span>
+                    <LucideIcon name={reason.iconName} size={17} className="text-primary shrink-0" />
                   </div>
+
+                  <h3 className="font-display font-bold text-[17px] sm:text-[18px] text-on-surface leading-snug mb-2">
+                    {reason.title}
+                  </h3>
+
+                  <p className="font-display font-bold text-[13px] sm:text-[13.5px] text-secondary leading-relaxed mb-2.5">
+                    {reason.catchphrase}
+                  </p>
 
                   <p className="font-sans text-[13.5px] text-on-surface-variant leading-relaxed mb-4">
                     {reason.description}

@@ -3,749 +3,223 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, MouseEvent } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { TESTIMONIALS, LINE_OFFICIAL_URL } from '../data';
-import { TestimonialItem } from '../types';
 import LucideIcon from './LucideIcon';
+import { LINE_OFFICIAL_URL } from '../data';
 
-// 比較用構造化データ
-interface CastComparisonData {
-  age: string;
-  experience: string;
-  period: string;
-  shifts: string;
-  reason: string;
-  highlightFeature: string;
-  beforeIncome: string;
-  afterIncome: string;
-  incomeGain: string;
+interface VoiceCase {
+  id: string;
+  initial: string;
+  imageUrl: string;
+  imageAlt: string;
+  ageBracket: string;
+  workstyleLabel: string;
+  experienceLabel: string;
+  anxietyBefore: string;
+  trigger: string;
+  impression: string;
+  staffSupport: string;
+  advice: string;
 }
 
-const COMPARISON_MAP: Record<string, CastComparisonData> = {
-  'test-1': {
-    age: '22歳',
-    experience: '完全未経験（夜職・風俗経験ゼロ）',
-    period: '勤務歴 6ヶ月',
-    shifts: '週4日（10:00〜17:00 / 昼シフト）',
-    reason: 'アパレルとカフェのバイト掛け持ちで手取り月収17万円。生活費と奨学金返済でカツカツだったため。',
-    highlightFeature: '昼シフト中心で生活リズム安定。半年で奨学金を一括完済＆毎月50万円貯金達成。',
-    beforeIncome: '手取り月収 約17万円（アパレル＋カフェ）',
-    afterIncome: '初月74万 → 現在 月収115万〜130万円',
-    incomeGain: '月収約+100万円UP'
+const VOICE_CASES: VoiceCase[] = [
+  {
+    id: 'voice-1',
+    initial: 'A',
+    imageUrl: '/images/tobita_cast_mai_selfie.jpg',
+    imageAlt: '昼シフト中心で働く20代前半女性のイメージ写真',
+    ageBracket: '20代前半',
+    workstyleLabel: '週4日・昼シフト中心（10:00〜17:00）',
+    experienceLabel: '未経験からスタート',
+    anxietyBefore:
+      '夜職の経験がまったくなく、「厳しいルールや怖い先輩がいたらどうしよう」と応募するまでとても迷っていました。',
+    trigger:
+      'まずは話だけ聞いてみようと思いLINEで相談したところ、私服見学で待機室や玄関の雰囲気を実際に見られたことが決め手になりました。',
+    impression:
+      '1回の接客が15分〜20分と区切りが明確で、お酒を飲んだり連絡先を交換したりする必要がないため、生活リズムを崩さず働けています。',
+    staffSupport:
+      '玄関では仲居さんがすぐ隣にいて、お客様への声掛けや時間の管理をしてくださるので、一人で困る場面がありません。',
+    advice:
+      '迷っている段階でも、無理に体験を勧められることはないので、まずは見学で部屋の綺麗さやスタッフの雰囲気を見てみるのが一番安心です。',
   },
-  'test-2': {
-    age: '20歳',
-    experience: '完全未経験（お酒一切NG・下戸）',
-    period: '勤務歴 8ヶ月',
-    shifts: '週2〜3日（講義後 17:00〜24:00 または 土日昼）',
-    reason: '仕送り減額で居酒屋深夜バイトするも月9万円が限界で体を壊しかけ、学費支払いが急務だったため。',
-    highlightFeature: 'お酒不要・講義や試験期間はシフトゼロでOK。学費自力完済＆貯金200万円達成。',
-    beforeIncome: '深夜バイト月収 約9万円（週5日夜勤）',
-    afterIncome: '月10日勤務で 月収48万〜62万円',
-    incomeGain: '月収約+45万円UP'
+  {
+    id: 'voice-2',
+    initial: 'K',
+    imageUrl: '/images/tobita_cast_hina_selfie.jpg',
+    imageAlt: '学業と両立して働く20代前半女性のイメージ写真',
+    ageBracket: '20代前半',
+    workstyleLabel: '週2〜3日・学業と両立',
+    experienceLabel: 'お酒NG・未経験',
+    anxietyBefore:
+      'お酒がまったく飲めない体質なことと、試験期間などで休みたい時にシフトの融通が利くのかが不安でした。',
+    trigger:
+      '直営店で紹介料の中抜きがないこと、面接に履歴書が不要で相談しやすいことに惹かれて問い合わせました。',
+    impression:
+      '飲み会や営業連絡がなく、退勤時にその日の分を全額現金で手渡ししてもらえるので、予定を立てて学業と両立しやすい環境です。',
+    staffSupport:
+      '衣装の無料レンタルやメイクのアドバイスも女性スタッフが丁寧に教えてくれて、毎回手ぶら感覚で通えています。',
+    advice:
+      '「週1日や短時間でも相談できるかな？」と悩んでいる方も、自分の希望の条件を正直にLINEで伝えてみるのがおすすめです。',
   },
-  'test-3': {
-    age: '25歳',
-    experience: '完全未経験（会社は副業禁止規定あり）',
-    period: '勤務歴 1年6ヶ月',
-    shifts: '週末限定 月6〜7日（金曜夜・土曜昼など）',
-    reason: 'メーカー一般事務（手取り20万）で物価高により手元に1〜2万円しか残らず将来に不安があったため。',
-    highlightFeature: '住民税普通徴収で会社バレ完全回避。平日は本業に集中し週末だけで預金500万円突破。',
-    beforeIncome: '本業OL手取り 約20万円',
-    afterIncome: '副業38万〜52万円（本業と合算で手取り月収60万〜70万円超）',
-    incomeGain: '副業だけで+40万円超'
-  }
-};
-
-// 絞り込みフィルター（※該当キャストがいない30代は除外）
-const FILTER_TAGS = [
-  { id: 'all', label: 'すべて', matches: () => true },
-  { id: 'beginner', label: '未経験からスタート', matches: () => true },
-  { id: 'student_freeter', label: '学生・フリーター', matches: (t: TestimonialItem) => t.id === 'test-1' || t.id === 'test-2' },
-  { id: 'career_change', label: '他業種から転職', matches: (t: TestimonialItem) => t.id === 'test-1' || t.id === 'test-3' },
-  { id: 'w_work', label: 'Wワーク', matches: (t: TestimonialItem) => t.id === 'test-2' || t.id === 'test-3' },
-  { id: 'high_income', label: '収入アップを目指したい', matches: () => true },
-  { id: 'twenties', label: '20代', matches: () => true }
+  {
+    id: 'voice-3',
+    initial: 'M',
+    imageUrl: '/images/tobita_cast_yuki_selfie.jpg',
+    imageAlt: '週末中心・Wワークで働く20代後半女性のイメージ写真',
+    ageBracket: '20代後半',
+    workstyleLabel: '週末中心・Wワーク勤務',
+    experienceLabel: '昼職との掛け持ち・プライバシー重視',
+    anxietyBefore:
+      '平日は一般の会社員として働いているため、知人への身バレや税金の手続き、顔写真の扱いが一番の心配事でした。',
+    trigger:
+      'WebやSNSに顔写真が一切載らない点と、エリア全体の撮影禁止ルール・住民税普通徴収の説明を読んで安心できたからです。',
+    impression:
+      '完全源氏名で私服通勤ができるため、普段の生活としっかり切り離して週末だけのペースを続けられています。',
+    staffSupport:
+      '控室の環境やプライベートとの両立について女性担当者が親身に相談に乗ってくれて、無理のない働き方が見つけられました。',
+    advice:
+      'プライバシー面の疑問は人それぞれ違うと思うので、気になる点は遠慮なく事前に質問して納得したうえで始めるのが良いと思います。',
+  },
 ];
 
 interface TestimonialsProps {
   onNavigateFaq?: () => void;
 }
 
-export default function Testimonials({ onNavigateFaq: _onNavigateFaq }: TestimonialsProps = {}) {
-  const [activeFilter, setActiveFilter] = useState<string>('all');
-  const [likedReviews, setLikedReviews] = useState<Record<string, boolean>>({});
-  const [likeCounts, setLikeCounts] = useState<Record<string, number>>({
-    'test-1': 184,
-    'test-2': 142,
-    'test-3': 169
-  });
-  const [selectedFullStory, setSelectedFullStory] = useState<TestimonialItem | null>(null);
-  const [selectedVerification, setSelectedVerification] = useState<TestimonialItem | null>(null);
-
-  const handleLike = (id: string, e: MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const isLiked = likedReviews[id];
-    setLikedReviews({ ...likedReviews, [id]: !isLiked });
-    setLikeCounts({
-      ...likeCounts,
-      [id]: isLiked ? likeCounts[id] - 1 : likeCounts[id] + 1
-    });
-  };
-
-  const currentFilterObj = FILTER_TAGS.find(f => f.id === activeFilter) || FILTER_TAGS[0];
-  const filteredTestimonials = TESTIMONIALS.filter(currentFilterObj.matches);
-
+export default function Testimonials({ onNavigateFaq }: TestimonialsProps = {}) {
   return (
-    <section className="py-16 sm:py-24 bg-surface text-on-surface-variant border-b border-outline-variant/60" id="voice">
+    <section
+      id="voice"
+      className="py-16 md:py-24 bg-surface border-b border-outline-variant/60"
+      aria-labelledby="voice-heading"
+    >
       <div className="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* =========================================================
-            1. セクションの見出し
-           ========================================================= */}
-        <div className="text-center max-w-3xl mx-auto mb-10 md:mb-12">
-          <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-primary uppercase mb-3">
+        {/* Heading */}
+        <div className="text-center max-w-2xl mx-auto mb-12 md:mb-14 space-y-3">
+          <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-primary uppercase">
             <span className="w-4 h-px bg-primary" aria-hidden="true" />
-            <span>REAL VOICE</span>
+            <span>WORKING STYLES &amp; VOICES</span>
             <span className="w-4 h-px bg-primary" aria-hidden="true" />
           </div>
-          
-          <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl text-on-surface leading-snug mb-4 tracking-tight text-balance max-w-xl sm:max-w-2xl mx-auto">
-            働く女性のリアルな声
+          <h2
+            id="voice-heading"
+            className="font-display font-bold text-2xl sm:text-3xl md:text-4xl text-on-surface leading-snug text-balance"
+          >
+            実際に働く女性の声
           </h2>
-          
-          <p className="font-sans text-sm sm:text-base text-on-surface-variant leading-relaxed max-w-2xl mx-auto">
-            未経験から始めた女性や、働き方を変えた女性の体験談をご紹介します。
-            実際の働き方や働く前の不安・入店後の変化を参考にしてください。
+          <p className="font-sans text-sm sm:text-base text-on-surface-variant leading-relaxed">
+            未経験から始めた方やWワークの方など、働く前の不安や入店後の変化、仲居さん・スタッフからのサポートについてご紹介します。
           </p>
-
-          {/* 補足ラベル 3項目 */}
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5 text-xs text-on-surface">
-            <span className="inline-flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full border border-outline-variant shadow-2xs font-medium">
-              <LucideIcon name="PenTool" size={13} className="text-primary" />
-              直筆サイン確認済みの取材記録
-            </span>
-            <span className="inline-flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full border border-outline-variant shadow-2xs font-medium">
-              <LucideIcon name="ShieldCheck" size={13} className="text-emerald-600" />
-              個人情報保護・プライバシー配慮
-            </span>
-            <span className="inline-flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full border border-outline-variant shadow-2xs font-medium">
-              <LucideIcon name="UserCheck" size={13} className="text-primary" />
-              満20歳以上の女性スタッフ
-            </span>
-          </div>
         </div>
 
-        {/* =========================================================
-            2. 検索・絞り込みタグ
-           ========================================================= */}
-        <div className="mb-8 sm:mb-10">
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 pt-1 no-scrollbar sm:justify-center">
-            {FILTER_TAGS.map(tag => {
-              const isActive = activeFilter === tag.id;
-              return (
-                <button
-                  key={tag.id}
-                  type="button"
-                  onClick={() => setActiveFilter(tag.id)}
-                  className={`flex-shrink-0 px-3.5 py-2 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer min-h-[40px] flex items-center justify-center ${
-                    isActive
-                      ? 'bg-[#E84B78] text-white shadow-xs scale-[1.02]'
-                      : 'bg-white text-[#66545A] hover:text-[#38242B] border border-[#F3E1E6] hover:border-[#F5A2B8]'
-                  }`}
-                >
-                  {tag.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
+        {/* 3-Col Clean Cards with Restored Cast Photos */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {VOICE_CASES.map((item) => (
+            <article
+              key={item.id}
+              className="group bg-white rounded-2xl border border-outline-variant overflow-hidden flex flex-col justify-between shadow-2xs hover:shadow-md hover:border-primary/35 transition-all duration-300"
+            >
+              <div>
+                {/* Restored Cast Lifestyle Image */}
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-surface-container-low border-b border-outline-variant/60">
+                  <img
+                    src={item.imageUrl}
+                    alt={item.imageAlt}
+                    className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
+                    width={640}
+                    height={480}
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
 
-        {/* =========================================================
-            3. インタビューカード 3枚（女性ごとに1枚のリアル写真・文字なし）
-           ========================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {filteredTestimonials.map((testimonial, idx) => {
-            const comparison = COMPARISON_MAP[testimonial.id];
-            const isLiked = likedReviews[testimonial.id];
-            
-            return (
-              <motion.article
-                key={testimonial.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
-                className="bg-white rounded-3xl border border-[#F3E1E6] shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden"
-              >
-                <div>
-                  {/* ① 各女性のリアル写真（文字なし・スマホミラーセルフィー） */}
-                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-rose-50/40">
-                    <img 
-                      src={testimonial.avatarUrl} 
-                      alt={`${testimonial.name}さん (${testimonial.age})`} 
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-
-                  {/* カード上部：タグ & 検証バッジ */}
-                  <div className="bg-[#FFF8F9] px-5 py-2.5 border-b border-[#F3E1E6] flex items-center justify-between gap-2">
-                    <span className="bg-[#E84B78] text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-2xs">
-                      {testimonial.tag}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedVerification(testimonial)}
-                      className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-white border border-emerald-200 px-2.5 py-1 rounded-full shadow-2xs hover:bg-emerald-50 transition-colors cursor-pointer"
-                      title="本人確認・在籍証明書の検証ログを開く"
+                <div className="p-6 space-y-4">
+                  {/* Profile Header */}
+                  <div className="flex items-center gap-3 pb-4 border-b border-outline-variant/70">
+                    <div
+                      className="w-10 h-10 rounded-full bg-surface-container border border-outline-variant flex items-center justify-center font-display font-bold text-base text-primary shrink-0"
+                      aria-hidden="true"
                     >
-                      <LucideIcon name="CheckCircle2" size={12} className="text-emerald-600" />
-                      <span>確認済</span>
-                    </button>
-                  </div>
-
-                  {/* カード本文エリア */}
-                  <div className="p-5 sm:p-6 space-y-4">
-                    
-                    {/* プロフィール見出し & 直筆サイン */}
-                    <div className="flex items-center justify-between gap-3 pb-3 border-b border-[#F3E1E6]">
-                      <div>
-                        <div className="flex items-baseline gap-2">
-                          <h3 className="text-lg sm:text-xl font-black text-[#38242B]">
-                            {testimonial.name}さん
-                          </h3>
-                          <span className="text-xs font-bold text-[#E84B78]">
-                            （{testimonial.age}）
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-[#66545A] mt-0.5 font-medium truncate">
-                          {testimonial.status}
-                        </p>
-                      </div>
-
-                      {/* 直筆サイン表示 */}
-                      <div className="bg-[#FFF8F9] border border-[#F3E1E6] rounded-xl px-2.5 py-1 text-center flex-shrink-0">
-                        <span className="text-[9px] font-bold text-[#E84B78] block tracking-wider">
-                          本人自署
-                        </span>
-                        <img
-                          src={testimonial.signatureUrl}
-                          alt={`${testimonial.name}さんの自署サイン`}
-                          className="h-6 w-auto object-contain mix-blend-multiply mx-auto"
-                          loading="lazy"
-                        />
-                      </div>
+                      {item.initial}
                     </div>
-
-                    {/* 収入変化ハイライト */}
-                    <div className="bg-[#FFF8F9] rounded-2xl p-3.5 border border-[#F3E1E6]">
-                      <div className="text-[10px] font-black text-[#E84B78] uppercase tracking-wider mb-1 flex items-center justify-between">
-                        <span>【実際の収入変化】</span>
-                        <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 text-[10px] font-bold">
-                          {comparison?.incomeGain}
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="font-display font-bold text-base text-on-surface">
+                          {item.ageBracket}
+                        </span>
+                        <span className="text-xs font-bold text-secondary">
+                          · {item.experienceLabel}
                         </span>
                       </div>
-                      <div className="text-xs space-y-1">
-                        <div className="flex items-center gap-1.5 text-zinc-500">
-                          <span className="text-[10px] font-bold bg-zinc-200/80 text-zinc-700 px-1.5 py-0.2 rounded text-[10px]">前</span>
-                          <span className="line-through text-[11px]">{comparison?.beforeIncome}</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 text-[#38242B] font-black text-xs sm:text-sm pt-0.5">
-                          <span className="text-[10px] font-bold bg-[#E84B78] text-white px-1.5 py-0.2 rounded text-[10px]">後</span>
-                          <span className="text-[#E84B78]">{comparison?.afterIncome}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* 本人のリアルな声（薄ピンク背景） */}
-                    <div className="bg-[#FFF8F9] rounded-2xl p-3.5 border border-[#F3E1E6]">
-                      <span className="text-[10px] font-bold text-[#E84B78] block mb-1">
-                        【本人のリアルな声】
-                      </span>
-                      <p className="text-xs sm:text-[13px] font-medium leading-relaxed text-[#38242B]">
-                        “{testimonial.quote}”
+                      <p className="text-xs text-on-surface-variant mt-0.5 truncate">
+                        {item.workstyleLabel}
                       </p>
                     </div>
+                  </div>
 
-                    {/* 共通比較項目テーブル */}
-                    <div className="bg-white rounded-2xl border border-[#F3E1E6] p-3 text-xs space-y-2">
-                      <div className="grid grid-cols-2 gap-2 text-[11px]">
-                        <div>
-                          <span className="text-zinc-400 block text-[10px] font-bold">年齢</span>
-                          <span className="font-bold text-[#38242B]">{comparison?.age}</span>
-                        </div>
-                        <div>
-                          <span className="text-zinc-400 block text-[10px] font-bold">勤務歴</span>
-                          <span className="font-bold text-[#38242B]">{comparison?.period}</span>
-                        </div>
-                      </div>
-
-                      <div className="pt-1 border-t border-zinc-100 text-[11px]">
-                        <span className="text-zinc-400 block text-[10px] font-bold">夜職経験</span>
-                        <span className="font-bold text-[#E84B78]">{comparison?.experience}</span>
-                      </div>
-
-                      <div className="pt-1 border-t border-zinc-100 text-[11px]">
-                        <span className="text-zinc-400 block text-[10px] font-bold">勤務日数・シフト</span>
-                        <span className="font-medium text-[#38242B]">{comparison?.shifts}</span>
-                      </div>
-
-                      <div className="pt-1 border-t border-zinc-100 text-[11px]">
-                        <span className="text-zinc-400 block text-[10px] font-bold">働き始めた理由</span>
-                        <p className="text-[#66545A] leading-relaxed text-[11px] mt-0.5">
-                          {comparison?.reason}
-                        </p>
-                      </div>
-
-                      <div className="pt-1 border-t border-zinc-100 text-[11px]">
-                        <span className="text-zinc-400 block text-[10px] font-bold">体験談の特徴</span>
-                        <p className="text-[#38242B] font-medium leading-relaxed text-[11px] mt-0.5">
-                          {comparison?.highlightFeature}
-                        </p>
-                      </div>
+                  {/* 4 Structured Sections */}
+                  <div className="space-y-3 text-xs sm:text-[13px] leading-relaxed">
+                    <div>
+                      <div className="font-bold text-primary text-[11px] mb-0.5">応募前の不安</div>
+                      <p className="text-on-surface-variant">{item.anxietyBefore}</p>
                     </div>
 
-                    {/* 3つのQ&Aハイライト */}
-                    <div className="space-y-2.5 pt-1">
-                      <div className="text-[11px] font-black text-[#38242B] flex items-center gap-1.5">
-                        <LucideIcon name="MessageSquareText" size={13} className="text-[#E84B78]" />
-                        <span>注目の対談ハイライト</span>
-                      </div>
-
-                      <div className="space-y-2">
-                        {/* Q2: 不安・身バレ */}
-                        <div className="bg-zinc-50/80 rounded-xl p-2.5 border border-zinc-200/60 text-xs space-y-1">
-                          <div className="flex items-start gap-1.5">
-                            <span className="w-4 h-4 rounded-full bg-[#38242B] text-white text-[9px] font-black flex items-center justify-center flex-shrink-0 mt-0.5">
-                              Q
-                            </span>
-                            <span className="font-bold text-[#38242B] text-[11px]">
-                              {testimonial.interviewQAs[1]?.question}
-                            </span>
-                          </div>
-                          <div className="flex items-start gap-1.5 pl-1 text-[11px] text-[#66545A] leading-relaxed">
-                            <span className="w-4 h-4 rounded-full bg-[#E84B78] text-white text-[9px] font-black flex items-center justify-center flex-shrink-0 mt-0.5">
-                              A
-                            </span>
-                            <p className="flex-1">
-                              「{testimonial.interviewQAs[1]?.answer}」
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Q4: 初日の様子とお給料 */}
-                        <div className="bg-zinc-50/80 rounded-xl p-2.5 border border-zinc-200/60 text-xs space-y-1">
-                          <div className="flex items-start gap-1.5">
-                            <span className="w-4 h-4 rounded-full bg-[#38242B] text-white text-[9px] font-black flex items-center justify-center flex-shrink-0 mt-0.5">
-                              Q
-                            </span>
-                            <span className="font-bold text-[#38242B] text-[11px]">
-                              {testimonial.interviewQAs[3]?.question}
-                            </span>
-                          </div>
-                          <div className="flex items-start gap-1.5 pl-1 text-[11px] text-[#66545A] leading-relaxed">
-                            <span className="w-4 h-4 rounded-full bg-[#E84B78] text-white text-[9px] font-black flex items-center justify-center flex-shrink-0 mt-0.5">
-                              A
-                            </span>
-                            <p className="flex-1">
-                              「{testimonial.interviewQAs[3]?.answer}」
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Q6: 実際の収入と生活の変化 */}
-                        <div className="bg-zinc-50/80 rounded-xl p-2.5 border border-zinc-200/60 text-xs space-y-1">
-                          <div className="flex items-start gap-1.5">
-                            <span className="w-4 h-4 rounded-full bg-[#38242B] text-white text-[9px] font-black flex items-center justify-center flex-shrink-0 mt-0.5">
-                              Q
-                            </span>
-                            <span className="font-bold text-[#38242B] text-[11px]">
-                              {testimonial.interviewQAs[5]?.question}
-                            </span>
-                          </div>
-                          <div className="flex items-start gap-1.5 pl-1 text-[11px] text-[#66545A] leading-relaxed">
-                            <span className="w-4 h-4 rounded-full bg-[#E84B78] text-white text-[9px] font-black flex items-center justify-center flex-shrink-0 mt-0.5">
-                              A
-                            </span>
-                            <p className="flex-1">
-                              「{testimonial.interviewQAs[5]?.answer}」
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                    <div>
+                      <div className="font-bold text-primary text-[11px] mb-0.5">働き始めたきっかけ</div>
+                      <p className="text-on-surface-variant">{item.trigger}</p>
                     </div>
 
-                    {/* 詳細を見るボタン */}
-                    <div className="pt-2">
-                      <button
-                        type="button"
-                        onClick={() => setSelectedFullStory(testimonial)}
-                        className="w-full py-2.5 px-4 bg-white hover:bg-[#FFF8F9] text-[#E84B78] border border-[#E84B78] font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs group"
-                      >
-                        <span>{testimonial.name}さんのインタビュー全文を見る</span>
-                        <LucideIcon name="ArrowRight" size={14} className="group-hover:translate-x-0.5 transition-transform" />
-                      </button>
+                    <div>
+                      <div className="font-bold text-primary text-[11px] mb-0.5">実際に働いて感じたこと</div>
+                      <p className="text-on-surface">{item.impression}</p>
                     </div>
 
+                    <div>
+                      <div className="font-bold text-primary text-[11px] mb-0.5">仲居さん・スタッフのサポート</div>
+                      <p className="text-on-surface-variant">{item.staffSupport}</p>
+                    </div>
                   </div>
                 </div>
+              </div>
 
-                {/* カードフッター: 認証番号 & いいねボタン */}
-                <div className="p-4 bg-zinc-50/80 border-t border-[#F3E1E6] flex items-center justify-between text-xs">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedVerification(testimonial)}
-                    className="inline-flex items-center gap-1 text-[#66545A] hover:text-emerald-700 text-[11px] font-medium transition-colors cursor-pointer"
-                  >
-                    <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-black">
-                      ✓
-                    </span>
-                    <span className="underline decoration-dotted underline-offset-2">
-                      確認番号: {testimonial.verification.verificationId}
-                    </span>
-                  </button>
-
-                  <button 
-                    onClick={(e) => handleLike(testimonial.id, e)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all cursor-pointer text-xs ${
-                      isLiked 
-                        ? 'bg-rose-100 text-[#E84B78] font-bold shadow-2xs' 
-                        : 'bg-white hover:bg-[#FFF8F9] text-zinc-500 hover:text-[#E84B78] border border-gray-200 shadow-2xs'
-                    }`}
-                  >
-                    <LucideIcon 
-                      name="Heart" 
-                      size={13} 
-                      className={`${isLiked ? 'fill-[#E84B78] text-[#E84B78]' : 'text-zinc-400'}`} 
-                    />
-                    <span>参考になった ({likeCounts[testimonial.id]})</span>
-                  </button>
+              {/* Advice Footer */}
+              <div className="px-6 pb-6">
+                <div className="rounded-xl bg-surface p-4 border border-outline-variant/80">
+                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-secondary mb-1">
+                    <LucideIcon name="MessageCircleHeart" size={14} className="text-primary shrink-0" />
+                    <span>検討中の方へのメッセージ</span>
+                  </div>
+                  <p className="text-xs text-on-surface leading-relaxed">
+                    「{item.advice}」
+                  </p>
                 </div>
-              </motion.article>
-            );
-          })}
+              </div>
+            </article>
+          ))}
         </div>
 
-        {/* Disclaimer Box */}
-        <div className="mt-8 bg-white rounded-2xl border border-outline-variant p-4 sm:p-5 text-xs text-on-surface-variant leading-relaxed flex items-start gap-2.5">
-          <LucideIcon name="Info" size={16} className="text-primary shrink-0 mt-0.5" />
-          <p>
-            ※プライバシー配慮のためプロフィール写真はイメージ画像を使用しています。掲載している収入実績は取材時点における個人の体験例であり、一定の収入額を保証するものではありません。収入は勤務日数・時間帯・来店状況などにより変動します。
-          </p>
+        {/* Action Links */}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          {onNavigateFaq && (
+            <button
+              type="button"
+              onClick={onNavigateFaq}
+              className="inline-flex items-center justify-center bg-white hover:bg-surface-container text-secondary border border-outline-variant hover:border-primary/40 font-bold text-xs sm:text-[13px] px-5 py-2.5 rounded-xl shadow-2xs transition-colors cursor-pointer"
+            >
+              よくある質問を見る
+            </button>
+          )}
+          <a
+            href={LINE_OFFICIAL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-1.5 bg-white hover:bg-surface-container text-primary hover:text-secondary border border-outline-variant hover:border-primary/40 font-bold text-xs sm:text-[13px] px-5 py-2.5 rounded-xl shadow-2xs transition-colors"
+          >
+            <span>まずは相談する</span>
+            <LucideIcon name="ArrowRight" size={13} />
+          </a>
         </div>
       </div>
-
-
-      {/* =========================================================
-          モーダル 1: インタビュー全文（全7問対談・ストーリー詳細）
-         ========================================================= */}
-      <AnimatePresence>
-        {selectedFullStory && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-[#F3E1E6] overflow-hidden relative max-h-[90vh] flex flex-col"
-            >
-              {/* Header */}
-              <div className="bg-gradient-to-r from-[#E84B78] to-[#F5A2B8] px-6 py-4 text-white flex items-center justify-between">
-                <div>
-                  <span className="text-[10px] font-bold tracking-wider uppercase opacity-90 block">
-                    INTERVIEW FULL STORY
-                  </span>
-                  <h3 className="font-bold text-base sm:text-lg">
-                    {selectedFullStory.name}さん（{selectedFullStory.age}）のインタビュー全文
-                  </h3>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setSelectedFullStory(null)}
-                  className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-colors cursor-pointer"
-                  title="閉じる"
-                >
-                  <LucideIcon name="X" size={18} />
-                </button>
-              </div>
-
-              {/* Body */}
-              <div className="p-6 overflow-y-auto space-y-6 text-xs text-[#66545A]">
-                
-                {/* Profile Banner */}
-                <div className="flex items-center gap-4 bg-[#FFF8F9] p-4 rounded-2xl border border-[#F3E1E6]">
-                  <img
-                    src={selectedFullStory.avatarUrl}
-                    alt={selectedFullStory.name}
-                    className="w-16 h-16 rounded-xl object-cover border border-[#F3E1E6]"
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-base font-black text-[#38242B]">{selectedFullStory.name}さん</span>
-                      <span className="text-xs font-bold text-[#E84B78]">{selectedFullStory.age}</span>
-                    </div>
-                    <p className="text-[11px] text-zinc-500 mt-0.5">{selectedFullStory.status}</p>
-                    <p className="text-xs font-bold text-[#E84B78] mt-1">{selectedFullStory.highlightEarnings}</p>
-                  </div>
-                </div>
-
-                {/* 全7問 対談記録 */}
-                <div className="space-y-4">
-                  <h4 className="font-black text-sm text-[#38242B] border-b border-[#F3E1E6] pb-2 flex items-center gap-2">
-                    <LucideIcon name="MessageSquareText" size={16} className="text-[#E84B78]" />
-                    <span>公式対談記録（全7問）</span>
-                  </h4>
-
-                  {selectedFullStory.interviewQAs.map((qa) => (
-                    <div 
-                      key={qa.qNumber}
-                      className="bg-zinc-50 rounded-2xl p-4 border border-zinc-200/80 space-y-2"
-                    >
-                      <div className="flex items-start gap-2">
-                        <span className="w-5 h-5 rounded-full bg-[#38242B] text-white text-[10px] font-black flex items-center justify-center flex-shrink-0 mt-0.5">
-                          {qa.qNumber}
-                        </span>
-                        <div className="flex-1">
-                          <span className="text-[10px] font-bold text-[#E84B78] mr-1.5 uppercase">
-                            [{qa.topic}]
-                          </span>
-                          <h5 className="font-bold text-xs text-[#38242B] inline">
-                            {qa.question}
-                          </h5>
-                        </div>
-                      </div>
-
-                      <div className="flex items-start gap-2 pt-2 border-t border-zinc-200/60 pl-1">
-                        <span className="w-5 h-5 rounded-full bg-[#E84B78] text-white text-[10px] font-black flex items-center justify-center flex-shrink-0 mt-0.5">
-                          A
-                        </span>
-                        <p className="text-xs text-[#38242B] leading-relaxed flex-1">
-                          「{qa.answer}」
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* LINE相談誘導 */}
-                <div className="bg-[#FFF8F9] rounded-2xl p-4 border border-[#F3E1E6] text-center space-y-2">
-                  <p className="font-bold text-xs text-[#38242B]">
-                    {selectedFullStory.name}さんのような働き方に興味がある方は、LINEで気軽にご相談ください
-                  </p>
-                  <a
-                    href={LINE_OFFICIAL_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-xs transition-colors cursor-pointer"
-                  >
-                    <LucideIcon name="MessageCircle" size={16} />
-                    <span>公式LINEで相談する</span>
-                  </a>
-                </div>
-
-              </div>
-
-              {/* Footer */}
-              <div className="p-4 bg-zinc-50 border-t border-[#F3E1E6] flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => setSelectedFullStory(null)}
-                  className="px-5 py-2 bg-zinc-800 hover:bg-zinc-900 text-white text-xs font-bold rounded-xl transition-colors cursor-pointer"
-                >
-                  閉じる
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {/* =========================================================
-          モーダル 2: 在籍キャスト本人確認・審査ログ
-         ========================================================= */}
-      <AnimatePresence>
-        {selectedVerification && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-[#F3E1E6] overflow-hidden relative max-h-[90vh] flex flex-col"
-            >
-              {/* Header */}
-              <div className="bg-gradient-to-r from-emerald-600 to-teal-700 px-6 py-4 text-white flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center">
-                    <LucideIcon name="FileCheck" size={16} className="text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-sm">在籍キャスト インタビュー証明</h3>
-                    <p className="text-[10px] text-emerald-100">実在キャスト対談記録</p>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setSelectedVerification(null)}
-                  className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-colors cursor-pointer"
-                  title="閉じる"
-                >
-                  <LucideIcon name="X" size={16} />
-                </button>
-              </div>
-
-              {/* Body */}
-              <div className="p-6 overflow-y-auto space-y-4 text-zinc-700 text-xs">
-                {/* Status Stamp */}
-                <div className="flex items-center justify-between bg-emerald-50/80 border border-emerald-200 rounded-2xl p-4">
-                  <div>
-                    <span className="text-[10px] text-emerald-800 font-bold tracking-wider block">確認状況</span>
-                    <span className="text-base font-black text-emerald-700 flex items-center gap-1 mt-0.5">
-                      <LucideIcon name="CheckCircle2" size={16} />
-                      年齢確認・在籍確認 完了
-                    </span>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-[10px] text-zinc-500 block">管理番号</span>
-                    <span className="font-mono font-bold text-xs text-zinc-800">{selectedVerification.verification.verificationId}</span>
-                  </div>
-                </div>
-
-                {/* Cast Profile & Original Signature Match */}
-                <div className="border border-gray-200 rounded-2xl p-4 bg-zinc-50/60 space-y-3">
-                  <div className="text-[11px] font-bold text-zinc-500">【インタビューしたキャストのプロフィール】</div>
-                  <div className="flex items-center justify-between gap-4">
-                    <div>
-                      <div className="text-sm font-black text-zinc-900">
-                        {selectedVerification.name}さん（{selectedVerification.profile.ageGroup}）
-                      </div>
-                      <div className="text-xs text-zinc-600 mt-0.5">
-                        前職：{selectedVerification.profile.previousJob}
-                      </div>
-                    </div>
-                    {/* Handwritten Signature Box */}
-                    <div className="bg-white border border-dashed border-[#F5A2B8] rounded-xl px-3 py-1.5 text-center shadow-2xs">
-                      <span className="text-[9px] text-zinc-400 block font-medium">ご本人の直筆サイン</span>
-                      <img
-                        src={selectedVerification.signatureUrl}
-                        alt={`${selectedVerification.name}の直筆サイン`}
-                        className="h-8 w-auto object-contain mx-auto mix-blend-multiply"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2 text-[11px] pt-2 border-t border-gray-200">
-                    <div>
-                      <span className="text-zinc-500 font-medium">勤務歴：</span>
-                      <span className="font-bold text-zinc-800">{selectedVerification.profile.workPeriod}</span>
-                    </div>
-                    <div>
-                      <span className="text-zinc-500 font-medium">夜職経験：</span>
-                      <span className="font-bold text-[#E84B78]">{selectedVerification.profile.nightWorkExp}</span>
-                    </div>
-                    <div>
-                      <span className="text-zinc-500 font-medium">取材日：</span>
-                      <span className="font-bold text-zinc-800">{selectedVerification.profile.interviewDate}</span>
-                    </div>
-                    <div>
-                      <span className="text-zinc-500 font-medium">取材担当：</span>
-                      <span className="font-bold text-zinc-800">{selectedVerification.profile.interviewer}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Checklist */}
-                <div className="bg-white border border-gray-200 rounded-xl p-3 space-y-2">
-                  <div className="flex justify-between py-1 border-b border-gray-100">
-                    <span className="text-zinc-500 font-medium">確認実施日</span>
-                    <span className="font-bold text-zinc-800">{selectedVerification.verification.verifiedDate}</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-gray-100">
-                    <span className="text-zinc-500 font-medium">提出確認書類</span>
-                    <span className="font-bold text-zinc-800 text-right">{selectedVerification.verification.docType}</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-gray-100">
-                    <span className="text-zinc-500 font-medium">年齢・適法審査</span>
-                    <span className="font-bold text-emerald-700 text-right">{selectedVerification.verification.complianceCheck}</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-gray-100">
-                    <span className="text-zinc-500 font-medium">所属店舗種別</span>
-                    <span className="font-bold text-zinc-800 text-right">{selectedVerification.verification.storeName}</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-gray-100">
-                    <span className="text-zinc-500 font-medium">署名・原本照合</span>
-                    <span className="font-bold text-[#E84B78] text-right">{selectedVerification.verification.signatureMatch}</span>
-                  </div>
-                  <div className="flex justify-between py-1">
-                    <span className="text-zinc-500 font-medium">掲載同意確認</span>
-                    <span className="font-bold text-zinc-800 text-right">{selectedVerification.verification.consentDate}</span>
-                  </div>
-                </div>
-
-                {/* Summary Statement */}
-                <div className="bg-[#FFF8F9] rounded-xl p-3 text-[11px] text-zinc-600 leading-relaxed border border-[#F3E1E6]">
-                  <strong className="text-zinc-800 block mb-1">■ 審査基準と個人情報保護について</strong>
-                  {selectedVerification.verification.methodSummary}
-                  <br />
-                  ※個人情報保護方針に基づき、本籍地記載の住民票原本および自署同意書は、暗号化サーバーにて厳重保管しております。
-                </div>
-              </div>
-
-              {/* Footer */}
-              <div className="p-4 bg-zinc-50 border-t border-gray-200 flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => setSelectedVerification(null)}
-                  className="px-5 py-2 bg-zinc-800 hover:bg-zinc-900 text-white text-xs font-bold rounded-xl transition-colors cursor-pointer"
-                >
-                  確認を閉じる
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {/* =========================================================
-          Structured Data (Schema.org JSON-LD)
-         ========================================================= */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@graph": TESTIMONIALS.map((t) => ({
-              "@type": "Article",
-              "@id": `https://tobitashinchi-recruit.com/#interview-${t.id}`,
-              "headline": `飛田新地で働いた女性インタビュー【${t.name}さん・年齢:${t.profile.ageGroup}・前職:${t.profile.previousJob}・勤務歴:${t.profile.workPeriod}】`,
-              "description": `${t.name}さん（${t.profile.ageGroup}・前職:${t.profile.previousJob}・経験:${t.profile.nightWorkExp}）への公式対面インタビュー。取材日:${t.profile.interviewDate}。実在キャストの自署同意書保管・リアルな本音。`,
-              "datePublished": "2026-03-14",
-              "dateModified": "2026-08-20",
-              "inLanguage": "ja-JP",
-              "author": {
-                "@type": "Person",
-                "name": t.profile.interviewer,
-                "jobTitle": "女性サポート相談担当（元キャスト歴8年）"
-              },
-              "about": {
-                "@type": "Person",
-                "name": `${t.name}（源氏名）`,
-                "jobTitle": "料亭キャスト",
-                "description": `${t.profile.ageGroup}、前職は${t.profile.previousJob}、夜職経験:${t.profile.nightWorkExp}。勤務歴:${t.profile.workPeriod}。`
-              },
-              "articleBody": `${t.quote} 前職は${t.profile.previousJob}、夜職経験は${t.profile.nightWorkExp}。${t.story.situationBefore} ${t.story.firstDayImpression} ${t.story.actualEarnings} ${t.story.adviceForOthers}`,
-              "publisher": {
-                "@type": "Organization",
-                "name": "飛田新地求人 飛田ガールズ（料理組合公認料亭直営）",
-                "url": "https://tobitashinchi-recruit.com",
-                "logo": "https://tobitashinchi-recruit.com/icon.png"
-              }
-            }))
-          })
-        }}
-      />
     </section>
   );
 }

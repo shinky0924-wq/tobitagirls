@@ -12,33 +12,43 @@ interface JobFlowSectionProps {
 const DAILY_STEPS = [
   {
     step: 'STEP 01',
-    title: '私服で出勤・無料貸出衣装へお着替え',
-    detail: 'お店に着いたら控室で貸出の着物やドレス・ワンピースに着替え、メイクや身だしなみを整えます（持ち帰り不要・私服通勤可）。',
-    icon: 'Shirt',
+    title: '出勤・お着替え',
+    detail:
+      '私服のまま店舗へ到着したら、女性専用の控室・お支度スペースで無料の貸出衣装（着物・ドレス・ワンピースなど）に着替え、髪型やメイク・身だしなみを整えます。衣装は店舗保管のため持ち帰りは不要です。',
+    imageUrl: '/images/job_step_one_kimono_1795427482137.jpg',
+    imageAlt: 'お支度スペースでの着物・メイク準備イラスト',
   },
   {
     step: 'STEP 02',
-    title: '玄関（上がり框）での笑顔のお迎え',
-    detail: '料亭の玄関先に座り、ご来店されたお客様へ挨拶をします。お客様への声掛けやご案内は、隣にいる仲居さん（店舗スタッフ）が担当します。',
-    icon: 'Smile',
+    title: 'お客様のお迎え',
+    detail:
+      '玄関（上がり框）に座り、笑顔でお客様をお迎えします。通りを歩かれるお客様への声掛けや呼び込み、料金やコースのご案内は隣に立つ仲居さん（店舗スタッフ）が担当するため、ご自身で無理に客引きをする必要はありません。',
+    imageUrl: '/images/job_step_two_entrance_1795427481883.jpg',
+    imageAlt: '料亭の玄関・上がり框でお客様をお迎えする様子を描いたイラスト',
   },
   {
     step: 'STEP 03',
-    title: '2階個室で15〜20分のおもてなし',
-    detail: 'お部屋へご案内し、短い時間でおもてなし接客を行います。時間の確認や終了の合図も仲居さんがサポートするため、時計に追われる心配はありません。',
-    icon: 'Clock',
+    title: '個室での接客',
+    detail:
+      '仲居さんの案内に続いて2階の和室へ上がり、15分〜20分中心の短時間のおもてなし接客（ほか30分・45分・60分コースあり）を行います。時間計測や終了の合図も店舗側で管理しているため安心です。',
+    imageUrl: '/images/job_step_three_room_1795427481851.jpg',
+    imageAlt: '清潔に整えられた和室個室のイラスト',
   },
   {
     step: 'STEP 04',
-    title: '控室で休憩しながら自分のペースで待機',
-    detail: '接客とお部屋の準備の合間は女性専用の控室でリラックスして待機できます。ドリンクを飲んだり、スマホを見たりして過ごせます。',
-    icon: 'Coffee',
+    title: '待機・休憩',
+    detail:
+      '接客が終わった後のお部屋の手配や片付け・換気は仲居さんが行います。次の接客までの待機時間や休憩時間は、冷暖房・Wi-Fi完備の女性専用控室で飲み物を飲んだり休んだりしながらリラックスして過ごせます。',
+    imageUrl: '/images/job_step_four_lounge_1795427481362.jpg',
+    imageAlt: '女性専用控室でリラックスして休憩できるラウンジのイラスト',
   },
   {
     step: 'STEP 05',
-    title: '私服に着替えてその日の報酬を全額現金受取',
-    detail: 'シフト終了後は私服に着替え、その日の売上50％バック分を全額現金で受け取って退勤します。お部屋の後片付けは不要です。',
-    icon: 'Banknote',
+    title: '退勤・報酬の受け取り',
+    detail:
+      '予定のシフト時刻になったら私服へ着替え、その日に担当した売上50％バックの報酬額を退勤時に全額現金で受け取って帰宅します。居残り強制や翌月繰り越しはありません。',
+    imageUrl: '/images/job_step_five_payout_1795427481685.jpg',
+    imageAlt: '退勤時の即日現金受け取りを表した丁寧な金封イラスト',
   },
 ];
 
@@ -49,100 +59,124 @@ export default function JobFlowSection({ onNavigateJob }: JobFlowSectionProps) {
       className="py-16 md:py-24 bg-white border-b border-outline-variant/60"
       aria-labelledby="job-heading"
     >
-      <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <div className="text-center max-w-2xl mx-auto mb-12 md:mb-14">
-          <span className="text-xs font-bold tracking-widest text-primary uppercase block mb-2">
+        <div className="text-center max-w-2xl mx-auto mb-12 md:mb-14 space-y-3">
+          <span className="text-xs font-bold tracking-widest text-primary uppercase block">
             JOB &amp; DAILY FLOW
           </span>
           <h2
             id="job-heading"
-            className="font-display font-bold text-2xl sm:text-3xl md:text-[34px] text-on-surface leading-snug mb-3 text-balance"
+            className="font-display font-bold text-2xl sm:text-3xl md:text-[34px] text-on-surface leading-snug text-balance"
           >
-            仕事内容・1日の流れ
+            飛田新地のお仕事内容・1日の流れ
           </h2>
           <p className="font-sans text-sm sm:text-[15px] text-on-surface-variant leading-relaxed">
-            飛田新地のお仕事は「短い接客時間」と「仲居さんのサポート」が特徴です。未経験の方にも全体のイメージが分かるよう、1日の流れを整理しました。
+            初めての方にも分かるように、出勤から退勤までの流れをご紹介します。
           </p>
         </div>
 
-        {/* 5-Step Daily Flow Timeline */}
-        <div className="space-y-3.5 mb-12">
-          {DAILY_STEPS.map((item) => (
-            <div
-              key={item.step}
-              className="rounded-2xl bg-surface border border-outline-variant p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3.5 sm:gap-5"
-            >
-              <div className="flex items-center gap-3 shrink-0">
-                <div className="w-10 h-10 rounded-xl bg-white border border-outline-variant flex items-center justify-center text-primary shrink-0">
-                  <LucideIcon name={item.icon} size={18} />
-                </div>
-                <span className="font-sans font-bold text-xs tracking-wider text-primary bg-white px-2.5 py-1 rounded-md border border-outline-variant">
-                  {item.step}
-                </span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-display font-bold text-base sm:text-[17px] text-on-surface mb-1">
-                  {item.title}
-                </h3>
-                <p className="text-[13px] sm:text-sm text-on-surface-variant leading-relaxed">
-                  {item.detail}
-                </p>
-              </div>
+        {/* Role Division Overview: Woman vs Nakai-san */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-12">
+          <div className="rounded-2xl bg-surface p-6 border border-outline-variant space-y-3">
+            <div className="flex items-center gap-2 text-primary font-bold text-sm">
+              <LucideIcon name="UserCheck" size={18} className="shrink-0" />
+              <h3>女性が担当すること</h3>
             </div>
-          ))}
-        </div>
-
-        {/* Reassurance Comparison: What is NOT required & Safety Rules */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="rounded-2xl bg-surface p-6 border border-outline-variant">
-            <h3 className="font-display font-bold text-base sm:text-lg text-on-surface mb-3.5 flex items-center gap-2">
-              <LucideIcon name="CheckCircle2" size={18} className="text-primary shrink-0" />
-              <span>お仕事で不要なこと・ないこと</span>
-            </h3>
-            <ul className="space-y-2.5 text-[13.5px] text-on-surface-variant">
+            <p className="text-xs sm:text-[13.5px] text-on-surface-variant leading-relaxed">
+              飛田新地のお仕事は、玄関先でのお迎えと、2階個室での短時間（15〜20分中心）のおもてなし接客が中心です。お酒の席への同席や飲酒、お客様との連絡先交換や営業LINEは行いません。
+            </p>
+            <ul className="space-y-1.5 text-xs text-on-surface pt-1">
               <li className="flex items-start gap-2">
-                <LucideIcon name="Check" size={15} className="text-primary shrink-0 mt-0.5" />
-                <span><strong className="text-on-surface">お酒の飲酒・お酌：</strong>料亭はお酒を飲む場ではないため、お酒が飲めない方も問題ありません。</span>
+                <LucideIcon name="Check" size={14} className="text-primary shrink-0 mt-0.5" />
+                <span>玄関での笑顔のお迎え・挨拶</span>
               </li>
               <li className="flex items-start gap-2">
-                <LucideIcon name="Check" size={15} className="text-primary shrink-0 mt-0.5" />
-                <span><strong className="text-on-surface">連絡先交換・営業LINE：</strong>お客様との私的な連絡先交換や、勤務時間外のメッセージ対応はありません。</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <LucideIcon name="Check" size={15} className="text-primary shrink-0 mt-0.5" />
-                <span><strong className="text-on-surface">指名競争・売上ノルマ：</strong>店舗の在籍同士での競争や指名ノルマ、達成できない場合の罰金はありません。</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <LucideIcon name="Check" size={15} className="text-primary shrink-0 mt-0.5" />
-                <span><strong className="text-on-surface">お茶出しや浴室掃除の雑用：</strong>お部屋の準備・後片付けや呼び込みは仲居さんが担当します。</span>
+                <LucideIcon name="Check" size={14} className="text-primary shrink-0 mt-0.5" />
+                <span>15〜60分のコースに沿った個室での接客</span>
               </li>
             </ul>
           </div>
 
-          <div className="rounded-2xl bg-surface-container/50 p-6 border border-outline-variant">
-            <h3 className="font-display font-bold text-base sm:text-lg text-on-surface mb-3.5 flex items-center gap-2">
-              <LucideIcon name="ShieldCheck" size={18} className="text-secondary shrink-0" />
-              <span>安心のための衛生・禁止ルール</span>
-            </h3>
-            <ul className="space-y-2.5 text-[13.5px] text-on-surface-variant">
+          <div className="rounded-2xl bg-surface p-6 border border-outline-variant space-y-3">
+            <div className="flex items-center gap-2 text-secondary font-bold text-sm">
+              <LucideIcon name="HeartHandshake" size={18} className="shrink-0" />
+              <h3>仲居さん（店舗スタッフ）が担当すること</h3>
+            </div>
+            <p className="text-xs sm:text-[13.5px] text-on-surface-variant leading-relaxed">
+              経験豊富な仲居さんがお迎えから時間管理、お部屋の清潔管理まで裏方の業務をすべて担うため、女性が一人で無理な営業や片付けを行うことはありません。
+            </p>
+            <ul className="space-y-1.5 text-xs text-on-surface pt-1">
               <li className="flex items-start gap-2">
-                <LucideIcon name="Shield" size={15} className="text-secondary shrink-0 mt-0.5" />
-                <span><strong className="text-on-surface">禁止事項の徹底：</strong>キスや粘膜への危険を伴う行為は一切禁止しており、コンドーム着用を徹底しています。</span>
+                <LucideIcon name="Check" size={14} className="text-secondary shrink-0 mt-0.5" />
+                <span>お客様への声掛け・コースや料金のご案内・精算</span>
               </li>
               <li className="flex items-start gap-2">
-                <LucideIcon name="Shield" size={15} className="text-secondary shrink-0 mt-0.5" />
-                <span><strong className="text-on-surface">衛生備品と清拭対応：</strong>客室に浴槽やシャワーはなく、おしぼりや衛生用品を用いた清拭対応を行っています。</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <LucideIcon name="Shield" size={15} className="text-secondary shrink-0 mt-0.5" />
-                <span><strong className="text-on-surface">仲居さんの見守りと時間管理：</strong>入室から退室まで店舗側で時間を把握し、困った際はすぐに呼び出せる環境です。</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <LucideIcon name="Shield" size={15} className="text-secondary shrink-0 mt-0.5" />
-                <span><strong className="text-on-surface">撮影行為の禁止：</strong>エリア全体および店内での写真・動画撮影は固く禁止しています。</span>
+                <LucideIcon name="Check" size={14} className="text-secondary shrink-0 mt-0.5" />
+                <span>接客中の時間管理・安全見守り・お部屋の清掃準備</span>
               </li>
             </ul>
+          </div>
+        </div>
+
+        {/* 5 Numbered Steps with Dedicated Illustrations */}
+        <div className="space-y-4 mb-12">
+          {DAILY_STEPS.map((item) => (
+            <article
+              key={item.step}
+              className="rounded-2xl bg-surface border border-outline-variant overflow-hidden grid grid-cols-1 md:grid-cols-12 items-stretch"
+            >
+              <div className="md:col-span-4 lg:col-span-3 aspect-[4/3] md:aspect-auto bg-white overflow-hidden border-b md:border-b-0 md:border-r border-outline-variant/70">
+                <img
+                  src={item.imageUrl}
+                  alt={item.imageAlt}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                  width={480}
+                  height={360}
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+
+              <div className="md:col-span-8 lg:col-span-9 p-5 sm:p-6 flex flex-col justify-center space-y-2">
+                <div className="text-xs font-bold tracking-wider text-primary tabular-nums">
+                  {item.step}
+                </div>
+                <h3 className="font-display font-bold text-lg sm:text-xl text-on-surface leading-snug">
+                  {item.title}
+                </h3>
+                <p className="text-[13.5px] sm:text-sm text-on-surface-variant leading-[1.8]">
+                  {item.detail}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* Hygiene & Store Rules */}
+        <div className="rounded-2xl bg-surface-container/40 p-6 sm:p-7 border border-outline-variant">
+          <h3 className="font-display font-bold text-base sm:text-lg text-on-surface mb-4 flex items-center gap-2">
+            <LucideIcon name="ShieldCheck" size={18} className="text-primary shrink-0" />
+            <span>衛生管理と店舗の安全ルールについて</span>
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs sm:text-[13px] text-on-surface-variant leading-relaxed">
+            <div className="bg-white rounded-xl border border-outline-variant p-4">
+              <strong className="text-on-surface block mb-1">おしぼり・清拭対応</strong>
+              客室内に浴槽やシャワー設備はありません。清潔なおしぼりや衛生消耗品を用いた清拭対応を徹底しています。
+            </div>
+            <div className="bg-white rounded-xl border border-outline-variant p-4">
+              <strong className="text-on-surface block mb-1">禁止事項・保護徹底</strong>
+              キスや粘膜への危険を伴う行為は一切禁止し、必ず衛生用品（コンドーム）を着用するルールです。
+            </div>
+            <div className="bg-white rounded-xl border border-outline-variant p-4">
+              <strong className="text-on-surface block mb-1">換気・リネン交換</strong>
+              1組ごとのご案内後に換気とタオル・シーツ交換を行い、常に清潔な状態でお部屋を用意します。
+            </div>
+            <div className="bg-white rounded-xl border border-outline-variant p-4">
+              <strong className="text-on-surface block mb-1">撮影行為の禁止</strong>
+              エリア全体および店内での写真・動画撮影は固く禁止されており、プライバシーを守って働けます。
+            </div>
           </div>
         </div>
 

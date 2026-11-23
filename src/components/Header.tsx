@@ -33,17 +33,17 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
 
   const sectionNavLinks = [
     { name: 'トップ', target: '#top' },
-    { name: 'お店紹介', target: '#about' },
+    { name: '3つのお約束', target: '#about' },
     { name: '6つの理由', target: '#reasons' },
     { name: '仕事内容', target: '#job' },
     { name: 'お給料', target: '#salary' },
+    { name: '待遇', target: '#benefits' },
     { name: '働き方', target: '#workstyle' },
-    { name: '環境・設備', target: '#environment' },
-    { name: '体験談', target: '#voice' },
+    { name: '設備', target: '#environment' },
+    { name: '女性の声', target: '#voice' },
+    { name: '応募の流れ', target: '#flow' },
     { name: '募集要項', target: '#requirements' },
     { name: 'FAQ', target: '#faq-preview' },
-    { name: '応募の流れ', target: '#flow' },
-    { name: '総合ガイド', target: '#recruit-guide' },
   ];
 
   const guideCategories = [

@@ -13,11 +13,11 @@ interface LineCtaSectionProps {
 }
 
 const CONSULTATION_TEMPLATE = `飛田ガールズの求人を見ました。
-・年齢（例：20代前半）：
+・年齢（満20歳以上・例：20代前半）：
 ・ご経験（未経験／経験あり）：
-・気になること（仕事内容／給料／勤務時間／身バレ対策など）：`;
+・相談したいこと（仕事内容／お給料／シフト・働き方／お店見学など）：`;
 
-export default function LineCtaSection({ content }: LineCtaSectionProps) {
+export default function LineCtaSection(_props: LineCtaSectionProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopyTemplate = async () => {
@@ -32,7 +32,7 @@ export default function LineCtaSection({ content }: LineCtaSectionProps) {
 
   return (
     <section
-      className="py-16 sm:py-24 bg-surface-container/70"
+      className="py-16 md:py-24 bg-surface-container/60 border-b border-outline-variant/60"
       id="consultation"
       aria-labelledby="consultation-heading"
     >
@@ -49,32 +49,31 @@ export default function LineCtaSection({ content }: LineCtaSectionProps) {
               id="consultation-heading"
               className="font-display font-bold text-2xl sm:text-3xl md:text-4xl text-on-surface leading-snug text-balance"
             >
-              {content?.title || 'まずはLINEでお気軽にご相談ください'}
+              まずはLINEで気軽に相談してみませんか？
             </h2>
 
             <p className="text-sm sm:text-base text-on-surface-variant leading-relaxed">
-              {content?.description ||
-                '応募するかまだ決めていない段階でも大丈夫です。「どんなお仕事かもう少し詳しく知りたい」「今の状況で働けるか相談したい」など、女性スタッフが丁寧にお答えします。'}
+              「仕事内容についてもう少し確認したい」「自分の希望する曜日で働けるか相談したい」「実際の雰囲気を見学してみたい」など、応募を迷っている段階でもそのままお送りください。
             </p>
           </div>
 
-          {/* 4 Honest Promises */}
+          {/* 4 Clear Consultation Topics */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-8">
             <div className="bg-surface rounded-xl border border-outline-variant p-3.5 text-center space-y-1">
-              <div className="text-xs font-bold text-primary">相談無料</div>
-              <p className="text-xs text-on-surface-variant">登録料や紹介料などは一切不要</p>
+              <div className="text-xs font-bold text-primary">相談だけでもOK</div>
+              <p className="text-xs text-on-surface-variant">応募前の質問・条件確認のみ歓迎</p>
             </div>
             <div className="bg-surface rounded-xl border border-outline-variant p-3.5 text-center space-y-1">
-              <div className="text-xs font-bold text-primary">24時間メッセージ受付</div>
-              <p className="text-xs text-on-surface-variant">営業時間10:00〜24:00に順次ご返信</p>
+              <div className="text-xs font-bold text-primary">見学・説明の予約</div>
+              <p className="text-xs text-on-surface-variant">私服で控室や雰囲気を事前に見学</p>
             </div>
             <div className="bg-surface rounded-xl border border-outline-variant p-3.5 text-center space-y-1">
-              <div className="text-xs font-bold text-primary">匿名・質問のみOK</div>
-              <p className="text-xs text-on-surface-variant">本名や顔写真の送信は不要です</p>
+              <div className="text-xs font-bold text-primary">匿名・写真送信不要</div>
+              <p className="text-xs text-on-surface-variant">相談段階で本名・顔写真は不要</p>
             </div>
             <div className="bg-surface rounded-xl border border-outline-variant p-3.5 text-center space-y-1">
-              <div className="text-xs font-bold text-primary">無理な勧誘なし</div>
-              <p className="text-xs text-on-surface-variant">見学や相談だけで終了しても問題ありません</p>
+              <div className="text-xs font-bold text-primary">満20歳以上・高校生不可</div>
+              <p className="text-xs text-on-surface-variant">無理な勧誘や引き止めは行いません</p>
             </div>
           </div>
 
@@ -99,8 +98,8 @@ export default function LineCtaSection({ content }: LineCtaSectionProps) {
             </pre>
           </div>
 
-          {/* Main LINE CTA */}
-          <div className="mt-8 text-center space-y-2.5">
+          {/* Main LINE CTA & Clear Time Separation */}
+          <div className="mt-8 text-center space-y-3">
             <a
               href={LINE_OFFICIAL_URL}
               target="_blank"
@@ -111,44 +110,47 @@ export default function LineCtaSection({ content }: LineCtaSectionProps) {
               <span>LINEで無料相談する</span>
               <LucideIcon name="ArrowRight" size={18} />
             </a>
-            <p className="text-xs text-on-surface-variant">
-              友だち追加後、気になることを一言お送りください
-            </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-on-surface-variant tabular-nums">
+              <span>LINEメッセージ受付：24時間</span>
+              <span className="text-outline-variant" aria-hidden="true">/</span>
+              <span>スタッフ返信時間：10:00〜24:00（順次対応）</span>
+            </div>
           </div>
         </div>
 
-        {/* 4 Bottom Trust Summary Cards */}
+        {/* 4 Bottom Supplements */}
         <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3.5 text-center">
-          <div className="bg-white rounded-2xl p-4 border border-outline-variant">
-            <div className="w-8 h-8 rounded-full bg-surface-container text-primary flex items-center justify-center mx-auto mb-2">
-              <LucideIcon name="ShieldCheck" size={18} />
-            </div>
-            <div className="font-bold text-xs text-on-surface">満20歳以上限定・法令遵守</div>
-            <div className="text-[11px] text-on-surface-variant mt-1">20歳未満就労禁止・年齢確認徹底</div>
-          </div>
-
           <div className="bg-white rounded-2xl p-4 border border-outline-variant">
             <div className="w-8 h-8 rounded-full bg-surface-container text-primary flex items-center justify-center mx-auto mb-2">
               <LucideIcon name="Building2" size={18} />
             </div>
-            <div className="font-bold text-xs text-on-surface">料亭直営の直接採用</div>
-            <div className="text-[11px] text-on-surface-variant mt-1">紹介手数料・仲介マージン0円</div>
+            <div className="font-bold text-xs text-on-surface">料亭直営の公式窓口</div>
+            <div className="text-[11px] text-on-surface-variant mt-1">紹介手数料・仲介料なし</div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-4 border border-outline-variant">
+            <div className="w-8 h-8 rounded-full bg-surface-container text-primary flex items-center justify-center mx-auto mb-2">
+              <LucideIcon name="ShieldCheck" size={18} />
+            </div>
+            <div className="font-bold text-xs text-on-surface">満20歳以上限定</div>
+            <div className="text-[11px] text-on-surface-variant mt-1">高校生不可・年齢確認徹底</div>
           </div>
 
           <div className="bg-white rounded-2xl p-4 border border-outline-variant">
             <div className="w-8 h-8 rounded-full bg-surface-container text-primary flex items-center justify-center mx-auto mb-2">
               <LucideIcon name="Lock" size={18} />
             </div>
-            <div className="font-bold text-xs text-on-surface">身バレ・プライバシー配慮</div>
-            <div className="text-[11px] text-on-surface-variant mt-1">WEB写真非公開・住民税普通徴収案内</div>
+            <div className="font-bold text-xs text-on-surface">プライバシー配慮</div>
+            <div className="text-[11px] text-on-surface-variant mt-1">顔写真非掲載・源氏名勤務</div>
           </div>
 
           <div className="bg-white rounded-2xl p-4 border border-outline-variant">
             <div className="w-8 h-8 rounded-full bg-surface-container text-primary flex items-center justify-center mx-auto mb-2">
               <LucideIcon name="Banknote" size={18} />
             </div>
-            <div className="font-bold text-xs text-on-surface">売上50％・即日現金日払い</div>
-            <div className="text-[11px] text-on-surface-variant mt-1">1日体験入店のみでも全額手渡し</div>
+            <div className="font-bold text-xs text-on-surface">売上50％・現金日払い</div>
+            <div className="text-[11px] text-on-surface-variant mt-1">退勤時にその場で全額手渡し</div>
           </div>
         </div>
       </div>

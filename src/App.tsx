@@ -11,13 +11,14 @@ import AboutSection from './components/AboutSection';
 import Reasons from './components/Reasons';
 import JobFlowSection from './components/JobFlowSection';
 import SalarySystemSection from './components/SalarySystemSection';
+import BenefitsSection from './components/BenefitsSection';
 import WorkstyleGuideSection from './components/WorkstyleGuideSection';
 import EnvironmentGallerySection from './components/EnvironmentGallerySection';
-import RequirementsSection from './components/RequirementsSection';
-import AccessSection from './components/AccessSection';
 import Testimonials from './components/Testimonials';
-import HomeFaqSection from './components/HomeFaqSection';
+import SupportSection from './components/SupportSection';
 import Flow from './components/Flow';
+import RequirementsSection from './components/RequirementsSection';
+import HomeFaqSection from './components/HomeFaqSection';
 import LineCtaSection from './components/LineCtaSection';
 import RecruitGuideSection from './components/RecruitGuideSection';
 import Footer from './components/Footer';
@@ -35,7 +36,7 @@ import {
 import { SITE_COMPARE_SEO } from './compareData';
 import type { BlogArticle } from './blogData';
 import { TOPIC_ROUTE_PATHS } from './featuredArticles';
-import { getStoredSiteContent, SiteContent } from './siteContent';
+import { getStoredSiteContent, normalizeSiteContent, SiteContent } from './siteContent';
 import { captureInitialHomeJsonLd, restoreHomeJsonLd } from './utils/jsonLd';
 import { trackAiSearchReferral, trackAiSearchPageView } from './utils/aiAnalytics';
 
@@ -64,7 +65,12 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const [pendingScrollTarget, setPendingScrollTarget] = useState<string | null>(null);
+  const [pendingScrollTarget, setPendingScrollTarget] = useState<string | null>(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      return window.location.hash.substring(1) || null;
+    }
+    return null;
+  });
 
   const scrollToElementById = (sectionId: string) => {
     const cleanId = sectionId.startsWith('#') ? sectionId.substring(1) : sectionId;
@@ -89,9 +95,7 @@ export default function App() {
       setPath(newPath);
       if (newPath.includes('#')) {
         const hash = newPath.split('#')[1];
-        setTimeout(() => {
-          scrollToElementById(hash);
-        }, 120);
+        setPendingScrollTarget(hash);
       } else if (!skipScrollTop) {
         window.scrollTo(0, 0);
       }
@@ -390,12 +394,12 @@ export default function App() {
     }
   };
 
-  // Perform pending scroll whenever entering recruit tab or when target updates
+  // Perform pending scroll whenever target updates across route transitions and lazy mounts
   useEffect(() => {
-    if (currentTab === 'recruit' && pendingScrollTarget) {
+    if (pendingScrollTarget) {
       const targetId = pendingScrollTarget;
       let attempts = 0;
-      const maxAttempts = 25; // Check for up to 1.25s to account for AnimatePresence transition
+      const maxAttempts = 40; // Check up to 2.0s to account for AnimatePresence + React.lazy chunk loading
       const interval = setInterval(() => {
         attempts++;
         const scrolled = scrollToElementById(targetId);
@@ -407,7 +411,7 @@ export default function App() {
 
       return () => clearInterval(interval);
     }
-  }, [currentTab, pendingScrollTarget]);
+  }, [currentTab, clusterTopic, pendingScrollTarget]);
 
   const [blogArticles, setBlogArticles] = useState<BlogArticle[]>([]);
   const [siteContent, setSiteContent] = useState<SiteContent>(getStoredSiteContent());
@@ -456,14 +460,16 @@ export default function App() {
       const fbMod = await import('./firebase');
       const firestoreData = await fbMod.getSiteContentFromFirestore();
       if (firestoreData) {
-        setSiteContent(firestoreData);
+        const { content } = normalizeSiteContent(firestoreData);
+        setSiteContent(content);
         return;
       }
 
       const res = await fetch('/api/cms/site');
       if (res.ok) {
         const data = await res.json();
-        setSiteContent(data);
+        const { content } = normalizeSiteContent(data);
+        setSiteContent(content);
       } else {
         setSiteContent(getStoredSiteContent());
       }
@@ -499,8 +505,7 @@ export default function App() {
   };
 
   const handleScrollToSimulator = () => {
-    navigate('/salary');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigate('/salary#simulator');
   };
 
   return (
@@ -532,7 +537,7 @@ export default function App() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.25 }}
             >
-              {/* 2. ファーストビュー */}
+              {/* 01. ファーストビュー */}
               <Hero
                 content={siteContent.hero}
                 onCtaclick={handleScrollToForm}
@@ -546,7 +551,7 @@ export default function App() {
                 }}
               />
 
-              {/* 3. 飛田ガールズとは？ */}
+              {/* 02. 女性に向けた3つのお約束 */}
               <AboutSection
                 onNavigateAbout={() => {
                   navigate('/about');
@@ -554,7 +559,7 @@ export default function App() {
                 }}
               />
 
-              {/* 4. 飛田ガールズが選ばれる6つの理由 */}
+              {/* 03. 飛田ガールズが選ばれる6つの理由 */}
               <Reasons
                 content={siteContent.reasons}
                 onNavigateTopic={(topicId) => {
@@ -563,7 +568,7 @@ export default function App() {
                 }}
               />
 
-              {/* 5. 仕事内容・1日の流れ */}
+              {/* 04. 仕事内容・1日の流れ */}
               <JobFlowSection
                 onNavigateJob={() => {
                   navigate('/job');
@@ -571,15 +576,17 @@ export default function App() {
                 }}
               />
 
-              {/* 6. 給料・報酬システム */}
+              {/* 05. 給与・報酬システム */}
               <SalarySystemSection
                 onNavigateSalary={() => {
-                  navigate('/salary');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  navigate('/salary#simulator');
                 }}
               />
 
-              {/* 7. 希望別の働き方ガイド */}
+              {/* 06. 待遇・福利厚生 */}
+              <BenefitsSection />
+
+              {/* 07. タイプ別・働き方ガイド */}
               <WorkstyleGuideSection
                 onNavigateTopic={(topicId) => {
                   navigate(TOPIC_ROUTE_PATHS[topicId] || `/${topicId}`);
@@ -591,7 +598,7 @@ export default function App() {
                 }}
               />
 
-              {/* 8. 働く環境・設備紹介 */}
+              {/* 08. 店舗・設備・施設紹介 */}
               <EnvironmentGallerySection
                 onNavigatePath={(targetPath) => {
                   navigate(targetPath);
@@ -599,7 +606,7 @@ export default function App() {
                 }}
               />
 
-              {/* 9. 働く女性のリアルな声 */}
+              {/* 09. 実際に働く女性の声・体験談 */}
               <Testimonials
                 onNavigateFaq={() => {
                   navigate('/faq');
@@ -607,7 +614,13 @@ export default function App() {
                 }}
               />
 
-              {/* 10. 募集要項 */}
+              {/* 10. 女性へのサポート体制 */}
+              <SupportSection />
+
+              {/* 11. 応募から体験入店・勤務開始まで */}
+              <Flow content={siteContent.flow} />
+
+              {/* 12. 募集要項（アクセス統合） */}
               <RequirementsSection
                 onNavigatePath={(targetPath) => {
                   navigate(targetPath);
@@ -615,10 +628,7 @@ export default function App() {
                 }}
               />
 
-              {/* 11. アクセス */}
-              <AccessSection />
-
-              {/* 12. 応募前のFAQ */}
+              {/* 13. よくある質問 */}
               <HomeFaqSection
                 onNavigateFaq={() => {
                   navigate('/faq');
@@ -626,13 +636,10 @@ export default function App() {
                 }}
               />
 
-              {/* 13. 応募からお仕事開始まで */}
-              <Flow content={siteContent.flow} />
-
               {/* 14. 最後のLINE相談案内 */}
               <LineCtaSection content={siteContent.consultation} />
 
-              {/* テーマ別の詳細ガイド・関連ページ */}
+              {/* 15. 飛田新地求人｜テーマ別の詳細ガイド */}
               <RecruitGuideSection
                 onNavigateTopic={(topicId) => {
                   navigate(TOPIC_ROUTE_PATHS[topicId] || `/${topicId}`);

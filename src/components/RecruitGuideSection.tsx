@@ -94,7 +94,7 @@ const GUIDE_CARDS: GuideCardItem[] = [
     categoryLabel: '働き方',
     title: '自由な働き方について見る',
     description:
-      '週1日や短時間勤務、本業・学業との両立、10:00〜24:00の選べる5つのシフトについて解説しています。',
+      '週1日や短時間勤務、本業・学業との両立、10:00〜24:00の選べるシフトについて解説しています。',
     icon: 'Clock',
     path: '/workstyle',
     type: 'topic',
@@ -138,7 +138,7 @@ const GUIDE_CARDS: GuideCardItem[] = [
     categoryLabel: 'よくある質問',
     title: `よくある質問（全${FAQ_100_LIST.length}問）を見る`,
     description:
-      '応募前の不安や疑問を12カテゴリー・全119問に体系化し、未経験・給料・年齢・シフトについてお答えしています。',
+      '応募前の不安や疑問を12カテゴリーに体系化し、未経験・給料・年齢・シフトについてお答えしています。',
     icon: 'HelpCircle',
     path: '/faq',
     type: 'path',
@@ -161,7 +161,7 @@ export default function RecruitGuideSection({ onNavigateTopic, onNavigatePath }:
   return (
     <section
       id="recruit-guide"
-      className="py-16 sm:py-24 bg-surface border-t border-outline-variant/70"
+      className="py-16 md:py-24 bg-white border-t border-outline-variant/60"
       aria-labelledby="recruit-guide-heading"
     >
       <div className="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -174,14 +174,14 @@ export default function RecruitGuideSection({ onNavigateTopic, onNavigatePath }:
             id="recruit-guide-heading"
             className="font-display font-bold text-2xl sm:text-3xl text-on-surface leading-snug text-balance"
           >
-            テーマ別の詳細ガイド・関連ページ
+            飛田新地求人｜知りたい情報から探せる詳細ガイド
           </h2>
           <p className="text-sm text-on-surface-variant leading-relaxed">
             さらに詳しく知りたいテーマがある場合は、各専門ガイドページもあわせてご覧ください。
           </p>
         </div>
 
-        {/* 3-Column Card Grid matching layout structure */}
+        {/* 12 Categories 3-Column Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {GUIDE_CARDS.map((card) => (
             <a
@@ -195,16 +195,16 @@ export default function RecruitGuideSection({ onNavigateTopic, onNavigatePath }:
                   onNavigatePath(card.target);
                 }
               }}
-              className="group bg-white rounded-2xl border border-outline-variant hover:border-primary/40 p-5 sm:p-6 shadow-2xs hover:shadow-md transition-all flex items-start gap-4 text-left"
+              className="group bg-surface rounded-2xl border border-outline-variant hover:border-primary/40 p-5 sm:p-6 shadow-2xs hover:shadow-md transition-all flex items-start gap-4 text-left"
             >
               {/* Left Pale Pink Icon Box */}
-              <div className="w-11 h-11 rounded-xl bg-surface-container border border-outline-variant/60 text-primary group-hover:bg-primary group-hover:text-white transition-colors flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-11 h-11 rounded-xl bg-white border border-outline-variant/70 text-primary group-hover:bg-primary group-hover:text-white transition-colors flex items-center justify-center shrink-0 mt-0.5">
                 <LucideIcon name={card.icon} size={20} />
               </div>
 
               {/* Right Text Content */}
               <div className="flex-1 min-w-0">
-                <div className="text-[11px] font-bold text-primary tracking-wide">
+                <div className="text-[11px] font-bold text-primary tracking-wide font-mono">
                   {card.number} <span className="text-outline-variant mx-0.5">|</span> {card.categoryLabel}
                 </div>
                 <h3 className="font-sans font-bold text-[15px] sm:text-base text-on-surface group-hover:text-primary transition-colors mt-1 leading-snug">

@@ -116,18 +116,18 @@ function buildHomeNoscript(): string {
         </a>
         <nav class="ssr-topnav" aria-label="主要メニュー">
           <a href="/">トップ</a>
-          <a href="/#about">お店紹介</a>
+          <a href="/#about">3つのお約束</a>
           <a href="/#reasons">6つの理由</a>
           <a href="/#job">仕事内容</a>
           <a href="/#salary">お給料</a>
+          <a href="/#benefits">待遇</a>
           <a href="/#workstyle">働き方</a>
-          <a href="/#environment">環境・設備</a>
-          <a href="/#voice">体験談</a>
+          <a href="/#environment">設備</a>
+          <a href="/#voice">女性の声</a>
+          <a href="/#flow">応募の流れ</a>
           <a href="/#requirements">募集要項</a>
           <a href="/#faq-preview">FAQ</a>
-          <a href="/#flow">応募の流れ</a>
-          <a href="/#recruit-guide">総合ガイド</a>
-          <a href="https://lin.ee/phFZoea" target="_blank" rel="noopener noreferrer" class="ssr-nav-cta">LINE無料相談</a>
+          <a href="https://lin.ee/phFZoea" target="_blank" rel="noopener noreferrer" class="ssr-nav-cta">LINEで相談</a>
         </nav>
       </div>
     </header>
@@ -135,40 +135,26 @@ function buildHomeNoscript(): string {
     <section class="ssr-hero">
       <div class="ssr-hero-inner">
         <div class="ssr-hero-copy">
-          <p class="ssr-hero-kicker">大阪・飛田新地の女性求人</p>
-          <h1 id="hero-title" class="ssr-hero-h1">飛田新地で、自分らしい働き方を見つけませんか。</h1>
+          <p class="ssr-hero-kicker">24時間受付中 ・ 店舗直営公式求人</p>
+          <h1 id="hero-title" class="ssr-hero-h1">飛田新地求人なら 飛田ガールズ♡</h1>
           <p class="ssr-hero-sub">飛田ガールズ｜料亭直営の公式求人窓口</p>
           <div id="hero-description" class="ssr-hero-desc">
-            <p>飛田ガールズは、大阪・飛田新地の料亭直営の求人窓口です。お店による直接募集だからこそ、仕事内容や報酬、勤務条件について、事前に分かりやすくご案内します。</p>
-            <p>未経験の方も、これまでの経験を活かしたい方も、一人ひとりの希望に合わせてご相談いただけます。</p>
+            <p>初めてでも安心できるよう、お仕事の内容やお給料の仕組み、働き方まで事前にわかりやすくご案内しています。</p>
+            <p>料亭直営の公式求人窓口だからこそ、無理な勧誘やあいまいな説明はありません。</p>
+            <p>「まずは話だけ聞いてみたい」「お店の雰囲気を見てみたい」という方も、気軽にLINEからご相談ください。</p>
           </div>
           <div class="ssr-hero-actions">
-            <a href="https://lin.ee/phFZoea" target="_blank" rel="noopener noreferrer" class="ssr-btn-line">LINEで無料相談する</a>
+            <a href="https://lin.ee/phFZoea" target="_blank" rel="noopener noreferrer" class="ssr-btn-line">LINEで今すぐ応募・相談する</a>
             <a href="/#job" class="ssr-btn-sub">仕事内容・給料を見る</a>
           </div>
-          <p class="ssr-hero-note">応募前の質問・相談だけでも歓迎</p>
+          <p class="ssr-hero-note">報酬システム：売上50%バック ／ お支払い：即日全額現金日払い ／ 勤務時間：10:00〜24:00 ／ 週1日から相談可能 ／ 満20歳以上 ／ 未経験者歓迎</p>
         </div>
 
         <div class="ssr-hero-visual">
           <div class="ssr-hero-card">
-            <picture>
-              <source srcset="/images/home_hero_ryotei_1795337037663.webp" type="image/webp" />
-              <img src="/images/home_hero_ryotei_1795337037663.jpg" alt="大阪・飛田新地の料亭直営求人 飛田ガールズ 上品な和風料亭イメージ" class="ssr-hero-img" width="1376" height="768" />
-            </picture>
+            <img src="/images/home_hero_ryotei_1795337037663.jpg" alt="上品で清潔感のある和風料亭イメージ（飛田ガールズ公式求人窓口）" class="ssr-hero-img" width="1376" height="768" />
           </div>
         </div>
-      </div>
-
-      <div class="ssr-hero-conditions" aria-label="主な募集条件">
-        <ul>
-          <li>売上50％バック</li>
-          <li>即日全額現金日払い</li>
-          <li>勤務時間 10:00〜24:00</li>
-          <li>週1日から相談可能</li>
-          <li>応募資格 満20歳以上</li>
-          <li>未経験者歓迎</li>
-        </ul>
-        <p class="ssr-hero-disclaimer">※報酬は完全歩合制のため、適用条件や時間帯・来店状況によって変動します。</p>
       </div>
     </section>
 
@@ -176,30 +162,37 @@ function buildHomeNoscript(): string {
       <article>
         <section id="about">
           <h2>飛田ガールズとは？｜あなたらしく働ける場所を、一緒に見つけませんか。</h2>
-          <p>飛田ガールズは、大阪市西成区・飛田新地にある料亭直営の公式求人窓口です。外部のスカウト会社や仲介業者ではなく、お店による直接募集として紹介料・手数料は一切不要でご案内しています。</p>
-          <p>飛田新地全体の一般的なルール（満20歳以上・撮影禁止・お酒や営業連絡なし）と、飛田ガールズ独自の女性スタッフサポートを明確に区別してお伝えしています。<a href="/about">運営者情報・店舗体制を見る</a></p>
+          <p>飛田ガールズは、大阪・飛田新地の料亭直営の公式求人窓口です。初めてお仕事を考えている方、これまでの経験を活かしたい方、他店からの移籍を考えている方など、女性一人ひとりの希望や状況に合わせて丁寧にご案内します。</p>
+          <h3>飛田ガールズが大切にしている3つのこと</h3>
+          <ul>
+            <li>01｜正直で分かりやすい情報提供</li>
+            <li>02｜一人ひとりに合わせたサポート</li>
+            <li>03｜女性が落ち着いて働ける環境づくり</li>
+          </ul>
+          <p><a href="/about">運営者情報・店舗体制を見る</a></p>
         </section>
 
         <section id="reasons">
           <h2>飛田ガールズが選ばれる6つの理由</h2>
+          <p>立地の良さから、毎日の身だしなみや接客のサポートまで。飛田新地で働きたい女性が気持ちよく働ける環境づくりを大切にしています。</p>
           <ul>
-            <li>01. 集客力へのこだわり（安定したご案内を目指した店舗運営）</li>
-            <li>02. メイク・美容サポート（初めてでも相談できる身だしなみアドバイス）</li>
-            <li>03. 未経験から始められる丁寧なサポート（女性スタッフ・仲居によるフォロー）</li>
-            <li>04. いじめや派閥のない働きやすい環境（穏やかで落ち着きのある関係性）</li>
-            <li>05. 分かりやすい給与・待遇システム（売上50％バック・雑費天引きなし）</li>
-            <li>06. 顔出しなし・個人情報保護などのプライバシー配慮（WEB非掲載・源氏名勤務）</li>
+            <li>01. メイン通り・青春通りの好立地</li>
+            <li>02. ベテラン仲居さんによるトータルサポート（身だしなみ相談・ご案内・時間管理）</li>
+            <li>03. 衣装無料貸出・お店で保管（着物・ドレス・ワンピース無料、私服通勤可）</li>
+            <li>04. 快適に過ごせる女性専用待機スペース（冷暖房・空気清浄機・無料Wi-Fi・充電・荷物保管）</li>
+            <li>05. 清潔で落ち着いた店内環境（接客後の換気・リネン交換・衛生管理）</li>
+            <li>06. プライバシーを大切にした働き方（源氏名・顔写真掲載なし・連絡先交換や営業LINEなし）</li>
           </ul>
         </section>
 
         <section id="job">
           <h2>仕事内容・1日の流れ</h2>
-          <p>出勤からお仕度（無料貸出衣装）・玄関（上がり框）でのお迎え・2階個室でのおもてなし接客・退勤時の即日現金受け取りまでの流れをご案内します。お酒の飲酒やお客様との連絡先交換、過度な勧誘・強要はありません。<a href="/job">仕事内容の詳細を見る</a></p>
+          <p>出勤からお仕度（無料貸出衣装）・玄関（上がり框）でのお迎え・2階個室でのおもてなし接客・退勤時の即日現金受け取りまでの流れをご案内します。お酒の飲酒やお客様との連絡先交換はありません。<a href="/job">仕事内容の詳細を見る</a></p>
         </section>
 
         <section id="salary">
-          <h2>給料・報酬システム</h2>
-          <p>完全歩合制（売上50％バック・即日全額現金日払い）で、ロッカー代や更衣室代などの雑費天引きはありません（※収入は出勤時間帯や来店状況等により変動します）。<a href="/salary">給料システムの詳細を見る</a></p>
+          <h2>給与・報酬システム</h2>
+          <p>完全歩合制（売上50％バック・即日全額現金日払い）で計算式は（料金 － 仲居料1,000円）÷ 2。ロッカー代や更衣室代などの雑費天引きはありません（※収入は出勤時間帯や来店状況等により変動します）。<a href="/salary">給料システムの詳細を見る</a></p>
           <table border="1">
             <thead>
               <tr>
@@ -218,73 +211,101 @@ function buildHomeNoscript(): string {
           </table>
         </section>
 
-        <section id="workstyle">
-          <h2>あなたの希望に合った働き方を探してみませんか？（働き方・求人比較）</h2>
+        <section id="benefits">
+          <h2>待遇・福利厚生</h2>
           <ul>
-            <li><a href="/compare">あなたに合った働き方を、一緒に考えませんか？（働き方・求人比較一覧）</a></li>
-            <li><a href="/compare/beginner">未経験の方</a> / <a href="/compare/experienced">経験者の方</a> / <a href="/compare/20s">20代</a> / <a href="/compare/30s">30代</a> / <a href="/compare/40s">40代</a></li>
-            <li><a href="/compare/high-income">高収入を目指したい</a> / <a href="/compare/savings">貯金したい</a> / <a href="/compare/living-expenses">生活費を増やしたい</a> / <a href="/compare/target-income">目標金額を稼ぎたい</a></li>
-            <li><a href="/compare/one-day-week">週1日〜勤務</a> / <a href="/compare/short-time">短時間勤務</a> / <a href="/compare/daytime">昼勤務</a> / <a href="/compare/nighttime">夜勤務</a> / <a href="/compare/weekends">週末・土日のみ</a> / <a href="/compare/regular">レギュラー勤務</a> / <a href="/compare/short-term">短期・出稼ぎ</a></li>
-            <li><a href="/compare/student">学生</a> / <a href="/compare/office-worker">OL・会社員（Wワーク）</a> / <a href="/compare/freeter">フリーター</a> / <a href="/compare/housewife">主婦</a> / <a href="/compare/parenting">子育て・シングルマザー</a> / <a href="/compare/self-employed">個人事業主・フリーランス</a></li>
-            <li><a href="/compare/privacy">身バレ対策</a> / <a href="/compare/customer-service-anxiety">接客への不安</a> / <a href="/compare/returning">出戻り・ブランク</a> / <a href="/compare/transfer">他店・他業種から移籍</a> / <a href="/compare/consultation">相談のみ希望</a></li>
+            <li>01｜無料貸出衣装・店舗保管（私服通勤OK）</li>
+            <li>02｜メイク・美容アドバイス</li>
+            <li>03｜女性専用の控室・待機スペース（冷暖房・無料Wi-Fi完備）</li>
+            <li>04｜寮・遠方からの滞在ご相談（空き状況・条件は事前確認制）</li>
+            <li>05｜駅チカ立地・交通費サポート相談（条件事前案内）</li>
           </ul>
-          <p><a href="/site-compare">他業種との違い比較</a> / <a href="/glossary">用語集</a> / <a href="/blog">お仕事コラム一覧</a></p>
+        </section>
+
+        <section id="workstyle">
+          <h2>あなたに合った働き方を見つけませんか？（8つのタイプ別ガイド）</h2>
+          <ul>
+            <li><a href="/compare/beginner">01｜未経験から始めたい</a></li>
+            <li><a href="/compare/experienced">02｜他店・他業種から移りたい（経験者）</a></li>
+            <li><a href="/compare/high-income">03｜目標額や貯金をしっかり目指したい</a></li>
+            <li><a href="/compare/one-day-week">04｜週1日・土日のみで働きたい</a></li>
+            <li><a href="/compare/short-time">05｜短時間・Wワークで働きたい</a></li>
+            <li><a href="/compare/daytime">06｜昼間の時間帯を中心に働きたい</a></li>
+            <li><a href="/compare/privacy">07｜身バレ・プライバシーを最優先したい</a></li>
+            <li><a href="/dekasegi">08｜寮・遠方からの勤務を相談したい</a></li>
+          </ul>
+          <p><a href="/compare">働き方・求人比較一覧</a> / <a href="/site-compare">他業種との違い比較</a></p>
+        </section>
+
+        <section id="environment">
+          <h2>働く場所・設備をご紹介</h2>
+          <p>店舗の外観・玄関（上がり框）・待機室・お仕度スペース・2階和室・住環境案内について。街全体で撮影禁止ルールがあるため、実際の館内は私服見学で直接ご確認いただけます。</p>
         </section>
 
         <section id="voice">
-          <h2>働く女性のリアルな声</h2>
+          <h2>実際に働く女性の声</h2>
           <ul>
-            <li><strong>未経験スタート（22歳・週4日昼シフト）</strong>：仲居さんや女性スタッフが寄り添ってくれ、初日から全額日払いを受け取れたことで安心できました。</li>
-            <li><strong>学生・未経験（20歳・お酒NG）</strong>：お酒を飲む必要がなく、学業や試験スケジュールを優先しながら自分のペースで勤務しています。</li>
+            <li><strong>20代前半・未経験・週4日昼シフト</strong>：仲居さんが隣でサポートしてくれ、お酒や連絡先交換もなく落ち着いて働けています。</li>
+            <li><strong>20代前半・お酒NG・学業と両立</strong>：無料衣装と全額日払い制度のおかげで、無理なく自分のペースで両立しています。</li>
           </ul>
         </section>
 
+        <section id="support">
+          <h2>初めての方も、一人ひとりを丁寧にサポートします。</h2>
+          <p>応募前の相談／未経験者への事前説明／仲居さんによるサポート／衣装・身だしなみの相談／勤務開始後の相談の5つの体制を整えています。</p>
+        </section>
+
+        <section id="flow">
+          <h2>応募から体験入店・勤務開始まで</h2>
+          <p>01 LINEで無料相談 → 02 ご希望・条件確認 → 03 私服で見学・面接 → 04 書類確認・お仕度 → 05 1日体験入店（全額日払い） → 06 ご納得のうえ勤務開始。</p>
+        </section>
+
         <section id="requirements">
-          <h2>募集要項・アクセス</h2>
+          <h2>飛田ガールズの募集要項</h2>
           <table border="1">
             <tbody>
-              <tr><th>募集職種</th><td>料亭の接客スタッフ（大阪市西成区山王・飛田新地）</td></tr>
               <tr><th>応募資格</th><td>満20歳以上の女性（未経験・ブランク歓迎 ※20歳未満・高校生不可）</td></tr>
-              <tr><th>勤務時間</th><td>10:00〜24:00（選べる5大シフト制・週1日〜自由出勤）</td></tr>
-              <tr><th>必要書類</th><td>面接時は履歴書不要・私服OK／体験入店・勤務開始時は本籍地記載の住民票原本または有効期限内の日本国パスポート＋顔写真付き公的身分証明書必須</td></tr>
-              <tr><th>アクセス</th><td>Osaka Metro「動物園前駅」徒歩5分 / JR・南海「新今宮駅」徒歩7分 / 各線「天王寺駅・大阪阿部野橋駅」徒歩10分</td></tr>
+              <tr><th>募集窓口</th><td>飛田ガールズ（料亭直営の公式求人窓口・直接募集）</td></tr>
+              <tr><th>勤務時間</th><td>10:00〜24:00（自由出勤制・週1日〜相談可能）</td></tr>
+              <tr><th>必要書類</th><td>面接時は履歴書不要・私服OK／体験入店・勤務開始時は本籍地記載の住民票原本または日本国パスポート＋顔写真付き公的身分証明書</td></tr>
+              <tr><th>アクセス</th><td>Osaka Metro「動物園前駅」徒歩約5分 / JR・南海「新今宮駅」徒歩約7分 / 各線「天王寺駅・大阪阿部野橋駅」徒歩約10分</td></tr>
             </tbody>
           </table>
         </section>
 
         <section id="faq-preview">
-          <h2>応募前のよくある質問</h2>
+          <h2>よくある質問</h2>
           <dl>
             <dt>Q. 未経験でも応募できますか？</dt>
-            <dd>A. はい、在籍キャストの多くが未経験からスタートしています。女性スタッフが接客手順や準備を個別でお伝えします。</dd>
-            <dt>Q. お給料はその日に全額受け取れますか？</dt>
-            <dd>A. はい、完全歩合制（売上50％バック）で、退勤時にその日の分を全額現金でお渡しします。</dd>
-            <dt>Q. 身バレや顔写真のネット掲載はありますか？</dt>
-            <dd>A. WebやSNSへの顔写真掲載は行いません。完全源氏名・私服通勤でプライバシーに配慮しています。</dd>
+            <dd>A. はい、未経験からご応募いただけます。女性スタッフが事前説明や仲居さんのフォロー体制まで丁寧にお伝えします。</dd>
+            <dt>Q. 報酬はいつもらえますか？</dt>
+            <dd>A. 完全歩合制（売上50％バック）で、退勤時にその日の分を全額現金でお渡しします。</dd>
+            <dt>Q. 顔出しやネットへの写真掲載はありますか？</dt>
+            <dd>A. WebやSNSへの顔写真掲載は一切行いません。完全源氏名・私服通勤でプライバシーに配慮しています。</dd>
           </dl>
-          <p><a href="/faq">よくある質問（全${FAQ_100_LIST.length}問）をすべて見る</a></p>
+          <p><a href="/faq">よくある質問（全${FAQ_100_LIST.length}問）を見る</a></p>
         </section>
 
         <section id="consultation">
-          <h2>応募からお仕事開始まで・LINE無料相談</h2>
-          <p>①LINEで無料相談 → ②ご希望・条件の確認 → ③私服で見学・ご説明 → ④必要書類確認・お仕度 → ⑤1日体験入店（全額日払い） → ⑥ご納得のうえ開始。相談無料・24時間受付（営業時間10:00〜24:00 順次返信）。</p>
+          <h2>まずはLINEで気軽に相談してみませんか？</h2>
+          <p>相談のみでも歓迎・見学予約や仕事内容の確認も可能（満20歳以上・高校生不可）。LINEメッセージ受付：24時間 ／ スタッフ返信時間：10:00〜24:00。</p>
         </section>
 
         <section id="recruit-guide">
-          <h2>テーマ別の詳細ガイド・関連ページ</h2>
+          <h2>飛田新地求人｜知りたい情報から探せる詳細ガイド</h2>
           <ul>
-            <li><a href="/job">01｜仕事内容を詳しく見る</a></li>
-            <li><a href="/salary">02｜お給料・報酬の仕組みを見る</a></li>
-            <li><a href="/beginner">03｜未経験者向けガイドを見る</a></li>
-            <li><a href="/experienced">04｜経験者向けガイドを見る</a></li>
-            <li><a href="/requirements">05｜募集要項・採用条件を見る</a></li>
-            <li><a href="/flow">06｜面接・体験入店の流れを見る</a></li>
-            <li><a href="/workstyle">07｜自由な働き方について見る</a></li>
-            <li><a href="/shops">08｜通り別の特徴と直営店を見る</a></li>
-            <li><a href="/dekasegi">09｜寮・出稼ぎ情報を見る</a></li>
-            <li><a href="/safety">10｜身バレ・安全対策を見る</a></li>
-            <li><a href="/faq">11｜よくある質問（全${FAQ_100_LIST.length}問）を見る</a></li>
-            <li><a href="/blog">12｜お仕事コラム一覧を見る</a></li>
+            <li><a href="/job">01｜仕事内容</a></li>
+            <li><a href="/salary">02｜給料・待遇</a></li>
+            <li><a href="/beginner">03｜未経験</a></li>
+            <li><a href="/experienced">04｜経験者</a></li>
+            <li><a href="/requirements">05｜募集要項</a></li>
+            <li><a href="/flow">06｜面接・体験入店</a></li>
+            <li><a href="/workstyle">07｜働き方</a></li>
+            <li><a href="/shops">08｜お店選び</a></li>
+            <li><a href="/dekasegi">09｜寮・出稼ぎ</a></li>
+            <li><a href="/safety">10｜プライバシー対策</a></li>
+            <li><a href="/faq">11｜よくある質問（全${FAQ_100_LIST.length}問）</a></li>
+            <li><a href="/blog">12｜お仕事コラム</a></li>
           </ul>
         </section>
       </article>
@@ -345,6 +366,8 @@ function buildHomeJsonLd(): string {
             '#reasons',
             '#job',
             '#salary',
+            '#benefits',
+            '#support',
             '#voice'
           ]
         }

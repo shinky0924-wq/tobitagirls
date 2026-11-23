@@ -7,6 +7,7 @@ import { MouseEvent, useState, useEffect } from 'react';
 import LucideIcon from './LucideIcon';
 import { getStoredSiteContent } from '../siteContent';
 import { FAQ_LAST_UPDATED } from '../faq100Data';
+import { LINE_OFFICIAL_URL } from '../data';
 
 interface FooterProps {
   currentTab: string;
@@ -18,8 +19,13 @@ interface FooterProps {
   isAdminMode?: boolean;
 }
 
-export default function Footer({ currentTab, onChangeTab, onScrollToSection, onOpenAdmin, onNavigateCompare, onNavigateTopic, isAdminMode }: FooterProps) {
-  const [showAdminLink, setShowAdminLink] = useState(false);
+export default function Footer({
+  onChangeTab,
+  onScrollToSection,
+  onOpenAdmin,
+  onNavigateCompare,
+  onNavigateTopic,
+}: FooterProps) {
   const [activeModal, setActiveModal] = useState<'policy' | 'company' | null>(null);
   const siteContent = getStoredSiteContent();
   const lastUpdated = siteContent.lastUpdated || FAQ_LAST_UPDATED;
@@ -29,58 +35,43 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
       const params = new URLSearchParams(window.location.search);
       if (params.get('creator') === 'tobita' || params.get('admin') === 'true') {
         localStorage.setItem('show_admin_portal', 'true');
-        setShowAdminLink(true);
-      } else if (localStorage.getItem('show_admin_portal') === 'true') {
-        setShowAdminLink(true);
       }
-    } catch (e) {
-      console.warn('localStorage or window.location not accessible', e);
+    } catch {
+      // ignore storage errors
     }
   }, []);
 
   const navLinks = [
-    { name: '飛田ガールズとは', action: 'section', target: '/#about' },
+    { name: '飛田ガールズの3つのお約束', action: 'section', target: '/#about' },
     { name: '選ばれる6つの理由', action: 'section', target: '/#reasons' },
     { name: '仕事内容・1日の流れ', action: 'section', target: '/#job' },
-    { name: '給料・報酬システム', action: 'section', target: '/#salary' },
-    { name: '働く環境・設備紹介', action: 'section', target: '/#environment' },
+    { name: '給与・報酬システム', action: 'section', target: '/#salary' },
+    { name: '待遇・福利厚生', action: 'section', target: '/#benefits' },
+    { name: 'タイプ別・働き方ガイド', action: 'section', target: '/#workstyle' },
+    { name: '働く場所・設備紹介', action: 'section', target: '/#environment' },
+    { name: '実際に働く女性の声', action: 'section', target: '/#voice' },
+    { name: 'サポート体制', action: 'section', target: '/#support' },
+    { name: '応募〜勤務開始の流れ', action: 'section', target: '/#flow' },
     { name: '募集要項・アクセス', action: 'section', target: '/#requirements' },
-    { name: '働く女性のリアルな声', action: 'section', target: '/#voice' },
-    { name: '応募前のFAQ（全119問）', action: 'faq', target: '/faq' },
-    { name: 'お仕事コラム一覧', action: 'blog', target: '/blog' },
-    { name: '目的・働き方別求人ガイド', action: 'compare', target: '/compare' },
-    { name: '他業種・サイト徹底比較', action: 'site-compare', target: '/site-compare' },
-    { name: '運営者情報・店舗体制', action: 'about', target: '/about' },
+    { name: 'よくある質問（全119問）', action: 'faq', target: '/faq' },
   ];
 
   const targetCategoryLinks = [
-    { name: '未経験', slug: 'beginner' },
+    { name: '未経験から始めたい', slug: 'beginner' },
     { name: '経験者・移籍', slug: 'experienced' },
-    { name: 'ガッツリ高収入', slug: 'high-income' },
-    { name: '週1日〜', slug: 'one-day-week' },
-    { name: '出稼ぎ', slug: 'short-term' },
-    { name: 'Wワーク', slug: 'office-worker' },
-    { name: '20代', slug: '20s' },
-    { name: '30代', slug: '30s' },
-    { name: '40代', slug: '40s' },
+    { name: '目標額・貯金を目指したい', slug: 'high-income' },
+    { name: '週1日・土日のみ', slug: 'one-day-week' },
+    { name: '短時間・Wワーク', slug: 'short-time' },
+    { name: '昼シフト中心', slug: 'daytime' },
+    { name: '身バレ・プライバシー配慮', slug: 'privacy' },
+    { name: '寮・遠方からの相談', slug: 'short-term' },
+    { name: '働き方・求人比較一覧', slug: '' },
   ];
 
   const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>, link: typeof navLinks[0]) => {
     e.preventDefault();
 
-    if (link.action === 'site-compare') {
-      onChangeTab('site-compare');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (link.action === 'compare') {
-      onChangeTab('compare');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (link.action === 'blog') {
-      onChangeTab('blog');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (link.action === 'about') {
-      onChangeTab('about');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (link.action === 'faq') {
+    if (link.action === 'faq') {
       onChangeTab('faq');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (link.action === 'section' && link.target) {
@@ -93,7 +84,7 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
   const handleCategoryLinkClick = (e: MouseEvent<HTMLAnchorElement>, slug?: string) => {
     e.preventDefault();
     if (onNavigateCompare) {
-      onNavigateCompare(slug);
+      onNavigateCompare(slug || undefined);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       if (typeof window !== 'undefined') {
@@ -106,22 +97,20 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
   };
 
   return (
-    <footer className="bg-surface-container-low border-t border-outline-variant pt-16 pb-8" id="app-footer">
+    <footer className="bg-surface-container-low border-t border-outline-variant pt-14 pb-8" id="app-footer">
       <div className="max-w-[1160px] mx-auto px-6">
-        
         {/* Upper footer grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          
           {/* Col 1: Logo & Operational Info */}
           <div className="space-y-4">
             <div className="space-y-1">
               <div className="text-xs font-bold text-on-surface-variant/80 uppercase tracking-wider">
-                飛田新地料亭直営求人・公式採用窓口
+                飛田新地 料亭直営の公式求人窓口
               </div>
-              <div className="font-display font-extrabold text-xl text-secondary flex items-center gap-2.5 pb-2">
+              <div className="font-display font-extrabold text-xl text-secondary flex items-center gap-2.5 pb-1">
                 <img
                   src="/favicon.png"
-                  alt="Tobita Girls Icon"
+                  alt="飛田ガールズ アイコン"
                   className="w-7 h-7 rounded-full object-cover border border-rose-200 shadow-xs"
                   referrerPolicy="no-referrer"
                 />
@@ -129,12 +118,24 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
               </div>
             </div>
             <p className="font-sans text-xs text-on-surface-variant leading-loose">
-              LINE相談：24時間受付（店舗営業時間：10:00〜24:00）<br />
-              アクセス：大阪府大阪市西成区山王（飛田新地料理組合加盟料亭）
+              LINEメッセージ受付：24時間<br />
+              スタッフ返信時間：10:00〜24:00<br />
+              所在地：大阪府大阪市西成区山王（飛田新地料理組合加盟料亭）
             </p>
-            <div className="flex items-center gap-2 text-[11px] text-gray-500 font-mono bg-white p-2.5 rounded-xl border border-rose-100/60 inline-flex">
+            <div>
+              <a
+                href={LINE_OFFICIAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-2xs transition-colors"
+              >
+                <LucideIcon name="MessageCircle" size={15} />
+                <span>LINEで無料相談する</span>
+              </a>
+            </div>
+            <div className="inline-flex items-center gap-2 text-[11px] text-on-surface-variant font-mono bg-white p-2.5 rounded-xl border border-outline-variant/80">
               <LucideIcon name="CalendarCheck" size={13} className="text-secondary" />
-              <span>サイト最終更新日：{lastUpdated}</span>
+              <span>サイト更新日：{lastUpdated}</span>
             </div>
           </div>
 
@@ -142,12 +143,12 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
           <div className="space-y-4">
             <h2 className="font-display font-bold text-on-surface text-sm uppercase tracking-wider flex items-center gap-1.5">
               <LucideIcon name="Layers" size={15} className="text-secondary" />
-              <span>サイト内リンク</span>
+              <span>トップページ目次</span>
             </h2>
-            <ul className="space-y-2 font-sans text-xs md:text-sm">
+            <ul className="space-y-2 font-sans text-xs md:text-[13px]">
               {navLinks.map((link) => (
                 <li key={link.name}>
-                  <a 
+                  <a
                     href={link.target || '#'}
                     onClick={(e) => handleLinkClick(e, link)}
                     className="text-on-surface-variant hover:text-secondary hover:underline transition-all block"
@@ -159,25 +160,24 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
             </ul>
           </div>
 
-          {/* Col 3: 自分に合うものはどれ？ */}
+          {/* Col 3: Type Guides */}
           <div className="space-y-4">
             <h2 className="font-display font-bold text-on-surface text-sm uppercase tracking-wider">
               <a
                 href="/compare"
                 onClick={(e) => handleCategoryLinkClick(e)}
                 className="hover:text-secondary flex items-center gap-1.5 transition-colors group cursor-pointer"
-                title="自分に合うものはどれ？｜働き方・求人比較ガイドへ"
               >
                 <LucideIcon name="Target" size={15} className="text-secondary" />
-                <span className="group-hover:underline">自分に合うものはどれ？</span>
-                <LucideIcon name="ChevronRight" size={13} className="text-zinc-400 group-hover:text-secondary transition-transform group-hover:translate-x-0.5" />
+                <span className="group-hover:underline">タイプ別・働き方ガイド</span>
+                <LucideIcon name="ChevronRight" size={13} className="text-on-surface-variant group-hover:text-secondary transition-transform group-hover:translate-x-0.5" />
               </a>
             </h2>
-            <ul className="space-y-2 font-sans text-xs md:text-sm">
+            <ul className="space-y-2 font-sans text-xs md:text-[13px]">
               {targetCategoryLinks.map((cat) => (
-                <li key={cat.slug}>
-                  <a 
-                    href={`/compare/${cat.slug}`}
+                <li key={cat.name}>
+                  <a
+                    href={cat.slug ? `/compare/${cat.slug}` : '/compare'}
                     onClick={(e) => handleCategoryLinkClick(e, cat.slug)}
                     className="text-on-surface-variant hover:text-secondary hover:underline transition-all block"
                   >
@@ -188,16 +188,16 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
             </ul>
           </div>
 
-          {/* Col 4: E-E-A-T & Editorial / Compliance Info */}
+          {/* Col 4: Operator & Policy Info */}
           <div className="space-y-4">
             <h2 className="font-display font-bold text-on-surface text-sm uppercase tracking-wider flex items-center gap-1.5">
               <LucideIcon name="ShieldCheck" size={15} className="text-secondary" />
-              <span>求人掲載基準・運営方針</span>
+              <span>運営情報・プライバシーポリシー</span>
             </h2>
             <p className="font-sans text-xs text-on-surface-variant leading-relaxed">
-              当サイト「飛田ガールズ」は、外部の紹介所や仲介業者ではなく、飛田新地の料理組合加盟料亭が直接運営する公式求人窓口です。お店スタッフによる直接採用のため不当な紹介手数料や天引きは一切なく、売上50%バック即日日払い、完全なプライバシー保護・身バレ防止を徹底しております。
+              当サイト「飛田ガールズ」は、外部の紹介業者ではなく、飛田新地の料理組合加盟料亭が直接運営する公式求人窓口です。満20歳以上限定の法令遵守と個人情報保護を徹底しています。
             </p>
-            <div className="flex flex-col gap-2 pt-1 text-xs">
+            <div className="flex flex-col gap-2.5 pt-1 text-xs">
               <a
                 href="/about"
                 onClick={(e) => {
@@ -205,11 +205,27 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
                   onChangeTab('about');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="text-left text-secondary font-bold hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-left text-secondary font-bold hover:underline flex items-center gap-1.5 cursor-pointer"
               >
-                <LucideIcon name="ShieldCheck" size={13} />
+                <LucideIcon name="Building2" size={13} />
                 <span>運営者情報・店舗体制</span>
               </a>
+              <button
+                type="button"
+                onClick={() => setActiveModal('company')}
+                className="text-left text-secondary font-bold hover:underline flex items-center gap-1.5 cursor-pointer"
+              >
+                <LucideIcon name="Lock" size={13} />
+                <span>プライバシーポリシー（個人情報保護）</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveModal('policy')}
+                className="text-left text-secondary font-bold hover:underline flex items-center gap-1.5 cursor-pointer"
+              >
+                <LucideIcon name="FileCheck" size={13} />
+                <span>求人情報掲載ポリシーと安全規約</span>
+              </button>
               <a
                 href="/glossary"
                 onClick={(e) => {
@@ -217,48 +233,40 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
                   onChangeTab('glossary');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="text-left text-secondary font-bold hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-left text-secondary font-bold hover:underline flex items-center gap-1.5 cursor-pointer"
               >
                 <LucideIcon name="BookOpen" size={13} />
                 <span>飛田新地 用語集・用語辞典</span>
               </a>
-              <button
-                onClick={() => setActiveModal('policy')}
-                className="text-left text-secondary font-bold hover:underline flex items-center gap-1 cursor-pointer"
-              >
-                <LucideIcon name="FileCheck" size={13} />
-                <span>求人情報掲載ポリシーと安全規約</span>
-              </button>
             </div>
           </div>
-
         </div>
 
-        {/* Topic Cluster Spoke Directory (SEO & LLMO Core Reciprocal Linking) */}
-        <div className="py-6 border-t border-rose-100/60 mb-8">
+        {/* Topic Cluster Directory */}
+        <div className="py-6 border-t border-outline-variant/70 mb-6">
           <div className="flex items-center gap-2 mb-3">
             <LucideIcon name="Compass" size={15} className="text-secondary" />
             <h2 className="font-display font-bold text-on-surface text-xs uppercase tracking-wider">
-              飛田新地求人 総合ガイド・特集一覧
+              飛田新地求人 詳細ガイド一覧
             </h2>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 text-xs">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 text-xs">
             {[
-              { id: 'job', name: '🍵 お仕事内容', path: '/job' },
-              { id: 'salary', name: '💰 給料・待遇', path: '/salary' },
-              { id: 'beginner', name: '🔰 未経験スタート', path: '/beginner' },
-              { id: 'experienced', name: '👑 経験者・移籍', path: '/experienced' },
-              { id: 'requirements', name: '📋 募集要項', path: '/requirements' },
-              { id: 'flow', name: '🌸 面接・体入の流れ', path: '/flow' },
-              { id: 'workstyle', name: '⏰ 自由な働き方', path: '/workstyle' },
-              { id: 'shops', name: '🏮 お店選び・通り比較', path: '/shops' },
-              { id: 'dorm', name: '🏠 個室寮・出稼ぎ', path: '/dekasegi' },
-              { id: 'safety', name: '🤫 身バレ・安全管理', path: '/safety' },
-              { id: 'faq', name: '💡 よくある質問 (119問)', path: '/faq' },
-              { id: 'compare', name: '🎯 目的・働き方別求人', path: '/compare' },
-              { id: 'site-compare', name: '⚖️ 飛田新地求人サイト徹底比較', path: '/site-compare' },
-              { id: 'glossary', name: '📖 専門用語集', path: '/glossary' },
-              { id: 'blog', name: '📚 お仕事コラム (128本)', path: '/blog' },
+              { id: 'job', name: '仕事内容', path: '/job' },
+              { id: 'salary', name: '給料・待遇', path: '/salary' },
+              { id: 'beginner', name: '未経験スタート', path: '/beginner' },
+              { id: 'experienced', name: '経験者・移籍', path: '/experienced' },
+              { id: 'requirements', name: '募集要項', path: '/requirements' },
+              { id: 'flow', name: '面接・体入の流れ', path: '/flow' },
+              { id: 'workstyle', name: '自由な働き方', path: '/workstyle' },
+              { id: 'shops', name: 'お店選び・通り比較', path: '/shops' },
+              { id: 'dorm', name: '寮・出稼ぎ相談', path: '/dekasegi' },
+              { id: 'safety', name: '身バレ・安全対策', path: '/safety' },
+              { id: 'faq', name: 'よくある質問', path: '/faq' },
+              { id: 'compare', name: '働き方比較', path: '/compare' },
+              { id: 'site-compare', name: '他業種との違い比較', path: '/site-compare' },
+              { id: 'glossary', name: '専門用語集', path: '/glossary' },
+              { id: 'blog', name: 'お仕事コラム', path: '/blog' },
             ].map((topic) => (
               <a
                 key={topic.id}
@@ -284,10 +292,10 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
                     onNavigateTopic(topic.id);
                   } else {
                     onChangeTab('recruit');
-                    onScrollToSection('recruit-hub');
+                    onScrollToSection('recruit-guide');
                   }
                 }}
-                className="p-2 rounded-xl bg-white hover:bg-rose-50 border border-gray-200/70 hover:border-rose-300 text-zinc-700 hover:text-rose-700 font-medium transition-colors block text-center truncate"
+                className="p-2.5 rounded-xl bg-white hover:bg-surface border border-outline-variant hover:border-primary/40 text-on-surface hover:text-primary font-medium transition-colors block text-center truncate"
               >
                 {topic.name}
               </a>
@@ -295,65 +303,72 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
           </div>
         </div>
 
-
         {/* Lower copyright & Admin link */}
-        <div className="pt-8 border-t border-rose-100/40 flex flex-col sm:flex-row justify-between items-center gap-4 text-center">
-          <p className="font-sans text-xs text-on-surface-variant opacity-60">
-            © Tobita Girls All Rights Reserved. 飛田ガールズ（料亭直営採用窓口）
+        <div className="pt-6 border-t border-outline-variant/60 flex flex-col sm:flex-row justify-between items-center gap-4 text-center">
+          <p className="font-sans text-xs text-on-surface-variant">
+            © Tobita Girls All Rights Reserved. 飛田ガールズ（料亭直営公式求人窓口）
           </p>
-          <button 
+          <button
+            type="button"
             onClick={onOpenAdmin}
-            className="text-xs text-on-surface-variant opacity-50 hover:opacity-100 hover:text-secondary transition-all cursor-pointer flex items-center gap-1 font-mono"
+            className="text-xs text-on-surface-variant/70 hover:text-secondary transition-all cursor-pointer flex items-center gap-1 font-mono"
             id="footer-admin-btn"
           >
             <LucideIcon name="Lock" size={12} />
-            管理者画面（コラム追加・管理）
+            管理者画面
           </button>
         </div>
-
       </div>
 
       {/* Policy Modal */}
       {activeModal === 'policy' && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full max-h-[80vh] overflow-y-auto shadow-2xl border border-rose-100">
-            <div className="flex items-center justify-between pb-4 border-b border-rose-100 mb-4">
-              <h4 className="font-display font-bold text-base text-gray-900 flex items-center gap-2">
+          <div className="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full max-h-[80vh] overflow-y-auto shadow-2xl border border-outline-variant">
+            <div className="flex items-center justify-between pb-4 border-b border-outline-variant mb-4">
+              <h4 className="font-display font-bold text-base text-on-surface flex items-center gap-2">
                 <LucideIcon name="FileCheck" className="text-secondary" size={18} />
                 求人情報掲載ポリシーと安全規約
               </h4>
-              <button onClick={() => setActiveModal(null)} className="text-gray-400 hover:text-gray-600 p-1">
+              <button type="button" onClick={() => setActiveModal(null)} className="text-on-surface-variant hover:text-on-surface p-1 cursor-pointer">
                 <LucideIcon name="X" size={18} />
               </button>
             </div>
-            <div className="text-xs text-gray-700 space-y-3 leading-relaxed font-sans">
-              <p><strong>1. 法令遵守と健全性の徹底（20歳以上完全限定）</strong><br />料理組合規約およびコンプライアンス管理に基づき、20歳未満（18歳・19歳・高校生含む）の就労を固く禁じております（※2022年の成人年齢引き下げ後も20歳未満不可を徹底）。本籍地記載の住民票原本等による厳正な身分証確認を行い、違法行為・反社会的勢力との関わりを一切排除しています。</p>
-              <p><strong>2. 嘘や誇大広告の禁止と、正しい情報の掲載</strong><br />当サイトの掲載情報は、お店の女性採用スタッフが直接確認した実際の募集条件をもとに作成しています。「誰でも日給30万円」などの誇大表記は行わず、料亭組合規約に基づいた正確な給与計算（売上50%バック即日全額日払い）と現場のリアルな実態をそのまま掲載し、条件変更時は随時更新を行っています。</p>
-              <p><strong>3. ノルマ・天引きの禁止</strong><br />指名ノルマ・同伴ペナルティ・不当な衣装代などの天引きは一切行っておりません。</p>
+            <div className="text-xs text-on-surface-variant space-y-3 leading-relaxed font-sans">
+              <p>
+                <strong className="text-on-surface">1. 法令遵守と満20歳以上限定の徹底</strong><br />
+                料理組合規約および関連法令に基づき、満20歳未満および高校生の就労を固く禁じております。体験入店・勤務開始時には、本籍地記載の住民票原本または日本国パスポート等による厳正な年齢確認を行っています。
+              </p>
+              <p>
+                <strong className="text-on-surface">2. 誇大表記の禁止と正確な条件掲載</strong><br />
+                収入を固定で保証するような誇大表記は行わず、完全歩合制の計算式（売上50％バック・退勤時全額現金日払い）と適用条件を明確に掲載しています。
+              </p>
+              <p>
+                <strong className="text-on-surface">3. ノルマ・不当な天引きの禁止</strong><br />
+                指名ノルマ・売上罰金・ロッカー代や衣装代などの不当な雑費天引きは一切行っておりません。
+              </p>
             </div>
           </div>
         </div>
       )}
 
-      {/* Company / Privacy Modal */}
+      {/* Privacy Policy & Operator Modal */}
       {activeModal === 'company' && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full max-h-[80vh] overflow-y-auto shadow-2xl border border-rose-100">
-            <div className="flex items-center justify-between pb-4 border-b border-rose-100 mb-4">
-              <h4 className="font-display font-bold text-base text-gray-900 flex items-center gap-2">
-                <LucideIcon name="ShieldCheck" className="text-secondary" size={18} />
-                運営者情報・プライバシー保護体制
+          <div className="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full max-h-[80vh] overflow-y-auto shadow-2xl border border-outline-variant">
+            <div className="flex items-center justify-between pb-4 border-b border-outline-variant mb-4">
+              <h4 className="font-display font-bold text-base text-on-surface flex items-center gap-2">
+                <LucideIcon name="Lock" className="text-secondary" size={18} />
+                プライバシーポリシー・運営者情報
               </h4>
-              <button onClick={() => setActiveModal(null)} className="text-gray-400 hover:text-gray-600 p-1">
+              <button type="button" onClick={() => setActiveModal(null)} className="text-on-surface-variant hover:text-on-surface p-1 cursor-pointer">
                 <LucideIcon name="X" size={18} />
               </button>
             </div>
-            <div className="text-xs text-gray-700 space-y-3 leading-relaxed font-sans">
-              <p><strong>運営組織：</strong>飛田新地料亭 店舗採用・女性サポートチーム（直営公式窓口）</p>
-              <p><strong>店舗所在地：</strong>大阪府大阪市西成区山王（飛田新地料理組合加盟料亭）</p>
-              <p><strong>求人責任者：</strong>女性サポート統括担当 さくら（歴8年） / 採用マネージャー 木村（歴12年）</p>
-              <p><strong>個人情報保護：</strong>ご相談・ご応募時のLINE情報や個人情報は、店舗見学・面接連絡にのみ厳重に使用し、第三者への開示・販売は一切行いません。</p>
-              <p><strong>身バレ防止対策：</strong>Webサイト・SNS等への写真掲載は全面禁止されており一切行われません。</p>
+            <div className="text-xs text-on-surface-variant space-y-3 leading-relaxed font-sans">
+              <p><strong className="text-on-surface">運営窓口：</strong>飛田ガールズ（飛田新地料理組合加盟 料亭直営求人窓口）</p>
+              <p><strong className="text-on-surface">所在地：</strong>大阪府大阪市西成区山王（飛田新地）</p>
+              <p><strong className="text-on-surface">個人情報の利用目的：</strong>LINEでのご相談やお問い合わせ、見学・面接日程のご連絡、法令に基づくご本人確認および店舗管理にのみ使用し、ご本人の同意なく第三者へ開示・提供することはありません。</p>
+              <p><strong className="text-on-surface">プライバシー保護方針：</strong>WebサイトやSNS等への顔写真掲載は行わず、エリア全体の撮影禁止ルールおよび完全源氏名での勤務を徹底しています。</p>
             </div>
           </div>
         </div>
@@ -361,4 +376,3 @@ export default function Footer({ currentTab, onChangeTab, onScrollToSection, onO
     </footer>
   );
 }
-

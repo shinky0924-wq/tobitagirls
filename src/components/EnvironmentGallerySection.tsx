@@ -10,126 +10,142 @@ interface EnvironmentGallerySectionProps {
   onNavigatePath?: (path: string) => void;
 }
 
-const ENVIRONMENT_SPACES = [
+interface FacilityItem {
+  number: string;
+  tag: string;
+  title: string;
+  imageUrl: string;
+  imageAlt: string;
+  description: string;
+  points: string[];
+}
+
+const FACILITY_ITEMS: FacilityItem[] = [
   {
-    id: 'ryotei-exterior',
+    number: '01',
     tag: '店舗外観',
-    title: '伝統的な和風料亭の落ち着いた外観',
+    title: '落ち着いた和風料亭の店構え',
     imageUrl: '/images/env_ryotei_exterior_1795342437929.jpg',
-    imageAlt: '飛田新地の伝統的な和風料亭の落ち着いた外観（イメージ画像）',
+    imageAlt: '飛田新地の落ち着いた和風料亭の店構え（イメージ画像）',
     description:
-      '飛田新地の街並みに馴染む、清潔感のある純和風の料亭構えです。暖簾や柔らかな照明が落ち着いた雰囲気をつくり、女性も安心して出入りしやすい環境を整えています。',
-    points: ['街並みに馴染む上品な和風構え', 'プライバシーに配慮した出入り動線', '外観や立地も私服見学で確認可能'],
+      '飛田新地の街並みに馴染む純和風の料亭構えです。暖簾と柔らかな玄関照明で落ち着いた雰囲気を整えており、私服での見学時にも立地や外観をお確かめいただけます。',
+    points: ['和風の落ち着いた外観と清潔感', 'プライバシーに配慮した出入り動線', '私服見学で周辺環境も確認可能'],
   },
   {
-    id: 'entrance-greeting',
-    tag: 'お店の玄関',
-    title: '仲居さん（おばちゃん）と迎える玄関スペース',
+    number: '02',
+    tag: '玄関（上がり框）',
+    title: '仲居さんと迎える玄関スペース',
     imageUrl: '/images/env_entrance_greeting_clean_1795342452336.jpg',
     imageAlt: '料亭の玄関（上がり框）で女性が座り、仲居スタッフ（おばちゃん）が隣で呼び込み・ご案内している様子（イメージ画像）',
     description:
-      '玄関（上がり框）では女性が一人にならず、経験豊富な仲居スタッフ（おばちゃん）がすぐ隣に立ち、笑顔での呼び込みやお客様対応をサポートします。',
-    points: ['仲居さんが隣で呼び込み・声掛けを担当', '困ったときもすぐ相談できる距離感', '無理な客引きや一人対応はなし'],
+      '玄関（上がり框）は女性が一人にならず、経験豊富な仲居スタッフ（おばちゃん）がすぐ隣に立ち、笑顔でのお声がけやご案内を行う場です。',
+    points: ['仲居さんが隣で呼び込みを担当', '初めてでも一人きりで対応しない体制', '困った時はその場で相談が可能'],
   },
   {
-    id: 'waiting-room',
+    number: '03',
     tag: '待機室・控室',
-    title: '冷暖房・Wi-Fi完備の女性専用待機スペース',
+    title: '冷暖房・Wi-Fi完備の女性専用控室',
     imageUrl: '/images/home_env_waiting_room_1795337038357.jpg',
     imageAlt: '飛田新地の料亭内にある落ち着いた女性専用待機室の雰囲気（イメージ画像）',
     description:
-      '接客の合間や休憩時間に、スマートフォンを見たり飲み物を飲んだりしてリラックスできる空間を整えています。冷暖房や無料Wi-Fi、お荷物をしまえるスペースも備えています。',
-    points: ['冷暖房・空気清浄機完備', '無料Wi-Fi・充電環境あり', '休憩や軽食も自分のペースで可能'],
+      '接客の合間や休憩時間にリラックスできる女性専用スペースです。冷暖房・無料Wi-Fi・充電環境・お荷物をしまえるスペースを整えています。',
+    points: ['冷暖房・無料Wi-Fi・充電設備', '私物を安心して置ける保管スペース', 'ロッカー代などの雑費徴収なし'],
   },
   {
-    id: 'dressing-room',
-    tag: 'お支度・衣装',
-    title: '無料貸出衣装と清潔なメイクルーム',
+    number: '04',
+    tag: 'お仕度・衣装',
+    title: '無料貸出衣装とお仕度スペース',
     imageUrl: '/images/home_env_dressing_room_1795337038246.jpg',
     imageAlt: '清潔な鏡と照明を備えたお支度スペース・化粧室の雰囲気（イメージ画像）',
     description:
-      '着物や浴衣、ワンピース、コスチュームなど働くための衣装は店舗側で無料貸出しています。ご自宅への持ち帰りは不要で、私服のまま手ぶら感覚で通勤できます。',
-    points: ['衣装無料貸出（購入費0円）', '衣装は店舗保管・洗濯対応', '明るい鏡台・ドライヤー等を用意'],
+      '着物・浴衣・ワンピース・コスチュームなど働く際の衣装は店舗で無料レンタル・保管しています。明るい鏡台やドライヤー等を備え、私服で通勤できます。',
+    points: ['衣装の無料貸出・洗濯店舗管理', '明るい鏡・ドライヤー・小物用意', '持ち帰り荷物が少なく私服通勤OK'],
   },
   {
-    id: 'tatami-room',
-    tag: '接客のお部屋・衛生管理',
-    title: '清潔を保った和室と衛生消耗品の常備',
+    number: '05',
+    tag: '2階和室・衛生管理',
+    title: '清潔を保った和室と衛生用品の常備',
     imageUrl: '/images/home_env_tatami_room_1795337038151.jpg',
     imageAlt: '清潔感のある和室のお部屋と照明の雰囲気（イメージ画像）',
     description:
-      'お客様をご案内する2階の個室は、お見送りのたびに仲居スタッフと協力して丁寧に換気・清掃・リネン交換を行います。衛生用品やタオル類も店舗で十分に準備しています。',
-    points: ['毎回の換気・リネン交換を徹底', '衛生消耗品・タオル等を店舗完備', '仲居スタッフによる安全見守り'],
+      'お客様をご案内する2階の個室は、お見送りのたびに仲居スタッフと連携して換気・清掃・シーツ等の交換を実施。衛生消耗品やタオル類も店舗で十分準備しています。',
+    points: ['お見送りごとの換気とリネン交換', '衛生消耗品・タオル等を店舗完備', '仲居スタッフによる時間管理と見守り'],
   },
   {
-    id: 'private-dorm',
-    tag: '寮環境',
-    title: 'プライバシーを守れる清潔なワンルーム個室寮',
+    number: '06',
+    tag: '住環境・寮',
+    title: '遠方・滞在希望向けの住環境案内',
     imageUrl: '/images/env_private_dorm_1795342438320.jpg',
     imageAlt: '清潔感のある女性向けワンルーム個室寮の内装（イメージ画像）',
     description:
-      '遠方からの短期出稼ぎや一人暮らしを希望される方向けに、個室タイプの住環境をご相談いただけます。間取りや利用料・入居条件は時期や空き状況により異なるため事前確認を行っています。',
-    points: ['プライバシーを保てる個室タイプ相談可', '家具・家電の有無は物件ごとに事前案内', '空き状況・費用・交通費条件をLINEで確認'],
+      '遠方から短期間・長期間お越しになる方には、プライバシーを保てる個室タイプの寮や滞在先のご案内も行っています。条件や空き状況は時期により事前確認いたします。',
+    points: ['個室タイプの滞在環境をご相談可能', '設備・利用料は物件ごとに事前開示', '交通費サポート条件も応募前に案内'],
   },
 ];
 
 export default function EnvironmentGallerySection(_props: EnvironmentGallerySectionProps) {
-
   return (
     <section
       id="environment"
-      className="py-16 sm:py-24 bg-white border-b border-outline-variant/60"
+      className="py-16 md:py-24 bg-white border-b border-outline-variant/60"
       aria-labelledby="environment-heading"
     >
       <div className="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-14 space-y-3">
+        <div className="text-center max-w-2xl mx-auto mb-10 md:mb-12 space-y-3">
           <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-primary uppercase">
             <span className="w-4 h-px bg-primary" aria-hidden="true" />
-            <span>ENVIRONMENT &amp; FACILITIES</span>
+            <span>FACILITIES &amp; SPACES</span>
             <span className="w-4 h-px bg-primary" aria-hidden="true" />
           </div>
           <h2
             id="environment-heading"
             className="font-display font-bold text-2xl sm:text-3xl md:text-4xl text-on-surface leading-snug text-balance"
           >
-            働く環境・設備紹介
+            働く場所・設備をご紹介
           </h2>
           <p className="text-sm sm:text-base text-on-surface-variant leading-relaxed">
-            長く安心して働いていただけるよう、清潔感と過ごしやすさを大切にしています。実際のお部屋の雰囲気は私服見学でもご確認いただけます。
+            安心して長く働いていただけるよう、清潔さと落ち着きを大切にしています。実際の空間や雰囲気は私服見学でも直接ご確認いただけます。
           </p>
         </div>
 
-        {/* 3-Col Grid (6 spaces) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {ENVIRONMENT_SPACES.map((space) => (
+        {/* 3x2 Grid (6 spaces) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+          {FACILITY_ITEMS.map((space) => (
             <article
-              key={space.id}
-              className="bg-surface rounded-2xl border border-outline-variant overflow-hidden flex flex-col shadow-xs"
+              key={space.number}
+              className="group bg-surface rounded-2xl border border-outline-variant overflow-hidden flex flex-col shadow-2xs hover:shadow-md hover:border-primary/35 transition-all duration-300"
             >
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-surface-container">
+              <div className="relative aspect-video w-full overflow-hidden bg-surface-container-low border-b border-outline-variant/80">
                 <img
                   src={space.imageUrl}
                   alt={space.imageAlt}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                   loading="lazy"
                   decoding="async"
+                  width={640}
+                  height={360}
                   referrerPolicy="no-referrer"
                 />
-                <span className="absolute top-3 left-3 bg-white/95 text-on-surface text-[11px] font-bold px-3 py-1 rounded-lg border border-outline-variant">
-                  {space.tag}
-                </span>
-                <span className="absolute bottom-2.5 right-2.5 bg-on-surface/75 text-white text-[10px] font-medium px-2.5 py-0.5 rounded-md">
+                <div className="absolute top-3 left-3 flex items-center gap-2">
+                  <span className="bg-white/95 text-primary text-[11px] font-mono font-bold px-2.5 py-1 rounded-md border border-outline-variant">
+                    {space.number}
+                  </span>
+                  <span className="bg-white/95 text-on-surface text-[11px] font-bold px-2.5 py-1 rounded-md border border-outline-variant">
+                    {space.tag}
+                  </span>
+                </div>
+                <span className="absolute bottom-2 right-2.5 text-[10px] font-medium text-on-surface/80 bg-white/90 px-2 py-0.5 rounded border border-outline-variant/60">
                   イメージ画像
                 </span>
               </div>
 
               <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between gap-4">
-                <div className="space-y-2.5">
+                <div className="space-y-2">
                   <h3 className="font-display font-bold text-base sm:text-lg text-on-surface leading-snug">
                     {space.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                  <p className="text-xs sm:text-[13px] text-on-surface-variant leading-relaxed">
                     {space.description}
                   </p>
                 </div>
@@ -147,14 +163,14 @@ export default function EnvironmentGallerySection(_props: EnvironmentGallerySect
           ))}
         </div>
 
-        {/* Bottom Tour & LINE Consultation Banner */}
+        {/* Bottom Honest Inspection Note & Tour CTA */}
         <div className="mt-10 bg-surface-container-low rounded-2xl border border-outline-variant px-6 py-5 sm:px-8 sm:py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="space-y-1">
             <p className="text-sm sm:text-[15px] font-bold text-on-surface">
-              応募を決める前に、実際の館内や待機場所を見学できます
+              実物の館内・控室は「私服見学」で直接お確かめいただけます
             </p>
             <p className="text-xs sm:text-[13px] text-on-surface-variant leading-relaxed">
-              イメージ画像だけでなく、実物の室内や清潔さを直接見てからご判断いただけます。
+              街全体で撮影禁止ルールがあるため室内はイメージ画像を掲載しています。実物の清潔さや仲居さんの雰囲気は見学のみでも丁寧にご案内しています。
             </p>
           </div>
           <a

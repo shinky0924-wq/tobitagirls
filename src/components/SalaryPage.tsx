@@ -524,7 +524,9 @@ export default function SalaryPage({
   }, [daysPerWeek, hoursPerDay, paceMode, variationIndex]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
     updatePageJsonLd({
       '@context': 'https://schema.org',
       '@graph': [
