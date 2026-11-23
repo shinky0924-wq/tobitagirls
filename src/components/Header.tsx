@@ -33,17 +33,17 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
 
   const sectionNavLinks = [
     { name: 'トップ', target: '#top' },
-    { name: '3つのお約束', target: '#about' },
-    { name: '6つの理由', target: '#reasons' },
+    { name: '当店について', target: '#about' },
+    { name: '選ばれる理由', target: '#reasons' },
     { name: '仕事内容', target: '#job' },
     { name: 'お給料', target: '#salary' },
     { name: '待遇', target: '#benefits' },
     { name: '働き方', target: '#workstyle' },
-    { name: '設備', target: '#environment' },
+    { name: '働く環境', target: '#environment' },
     { name: '女性の声', target: '#voice' },
     { name: '応募の流れ', target: '#flow' },
     { name: '募集要項', target: '#requirements' },
-    { name: 'FAQ', target: '#faq-preview' },
+    { name: 'よくある質問', target: '#faq-preview' },
   ];
 
   const guideCategories = [
@@ -98,7 +98,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
           isScrolled ? 'shadow-xs py-2.5' : 'py-3'
         }`}
       >
-        <div className="flex items-center justify-between lg:justify-center w-full px-3 sm:px-5 lg:px-4 max-w-[1200px] mx-auto gap-2 lg:gap-3 xl:gap-4">
+        <div className="flex items-center justify-between lg:justify-center w-full px-3 sm:px-5 lg:px-4 max-w-[1280px] mx-auto gap-2 lg:gap-2.5 xl:gap-4">
           {/* Logo: 飛田ガールズ */}
           <a
             href="/"
@@ -145,7 +145,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                   key={link.target}
                   href={link.target === '#top' ? '/' : `/${link.target}`}
                   onClick={(e) => handleSectionClick(e, link.target)}
-                  className={`font-sans text-[11px] xl:text-[12.5px] px-1.5 xl:px-2 py-1.5 rounded-xl transition-colors whitespace-nowrap cursor-pointer ${
+                  className={`font-sans text-[10.5px] xl:text-[12px] px-1.5 xl:px-2 py-1.5 rounded-xl transition-colors whitespace-nowrap cursor-pointer ${
                     isTopActive
                       ? 'font-bold bg-surface-container text-secondary hover:text-primary'
                       : 'font-medium text-on-surface-variant hover:text-primary hover:bg-surface-container/60'

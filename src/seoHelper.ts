@@ -116,17 +116,17 @@ function buildHomeNoscript(): string {
         </a>
         <nav class="ssr-topnav" aria-label="主要メニュー">
           <a href="/">トップ</a>
-          <a href="/#about">3つのお約束</a>
-          <a href="/#reasons">6つの理由</a>
+          <a href="/#about">当店について</a>
+          <a href="/#reasons">選ばれる理由</a>
           <a href="/#job">仕事内容</a>
           <a href="/#salary">お給料</a>
           <a href="/#benefits">待遇</a>
           <a href="/#workstyle">働き方</a>
-          <a href="/#environment">設備</a>
+          <a href="/#environment">働く環境</a>
           <a href="/#voice">女性の声</a>
           <a href="/#flow">応募の流れ</a>
           <a href="/#requirements">募集要項</a>
-          <a href="/#faq-preview">FAQ</a>
+          <a href="/#faq-preview">よくある質問</a>
           <a href="https://lin.ee/phFZoea" target="_blank" rel="noopener noreferrer" class="ssr-nav-cta">LINEで相談</a>
         </nav>
       </div>
