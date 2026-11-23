@@ -28,7 +28,7 @@ export default function AccessSection() {
   return (
     <section
       id="access"
-      className="py-16 sm:py-24 bg-white border-b border-outline-variant/60"
+      className="py-16 sm:py-24 bg-surface border-b border-outline-variant/60"
       aria-labelledby="access-heading"
     >
       <div className="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -52,7 +52,7 @@ export default function AccessSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Left: Clean Area Route Diagram + Address Card */}
-          <div className="lg:col-span-5 bg-surface rounded-2xl border border-outline-variant p-6 flex flex-col justify-between gap-6">
+          <div className="lg:col-span-5 bg-white rounded-2xl border border-outline-variant p-6 flex flex-col justify-between gap-6">
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-xs font-bold text-primary">
                 <LucideIcon name="MapPin" size={16} />
@@ -116,7 +116,7 @@ export default function AccessSection() {
               {STATION_ROUTES.map((route) => (
                 <div
                   key={route.station}
-                  className="bg-surface rounded-2xl border border-outline-variant p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                  className="bg-white rounded-2xl border border-outline-variant p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                 >
                   <div className="space-y-1 flex-1">
                     <h3 className="font-bold text-sm sm:text-base text-on-surface">{route.station}</h3>
@@ -125,7 +125,7 @@ export default function AccessSection() {
                     </p>
                   </div>
                   <div className="shrink-0">
-                    <span className="inline-flex items-center gap-1.5 bg-white text-primary font-bold text-xs px-3.5 py-2 rounded-xl border border-outline-variant">
+                    <span className="inline-flex items-center gap-1.5 bg-surface text-primary font-bold text-xs px-3.5 py-2 rounded-xl border border-outline-variant">
                       <LucideIcon name="Footprints" size={14} />
                       <span>{route.time}</span>
                     </span>

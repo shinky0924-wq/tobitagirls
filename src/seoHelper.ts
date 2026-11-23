@@ -115,13 +115,18 @@ function buildHomeNoscript(): string {
           </span>
         </a>
         <nav class="ssr-topnav" aria-label="主要メニュー">
-          <a href="/#about">飛田ガールズとは</a>
+          <a href="/">トップ</a>
+          <a href="/#about">お店紹介</a>
+          <a href="/#reasons">6つの理由</a>
           <a href="/#job">仕事内容</a>
-          <a href="/#salary">給料・待遇</a>
+          <a href="/#salary">お給料</a>
           <a href="/#workstyle">働き方</a>
+          <a href="/#environment">環境・設備</a>
+          <a href="/#voice">体験談</a>
           <a href="/#requirements">募集要項</a>
-          <a href="/faq">FAQ</a>
-          <a href="/#access">アクセス</a>
+          <a href="/#faq-preview">FAQ</a>
+          <a href="/#flow">応募の流れ</a>
+          <a href="/#recruit-guide">総合ガイド</a>
           <a href="https://lin.ee/phFZoea" target="_blank" rel="noopener noreferrer" class="ssr-nav-cta">LINE無料相談</a>
         </nav>
       </div>
@@ -226,6 +231,14 @@ function buildHomeNoscript(): string {
           <p><a href="/site-compare">他業種との違い比較</a> / <a href="/glossary">用語集</a> / <a href="/blog">お仕事コラム一覧</a></p>
         </section>
 
+        <section id="voice">
+          <h2>働く女性のリアルな声</h2>
+          <ul>
+            <li><strong>未経験スタート（22歳・週4日昼シフト）</strong>：仲居さんや女性スタッフが寄り添ってくれ、初日から全額日払いを受け取れたことで安心できました。</li>
+            <li><strong>学生・未経験（20歳・お酒NG）</strong>：お酒を飲む必要がなく、学業や試験スケジュールを優先しながら自分のペースで勤務しています。</li>
+          </ul>
+        </section>
+
         <section id="requirements">
           <h2>募集要項・アクセス</h2>
           <table border="1">
@@ -237,14 +250,6 @@ function buildHomeNoscript(): string {
               <tr><th>アクセス</th><td>Osaka Metro「動物園前駅」徒歩5分 / JR・南海「新今宮駅」徒歩7分 / 各線「天王寺駅・大阪阿部野橋駅」徒歩10分</td></tr>
             </tbody>
           </table>
-        </section>
-
-        <section id="voice">
-          <h2>働く女性のリアルな声</h2>
-          <ul>
-            <li><strong>未経験スタート（22歳・週4日昼シフト）</strong>：仲居さんや女性スタッフが寄り添ってくれ、初日から全額日払いを受け取れたことで安心できました。</li>
-            <li><strong>学生・未経験（20歳・お酒NG）</strong>：お酒を飲む必要がなく、学業や試験スケジュールを優先しながら自分のペースで勤務しています。</li>
-          </ul>
         </section>
 
         <section id="faq-preview">

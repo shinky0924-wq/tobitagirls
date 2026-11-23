@@ -1,4 +1,51 @@
-import { lazy } from 'react';
+import { ComponentType, lazy } from 'react';
+
+function isChunkFetchError(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error || '');
+  return (
+    message.includes('Failed to fetch dynamically imported module') ||
+    message.includes('Importing a module script failed') ||
+    message.includes('error loading dynamically imported module') ||
+    message.includes('Outdated Optimize Dep') ||
+    message.includes('Loading chunk')
+  );
+}
+
+function lazyWithRetry<T extends ComponentType<any>>(
+  importer: () => Promise<{ default: T }>,
+  moduleKey: string,
+) {
+  return lazy(async () => {
+    try {
+      return await importer();
+    } catch (firstError) {
+      if (isChunkFetchError(firstError)) {
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        try {
+          return await importer();
+        } catch (secondError) {
+          if (typeof window !== 'undefined') {
+            try {
+              const storageKey = `lazy_retry_ts_${moduleKey}`;
+              const lastReload = Number(window.sessionStorage.getItem(storageKey) || '0');
+              const now = Date.now();
+              if (!lastReload || now - lastReload > 15000) {
+                window.sessionStorage.setItem(storageKey, String(now));
+                window.location.reload();
+                // Keep Suspense pending while browser reloads so ErrorBoundary does not flash
+                return new Promise<{ default: T }>(() => {});
+              }
+            } catch {
+              // Ignore sessionStorage restrictions
+            }
+          }
+          throw secondError;
+        }
+      }
+      throw firstError;
+    }
+  });
+}
 
 export const loadBlogSection = () => import('./components/BlogSection');
 export const loadAboutPage = () => import('./components/AboutPage');
@@ -17,22 +64,22 @@ export const loadFlowPage = () => import('./components/FlowPage');
 export const loadWorkstylePage = () => import('./components/WorkstylePage');
 export const loadShopsPage = () => import('./components/ShopsPage');
 
-export const LazyBlogSection = lazy(loadBlogSection);
-export const LazyAboutPage = lazy(loadAboutPage);
-export const LazyComparisonPage = lazy(loadComparisonPage);
-export const LazySiteComparisonPage = lazy(loadSiteComparisonPage);
-export const LazyFAQPage = lazy(loadFAQPage);
-export const LazyTopicClusterPage = lazy(loadTopicClusterPage);
-export const LazyGlossaryPage = lazy(loadGlossaryPage);
-export const LazyAdminPanel = lazy(loadAdminPanel);
+export const LazyBlogSection = lazyWithRetry(loadBlogSection, 'BlogSection');
+export const LazyAboutPage = lazyWithRetry(loadAboutPage, 'AboutPage');
+export const LazyComparisonPage = lazyWithRetry(loadComparisonPage, 'ComparisonPage');
+export const LazySiteComparisonPage = lazyWithRetry(loadSiteComparisonPage, 'SiteComparisonPage');
+export const LazyFAQPage = lazyWithRetry(loadFAQPage, 'FAQPage');
+export const LazyTopicClusterPage = lazyWithRetry(loadTopicClusterPage, 'TopicClusterPage');
+export const LazyGlossaryPage = lazyWithRetry(loadGlossaryPage, 'GlossaryPage');
+export const LazyAdminPanel = lazyWithRetry(loadAdminPanel, 'AdminPanel');
 
-export const LazyJobContentPage = lazy(loadJobContentPage);
-export const LazySalaryPage = lazy(loadSalaryPage);
-export const LazyBeginnerPage = lazy(loadBeginnerPage);
-export const LazyExperiencedPage = lazy(loadExperiencedPage);
-export const LazyFlowPage = lazy(loadFlowPage);
-export const LazyWorkstylePage = lazy(loadWorkstylePage);
-export const LazyShopsPage = lazy(loadShopsPage);
+export const LazyJobContentPage = lazyWithRetry(loadJobContentPage, 'JobContentPage');
+export const LazySalaryPage = lazyWithRetry(loadSalaryPage, 'SalaryPage');
+export const LazyBeginnerPage = lazyWithRetry(loadBeginnerPage, 'BeginnerPage');
+export const LazyExperiencedPage = lazyWithRetry(loadExperiencedPage, 'ExperiencedPage');
+export const LazyFlowPage = lazyWithRetry(loadFlowPage, 'FlowPage');
+export const LazyWorkstylePage = lazyWithRetry(loadWorkstylePage, 'WorkstylePage');
+export const LazyShopsPage = lazyWithRetry(loadShopsPage, 'ShopsPage');
 
 /**
  * Preloads the active lazy route chunk before React's first render so direct landing on any subpage

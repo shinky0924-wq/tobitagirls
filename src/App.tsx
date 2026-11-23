@@ -370,6 +370,14 @@ export default function App() {
 
   const handleScrollToSection = (sectionId: string) => {
     const cleanId = sectionId.startsWith('#') ? sectionId.substring(1) : sectionId;
+    if (cleanId === 'top') {
+      if (currentTab !== 'recruit') {
+        navigate('/');
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
     if (cleanId === 'compare') {
       navigate('/compare');
       return;
@@ -591,7 +599,15 @@ export default function App() {
                 }}
               />
 
-              {/* 9. 募集要項 */}
+              {/* 9. 働く女性のリアルな声 */}
+              <Testimonials
+                onNavigateFaq={() => {
+                  navigate('/faq');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
+
+              {/* 10. 募集要項 */}
               <RequirementsSection
                 onNavigatePath={(targetPath) => {
                   navigate(targetPath);
@@ -599,16 +615,8 @@ export default function App() {
                 }}
               />
 
-              {/* 10. アクセス */}
+              {/* 11. アクセス */}
               <AccessSection />
-
-              {/* 11. 働く女性のリアルな声 */}
-              <Testimonials
-                onNavigateFaq={() => {
-                  navigate('/faq');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-              />
 
               {/* 12. 応募前のFAQ */}
               <HomeFaqSection

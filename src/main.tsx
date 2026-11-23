@@ -60,6 +60,22 @@ class ErrorBoundary extends Component<Props, State> {
   }
 }
 
+if (typeof window !== 'undefined') {
+  window.addEventListener('vite:preloadError', () => {
+    try {
+      const storageKey = 'vite_preload_reload_ts';
+      const lastReload = Number(window.sessionStorage.getItem(storageKey) || '0');
+      const now = Date.now();
+      if (!lastReload || now - lastReload > 15000) {
+        window.sessionStorage.setItem(storageKey, String(now));
+        window.location.reload();
+      }
+    } catch {
+      window.location.reload();
+    }
+  });
+}
+
 const rootElement = document.getElementById('root');
 if (rootElement) {
   (async () => {

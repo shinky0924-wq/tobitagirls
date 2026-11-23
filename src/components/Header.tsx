@@ -32,13 +32,18 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
   }, []);
 
   const sectionNavLinks = [
-    { name: '飛田ガールズとは', target: '#about' },
+    { name: 'トップ', target: '#top' },
+    { name: 'お店紹介', target: '#about' },
+    { name: '6つの理由', target: '#reasons' },
     { name: '仕事内容', target: '#job' },
-    { name: '給料・待遇', target: '#salary' },
+    { name: 'お給料', target: '#salary' },
     { name: '働き方', target: '#workstyle' },
+    { name: '環境・設備', target: '#environment' },
+    { name: '体験談', target: '#voice' },
     { name: '募集要項', target: '#requirements' },
     { name: 'FAQ', target: '#faq-preview' },
-    { name: 'アクセス', target: '#access' },
+    { name: '応募の流れ', target: '#flow' },
+    { name: '総合ガイド', target: '#recruit-guide' },
   ];
 
   const guideCategories = [
@@ -59,6 +64,10 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
   const handleSectionClick = (e: MouseEvent<HTMLAnchorElement>, target: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
+    if (target === '#top') {
+      onScrollToSection('top');
+      return;
+    }
     const sectionId = target.startsWith('#') ? target.substring(1) : target;
     onScrollToSection(sectionId);
   };
@@ -89,7 +98,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
           isScrolled ? 'shadow-xs py-2.5' : 'py-3'
         }`}
       >
-        <div className="flex justify-between items-center w-full px-4 sm:px-6 lg:px-8 max-w-[1220px] mx-auto gap-4">
+        <div className="flex items-center justify-between lg:justify-center w-full px-3 sm:px-5 lg:px-4 max-w-[1200px] mx-auto gap-2 lg:gap-3 xl:gap-4">
           {/* Logo: 飛田ガールズ */}
           <a
             href="/"
@@ -99,7 +108,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
               onChangeTab('recruit');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="flex items-center gap-2.5 group cursor-pointer shrink-0"
+            className="flex items-center gap-2 group cursor-pointer shrink-0"
             id="header-brand-logo"
           >
             <div className="w-9 h-9 rounded-full overflow-hidden border border-outline-variant shadow-2xs shrink-0">
@@ -122,23 +131,30 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
             </span>
           </a>
 
-          {/* Desktop Navigation: 7 Clean Section Anchors */}
+          {/* Desktop Navigation: 12 Clean Section Anchors */}
           <nav
             ref={navRef}
-            className="hidden lg:flex items-center gap-1 xl:gap-2"
+            className="hidden lg:flex items-center justify-center gap-0.5 min-w-0"
             id="desktop-navigation"
             aria-label="メインナビゲーション"
           >
-            {sectionNavLinks.map((link) => (
-              <a
-                key={link.target}
-                href={`/${link.target}`}
-                onClick={(e) => handleSectionClick(e, link.target)}
-                className="font-sans text-[13px] xl:text-[13.5px] font-medium text-on-surface-variant hover:text-primary px-2.5 py-2 rounded-lg hover:bg-surface-container/60 transition-colors whitespace-nowrap cursor-pointer"
-              >
-                {link.name}
-              </a>
-            ))}
+            {sectionNavLinks.map((link) => {
+              const isTopActive = link.target === '#top' && currentTab === 'recruit';
+              return (
+                <a
+                  key={link.target}
+                  href={link.target === '#top' ? '/' : `/${link.target}`}
+                  onClick={(e) => handleSectionClick(e, link.target)}
+                  className={`font-sans text-[11px] xl:text-[12.5px] px-1.5 xl:px-2 py-1.5 rounded-xl transition-colors whitespace-nowrap cursor-pointer ${
+                    isTopActive
+                      ? 'font-bold bg-surface-container text-secondary hover:text-primary'
+                      : 'font-medium text-on-surface-variant hover:text-primary hover:bg-surface-container/60'
+                  }`}
+                >
+                  {link.name}
+                </a>
+              );
+            })}
           </nav>
 
           {/* Right: Prominent Official LINE Button + Mobile Menu Toggle */}
@@ -148,10 +164,10 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
               target="_blank"
               rel="noopener noreferrer"
               id="header-cta"
-              className="bg-[#06C755] hover:bg-[#05b34c] text-white font-sans font-bold text-xs sm:text-[13px] px-3.5 sm:px-5 py-2.5 rounded-xl shadow-xs hover:shadow-sm transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap min-h-[40px]"
+              className="bg-[#06C755] hover:bg-[#05b34c] text-white font-sans font-bold text-xs sm:text-[13px] px-3.5 sm:px-4 py-2 rounded-full shadow-xs hover:shadow-sm transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap min-h-[38px]"
             >
-              <LucideIcon name="MessageCircle" size={16} className="fill-white text-white shrink-0" />
-              <span>LINE無料相談</span>
+              <LucideIcon name="MessageCircle" size={15} className="fill-white text-white shrink-0" />
+              <span>LINEで相談</span>
             </a>
 
             <button
@@ -185,16 +201,16 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                 <p className="text-[11px] font-bold text-on-surface-variant tracking-wider uppercase px-1 mb-2">
                   トップページ案内
                 </p>
-                <div className="grid grid-cols-1 divide-y divide-outline-variant/60 border border-outline-variant rounded-2xl bg-surface overflow-hidden">
+                <div className="grid grid-cols-2 gap-1.5">
                   {sectionNavLinks.map((link) => (
                     <a
                       key={link.target}
-                      href={`/${link.target}`}
+                      href={link.target === '#top' ? '/' : `/${link.target}`}
                       onClick={(e) => handleSectionClick(e, link.target)}
-                      className="px-4 py-3 text-sm font-semibold text-on-surface hover:text-primary hover:bg-surface-container/50 flex items-center justify-between transition-colors"
+                      className="px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-on-surface hover:text-primary bg-surface hover:bg-surface-container/50 border border-outline-variant rounded-xl flex items-center justify-between transition-colors"
                     >
-                      <span>{link.name}</span>
-                      <LucideIcon name="ChevronRight" size={16} className="text-on-surface-variant/60" />
+                      <span className="truncate">{link.name}</span>
+                      <LucideIcon name="ChevronRight" size={14} className="text-on-surface-variant/60 shrink-0" />
                     </a>
                   ))}
                 </div>

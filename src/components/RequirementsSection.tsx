@@ -66,7 +66,7 @@ export default function RequirementsSection({ onNavigatePath }: RequirementsSect
   return (
     <section
       id="requirements"
-      className="py-16 sm:py-24 bg-surface border-b border-outline-variant/60"
+      className="py-16 sm:py-24 bg-white border-b border-outline-variant/60"
       aria-labelledby="requirements-heading"
     >
       <div className="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -89,7 +89,7 @@ export default function RequirementsSection({ onNavigatePath }: RequirementsSect
         </div>
 
         {/* Specification Table */}
-        <div className="bg-white rounded-2xl border border-outline-variant shadow-xs overflow-hidden">
+        <div className="bg-surface rounded-2xl border border-outline-variant shadow-xs overflow-hidden">
           <dl className="divide-y divide-outline-variant/80">
             {REQUIREMENT_ROWS.map((row) => (
               <div
