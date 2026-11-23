@@ -7,6 +7,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import YearEndCampaignSection from './components/YearEndCampaignSection';
 import AboutSection from './components/AboutSection';
 import Reasons from './components/Reasons';
 import JobFlowSection from './components/JobFlowSection';
@@ -550,6 +551,9 @@ export default function App() {
                   navigate(`/blog/${slug}`);
                 }}
               />
+
+              {/* 年末年始限定 入店祝い金10万円キャンペーン */}
+              <YearEndCampaignSection />
 
               {/* 02. 女性に向けた3つのお約束 */}
               <AboutSection
