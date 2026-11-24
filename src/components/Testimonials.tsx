@@ -14,6 +14,9 @@ interface VoiceCase {
   ageBracket: string;
   workstyleLabel: string;
   experienceLabel: string;
+  dailyAverage: string;
+  monthlyExample: string;
+  incomePaceNote: string;
   anxietyBefore: string;
   trigger: string;
   impression: string;
@@ -30,6 +33,9 @@ const VOICE_CASES: VoiceCase[] = [
     ageBracket: '20代前半',
     workstyleLabel: '週4日・昼シフト中心（10:00〜17:00）',
     experienceLabel: '未経験からスタート',
+    dailyAverage: '約6.5万円',
+    monthlyExample: '約104万円',
+    incomePaceNote: '週4日（月16日ほど）昼シフト勤務の例',
     anxietyBefore:
       '夜職の経験がまったくなく、「厳しいルールや怖い先輩がいたらどうしよう」と応募するまでとても迷っていました。',
     trigger:
@@ -47,8 +53,11 @@ const VOICE_CASES: VoiceCase[] = [
     imageUrl: '/images/tobita_cast_hina_selfie.jpg',
     imageAlt: '学業と両立して働く20代前半女性のイメージ写真',
     ageBracket: '20代前半',
-    workstyleLabel: '週2〜3日・学業と両立',
+    workstyleLabel: '週2〜3日・学業と両立（17:00〜24:00）',
     experienceLabel: 'お酒NG・未経験',
+    dailyAverage: '約5.5万円',
+    monthlyExample: '約55万円',
+    incomePaceNote: '週2〜3日（月10日ほど）学業と両立勤務の例',
     anxietyBefore:
       'お酒がまったく飲めない体質なことと、試験期間などで休みたい時にシフトの融通が利くのかが不安でした。',
     trigger:
@@ -66,8 +75,11 @@ const VOICE_CASES: VoiceCase[] = [
     imageUrl: '/images/tobita_cast_yuki_selfie.jpg',
     imageAlt: '週末中心・Wワークで働く20代後半女性のイメージ写真',
     ageBracket: '20代後半',
-    workstyleLabel: '週末中心・Wワーク勤務',
+    workstyleLabel: '週末中心・Wワーク（14:00〜24:00）',
     experienceLabel: '昼職との掛け持ち・プライバシー重視',
+    dailyAverage: '約7万円',
+    monthlyExample: '約45万円',
+    incomePaceNote: '週末中心（月6〜7日ほど）Wワーク勤務の例',
     anxietyBefore:
       '平日は一般の会社員として働いているため、知人への身バレや税金の手続き、顔写真の扱いが一番の心配事でした。',
     trigger:
@@ -107,7 +119,7 @@ export default function Testimonials({ onNavigateFaq }: TestimonialsProps = {}) 
             実際に働く女性の声
           </h2>
           <p className="font-sans text-sm sm:text-base text-on-surface-variant leading-relaxed">
-            未経験から始めた方やWワークの方など、働く前の不安や入店後の変化、仲居さん・スタッフからのサポートについてご紹介します。
+            未経験から始めた方やWワークの方など、1日の平均・月の収入例や働く前の不安、仲居さん・スタッフからのサポートについてご紹介します。
           </p>
         </div>
 
@@ -151,9 +163,34 @@ export default function Testimonials({ onNavigateFaq }: TestimonialsProps = {}) 
                           · {item.experienceLabel}
                         </span>
                       </div>
-                      <p className="text-xs text-on-surface-variant mt-0.5 truncate">
+                      <p className="text-xs text-on-surface-variant mt-0.5 leading-snug tabular-nums">
                         {item.workstyleLabel}
                       </p>
+                    </div>
+                  </div>
+
+                  {/* Daily Average & Monthly Income Example */}
+                  <div className="rounded-xl bg-[#FFF6F9] border border-[#F3D5E0] overflow-hidden">
+                    <div className="grid grid-cols-2 divide-x divide-[#F2DAE3]">
+                      <div className="px-3.5 py-3 text-center">
+                        <div className="text-[11px] font-bold text-secondary mb-0.5">
+                          1日の平均
+                        </div>
+                        <div className="font-cute font-black text-lg sm:text-[19px] text-primary tabular-nums leading-tight">
+                          {item.dailyAverage}
+                        </div>
+                      </div>
+                      <div className="px-3.5 py-3 text-center">
+                        <div className="text-[11px] font-bold text-secondary mb-0.5">
+                          月の収入例
+                        </div>
+                        <div className="font-cute font-black text-lg sm:text-[19px] text-on-surface tabular-nums leading-tight">
+                          {item.monthlyExample}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="border-t border-[#F2DAE3] bg-white/75 px-3 py-1.5 text-center text-[11px] text-on-surface-variant">
+                      {item.incomePaceNote}
                     </div>
                   </div>
 
@@ -197,6 +234,10 @@ export default function Testimonials({ onNavigateFaq }: TestimonialsProps = {}) 
             </article>
           ))}
         </div>
+
+        <p className="mt-5 text-center text-[11.5px] text-on-surface-variant leading-relaxed">
+          ※完全歩合制のため、収入は出勤時間帯・日数や当日の来店状況により変動します。
+        </p>
 
         {/* Action Links */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">

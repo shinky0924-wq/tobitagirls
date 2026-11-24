@@ -57,7 +57,7 @@ const REQUIREMENT_ROWS = [
     number: '08',
     label: '控除・天引き・罰金',
     value: '紹介料0円・ロッカー代や更衣室代などの雑費天引きなし・ノルマ／罰金なし',
-    note: '計算式記載の仲居料1,000円以外に不透明な手数料を差し引くことはありません。',
+    note: '不透明な手数料や雑費を差し引くことはありません。',
   },
   {
     number: '09',
@@ -75,18 +75,27 @@ const REQUIREMENT_ROWS = [
 
 const STATION_ROUTES = [
   {
-    station: 'Osaka Metro 御堂筋線・堺筋線「動物園前駅」',
+    id: 'dobutsuen',
+    line: 'Osaka Metro 御堂筋線・堺筋線',
+    station: '動物園前駅',
     time: '徒歩 約5分',
+    isNearest: true,
     detail: '2番出口から南東方向へ進み、最もアクセスの近い最寄り駅です。',
   },
   {
-    station: 'JR大阪環状線・関西本線／南海線「新今宮駅」',
+    id: 'shinimamiya',
+    line: 'JR大阪環状線・関西本線／南海線',
+    station: '新今宮駅',
     time: '徒歩 約7分',
+    isNearest: false,
     detail: '関西空港・難波・大阪駅方面から乗換しやすく、遠方の方も便利です。',
   },
   {
-    station: '各線「天王寺駅」・近鉄「大阪阿部野橋駅」',
+    id: 'tennoji',
+    line: 'JR・Osaka Metro 各線／近鉄南大阪線',
+    station: '天王寺駅・大阪阿部野橋駅',
     time: '徒歩 約10分',
+    isNearest: false,
     detail: 'ショッピングやお出かけついで、待ち合わせにも利用しやすい主要駅です。',
   },
 ];
@@ -98,7 +107,7 @@ export default function RequirementsSection({ onNavigatePath }: RequirementsSect
       className="py-16 md:py-24 bg-white border-b border-outline-variant/60"
       aria-labelledby="requirements-heading"
     >
-      <div className="max-w-[1040px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1060px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12 space-y-3">
           <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-primary uppercase">
@@ -117,24 +126,37 @@ export default function RequirementsSection({ onNavigatePath }: RequirementsSect
           </p>
         </div>
 
-        {/* 10-Row Specification Table */}
-        <div className="bg-surface rounded-2xl border border-outline-variant shadow-2xs overflow-hidden">
-          <dl className="divide-y divide-outline-variant/80">
+        {/* 10-Row Specification Table with Clear Label/Value Split */}
+        <div className="bg-white rounded-2xl border border-[#EACBD6] shadow-2xs overflow-hidden">
+          <div className="px-5 py-3.5 sm:px-7 bg-[#FFF6F9] border-b border-[#EFE0E5] flex flex-wrap items-center justify-between gap-2">
+            <h3 className="font-display font-bold text-sm sm:text-[15px] text-on-surface">
+              基本情報・採用条件（全10項目）
+            </h3>
+            <span className="text-xs font-semibold text-secondary">
+              店舗直営・直接募集
+            </span>
+          </div>
+
+          <dl className="divide-y divide-[#EFE0E5]">
             {REQUIREMENT_ROWS.map((row) => (
               <div
                 key={row.number}
-                className="grid grid-cols-1 md:grid-cols-12 gap-1.5 md:gap-6 px-5 py-4 sm:px-7 sm:py-5"
+                className="grid grid-cols-1 md:grid-cols-12"
               >
-                <dt className="md:col-span-4 text-xs sm:text-sm font-bold text-on-surface flex items-start gap-2.5">
-                  <span className="text-[11px] font-mono text-primary mt-0.5 shrink-0">
+                <dt className="md:col-span-4 bg-[#FFF9FB] md:border-r border-[#EFE0E5] px-5 pt-4 pb-2 md:py-5 sm:px-6 text-xs sm:text-sm font-bold text-on-surface flex items-start gap-2.5">
+                  <span className="text-[11px] font-mono font-bold text-primary mt-0.5 shrink-0 tabular-nums">
                     {row.number}
                   </span>
                   <span>{row.label}</span>
                 </dt>
-                <dd className="md:col-span-8 space-y-1 pl-6 md:pl-0">
-                  <p className="text-sm font-bold text-on-surface leading-relaxed">{row.value}</p>
+                <dd className="md:col-span-8 bg-white px-5 pt-2 pb-4 md:py-5 sm:px-7 space-y-1.5">
+                  <p className="text-sm font-bold text-on-surface leading-relaxed">
+                    {row.value}
+                  </p>
                   {row.note && (
-                    <p className="text-xs text-on-surface-variant leading-relaxed">{row.note}</p>
+                    <p className="text-xs text-on-surface-variant leading-relaxed">
+                      {row.note}
+                    </p>
                   )}
                 </dd>
               </div>
@@ -143,18 +165,18 @@ export default function RequirementsSection({ onNavigatePath }: RequirementsSect
         </div>
 
         {/* Links to full requirement & flow pages */}
-        <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+        <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
           <a
             href="/requirements"
             onClick={(e) => {
               e.preventDefault();
               onNavigatePath('/requirements');
             }}
-            className="inline-flex items-center gap-2 bg-white hover:bg-surface-container text-secondary border border-outline-variant font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-2xs transition-colors cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 bg-[#FFF6F9] hover:bg-surface-container text-secondary border border-[#E7C2D0] hover:border-primary/50 font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-2xs transition-colors cursor-pointer min-h-[48px]"
           >
-            <LucideIcon name="FileText" size={16} />
+            <LucideIcon name="FileText" size={16} className="text-primary shrink-0" />
             <span>募集要項・必要書類の詳しい解説を見る</span>
-            <LucideIcon name="ArrowRight" size={15} />
+            <LucideIcon name="ArrowRight" size={15} className="shrink-0" />
           </a>
           <a
             href="/flow"
@@ -162,96 +184,174 @@ export default function RequirementsSection({ onNavigatePath }: RequirementsSect
               e.preventDefault();
               onNavigatePath('/flow');
             }}
-            className="inline-flex items-center gap-2 bg-white hover:bg-surface-container text-on-surface border border-outline-variant font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-2xs transition-colors cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 bg-white hover:bg-surface-container text-on-surface border border-outline-variant hover:border-primary/40 font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-2xs transition-colors cursor-pointer min-h-[48px]"
           >
             <span>面接・体験入店の詳細を見る</span>
-            <LucideIcon name="ChevronRight" size={15} />
+            <LucideIcon name="ChevronRight" size={15} className="shrink-0" />
           </a>
         </div>
 
-        {/* Integrated Compact Access Information (#access anchor preserved without adding a 17th section) */}
-        <div id="access" className="mt-12 pt-10 border-t border-outline-variant/80">
-          <div className="flex flex-col lg:flex-row gap-6 items-stretch">
-            {/* Left Map & Address */}
-            <div className="lg:w-5/12 bg-surface rounded-2xl border border-outline-variant p-5 flex flex-col justify-between gap-4">
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
-                  <LucideIcon name="MapPin" size={15} />
-                  <span>勤務地・最寄り駅からのアクセス</span>
-                </div>
-                <p className="font-display font-bold text-base text-on-surface">
-                  大阪府大阪市西成区山王（飛田新地）
-                </p>
-                <p className="text-xs text-on-surface-variant leading-relaxed">
-                  防犯・プライバシー保護のため、詳細な目印はLINEでの見学予約後に個別でお知らせしています。
-                </p>
+        {/* Unified, Clean Access Panel (#access) */}
+        <div id="access" className="mt-12 sm:mt-14">
+          <div className="bg-white rounded-2xl border border-[#EACBD6] shadow-2xs overflow-hidden">
+            {/* Access Panel Header */}
+            <div className="px-5 py-4 sm:px-7 sm:py-5 bg-[#FFF6F9] border-b border-[#EFE0E5] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <LucideIcon name="MapPin" size={18} className="text-primary shrink-0" />
+                <h3 className="font-display font-bold text-base sm:text-lg text-on-surface">
+                  勤務地・最寄り駅からのアクセス
+                </h3>
               </div>
-
-              <div className="bg-white rounded-xl border border-outline-variant p-3">
-                <svg
-                  viewBox="0 0 360 175"
-                  className="w-full h-auto"
-                  role="img"
-                  aria-label="動物園前駅・新今宮駅・天王寺駅から飛田新地エリアへの徒歩アクセス図"
-                >
-                  <rect x="0" y="0" width="360" height="175" rx="8" fill="#FFF9FA" />
-                  <path
-                    d="M78 44 L180 104 M180 34 L180 104 M284 44 L180 104"
-                    stroke="#E5B9C7"
-                    strokeWidth="2"
-                    strokeDasharray="4 4"
-                    fill="none"
-                  />
-                  <rect x="14" y="16" width="126" height="34" rx="7" fill="#FFFFFF" stroke="#EFE0E5" strokeWidth="1.2" />
-                  <text x="77" y="31" textAnchor="middle" fill="#2B2326" fontSize="10" fontWeight="700">JR・南海 新今宮駅</text>
-                  <text x="77" y="44" textAnchor="middle" fill="#9D3B5E" fontSize="9" fontWeight="700">徒歩 約7分</text>
-
-                  <rect x="122" y="8" width="116" height="34" rx="7" fill="#FFFFFF" stroke="#EFE0E5" strokeWidth="1.2" />
-                  <text x="180" y="23" textAnchor="middle" fill="#2B2326" fontSize="10" fontWeight="700">動物園前駅</text>
-                  <text x="180" y="36" textAnchor="middle" fill="#D64572" fontSize="9" fontWeight="700">徒歩 約5分</text>
-
-                  <rect x="220" y="16" width="126" height="34" rx="7" fill="#FFFFFF" stroke="#EFE0E5" strokeWidth="1.2" />
-                  <text x="283" y="31" textAnchor="middle" fill="#2B2326" fontSize="10" fontWeight="700">天王寺・阿部野橋駅</text>
-                  <text x="283" y="44" textAnchor="middle" fill="#9D3B5E" fontSize="9" fontWeight="700">徒歩 約10分</text>
-
-                  <rect x="92" y="102" width="176" height="52" rx="10" fill="#FCE8EF" stroke="#D64572" strokeWidth="1.5" />
-                  <text x="180" y="125" textAnchor="middle" fill="#6E233F" fontSize="11.5" fontWeight="700">飛田新地エリア（山王）</text>
-                  <text x="180" y="142" textAnchor="middle" fill="#5E4D53" fontSize="9.5">飛田ガールズ 直営料亭</text>
-                </svg>
-              </div>
+              <p className="text-xs sm:text-sm font-bold text-secondary">
+                大阪府大阪市西成区山王（飛田新地エリア）
+              </p>
             </div>
 
-            {/* Right Station Routes */}
-            <div className="lg:w-7/12 flex flex-col justify-between gap-3">
-              {STATION_ROUTES.map((route) => (
-                <div
-                  key={route.station}
-                  className="bg-surface rounded-2xl border border-outline-variant p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
-                >
-                  <div className="space-y-1 flex-1">
-                    <h3 className="font-bold text-sm text-on-surface">{route.station}</h3>
-                    <p className="text-xs text-on-surface-variant leading-relaxed">{route.detail}</p>
-                  </div>
-                  <span className="inline-flex items-center gap-1.5 bg-white text-primary font-bold text-xs px-3 py-1.5 rounded-lg border border-outline-variant shrink-0 self-start sm:self-center tabular-nums">
-                    <LucideIcon name="Footprints" size={14} />
-                    <span>{route.time}</span>
-                  </span>
+            {/* Main 2-Column Body (No Nested Card-in-Card Clutter) */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+              {/* Left: Clean Visual Route Diagram */}
+              <div className="lg:col-span-5 p-5 sm:p-7 bg-[#FFFBFD] border-b lg:border-b-0 lg:border-r border-[#EFE0E5] flex flex-col justify-between gap-4">
+                <div className="space-y-1">
+                  <p className="text-xs font-bold text-primary">
+                    3路線・3主要駅から徒歩圏内
+                  </p>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">
+                    難波・天王寺・関西空港方面からもアクセスしやすく、お仕事帰りのお買い物にも便利な立地です。
+                  </p>
                 </div>
-              ))}
 
-              <div className="bg-surface-container-low rounded-2xl border border-outline-variant p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <p className="text-xs text-on-surface-variant leading-relaxed">
-                  道が不安な場合は、最寄り駅での待ち合わせ案内もLINEで承っています。
+                {/* Crisp Access Route Diagram */}
+                <div className="rounded-xl bg-white border border-[#EFE0E5] p-3">
+                  <svg
+                    viewBox="0 0 400 220"
+                    className="w-full h-auto"
+                    role="img"
+                    aria-label="動物園前駅・新今宮駅・天王寺駅から飛田新地エリアへの徒歩アクセス図"
+                  >
+                    <rect x="0" y="0" width="400" height="220" rx="10" fill="#FFF9FB" />
+
+                    {/* Route Lines */}
+                    <path
+                      d="M72 68 L178 136"
+                      stroke="#DFB3C3"
+                      strokeWidth="2.2"
+                      strokeDasharray="5 4"
+                      fill="none"
+                    />
+                    <path
+                      d="M200 62 L200 132"
+                      stroke="#D64572"
+                      strokeWidth="2.5"
+                      fill="none"
+                    />
+                    <path
+                      d="M328 68 L222 136"
+                      stroke="#DFB3C3"
+                      strokeWidth="2.2"
+                      strokeDasharray="5 4"
+                      fill="none"
+                    />
+
+                    {/* Station 1: 新今宮駅 */}
+                    <rect x="14" y="22" width="118" height="48" rx="9" fill="#FFFFFF" stroke="#E8CFD8" strokeWidth="1.3" />
+                    <text x="73" y="42" textAnchor="middle" fill="#2B2326" fontSize="11.5" fontWeight="700">
+                      新今宮駅
+                    </text>
+                    <text x="73" y="59" textAnchor="middle" fill="#9D3B5E" fontSize="10.5" fontWeight="700">
+                      徒歩 約7分
+                    </text>
+
+                    {/* Station 2: 動物園前駅 (Nearest Highlight) */}
+                    <rect x="141" y="14" width="118" height="50" rx="9" fill="#FCE8EF" stroke="#D64572" strokeWidth="1.6" />
+                    <text x="200" y="35" textAnchor="middle" fill="#6E233F" fontSize="12" fontWeight="700">
+                      動物園前駅
+                    </text>
+                    <text x="200" y="53" textAnchor="middle" fill="#D64572" fontSize="11" fontWeight="700">
+                      最短 徒歩約5分
+                    </text>
+
+                    {/* Station 3: 天王寺・阿部野橋駅 */}
+                    <rect x="268" y="22" width="118" height="48" rx="9" fill="#FFFFFF" stroke="#E8CFD8" strokeWidth="1.3" />
+                    <text x="327" y="42" textAnchor="middle" fill="#2B2326" fontSize="11" fontWeight="700">
+                      天王寺・阿部野橋
+                    </text>
+                    <text x="327" y="59" textAnchor="middle" fill="#9D3B5E" fontSize="10.5" fontWeight="700">
+                      徒歩 約10分
+                    </text>
+
+                    {/* Center Pin Dot */}
+                    <circle cx="200" cy="134" r="5" fill="#D64572" />
+
+                    {/* Destination Block */}
+                    <rect x="86" y="138" width="228" height="64" rx="12" fill="#FFFFFF" stroke="#D64572" strokeWidth="1.8" />
+                    <text x="200" y="164" textAnchor="middle" fill="#2B2326" fontSize="13.5" fontWeight="700">
+                      飛田新地エリア（山王）
+                    </text>
+                    <text x="200" y="185" textAnchor="middle" fill="#9D3B5E" fontSize="11" fontWeight="600">
+                      飛田ガールズ 直営料亭
+                    </text>
+                  </svg>
+                </div>
+
+                <p className="text-[11.5px] text-on-surface-variant leading-relaxed">
+                  ※防犯・プライバシー保護のため、詳細な場所・目印はLINEでの見学予約後に個別でお知らせしています。
                 </p>
-                <a
-                  href={LINE_OFFICIAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-1.5 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-xs px-4 py-2.5 rounded-xl shrink-0 transition-colors"
-                >
-                  <LucideIcon name="MessageCircle" size={15} />
-                  <span>道案内をLINEで聞く</span>
-                </a>
+              </div>
+
+              {/* Right: Clean Hairline-Separated Station List */}
+              <div className="lg:col-span-7 flex flex-col justify-between bg-white">
+                <ul className="divide-y divide-[#EFE0E5] flex-1">
+                  {STATION_ROUTES.map((route) => (
+                    <li
+                      key={route.id}
+                      className="px-5 py-5 sm:px-7 sm:py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                    >
+                      <div className="space-y-1 flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11.5px] font-semibold text-on-surface-variant">
+                          <span>{route.line}</span>
+                          {route.isNearest && (
+                            <>
+                              <span aria-hidden="true">·</span>
+                              <span className="text-primary font-bold">最寄り駅</span>
+                            </>
+                          )}
+                        </div>
+                        <h4 className="font-display font-bold text-base text-on-surface">
+                          {route.station}
+                        </h4>
+                        <p className="text-xs sm:text-[13px] text-on-surface-variant leading-relaxed">
+                          {route.detail}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-1.5 text-sm sm:text-[15px] font-bold text-primary shrink-0 tabular-nums sm:pl-4">
+                        <LucideIcon name="Footprints" size={16} className="shrink-0" />
+                        <span>{route.time}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Integrated Bottom Guidance & LINE Action Strip */}
+                <div className="px-5 py-4 sm:px-7 sm:py-5 bg-[#FFF6F9] border-t border-[#EFE0E5] flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
+                  <div className="space-y-0.5">
+                    <p className="text-xs sm:text-[13px] font-bold text-on-surface">
+                      駅からの道が不安な方もご安心ください
+                    </p>
+                    <p className="text-xs text-on-surface-variant leading-relaxed">
+                      最寄り駅での待ち合わせや道案内もLINEで承っています。
+                    </p>
+                  </div>
+                  <a
+                    href={LINE_OFFICIAL_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-xs sm:text-[13px] px-5 py-3 rounded-xl shadow-xs hover:shadow-sm shrink-0 transition-all whitespace-nowrap min-h-[44px]"
+                  >
+                    <LucideIcon name="MessageCircle" size={16} className="fill-white text-white shrink-0" />
+                    <span>道案内をLINEで聞く</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
