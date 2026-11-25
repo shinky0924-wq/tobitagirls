@@ -214,6 +214,54 @@ export function getValidArticleEyeCatch(art: { id?: string | number; category?: 
   return '/images/col_beginner_guide_art_1787803245812.jpg';
 }
 
+function parseArticleDateMs(publishedAt?: string): number {
+  if (!publishedAt) return 0;
+  const normalized = String(publishedAt).trim().replace(/[./年]/g, '-').replace(/月/g, '-').replace(/日/g, '');
+  const match = normalized.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if (match) {
+    return Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+  }
+  const parsed = Date.parse(normalized);
+  return Number.isNaN(parsed) ? 0 : parsed;
+}
+
+function parseArticleSecondaryOrder(id?: string): number {
+  if (!id) return 0;
+  const str = String(id).trim();
+  const customMatch = str.match(/^custom-(\d+)$/);
+  if (customMatch) {
+    return Number(customMatch[1]) || 0;
+  }
+  if (/^\d+$/.test(str)) {
+    return parseInt(str, 10) || 0;
+  }
+  return 0;
+}
+
+export function sortArticlesByDate(
+  articles: BlogArticle[],
+  order: 'newest' | 'oldest' = 'newest'
+): BlogArticle[] {
+  const withIndex = articles.map((article, index) => ({
+    article,
+    index,
+    dateMs: parseArticleDateMs(article.publishedAt),
+    sec: parseArticleSecondaryOrder(article.id),
+  }));
+
+  withIndex.sort((a, b) => {
+    if (a.dateMs !== b.dateMs) {
+      return order === 'newest' ? b.dateMs - a.dateMs : a.dateMs - b.dateMs;
+    }
+    if (a.sec !== b.sec) {
+      return order === 'newest' ? b.sec - a.sec : a.sec - b.sec;
+    }
+    return order === 'newest' ? a.index - b.index : b.index - a.index;
+  });
+
+  return withIndex.map((item) => item.article);
+}
+
 export function mergeWithDefaultArticles(incomingArticles: BlogArticle[]): { merged: BlogArticle[]; hasChanges: boolean } {
   const incoming = incomingArticles || [];
   const defaultSlugs = new Map(BLOG_ARTICLES.map(d => [d.slug, d]));
@@ -243,31 +291,26 @@ export function mergeWithDefaultArticles(incomingArticles: BlogArticle[]): { mer
     }
   }
 
-  merged.sort((a, b) => {
-    const idA = parseInt(a.id, 10) || 0;
-    const idB = parseInt(b.id, 10) || 0;
-    return idA - idB;
-  });
-
-  return { merged, hasChanges };
+  return { merged: sortArticlesByDate(merged, 'newest'), hasChanges };
 }
 
-const BLOG_DATA_VERSION = '20261118_seo_articles_batch7_254_263_v19';
+const BLOG_DATA_VERSION = '20261125_wave8_five_seo_articles_v28';
 
 export function getStoredArticles(): BlogArticle[] {
-  if (typeof window === 'undefined') return BLOG_ARTICLES;
+  if (typeof window === 'undefined') return sortArticlesByDate(BLOG_ARTICLES, 'newest');
   try {
     if (localStorage.getItem('custom_blog_articles_version') !== BLOG_DATA_VERSION) {
+      const sortedDefaults = sortArticlesByDate(BLOG_ARTICLES, 'newest');
       localStorage.setItem('custom_blog_articles_version', BLOG_DATA_VERSION);
-      localStorage.setItem('custom_blog_articles', JSON.stringify(BLOG_ARTICLES));
-      return BLOG_ARTICLES;
+      localStorage.setItem('custom_blog_articles', JSON.stringify(sortedDefaults));
+      return sortedDefaults;
     }
     const stored = localStorage.getItem('custom_blog_articles');
     if (!stored) {
-      return BLOG_ARTICLES;
+      return sortArticlesByDate(BLOG_ARTICLES, 'newest');
     }
     const rawArticles = JSON.parse(stored) as BlogArticle[];
-    if (rawArticles.length === 0) return BLOG_ARTICLES;
+    if (rawArticles.length === 0) return sortArticlesByDate(BLOG_ARTICLES, 'newest');
 
     const { merged, hasChanges } = mergeWithDefaultArticles(rawArticles);
     if (hasChanges) {
@@ -276,7 +319,7 @@ export function getStoredArticles(): BlogArticle[] {
     return merged;
   } catch (e) {
     console.error('Error parsing custom blog articles:', e);
-    return BLOG_ARTICLES;
+    return sortArticlesByDate(BLOG_ARTICLES, 'newest');
   }
 }
 

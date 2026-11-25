@@ -126,7 +126,7 @@ export default function JobFlowSection({ onNavigateJob }: JobFlowSectionProps) {
               key={item.step}
               className="rounded-2xl bg-surface border border-outline-variant overflow-hidden grid grid-cols-1 md:grid-cols-12 items-stretch"
             >
-              <div className="md:col-span-4 lg:col-span-3 aspect-[4/3] md:aspect-auto bg-white overflow-hidden border-b md:border-b-0 md:border-r border-outline-variant/70">
+              <div className="md:col-span-4 lg:col-span-3 aspect-[4/3] bg-white overflow-hidden border-b md:border-b-0 md:border-r border-outline-variant/70">
                 <img
                   src={item.imageUrl}
                   alt={item.imageAlt}

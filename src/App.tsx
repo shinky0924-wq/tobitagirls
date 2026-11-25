@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -73,24 +73,73 @@ export default function App() {
     return null;
   });
 
-  const scrollToElementById = (sectionId: string) => {
+  const activeScrollCleanupRef = useRef<(() => void) | null>(null);
+
+  const scrollToElementById = (sectionId: string, behavior: ScrollBehavior = 'smooth') => {
     const cleanId = sectionId.startsWith('#') ? sectionId.substring(1) : sectionId;
     const target = document.getElementById(cleanId);
-    if (target) {
-      const offsetHeader = 70;
-      const elementPosition = target.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - offsetHeader;
+    if (!target) return false;
 
-      window.scrollTo({
-        top: Math.max(0, offsetPosition),
-        behavior: 'smooth'
-      });
-      return true;
+    if (activeScrollCleanupRef.current) {
+      activeScrollCleanupRef.current();
+      activeScrollCleanupRef.current = null;
     }
-    return false;
+
+    const getHeaderOffset = () => {
+      const headerEl = document.getElementById('app-header');
+      return (headerEl ? Math.ceil(headerEl.getBoundingClientRect().height) : 68) + 12;
+    };
+
+    const computeTop = () => {
+      const el = document.getElementById(cleanId);
+      if (!el) return null;
+      return Math.max(0, Math.round(el.getBoundingClientRect().top + window.scrollY - getHeaderOffset()));
+    };
+
+    const initialTop = computeTop();
+    if (initialTop === null) return false;
+
+    window.scrollTo({
+      top: initialTop,
+      behavior,
+    });
+
+    // Re-check once after layout/lazy-images settle unless user scrolls or clicks another link
+    let cancelled = false;
+    let timerId = 0;
+    const cleanup = () => {
+      cancelled = true;
+      window.clearTimeout(timerId);
+      window.removeEventListener('wheel', cleanup);
+      window.removeEventListener('touchstart', cleanup);
+      window.removeEventListener('keydown', cleanup);
+      if (activeScrollCleanupRef.current === cleanup) {
+        activeScrollCleanupRef.current = null;
+      }
+    };
+    activeScrollCleanupRef.current = cleanup;
+    window.addEventListener('wheel', cleanup, { passive: true, once: true });
+    window.addEventListener('touchstart', cleanup, { passive: true, once: true });
+    window.addEventListener('keydown', cleanup, { passive: true, once: true });
+
+    timerId = window.setTimeout(() => {
+      const wasCancelled = cancelled;
+      cleanup();
+      if (wasCancelled) return;
+      const settledTop = computeTop();
+      if (settledTop !== null && Math.abs(settledTop - window.scrollY) > 24) {
+        window.scrollTo({ top: settledTop, behavior: 'smooth' });
+      }
+    }, 520);
+
+    return true;
   };
 
   const navigate = (newPath: string, skipScrollTop = false) => {
+    if (activeScrollCleanupRef.current) {
+      activeScrollCleanupRef.current();
+      activeScrollCleanupRef.current = null;
+    }
     if (typeof window !== 'undefined') {
       window.history.pushState({}, '', newPath);
       setPath(newPath);
@@ -98,7 +147,7 @@ export default function App() {
         const hash = newPath.split('#')[1];
         setPendingScrollTarget(hash);
       } else if (!skipScrollTop) {
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
       }
     }
   };
@@ -397,21 +446,34 @@ export default function App() {
 
   // Perform pending scroll whenever target updates across route transitions and lazy mounts
   useEffect(() => {
-    if (pendingScrollTarget) {
-      const targetId = pendingScrollTarget;
-      let attempts = 0;
-      const maxAttempts = 40; // Check up to 2.0s to account for AnimatePresence + React.lazy chunk loading
-      const interval = setInterval(() => {
-        attempts++;
-        const scrolled = scrollToElementById(targetId);
-        if (scrolled || attempts >= maxAttempts) {
-          clearInterval(interval);
+    if (!pendingScrollTarget) return;
+    const targetId = pendingScrollTarget;
+    let attempts = 0;
+    const maxAttempts = 50; // Up to 2.5s to account for AnimatePresence exit + React.lazy mount
+    const interval = window.setInterval(() => {
+      attempts++;
+      // When navigating back to home sections, wait until the home hero (#top) is mounted
+      if (currentTab === 'recruit' && !document.getElementById('top')) {
+        if (attempts >= maxAttempts) {
+          window.clearInterval(interval);
           setPendingScrollTarget(null);
         }
-      }, 50);
+        return;
+      }
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        window.clearInterval(interval);
+        requestAnimationFrame(() => {
+          scrollToElementById(targetId, 'smooth');
+        });
+        setPendingScrollTarget(null);
+      } else if (attempts >= maxAttempts) {
+        window.clearInterval(interval);
+        setPendingScrollTarget(null);
+      }
+    }, 50);
 
-      return () => clearInterval(interval);
-    }
+    return () => window.clearInterval(interval);
   }, [currentTab, clusterTopic, pendingScrollTarget]);
 
   const [blogArticles, setBlogArticles] = useState<BlogArticle[]>([]);
@@ -525,7 +587,7 @@ export default function App() {
       />
 
       {/* Main Layout Area */}
-      <main className="flex-grow pt-16 overflow-x-hidden pb-20 md:pb-0">
+      <main className="flex-grow pt-16 overflow-x-clip pb-20 md:pb-0">
         <AnimatePresence mode="wait" initial={false}>
           {currentTab === 'recruit' ? (
             /* ==========================================
@@ -533,10 +595,10 @@ export default function App() {
                ========================================== */
             <motion.div
               key="recruit-page"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.25 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.16 }}
             >
               {/* 01. ファーストビュー */}
               <Hero

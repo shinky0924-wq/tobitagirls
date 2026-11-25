@@ -21,7 +21,9 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileGuideExpanded, setMobileGuideExpanded] = useState(false);
+  const [guideDropdownOpen, setGuideDropdownOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const guideMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,6 +32,26 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!guideDropdownOpen) return;
+    const handleClickOutside = (e: globalThis.MouseEvent) => {
+      if (guideMenuRef.current && !guideMenuRef.current.contains(e.target as Node)) {
+        setGuideDropdownOpen(false);
+      }
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setGuideDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [guideDropdownOpen]);
 
   const sectionNavLinks = [
     { name: 'トップ', target: '#top' },
@@ -64,6 +86,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
   const handleSectionClick = (e: MouseEvent<HTMLAnchorElement>, target: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
+    setGuideDropdownOpen(false);
     if (target === '#top') {
       onScrollToSection('top');
       return;
@@ -75,6 +98,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
   const handleGuideCategoryClick = (e: MouseEvent<HTMLAnchorElement>, categoryId: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
+    setGuideDropdownOpen(false);
     if (categoryId === 'faq') {
       onChangeTab('faq');
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -98,7 +122,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
           isScrolled ? 'shadow-xs py-2.5' : 'py-3'
         }`}
       >
-        <div className="flex items-center justify-between lg:justify-center w-full px-3 sm:px-5 lg:px-4 max-w-[1280px] mx-auto gap-2 lg:gap-2.5 xl:gap-4">
+        <div className="flex items-center justify-between lg:justify-center w-full px-3 sm:px-5 lg:px-3 xl:px-4 max-w-[1340px] mx-auto gap-2 lg:gap-2 xl:gap-3">
           {/* Logo: 飛田ガールズ */}
           <a
             href="/"
@@ -131,7 +155,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
             </span>
           </a>
 
-          {/* Desktop Navigation: 12 Clean Section Anchors */}
+          {/* Desktop Navigation: 12 Section Anchors + 総合ガイド Dropdown */}
           <nav
             ref={navRef}
             className="hidden lg:flex items-center justify-center gap-0.5 min-w-0"
@@ -145,7 +169,7 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                   key={link.target}
                   href={link.target === '#top' ? '/' : `/${link.target}`}
                   onClick={(e) => handleSectionClick(e, link.target)}
-                  className={`font-sans text-[10.5px] xl:text-[12px] px-1.5 xl:px-2 py-1.5 rounded-xl transition-colors whitespace-nowrap cursor-pointer ${
+                  className={`font-sans text-[10px] xl:text-[11.5px] px-1 xl:px-1.5 py-1.5 rounded-xl transition-colors whitespace-nowrap cursor-pointer ${
                     isTopActive
                       ? 'font-bold bg-surface-container text-secondary hover:text-primary'
                       : 'font-medium text-on-surface-variant hover:text-primary hover:bg-surface-container/60'
@@ -155,6 +179,96 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
                 </a>
               );
             })}
+
+            {/* 総合ガイド Dropdown Menu */}
+            <div ref={guideMenuRef} className="relative">
+              <button
+                type="button"
+                id="desktop-guide-dropdown-trigger"
+                onClick={() => setGuideDropdownOpen((prev) => !prev)}
+                aria-expanded={guideDropdownOpen}
+                aria-haspopup="true"
+                className={`font-sans text-[10px] xl:text-[11.5px] px-1.5 xl:px-2 py-1.5 rounded-xl transition-colors whitespace-nowrap cursor-pointer inline-flex items-center gap-0.5 ${
+                  guideDropdownOpen || currentTab === 'cluster' || currentTab === 'blog' || currentTab === 'faq'
+                    ? 'font-bold bg-surface-container text-secondary'
+                    : 'font-medium text-on-surface-variant hover:text-primary hover:bg-surface-container/60'
+                }`}
+              >
+                <span>総合ガイド</span>
+                <LucideIcon
+                  name="ChevronDown"
+                  size={12}
+                  className={`transition-transform duration-200 shrink-0 ${guideDropdownOpen ? 'rotate-180 text-secondary' : ''}`}
+                />
+              </button>
+
+              <AnimatePresence>
+                {guideDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 4, scale: 0.98 }}
+                    transition={{ duration: 0.16 }}
+                    id="desktop-guide-dropdown-menu"
+                    className="absolute right-0 top-full mt-2 w-[420px] bg-white rounded-2xl border border-outline-variant shadow-xl p-3.5 z-50"
+                  >
+                    <div className="flex items-center justify-between px-1.5 pb-2.5 mb-2 border-b border-outline-variant/70">
+                      <span className="text-xs font-bold text-secondary">
+                        総合ガイド・特集ページ（12テーマ）
+                      </span>
+                      <a
+                        href="/#recruit-guide"
+                        onClick={(e) => handleSectionClick(e, '#recruit-guide')}
+                        className="text-[11px] font-medium text-on-surface-variant hover:text-primary transition-colors cursor-pointer"
+                      >
+                        一覧セクションへ ↓
+                      </a>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-1">
+                      {guideCategories.map((cat) => (
+                        <a
+                          key={cat.id}
+                          href={cat.path}
+                          onClick={(e) => handleGuideCategoryClick(e, cat.id)}
+                          className="px-2.5 py-2 rounded-xl hover:bg-surface-container/70 text-xs font-medium text-on-surface hover:text-primary flex items-center gap-2 transition-colors cursor-pointer"
+                        >
+                          <LucideIcon name={cat.icon} size={14} className="text-primary shrink-0" />
+                          <span className="truncate">{cat.name}</span>
+                        </a>
+                      ))}
+                    </div>
+
+                    <div className="mt-2.5 pt-2.5 border-t border-outline-variant/70 grid grid-cols-2 gap-1.5">
+                      <a
+                        href="/compare"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setGuideDropdownOpen(false);
+                          onChangeTab('compare');
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                        className="px-2.5 py-2 rounded-xl bg-surface hover:bg-surface-container/70 border border-outline-variant/60 text-[11px] font-semibold text-on-surface hover:text-primary text-center transition-colors cursor-pointer"
+                      >
+                        他業種との働き方比較
+                      </a>
+                      <a
+                        href="/about"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setGuideDropdownOpen(false);
+                          onChangeTab('about');
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                        className="px-2.5 py-2 rounded-xl bg-surface hover:bg-surface-container/70 border border-outline-variant/60 text-[11px] font-semibold text-on-surface hover:text-primary text-center transition-colors cursor-pointer"
+                      >
+                        運営情報・お店について
+                      </a>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </nav>
 
           {/* Right: Prominent Official LINE Button + Mobile Menu Toggle */}
@@ -218,14 +332,14 @@ export default function Header({ currentTab, onChangeTab, onCtaclick, onScrollTo
 
               {/* Expandable 12-Category Guides */}
               <div className="border border-outline-variant rounded-2xl bg-white overflow-hidden">
-                <button
-                  type="button"
-                  onClick={() => setMobileGuideExpanded(!mobileGuideExpanded)}
-                  className="w-full px-4 py-3 text-left flex items-center justify-between bg-surface-container/40 font-bold text-sm text-secondary cursor-pointer"
-                >
-                  <span>詳細ガイド・特集ページ（12テーマ）</span>
-                  <LucideIcon name={mobileGuideExpanded ? 'ChevronUp' : 'ChevronDown'} size={16} />
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => setMobileGuideExpanded(!mobileGuideExpanded)}
+                    className="w-full px-4 py-3 text-left flex items-center justify-between bg-surface-container/40 font-bold text-sm text-secondary cursor-pointer"
+                  >
+                    <span>総合ガイド（12テーマ）</span>
+                    <LucideIcon name={mobileGuideExpanded ? 'ChevronUp' : 'ChevronDown'} size={16} />
+                  </button>
                 {mobileGuideExpanded && (
                   <div className="p-2 grid grid-cols-2 gap-1.5 bg-white">
                     {guideCategories.map((cat) => (

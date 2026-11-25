@@ -1,5 +1,19 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, getDocs, setDoc, doc, getDoc, query, orderBy, deleteDoc, updateDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import {
+  getFirestore,
+  initializeFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  setDoc,
+  doc,
+  getDoc,
+  query,
+  orderBy,
+  deleteDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import config from '../firebase-applet-config.json';
 import { BlogArticle } from './blogData';
 import { SiteContent } from './siteContent';
@@ -16,10 +30,75 @@ const firebaseConfig = {
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
-// Use custom firestore database ID if specified in config
-export const db = config.firestoreDatabaseId 
-  ? getFirestore(app, config.firestoreDatabaseId)
-  : getFirestore(app);
+export const auth = getAuth(app);
+
+// Force long-polling so proxied/iframe browsers do not hang for 10s on WebChannel streams
+function createFirestoreInstance() {
+  const settings = { experimentalForceLongPolling: true };
+  try {
+    return config.firestoreDatabaseId
+      ? initializeFirestore(app, settings, config.firestoreDatabaseId)
+      : initializeFirestore(app, settings);
+  } catch {
+    return config.firestoreDatabaseId
+      ? getFirestore(app, config.firestoreDatabaseId)
+      : getFirestore(app);
+  }
+}
+
+export const db = createFirestoreInstance();
+
+export enum OperationType {
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete',
+  LIST = 'list',
+  GET = 'get',
+  WRITE = 'write',
+}
+
+export interface FirestoreErrorInfo {
+  error: string;
+  operationType: OperationType;
+  path: string | null;
+  authInfo: {
+    userId?: string | null;
+    email?: string | null;
+    emailVerified?: boolean | null;
+    isAnonymous?: boolean | null;
+    tenantId?: string | null;
+    providerInfo?: {
+      providerId?: string | null;
+      email?: string | null;
+    }[];
+  };
+}
+
+export function handleFirestoreError(
+  error: unknown,
+  operationType: OperationType,
+  path: string | null
+): void {
+  const errInfo: FirestoreErrorInfo = {
+    error: error instanceof Error ? error.message : String(error),
+    authInfo: {
+      userId: auth.currentUser?.uid,
+      email: auth.currentUser?.email,
+      emailVerified: auth.currentUser?.emailVerified,
+      isAnonymous: auth.currentUser?.isAnonymous,
+      tenantId: auth.currentUser?.tenantId,
+      providerInfo:
+        auth.currentUser?.providerData?.map((provider) => ({
+          providerId: provider.providerId,
+          email: provider.email,
+        })) || [],
+    },
+    operationType,
+    path,
+  };
+  console.error('Firestore Error: ', JSON.stringify(errInfo));
+  throw new Error(JSON.stringify(errInfo));
+}
 
 // In-memory & session storage flag to avoid repeated failing calls when daily quota is reached
 let quotaExceededDetected = false;
@@ -33,6 +112,16 @@ function isQuotaExceededError(error: unknown): boolean {
     msg.toLowerCase().includes('quota limit exceeded') ||
     msg.toLowerCase().includes('quota exceeded') ||
     msg.toLowerCase().includes('resource_exhausted')
+  );
+}
+
+function isPermissionDeniedError(error: unknown): boolean {
+  if (!error) return false;
+  const msg = error instanceof Error ? error.message : String(error);
+  const code = (error as any)?.code;
+  return (
+    code === 'permission-denied' ||
+    msg.toLowerCase().includes('missing or insufficient permissions')
   );
 }
 
@@ -51,7 +140,16 @@ export function isFirestoreQuotaExceeded(): boolean {
   return false;
 }
 
-function handleQuotaOrError(operation: string, e: unknown): void {
+function handleQuotaOrError(
+  operation: string,
+  e: unknown,
+  operationType?: OperationType,
+  path?: string
+): void {
+  if (isPermissionDeniedError(e) && operationType) {
+    handleFirestoreError(e, operationType, path || null);
+    return;
+  }
   if (isQuotaExceededError(e)) {
     quotaExceededDetected = true;
     try {
@@ -81,6 +179,24 @@ export interface ConsultationSubmission {
   source: 'website';
 }
 
+function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error(`Firestore timeout (${ms}ms) during ${label}`));
+    }, ms);
+    promise.then(
+      (val) => {
+        clearTimeout(timer);
+        resolve(val);
+      },
+      (err) => {
+        clearTimeout(timer);
+        reject(err);
+      }
+    );
+  });
+}
+
 export async function submitConsultation(submission: Omit<ConsultationSubmission, 'createdAt' | 'status' | 'source'>) {
   try {
     const colRef = collection(db, 'consultations');
@@ -92,7 +208,7 @@ export async function submitConsultation(submission: Omit<ConsultationSubmission
     });
     return { success: true, id: docRef.id };
   } catch (e) {
-    handleQuotaOrError('submitConsultation', e);
+    handleQuotaOrError('submitConsultation', e, OperationType.CREATE, 'consultations');
     return { success: false, fallbackSaved: true };
   }
 }
@@ -105,7 +221,7 @@ export async function getConsultations(): Promise<ConsultationSubmission[]> {
   try {
     const colRef = collection(db, 'consultations');
     const q = query(colRef, orderBy('createdAt', 'desc'));
-    const snapshot = await getDocs(q);
+    const snapshot = await withTimeout(getDocs(q), 6000, 'getConsultations');
     const submissions: ConsultationSubmission[] = [];
     snapshot.forEach((doc) => {
       submissions.push({
@@ -115,7 +231,7 @@ export async function getConsultations(): Promise<ConsultationSubmission[]> {
     });
     return submissions;
   } catch (e) {
-    handleQuotaOrError('getConsultations', e);
+    handleQuotaOrError('getConsultations', e, OperationType.LIST, 'consultations');
     return [];
   }
 }
@@ -127,7 +243,7 @@ export async function updateConsultationStatus(id: string, status: 'unread' | 'r
     await updateDoc(docRef, { status });
     return true;
   } catch (e) {
-    handleQuotaOrError('updateConsultationStatus', e);
+    handleQuotaOrError('updateConsultationStatus', e, OperationType.UPDATE, `consultations/${id}`);
     return false;
   }
 }
@@ -139,7 +255,7 @@ export async function deleteConsultation(id: string) {
     await deleteDoc(docRef);
     return true;
   } catch (e) {
-    handleQuotaOrError('deleteConsultation', e);
+    handleQuotaOrError('deleteConsultation', e, OperationType.DELETE, `consultations/${id}`);
     return false;
   }
 }
@@ -154,7 +270,7 @@ export async function saveBlogArticlesToFirestore(articles: BlogArticle[]): Prom
     await setDoc(docRef, { articles });
     return true;
   } catch (e) {
-    handleQuotaOrError('saveBlogArticlesToFirestore', e);
+    handleQuotaOrError('saveBlogArticlesToFirestore', e, OperationType.WRITE, 'cms/blog');
     return false;
   }
 }
@@ -166,14 +282,14 @@ export async function getBlogArticlesFromFirestore(): Promise<BlogArticle[] | nu
   }
   try {
     const docRef = doc(db, 'cms', 'blog');
-    const docSnap = await getDoc(docRef);
+    const docSnap = await withTimeout(getDoc(docRef), 6000, 'getBlogArticlesFromFirestore');
     if (docSnap.exists()) {
       const data = docSnap.data();
       return (data.articles as BlogArticle[]) || null;
     }
     return null;
   } catch (e) {
-    handleQuotaOrError('getBlogArticlesFromFirestore', e);
+    handleQuotaOrError('getBlogArticlesFromFirestore', e, OperationType.GET, 'cms/blog');
     return null;
   }
 }
@@ -188,7 +304,7 @@ export async function saveSiteContentToFirestore(content: SiteContent): Promise<
     await setDoc(docRef, { content });
     return true;
   } catch (e) {
-    handleQuotaOrError('saveSiteContentToFirestore', e);
+    handleQuotaOrError('saveSiteContentToFirestore', e, OperationType.WRITE, 'cms/site');
     return false;
   }
 }
@@ -200,14 +316,14 @@ export async function getSiteContentFromFirestore(): Promise<SiteContent | null>
   }
   try {
     const docRef = doc(db, 'cms', 'site');
-    const docSnap = await getDoc(docRef);
+    const docSnap = await withTimeout(getDoc(docRef), 6000, 'getSiteContentFromFirestore');
     if (docSnap.exists()) {
       const data = docSnap.data();
       return (data.content as SiteContent) || null;
     }
     return null;
   } catch (e) {
-    handleQuotaOrError('getSiteContentFromFirestore', e);
+    handleQuotaOrError('getSiteContentFromFirestore', e, OperationType.GET, 'cms/site');
     return null;
   }
 }

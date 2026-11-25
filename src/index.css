@@ -23,21 +23,25 @@
 
 /* Mobile Friendly & Core Web Vitals optimizations */
 html {
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
   font-family: var(--font-sans);
   background-color: var(--color-surface);
   color: var(--color-on-surface);
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
   position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+section[id],
+#access {
+  scroll-margin-top: 84px;
 }
 
 /* Ensure mobile form inputs don't trigger unwanted iOS auto-zoom */

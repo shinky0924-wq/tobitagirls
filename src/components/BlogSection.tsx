@@ -1,8 +1,8 @@
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { BLOG_CATEGORIES, BlogArticle, getValidArticleEyeCatch, getAuthorProfile } from '../blogData';
+import { BLOG_CATEGORIES, BlogArticle, getValidArticleEyeCatch, getAuthorProfile, sortArticlesByDate } from '../blogData';
 import { ArticleCardImage } from './ArticleCardImage';
-import { BookOpen, Calendar, Clock, Search, ArrowLeft, Tag, MessageCircle, ChevronRight, ChevronLeft, Sparkles, Send, ShieldCheck, HeartHandshake, CheckCircle2, RefreshCw } from 'lucide-react';
+import { BookOpen, Calendar, Clock, Search, ArrowLeft, Tag, MessageCircle, ChevronRight, ChevronLeft, Sparkles, Send, ShieldCheck, HeartHandshake, RefreshCw } from 'lucide-react';
 import LucideIcon from './LucideIcon';
 import { updatePageJsonLd } from '../utils/jsonLd';
 import { FAQ_LAST_UPDATED_ISO } from '../faq100Data';
@@ -115,19 +115,7 @@ export default function BlogSection({
       return matchesCategory && matchesSearch;
     });
 
-    if (sortOrder === 'newest') {
-      return [...list].sort((a, b) => {
-        const idA = parseInt(a.id, 10) || 0;
-        const idB = parseInt(b.id, 10) || 0;
-        return idB - idA;
-      });
-    }
-
-    return [...list].sort((a, b) => {
-      const idA = parseInt(a.id, 10) || 0;
-      const idB = parseInt(b.id, 10) || 0;
-      return idA - idB;
-    });
+    return sortArticlesByDate(list, sortOrder === 'newest' ? 'newest' : 'oldest');
   }, [articles, selectedCategory, searchQuery, sortOrder]);
 
   // Reset page when filter or search changes
@@ -677,7 +665,7 @@ export default function BlogSection({
                           : 'text-on-surface-variant hover:text-on-surface'
                       }`}
                     >
-                      ✨ 新着順
+                      ✨ 最新順
                     </button>
                     <button
                       onClick={() => setSortOrder('id')}
@@ -687,7 +675,7 @@ export default function BlogSection({
                           : 'text-on-surface-variant hover:text-on-surface'
                       }`}
                     >
-                      📖 番号順
+                      📖 古い順
                     </button>
                   </div>
                   <div className="text-xs font-sans text-on-surface-variant bg-white px-3 py-2 rounded-2xl border border-outline-variant">
@@ -1004,69 +992,6 @@ export default function BlogSection({
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold leading-snug text-[#2c1a1e] tracking-tight text-balance max-w-2xl">
                 {currentArticle!.title}
               </h1>
-
-              {/* Author & Editorial Credibility Card (E-E-A-T Guarantee) */}
-              <div className="mt-6 p-5 bg-gradient-to-br from-rose-50/80 via-white to-pink-50/60 rounded-3xl border border-rose-200 shadow-xs">
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                  <div className="flex items-center gap-3.5">
-                    <div className="relative shrink-0">
-                      <AvatarDisplay
-                        avatar={currentAuthorProfile?.avatar}
-                        name={currentAuthorProfile?.name}
-                        className="w-12 h-12 rounded-2xl shadow-xs"
-                        textClassName="text-2xl"
-                      />
-                      <div className="absolute -bottom-1 -right-1 bg-secondary text-white p-1 rounded-full text-[9px] shadow-xs" title="女性スタッフ公認監修">
-                        <CheckCircle2 size={10} />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <span className="text-[11px] font-bold text-secondary bg-rose-100/90 px-2.5 py-0.5 rounded-full">
-                          監修：飛田新地ガールズ求人サポートスタッフ
-                        </span>
-                        <span className="text-[10px] font-bold text-gray-700 bg-gray-100 px-2 py-0.5 rounded-full">
-                          現場スタッフ確認済み
-                        </span>
-                      </div>
-                      <div className="text-sm sm:text-base font-bold text-[#2c1a1e] flex flex-wrap items-center gap-1.5">
-                        <span>執筆：{currentAuthorProfile?.name || 'さくら'}</span>
-                        <span className="text-xs font-normal text-on-surface-variant">
-                          （{currentAuthorProfile?.role || '料亭直営 女性サポートスタッフ（歴8年）'}）
-                        </span>
-                      </div>
-                      <div className="text-[11px] text-gray-500 font-mono mt-0.5 flex items-center gap-1">
-                        <RefreshCw size={11} className="text-secondary" />
-                        <span>最終更新：2026/09/05（女性スタッフ現場確認済み）</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col sm:items-end gap-1.5 shrink-0 self-stretch sm:self-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-rose-100">
-                    <div className="text-[11px] text-rose-800 bg-white border border-rose-200 px-3 py-1.5 rounded-full font-medium flex items-center justify-center gap-1">
-                      <ShieldCheck size={13} className="text-secondary" />
-                      <span>{currentAuthorProfile?.experienceTag || '女性スタッフ確認済み'}</span>
-                    </div>
-                    {onNavigateAbout && (
-                      <button
-                        onClick={onNavigateAbout}
-                        className="text-[11px] text-secondary hover:text-rose-800 font-bold underline cursor-pointer text-center sm:text-right"
-                      >
-                        運営者情報・お店のご案内について →
-                      </button>
-                    )}
-                  </div>
-                </div>
-
-                <div className="mt-3 pt-3 border-t border-rose-100/80 text-xs text-[#5e474c] leading-relaxed flex items-start gap-1.5">
-                  <span className="text-secondary font-bold shrink-0">【執筆・監修者コメント】</span>
-                  <span>
-                    {currentAuthorProfile?.comment || '当直営料亭の求人担当スタッフによる現場情報と実際の募集条件をもとに、法令および組合規約に基づいた事実のみを記載しています。'}
-                  </span>
-                </div>
-              </div>
-
-
             </div>
 
             {/* Article Fast Summary Box */}

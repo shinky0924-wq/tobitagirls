@@ -127,6 +127,7 @@ function buildHomeNoscript(): string {
           <a href="/#flow">応募の流れ</a>
           <a href="/#requirements">募集要項</a>
           <a href="/#faq-preview">よくある質問</a>
+          <a href="/#recruit-guide">総合ガイド</a>
           <a href="https://lin.ee/phFZoea" target="_blank" rel="noopener noreferrer" class="ssr-nav-cta">LINEで相談</a>
         </nav>
       </div>
@@ -1022,7 +1023,14 @@ function buildAboutNoscript(): string {
 }
 
 function buildBlogIndexNoscript(articles: any[] = []): string {
-  const validArticles = articles.filter((a: any) => a && a.slug && a.title && !a.seoNoindex);
+  const validArticles = articles
+    .filter((a: any) => a && a.slug && a.title && !a.seoNoindex)
+    .sort((a: any, b: any) => {
+      const dateA = Date.parse(String(a.publishedAt || '').replace(/\./g, '-')) || 0;
+      const dateB = Date.parse(String(b.publishedAt || '').replace(/\./g, '-')) || 0;
+      if (dateB !== dateA) return dateB - dateA;
+      return (parseInt(String(b.id || ''), 10) || 0) - (parseInt(String(a.id || ''), 10) || 0);
+    });
   const byCategory = new Map<string, { label: string; items: any[] }>();
   for (const a of validArticles) {
     const key = a.category || 'general';
@@ -1067,17 +1075,22 @@ function buildBlogIndexNoscript(articles: any[] = []): string {
   `;
 }
 
+function renderSsrInlineText(text: string): string {
+  const escaped = escapeHtml(text).replace(/\n/g, '<br />');
+  return escaped.replace(/\[([^\]]+)\]\((\/[a-zA-Z0-9/_#-]+)\)/g, '<a href="$2">$1</a>');
+}
+
 function buildBlogArticleNoscript(article: any): string {
   let bodyText = '';
   if (Array.isArray(article.content)) {
     article.content.forEach((block: any) => {
       if (block.type === 'h2') bodyText += `<h2>${escapeHtml(block.text)}</h2>`;
       else if (block.type === 'h3') bodyText += `<h3>${escapeHtml(block.text)}</h3>`;
-      else if (block.type === 'p') bodyText += `<p>${escapeHtml(block.text)}</p>`;
+      else if (block.type === 'p') bodyText += `<p>${renderSsrInlineText(block.text)}</p>`;
       else if (block.type === 'list' && Array.isArray(block.items)) {
-        bodyText += `<ul>${block.items.map((it: string) => `<li>${escapeHtml(it)}</li>`).join('')}</ul>`;
+        bodyText += `<ul>${block.items.map((it: string) => `<li>${renderSsrInlineText(it)}</li>`).join('')}</ul>`;
       } else if (block.type === 'qna' && block.question) {
-        bodyText += `<section><h3>Q. ${escapeHtml(block.question)}</h3><p>A. ${escapeHtml(block.answer || block.text || '')}</p></section>`;
+        bodyText += `<section><h3>Q. ${escapeHtml(block.question)}</h3><p>A. ${renderSsrInlineText(block.answer || block.text || '')}</p></section>`;
       }
     });
   }
