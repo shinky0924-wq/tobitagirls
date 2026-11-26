@@ -333,7 +333,7 @@ export function mergeWithDefaultArticles(incomingArticles: BlogArticle[]): { mer
   return { merged: sortArticlesByDate(merged, 'newest'), hasChanges };
 }
 
-const BLOG_DATA_VERSION = '20261125_blog_clean_thumbnails_v30';
+const BLOG_DATA_VERSION = '20261126_blog_5_experienced_seo_v34';
 
 export function getStoredArticles(): BlogArticle[] {
   if (typeof window === 'undefined') return sortArticlesByDate(BLOG_ARTICLES, 'newest');
