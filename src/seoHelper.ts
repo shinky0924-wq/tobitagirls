@@ -1023,6 +1023,30 @@ function buildAboutNoscript(): string {
 }
 
 function buildBlogIndexNoscript(articles: any[] = []): string {
+  const ORDERED_CATEGORIES: { id: string; label: string }[] = [
+    { id: 'voice', label: '女性体験談' },
+    { id: 'beginner', label: '未経験・初めて' },
+    { id: 'experienced', label: '経験者・移籍' },
+    { id: 'job', label: '仕事内容・1日の流れ' },
+    { id: 'salary', label: '給料・報酬' },
+    { id: 'benefits', label: '待遇・設備' },
+    { id: 'workstyle', label: '勤務時間・シフト' },
+    { id: 'criteria', label: '採用基準' },
+    { id: 'interview', label: '応募・面接・体験入店' },
+    { id: 'access', label: '通勤・アクセス' },
+    { id: 'privacy', label: '身バレ・プライバシー' },
+    { id: 'safety', label: '安全・トラブル対策' },
+    { id: 'shops', label: 'お店選び' },
+    { id: 'support', label: 'サポート体制' },
+    { id: 'dorm', label: '寮・出稼ぎ' },
+    { id: 'technique', label: 'テクニック' },
+    { id: 'repeat', label: 'リピート・指名率UP' },
+    { id: 'beauty', label: '美容・身だしなみ' },
+    { id: 'quit', label: '退店・辞め方' },
+    { id: 'faq', label: 'よくある質問' },
+    { id: 'relationships', label: '人間関係・職場環境' },
+  ];
+
   const validArticles = articles
     .filter((a: any) => a && a.slug && a.title && !a.seoNoindex)
     .sort((a: any, b: any) => {
@@ -1031,10 +1055,14 @@ function buildBlogIndexNoscript(articles: any[] = []): string {
       if (dateB !== dateA) return dateB - dateA;
       return (parseInt(String(b.id || ''), 10) || 0) - (parseInt(String(a.id || ''), 10) || 0);
     });
+
   const byCategory = new Map<string, { label: string; items: any[] }>();
+  for (const cat of ORDERED_CATEGORIES) {
+    byCategory.set(cat.id, { label: cat.label, items: [] });
+  }
   for (const a of validArticles) {
-    const key = a.category || 'general';
-    const label = a.categoryLabel || 'お仕事コラム';
+    const key = a.category || 'faq';
+    const label = a.categoryLabel || 'よくある質問';
     if (!byCategory.has(key)) {
       byCategory.set(key, { label, items: [] });
     }
@@ -1042,6 +1070,7 @@ function buildBlogIndexNoscript(articles: any[] = []): string {
   }
 
   const categorySections = Array.from(byCategory.entries())
+    .filter(([, group]) => group.items.length > 0)
     .map(([key, group]) => {
       const itemsHtml = group.items
         .map(
@@ -1061,15 +1090,33 @@ function buildBlogIndexNoscript(articles: any[] = []): string {
     .join('');
 
   return `
-    <header>
-      <p>飛田新地お仕事コラム・給与・面接ガイド一覧｜飛田ガールズ【公式】</p>
-      <p><a href="/">トップページ（飛田ガールズ）</a> ／ 全${validArticles.length}記事 ／ 24時間受付中・相談無料・完全秘密厳守</p>
+    <header class="ssr-topbar">
+      <div class="ssr-topbar-inner">
+        <a href="/" class="ssr-brand">
+          <img src="/favicon.png" alt="飛田ガールズ アイコン" class="ssr-logo-img" width="36" height="36" />
+          <span class="ssr-brand-text">
+            <strong>飛田ガールズ</strong>
+            <small>飛田新地求人</small>
+          </span>
+        </a>
+        <nav class="ssr-topnav" aria-label="主要メニュー">
+          <a href="/">トップ</a>
+          <a href="/requirements">募集要項</a>
+          <a href="/faq">よくある質問</a>
+          <a href="/blog">お仕事コラム</a>
+        </nav>
+      </div>
     </header>
-    <main>
+    <main class="ssr-below-fold">
       <article>
-        <h1>飛田新地お仕事コラム・給与・面接ガイド一覧（全${validArticles.length}記事）</h1>
-        <p class="lead">飛田新地のお仕事、給料システム、面接・体入の流れ、寮生活、安全対策など、現場の女性スタッフによる役立つ最新コラム全${validArticles.length}記事の一覧です。</p>
+        <h1>飛田新地のお仕事コラム</h1>
+        <p class="lead">働く前に知りたいことも、働き始めてから役立つことも。飛田新地でのお仕事を考えている女性に向けて、仕事内容・給料・待遇・採用基準・未経験からの始め方・面接や体験入店・寮生活・身バレ対策など、気になる情報を分かりやすくまとめています。初めての方も、経験のある方も、自分に合った記事からご覧ください。</p>
         ${categorySections}
+        <section id="blog-recruit-cta">
+          <h2>飛田新地でのお仕事を検討している方へ</h2>
+          <p>仕事内容や給料、待遇、採用基準、面接の流れなどを確認したい方は、飛田ガールズの募集要項もあわせてご覧ください。初めての方も、気になることがあれば応募前にお問い合わせいただけます。</p>
+          <p><a href="/requirements">募集要項を見る</a> ／ <a href="${OFFICIAL_LINE_URL}">LINEで相談・お問い合わせ</a></p>
+        </section>
       </article>
     </main>
   `;
@@ -1436,11 +1483,11 @@ export function injectSeoMetadata(originalHtml: string, reqUrl: string): { html:
       }
     }
   } else if (cleanPath === '/blog' || cleanPath === '/blog/') {
-    title = '飛田新地お仕事コラム一覧｜給与・面接・体験談ガイド｜飛田ガールズ';
-    description = '飛田新地のお仕事、給料システム、面接・体入の流れ、寮生活、安全対策など、現場の女性スタッフによる役立つ最新コラム一覧。';
+    title = '飛田新地のお仕事コラム｜給料・仕事内容・採用基準・未経験ガイド｜飛田ガールズ';
+    description = '飛田新地で働くことを考えている女性向けのお仕事コラム。仕事内容、給料・報酬、未経験からの始め方、採用基準、面接・体験入店、待遇、サポート体制、寮、身バレ対策など、応募前に知っておきたい情報を分かりやすく紹介します。';
     canonicalUrl = 'https://tobitashinchi-recruit.com/blog';
-    ogImageUrl = DEFAULT_IMAGE;
-    ogImageAlt = '飛田新地お仕事コラム 飛田ガールズ';
+    ogImageUrl = 'https://tobitashinchi-recruit.com/images/blog_hero_editorial_guide_1795658839229.jpg';
+    ogImageAlt = '飛田新地のお仕事コラム｜飛田ガールズ';
     let blogArticlesList: any[] = [];
     try {
       const articlesFile = path.join(process.cwd(), 'data', 'blogArticles.json');

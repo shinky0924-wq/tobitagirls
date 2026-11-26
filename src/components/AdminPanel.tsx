@@ -673,7 +673,7 @@ export default function AdminPanel({ onClose, onRefreshBlog, onRefreshSite }: Ad
       .filter(t => t.length > 0);
 
     const categoryObj = BLOG_CATEGORIES.find(c => c.id === category);
-    const categoryLabel = categoryObj ? categoryObj.label : '未経験者向け';
+    const categoryLabel = categoryObj ? categoryObj.label : '未経験・初めて';
 
     // Format content block by stripping the temporary visual editor IDs
     const formattedContent = blocks.map(({ id, ...rest }) => rest);

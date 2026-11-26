@@ -1,66 +1,131 @@
-import { useState, useMemo, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { BLOG_CATEGORIES, BlogArticle, getValidArticleEyeCatch, getAuthorProfile, sortArticlesByDate } from '../blogData';
+import React, { useState, useMemo, useEffect } from 'react';
+import {
+  BLOG_CATEGORIES,
+  BLOG_HERO_IMAGE,
+  RECOMMENDED_BLOG_SLUGS,
+  BlogArticle,
+  getValidArticleEyeCatch,
+  getAuthorProfile,
+  sortArticlesByDate,
+} from '../blogData';
 import { ArticleCardImage } from './ArticleCardImage';
-import { BookOpen, Calendar, Clock, Search, ArrowLeft, Tag, MessageCircle, ChevronRight, ChevronLeft, Sparkles, Send, ShieldCheck, HeartHandshake, RefreshCw } from 'lucide-react';
-import LucideIcon from './LucideIcon';
+import {
+  Search,
+  X,
+  ArrowLeft,
+  ArrowRight,
+  ChevronRight,
+  ChevronLeft,
+  MessageCircle,
+  FileText,
+} from 'lucide-react';
 import { updatePageJsonLd } from '../utils/jsonLd';
 import { FAQ_LAST_UPDATED_ISO } from '../faq100Data';
 import {
+  OFFICIAL_LINE_URL,
   resolveAuthorPersonNode,
   buildGlossaryMentions,
   buildArticleCitations,
   calculateArticleWordCount,
 } from '../utils/knowledgeGraph';
 
+const SEARCH_SUGGESTIONS = [
+  '未経験',
+  '給料',
+  '面接',
+  '採用基準',
+  '住民票',
+  '身バレ',
+  '寮',
+  '仲居さん',
+];
+
+const RELATED_CATEGORY_MAP: Record<string, string[]> = {
+  voice: ['beginner', 'support', 'relationships'],
+  beginner: ['job', 'interview', 'support'],
+  experienced: ['shops', 'salary', 'workstyle'],
+  job: ['beginner', 'salary', 'support'],
+  salary: ['benefits', 'job', 'workstyle'],
+  benefits: ['salary', 'dorm', 'beauty'],
+  workstyle: ['salary', 'privacy', 'access'],
+  criteria: ['interview', 'beginner', 'beauty'],
+  interview: ['criteria', 'beginner', 'access'],
+  access: ['interview', 'shops', 'dorm'],
+  privacy: ['safety', 'workstyle', 'salary'],
+  safety: ['privacy', 'support', 'shops'],
+  shops: ['access', 'relationships', 'experienced'],
+  support: ['beginner', 'relationships', 'safety'],
+  dorm: ['benefits', 'access', 'salary'],
+  technique: ['repeat', 'beauty', 'support'],
+  repeat: ['technique', 'support', 'salary'],
+  beauty: ['benefits', 'technique', 'criteria'],
+  quit: ['salary', 'benefits', 'faq'],
+  faq: ['beginner', 'interview', 'criteria'],
+  relationships: ['support', 'shops', 'voice'],
+};
+
+const BLOG_INDEX_TITLE =
+  '飛田新地のお仕事コラム｜給料・仕事内容・採用基準・未経験ガイド｜飛田ガールズ';
+const BLOG_INDEX_DESCRIPTION =
+  '飛田新地で働くことを考えている女性向けのお仕事コラム。仕事内容、給料・報酬、未経験からの始め方、採用基準、面接・体験入店、待遇、サポート体制、寮、身バレ対策など、応募前に知っておきたい情報を分かりやすく紹介します。';
+
 function AvatarDisplay({
   avatar,
   name,
-  className = 'w-8 h-8 rounded-full',
-  textClassName = 'text-sm',
+  className = 'w-10 h-10 rounded-full',
 }: {
   avatar?: string;
   name?: string;
   className?: string;
-  textClassName?: string;
 }) {
-  const isImage = avatar && (
-    avatar.startsWith('/') ||
-    avatar.startsWith('http') ||
-    avatar.includes('.jpg') ||
-    avatar.includes('.png') ||
-    avatar.includes('.webp') ||
-    avatar.includes('.svg')
-  );
+  const [failed, setFailed] = useState(false);
+  const isImage =
+    !failed &&
+    avatar &&
+    (avatar.startsWith('/') ||
+      avatar.startsWith('http') ||
+      avatar.includes('.jpg') ||
+      avatar.includes('.png') ||
+      avatar.includes('.webp') ||
+      avatar.includes('.svg'));
 
   if (isImage) {
     return (
       <img
         src={avatar}
-        alt={name || '監修スタッフ'}
-        className={`${className} object-cover border border-rose-100 bg-rose-50`}
+        alt={name || '執筆スタッフ'}
+        className={`${className} object-cover border border-[#EFE0E5] bg-[#FFF0F4]`}
         loading="lazy"
         decoding="async"
         referrerPolicy="no-referrer"
-        onError={(e) => {
-          const target = e.currentTarget;
-          target.style.display = 'none';
-          if (target.parentElement && !target.parentElement.querySelector('.avatar-fallback')) {
-            const fallback = document.createElement('span');
-            fallback.className = `avatar-fallback ${className} flex items-center justify-center bg-rose-50 border border-rose-100 ${textClassName}`;
-            fallback.textContent = '👩‍💼';
-            target.parentElement.appendChild(fallback);
-          }
-        }}
+        onError={() => setFailed(true)}
       />
     );
   }
 
   return (
-    <span className={`${className} bg-rose-50 border border-rose-100 flex items-center justify-center ${textClassName}`}>
-      {avatar || '👩‍💼'}
+    <span
+      className={`${className} bg-[#FFF0F4] border border-[#EFE0E5] flex items-center justify-center text-xs font-bold text-[#9D3B5E]`}
+      aria-hidden="true"
+    >
+      {(name || 'ス').slice(0, 1)}
     </span>
   );
+}
+
+function formatDateDisplay(dateStr?: string): string {
+  if (!dateStr) return '';
+  return dateStr.trim().replace(/-/g, '.');
+}
+
+function getEffectiveUpdatedDate(article: BlogArticle): string {
+  const updated = (article as BlogArticle & { updatedAt?: string }).updatedAt;
+  if (updated) return updated.replace(/-/g, '.');
+  const pub = (article.publishedAt || '').replace(/\./g, '-');
+  if (pub && pub >= FAQ_LAST_UPDATED_ISO) {
+    return pub.replace(/-/g, '.');
+  }
+  return FAQ_LAST_UPDATED_ISO.replace(/-/g, '.');
 }
 
 interface BlogSectionProps {
@@ -73,6 +138,7 @@ interface BlogSectionProps {
   onSimulatorClick: () => void;
   onNavigateAbout?: () => void;
   onNavigateHome?: () => void;
+  onNavigatePath?: (path: string) => void;
 }
 
 export default function BlogSection({
@@ -82,17 +148,16 @@ export default function BlogSection({
   onSelectSlug,
   onCtaclick,
   onInjectedScroll,
-  onSimulatorClick,
-  onNavigateAbout,
-  onNavigateHome
+  onNavigateHome,
+  onNavigatePath,
 }: BlogSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory || 'all');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [sortOrder, setSortOrder] = useState<'newest' | 'id'>('newest');
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const ARTICLES_PER_PAGE = 9;
+  const [heroImgFailed, setHeroImgFailed] = useState<boolean>(false);
+  const ARTICLES_PER_PAGE = 12;
 
-  // Sync when initialCategory prop changes
   useEffect(() => {
     if (initialCategory && initialCategory !== 'all') {
       setSelectedCategory(initialCategory);
@@ -103,35 +168,86 @@ export default function BlogSection({
     return !!selectedSlug && articles.length === 0;
   }, [selectedSlug, articles]);
 
-  // Filter & Search & Sort articles (exclude seoNoindex thin/duplicate articles from listing)
+  // Indexable public articles only for listing counts & filtering
+  const publicArticles = useMemo(() => {
+    return articles.filter((a) => a && a.slug && a.title && !a.seoNoindex);
+  }, [articles]);
+
+  // Count articles per category so empty categories are never shown in public UI
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { all: publicArticles.length };
+    for (const art of publicArticles) {
+      counts[art.category] = (counts[art.category] || 0) + 1;
+    }
+    return counts;
+  }, [publicArticles]);
+
+  const activeCategories = useMemo(() => {
+    return BLOG_CATEGORIES.filter((cat) => cat.id === 'all' || (categoryCounts[cat.id] || 0) > 0);
+  }, [categoryCounts]);
+
+  const currentCategoryInfo = useMemo(() => {
+    return BLOG_CATEGORIES.find((c) => c.id === selectedCategory) || BLOG_CATEGORIES[0];
+  }, [selectedCategory]);
+
+  // Curated recommended articles (only real existing articles)
+  const recommendedArticles = useMemo(() => {
+    const bySlug = new Map(publicArticles.map((a) => [a.slug, a]));
+    return RECOMMENDED_BLOG_SLUGS.map((item) => {
+      const article = bySlug.get(item.slug);
+      return article ? { article, shortLabel: item.shortLabel } : null;
+    }).filter((x): x is { article: BlogArticle; shortLabel: string } => x !== null);
+  }, [publicArticles]);
+
+  // Filter & Search (title, summary, tags, categoryLabel, and body prose) + Sort
   const filteredArticles = useMemo(() => {
-    const list = articles.filter((article) => {
-      if (article.seoNoindex) return false;
+    const q = searchQuery.trim().toLowerCase();
+    const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
+
+    const list = publicArticles.filter((article) => {
       const matchesCategory = selectedCategory === 'all' || article.category === selectedCategory;
-      const matchesSearch = 
-        article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-      return matchesCategory && matchesSearch;
+      if (!matchesCategory) return false;
+      if (tokens.length === 0) return true;
+
+      const bodySample = Array.isArray(article.content)
+        ? article.content
+            .map((b) => [b.text, b.question, b.answer, ...(b.items || [])].filter(Boolean).join(' '))
+            .join(' ')
+            .toLowerCase()
+        : '';
+
+      const haystack = [
+        article.title,
+        article.summary,
+        article.categoryLabel,
+        ...(article.tags || []),
+        bodySample,
+      ]
+        .join(' ')
+        .toLowerCase();
+
+      return tokens.every((tok) => haystack.includes(tok));
     });
 
-    return sortArticlesByDate(list, sortOrder === 'newest' ? 'newest' : 'oldest');
-  }, [articles, selectedCategory, searchQuery, sortOrder]);
+    return sortArticlesByDate(list, sortOrder);
+  }, [publicArticles, selectedCategory, searchQuery, sortOrder]);
 
-  // Reset page when filter or search changes
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedCategory, searchQuery, sortOrder]);
 
   const totalPages = Math.max(1, Math.ceil(filteredArticles.length / ARTICLES_PER_PAGE));
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+
   const paginatedArticles = useMemo(() => {
-    const start = (currentPage - 1) * ARTICLES_PER_PAGE;
+    const start = (safeCurrentPage - 1) * ARTICLES_PER_PAGE;
     return filteredArticles.slice(start, start + ARTICLES_PER_PAGE);
-  }, [filteredArticles, currentPage, ARTICLES_PER_PAGE]);
+  }, [filteredArticles, safeCurrentPage]);
 
   const handlePageChange = (newPage: number) => {
-    setCurrentPage(newPage);
-    const listEl = document.getElementById('blog-list');
+    const clamped = Math.max(1, Math.min(totalPages, newPage));
+    setCurrentPage(clamped);
+    const listEl = document.getElementById('blog-articles-grid');
     if (listEl) {
       listEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
@@ -139,9 +255,19 @@ export default function BlogSection({
     }
   };
 
+  const handleSelectCategory = (catId: string) => {
+    setSelectedCategory(catId);
+    const listEl = document.getElementById('blog-articles-grid');
+    if (catId !== 'all' && listEl) {
+      window.requestAnimationFrame(() => {
+        listEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  };
+
   const currentArticle = useMemo(() => {
     if (!selectedSlug) return null;
-    return articles.find(a => a.slug === selectedSlug) || null;
+    return articles.find((a) => a.slug === selectedSlug) || null;
   }, [articles, selectedSlug]);
 
   const currentAuthorProfile = useMemo(() => {
@@ -149,60 +275,88 @@ export default function BlogSection({
     return getAuthorProfile(currentArticle.author);
   }, [currentArticle]);
 
-  // Dynamically update document title, description, canonical and JSON-LD for SEO based on the active article
+  // Dynamic SEO head & JSON-LD synchronization
   useEffect(() => {
     let jsonLdScript = document.getElementById('article-jsonld') as HTMLScriptElement | null;
     const canonicalLink = document.querySelector('link[rel="canonical"]');
-    const ogUrl = document.querySelector('meta[property="og:url"]');
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    const ogDesc = document.querySelector('meta[property="og:description"]');
-    const ogImage = document.querySelector('meta[property="og:image"]');
+
+    const setMetaTag = (
+      selector: string,
+      attr: string,
+      value: string,
+      createAttr?: { key: string; val: string }
+    ) => {
+      let el = document.querySelector(selector);
+      if (!el && createAttr) {
+        el = document.createElement('meta');
+        el.setAttribute(createAttr.key, createAttr.val);
+        document.head.appendChild(el);
+      }
+      if (el) {
+        el.setAttribute(attr, value);
+      }
+    };
 
     if (currentArticle) {
       const pageTitle = `${currentArticle.title}｜飛田ガールズ`;
       document.title = pageTitle;
       const articleUrl = `https://tobitashinchi-recruit.com/blog/${currentArticle.slug}`;
 
-      const setMetaTag = (selector: string, attr: string, value: string, createAttr?: { key: string; val: string }) => {
-        let el = document.querySelector(selector);
-        if (!el && createAttr) {
-          el = document.createElement('meta');
-          el.setAttribute(createAttr.key, createAttr.val);
-          document.head.appendChild(el);
-        }
-        if (el) {
-          el.setAttribute(attr, value);
-        }
-      };
-
       const robotsContent = currentArticle.seoNoindex
         ? 'noindex, follow'
         : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1';
       setMetaTag('meta[name="robots"]', 'content', robotsContent, { key: 'name', val: 'robots' });
 
-      const imgFname = currentArticle.eyeCatch ? currentArticle.eyeCatch.split('/').pop()?.split('?')[0] : '';
+      const imgFname = currentArticle.eyeCatch
+        ? currentArticle.eyeCatch.split('/').pop()?.split('?')[0]
+        : '';
       const fullImgUrl = currentArticle.eyeCatch
-        ? (currentArticle.eyeCatch.startsWith('http') ? currentArticle.eyeCatch : `https://tobitashinchi-recruit.com/images/${imgFname}`)
-        : 'https://tobitashinchi-recruit.com/images/col_beginner_guide_art_1787803245812.jpg';
+        ? currentArticle.eyeCatch.startsWith('http')
+          ? currentArticle.eyeCatch
+          : `https://tobitashinchi-recruit.com/images/${imgFname}`
+        : `https://tobitashinchi-recruit.com${BLOG_HERO_IMAGE}`;
 
-      setMetaTag('meta[name="description"]', 'content', currentArticle.summary, { key: 'name', val: 'description' });
+      setMetaTag('meta[name="description"]', 'content', currentArticle.summary, {
+        key: 'name',
+        val: 'description',
+      });
       if (canonicalLink) {
         canonicalLink.setAttribute('href', articleUrl);
       }
       setMetaTag('meta[property="og:url"]', 'content', articleUrl, { key: 'property', val: 'og:url' });
       setMetaTag('meta[property="og:title"]', 'content', pageTitle, { key: 'property', val: 'og:title' });
-      setMetaTag('meta[property="og:description"]', 'content', currentArticle.summary, { key: 'property', val: 'og:description' });
+      setMetaTag('meta[property="og:description"]', 'content', currentArticle.summary, {
+        key: 'property',
+        val: 'og:description',
+      });
       setMetaTag('meta[property="og:type"]', 'content', 'article', { key: 'property', val: 'og:type' });
       setMetaTag('meta[property="og:image"]', 'content', fullImgUrl, { key: 'property', val: 'og:image' });
-      setMetaTag('meta[property="og:image:alt"]', 'content', currentArticle.title, { key: 'property', val: 'og:image:alt' });
+      setMetaTag('meta[property="og:image:alt"]', 'content', currentArticle.title, {
+        key: 'property',
+        val: 'og:image:alt',
+      });
 
-      setMetaTag('meta[name="twitter:card"]', 'content', 'summary_large_image', { key: 'name', val: 'twitter:card' });
-      setMetaTag('meta[name="twitter:title"]', 'content', pageTitle, { key: 'name', val: 'twitter:title' });
-      setMetaTag('meta[name="twitter:description"]', 'content', currentArticle.summary, { key: 'name', val: 'twitter:description' });
-      setMetaTag('meta[name="twitter:image"]', 'content', fullImgUrl, { key: 'name', val: 'twitter:image' });
-      setMetaTag('meta[name="twitter:image:alt"]', 'content', currentArticle.title, { key: 'name', val: 'twitter:image:alt' });
+      setMetaTag('meta[name="twitter:card"]', 'content', 'summary_large_image', {
+        key: 'name',
+        val: 'twitter:card',
+      });
+      setMetaTag('meta[name="twitter:title"]', 'content', pageTitle, {
+        key: 'name',
+        val: 'twitter:title',
+      });
+      setMetaTag('meta[name="twitter:description"]', 'content', currentArticle.summary, {
+        key: 'name',
+        val: 'twitter:description',
+      });
+      setMetaTag('meta[name="twitter:image"]', 'content', fullImgUrl, {
+        key: 'name',
+        val: 'twitter:image',
+      });
+      setMetaTag('meta[name="twitter:image:alt"]', 'content', currentArticle.title, {
+        key: 'name',
+        val: 'twitter:image:alt',
+      });
 
-      // Add or update comprehensive JSON-LD (Article + BreadcrumbList + FAQPage for SEO & LLMs)
       if (!jsonLdScript) {
         jsonLdScript = document.createElement('script');
         jsonLdScript.id = 'article-jsonld';
@@ -215,7 +369,9 @@ export default function BlogSection({
         currentArticle.summary,
         ...(currentArticle.tags || []),
         ...(Array.isArray(currentArticle.content)
-          ? currentArticle.content.map((b: any) => [b.text, b.question, b.answer, ...(b.items || [])].filter(Boolean).join(' '))
+          ? currentArticle.content.map((b) =>
+              [b.text, b.question, b.answer, ...(b.items || [])].filter(Boolean).join(' ')
+            )
           : []),
       ].join(' ');
       const glossaryMentions = buildGlossaryMentions(combinedTextForGraph);
@@ -227,109 +383,114 @@ export default function BlogSection({
         currentAuthorProfile?.bio
       );
 
-      const graphItems: any[] = [
+      const datePublishedIso = currentArticle.publishedAt
+        ? currentArticle.publishedAt.replace(/\./g, '-')
+        : '2026-07-01';
+      const dateModifiedIso = getEffectiveUpdatedDate(currentArticle).replace(/\./g, '-');
+
+      const graphItems: Record<string, unknown>[] = [
         {
-          "@type": "BlogPosting",
-          "@id": `${articleUrl}#article`,
-          "isPartOf": {
-            "@type": "WebSite",
-            "@id": "https://tobitashinchi-recruit.com/#website",
-            "name": "飛田ガールズ",
-            "url": "https://tobitashinchi-recruit.com/"
+          '@type': 'BlogPosting',
+          '@id': `${articleUrl}#article`,
+          isPartOf: {
+            '@type': 'WebSite',
+            '@id': 'https://tobitashinchi-recruit.com/#website',
+            name: '飛田ガールズ',
+            url: 'https://tobitashinchi-recruit.com/',
           },
-          "headline": currentArticle.title,
-          "description": currentArticle.summary,
-          "image": fullImgUrl,
-          "wordCount": wordCount,
-          "datePublished": currentArticle.publishedAt ? currentArticle.publishedAt.replace(/\./g, '-') : '2026-07-01',
-          "dateModified": (currentArticle as any).updatedAt ? String((currentArticle as any).updatedAt).replace(/\./g, '-') : ((currentArticle.publishedAt && currentArticle.publishedAt.replace(/\./g, '-') > FAQ_LAST_UPDATED_ISO) ? currentArticle.publishedAt.replace(/\./g, '-') : FAQ_LAST_UPDATED_ISO),
-          "articleSection": currentArticle.categoryLabel,
-          "keywords": (currentArticle.tags || []).join(', '),
-          "inLanguage": "ja-JP",
-          "author": personAuthor,
-          "reviewedBy": {
-            "@type": "Organization",
-            "@id": "https://tobitashinchi-recruit.com/#organization",
-            "name": "飛田ガールズ 女性サポートスタッフ",
-            "url": "https://tobitashinchi-recruit.com/about"
+          headline: currentArticle.title,
+          description: currentArticle.summary,
+          image: fullImgUrl,
+          wordCount,
+          datePublished: datePublishedIso,
+          dateModified: dateModifiedIso,
+          articleSection: currentArticle.categoryLabel,
+          keywords: (currentArticle.tags || []).join(', '),
+          inLanguage: 'ja-JP',
+          author: personAuthor,
+          reviewedBy: {
+            '@type': 'Organization',
+            '@id': 'https://tobitashinchi-recruit.com/#organization',
+            name: '飛田ガールズ 女性サポートスタッフ',
+            url: 'https://tobitashinchi-recruit.com/about',
           },
-          "publisher": {
-            "@type": "Organization",
-            "@id": "https://tobitashinchi-recruit.com/#organization",
-            "name": "飛田ガールズ",
-            "url": "https://tobitashinchi-recruit.com",
-            "logo": {
-              "@type": "ImageObject",
-              "url": "https://tobitashinchi-recruit.com/icon.png"
-            }
+          publisher: {
+            '@type': 'Organization',
+            '@id': 'https://tobitashinchi-recruit.com/#organization',
+            name: '飛田ガールズ',
+            url: 'https://tobitashinchi-recruit.com',
+            logo: {
+              '@type': 'ImageObject',
+              url: 'https://tobitashinchi-recruit.com/icon.png',
+            },
           },
-          ...(glossaryMentions.length > 0 ? { "mentions": glossaryMentions, "about": glossaryMentions.slice(0, 3) } : {}),
-          "citation": articleCitations,
-          "speakable": {
-            "@type": "SpeakableSpecification",
-            "cssSelector": ["h1", ".ai-direct-summary", ".summary"]
+          ...(glossaryMentions.length > 0
+            ? { mentions: glossaryMentions, about: glossaryMentions.slice(0, 3) }
+            : {}),
+          citation: articleCitations,
+          speakable: {
+            '@type': 'SpeakableSpecification',
+            cssSelector: ['h1', '.ai-direct-summary', '.summary'],
           },
-          "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": articleUrl
-          }
+          mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': articleUrl,
+          },
         },
         {
-          "@type": "BreadcrumbList",
-          "@id": `${articleUrl}#breadcrumb`,
-          "itemListElement": [
+          '@type': 'BreadcrumbList',
+          '@id': `${articleUrl}#breadcrumb`,
+          itemListElement: [
             {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "飛田新地求人トップ",
-              "item": "https://tobitashinchi-recruit.com/"
+              '@type': 'ListItem',
+              position: 1,
+              name: '飛田新地求人トップ',
+              item: 'https://tobitashinchi-recruit.com/',
             },
             {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "お仕事コラム",
-              "item": "https://tobitashinchi-recruit.com/blog"
+              '@type': 'ListItem',
+              position: 2,
+              name: '飛田新地のお仕事コラム',
+              item: 'https://tobitashinchi-recruit.com/blog',
             },
             {
-              "@type": "ListItem",
-              "position": 3,
-              "name": currentArticle.title,
-              "item": articleUrl
-            }
-          ]
-        }
+              '@type': 'ListItem',
+              position: 3,
+              name: currentArticle.title,
+              item: articleUrl,
+            },
+          ],
+        },
       ];
 
-      // Extract Q&A blocks to generate FAQPage Schema for Google Rich Snippets and AI search
-      const qnaBlocks = (currentArticle.content || []).filter(b => b.type === 'qna' && b.question && (b.answer || b.text));
+      const qnaBlocks = (currentArticle.content || []).filter(
+        (b) => b.type === 'qna' && b.question && (b.answer || b.text)
+      );
       if (qnaBlocks.length > 0) {
         graphItems.push({
-          "@type": "FAQPage",
-          "@id": `${articleUrl}#faq`,
-          "mainEntity": qnaBlocks.map(q => ({
-            "@type": "Question",
-            "name": q.question,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": q.answer || q.text || ""
-            }
-          }))
+          '@type': 'FAQPage',
+          '@id': `${articleUrl}#faq`,
+          mainEntity: qnaBlocks.map((q) => ({
+            '@type': 'Question',
+            name: q.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: q.answer || q.text || '',
+            },
+          })),
         });
       }
 
-      const fullStructuredData = {
-        "@context": "https://schema.org",
-        "@graph": graphItems
-      };
-      jsonLdScript.textContent = JSON.stringify(fullStructuredData);
-
+      jsonLdScript.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': graphItems,
+      });
     } else if (selectedSlug) {
-      // 404 state: Slug specified but article does not exist
-      document.title = 'お探しの記事が見つかりませんでした (404) | 飛田ガールズ';
-      const metaRobots = document.querySelector('meta[name="robots"]');
-      if (metaRobots) {
-        metaRobots.setAttribute('content', 'noindex, nofollow');
-      }
+      document.title = 'お探しの記事が見つかりませんでした (404)｜飛田ガールズ';
+      setMetaTag('meta[name="robots"]', 'content', 'noindex, nofollow', {
+        key: 'name',
+        val: 'robots',
+      });
       if (canonicalLink) {
         canonicalLink.removeAttribute('href');
       }
@@ -337,92 +498,120 @@ export default function BlogSection({
         jsonLdScript.remove();
       }
     } else {
-      const defaultTitle = '飛田新地お仕事コラム一覧｜給与・面接・体験談ガイド｜飛田ガールズ';
-      const defaultDesc = '飛田新地のお仕事、給料システム、面接・体入の流れ、寮生活、安全対策など、現場の女性スタッフによる役立つ最新コラム一覧。';
       const defaultUrl = 'https://tobitashinchi-recruit.com/blog';
-      const defaultImg = 'https://tobitashinchi-recruit.com/images/tobita_dream_hero_banner_v2.jpg';
+      const defaultImg = `https://tobitashinchi-recruit.com${BLOG_HERO_IMAGE}`;
 
-      document.title = defaultTitle;
-      const metaRobots = document.querySelector('meta[name="robots"]');
-      if (metaRobots) {
-        metaRobots.setAttribute('content', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
-      }
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute('content', defaultDesc);
-      }
+      document.title = BLOG_INDEX_TITLE;
+      setMetaTag(
+        'meta[name="robots"]',
+        'content',
+        'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
+        { key: 'name', val: 'robots' }
+      );
+      setMetaTag('meta[name="description"]', 'content', BLOG_INDEX_DESCRIPTION, {
+        key: 'name',
+        val: 'description',
+      });
       if (canonicalLink) {
         canonicalLink.setAttribute('href', defaultUrl);
       }
-      if (ogUrl) ogUrl.setAttribute('content', defaultUrl);
-      if (ogTitle) ogTitle.setAttribute('content', defaultTitle);
-      if (ogDesc) ogDesc.setAttribute('content', defaultDesc);
-      if (ogImage) ogImage.setAttribute('content', defaultImg);
+      setMetaTag('meta[property="og:url"]', 'content', defaultUrl, { key: 'property', val: 'og:url' });
+      setMetaTag('meta[property="og:title"]', 'content', BLOG_INDEX_TITLE, {
+        key: 'property',
+        val: 'og:title',
+      });
+      setMetaTag('meta[property="og:description"]', 'content', BLOG_INDEX_DESCRIPTION, {
+        key: 'property',
+        val: 'og:description',
+      });
+      setMetaTag('meta[property="og:image"]', 'content', defaultImg, {
+        key: 'property',
+        val: 'og:image',
+      });
+      setMetaTag('meta[property="og:type"]', 'content', 'website', {
+        key: 'property',
+        val: 'og:type',
+      });
+      setMetaTag('meta[name="twitter:card"]', 'content', 'summary_large_image', {
+        key: 'name',
+        val: 'twitter:card',
+      });
+      setMetaTag('meta[name="twitter:title"]', 'content', BLOG_INDEX_TITLE, {
+        key: 'name',
+        val: 'twitter:title',
+      });
+      setMetaTag('meta[name="twitter:description"]', 'content', BLOG_INDEX_DESCRIPTION, {
+        key: 'name',
+        val: 'twitter:description',
+      });
+      setMetaTag('meta[name="twitter:image"]', 'content', defaultImg, {
+        key: 'name',
+        val: 'twitter:image',
+      });
 
-      const twCard = document.querySelector('meta[name="twitter:card"]');
-      if (twCard) twCard.setAttribute('content', 'summary_large_image');
-      const twTitle = document.querySelector('meta[name="twitter:title"]');
-      if (twTitle) twTitle.setAttribute('content', defaultTitle);
-      const twDesc = document.querySelector('meta[name="twitter:description"]');
-      if (twDesc) twDesc.setAttribute('content', defaultDesc);
-      const twImg = document.querySelector('meta[name="twitter:image"]');
-      if (twImg) twImg.setAttribute('content', defaultImg);
+      if (jsonLdScript) {
+        jsonLdScript.remove();
+      }
 
-      const ogType = document.querySelector('meta[property="og:type"]');
-      if (ogType) ogType.setAttribute('content', 'website');
-
+      const sortedPublic = sortArticlesByDate(publicArticles, 'newest');
       updatePageJsonLd({
         '@context': 'https://schema.org',
         '@graph': [
           {
             '@type': 'CollectionPage',
             '@id': 'https://tobitashinchi-recruit.com/blog#webpage',
-            'url': defaultUrl,
-            'name': defaultTitle,
-            'description': defaultDesc,
-            'dateModified': FAQ_LAST_UPDATED_ISO,
-            'inLanguage': 'ja-JP',
-            'isPartOf': {
+            url: defaultUrl,
+            name: BLOG_INDEX_TITLE,
+            description: BLOG_INDEX_DESCRIPTION,
+            dateModified: FAQ_LAST_UPDATED_ISO,
+            inLanguage: 'ja-JP',
+            isPartOf: {
               '@id': 'https://tobitashinchi-recruit.com/#website',
             },
-            'publisher': {
+            publisher: {
               '@id': 'https://tobitashinchi-recruit.com/#organization',
             },
-            'speakable': {
+            speakable: {
               '@type': 'SpeakableSpecification',
-              'cssSelector': ['h1', 'main .lead', 'article h2'],
+              cssSelector: ['h1', '#blog-hero-lead', '#blog-recommended'],
             },
           },
           {
             '@type': 'BreadcrumbList',
             '@id': 'https://tobitashinchi-recruit.com/blog#breadcrumb',
-            'itemListElement': [
-              { '@type': 'ListItem', 'position': 1, 'name': 'トップページ', 'item': 'https://tobitashinchi-recruit.com/' },
-              { '@type': 'ListItem', 'position': 2, 'name': 'お仕事コラム', 'item': defaultUrl },
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'トップページ',
+                item: 'https://tobitashinchi-recruit.com/',
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: '飛田新地のお仕事コラム',
+                item: defaultUrl,
+              },
             ],
           },
-          (() => {
-            const indexableArticles = articles.filter((a) => a && a.slug && a.title && !a.seoNoindex);
-            return {
-              '@type': 'ItemList',
-              '@id': 'https://tobitashinchi-recruit.com/blog#itemlist',
-              'name': '飛田新地 お仕事コラム・解説記事一覧',
-              'numberOfItems': indexableArticles.length,
-              'itemListElement': indexableArticles.map((a, idx) => ({
-                '@type': 'ListItem',
-                'position': idx + 1,
-                'name': a.title,
-                'url': `https://tobitashinchi-recruit.com/blog/${a.slug}`,
-                'description': a.summary || a.title,
-              })),
-            };
-          })(),
+          {
+            '@type': 'ItemList',
+            '@id': 'https://tobitashinchi-recruit.com/blog#itemlist',
+            name: '飛田新地のお仕事コラム一覧',
+            numberOfItems: sortedPublic.length,
+            itemListElement: sortedPublic.map((a, idx) => ({
+              '@type': 'ListItem',
+              position: idx + 1,
+              name: a.title,
+              url: `https://tobitashinchi-recruit.com/blog/${a.slug}`,
+              description: a.summary || a.title,
+            })),
+          },
         ],
       });
     }
-  }, [currentArticle, selectedSlug, articles]);
+  }, [currentArticle, currentAuthorProfile, selectedSlug, publicArticles]);
 
-  // Back to article list
   const handleBackToList = () => {
     onSelectSlug(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -433,47 +622,46 @@ export default function BlogSection({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Smart Related Articles recommendation (based on category, tags overlap, and recency)
+  const handleGoToRequirements = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (onNavigatePath) {
+      e.preventDefault();
+      onNavigatePath('/requirements');
+    }
+  };
+
+  // Smart Related Articles (same category + cross-category topical relevance + shared tags)
   const relatedArticles = useMemo(() => {
     if (!currentArticle) return [];
     const currentTags = new Set(currentArticle.tags || []);
-    
-    const candidates = articles
-      .filter(a => a.slug !== currentArticle.slug && !a.seoNoindex)
-      .map(article => {
+    const relatedCats = new Set(RELATED_CATEGORY_MAP[currentArticle.category] || []);
+
+    const candidates = publicArticles
+      .filter((a) => a.slug !== currentArticle.slug)
+      .map((article) => {
         let score = 0;
-        // Same category: +5 points
-        if (article.category === currentArticle.category) {
-          score += 5;
-        }
-        // Common tags: +2 points per matching tag
+        if (article.category === currentArticle.category) score += 6;
+        else if (relatedCats.has(article.category)) score += 3.5;
+
         if (article.tags) {
           for (const t of article.tags) {
-            if (currentTags.has(t)) {
-              score += 2;
-            }
+            if (currentTags.has(t)) score += 2;
           }
         }
-        // New article bonus (recent ID >= 98): +1.5 points
         const articleId = parseInt(article.id, 10) || 0;
-        if (articleId >= 98) {
-          score += 1.5;
-        }
+        if (articleId >= 200) score += 1;
         return { article, score };
       });
 
     candidates.sort((a, b) => {
       if (b.score !== a.score) return b.score - a.score;
-      const idA = parseInt(a.article.id, 10) || 0;
-      const idB = parseInt(b.article.id, 10) || 0;
-      return idB - idA;
+      return (parseInt(b.article.id, 10) || 0) - (parseInt(a.article.id, 10) || 0);
     });
 
-    return candidates.slice(0, 3).map(c => c.article);
-  }, [articles, currentArticle]);
+    return candidates.slice(0, 3).map((c) => c.article);
+  }, [publicArticles, currentArticle]);
 
   const handleCtaInArticle = (articleTitle: string) => {
-    onInjectedScroll(`コラム「${articleTitle}」を読みました。求人について詳しく話を聞きたいです！`);
+    onInjectedScroll(`コラム「${articleTitle}」を読みました。求人について詳しく話を聞きたいです。`);
   };
 
   const renderFormattedText = (text: string) => {
@@ -492,30 +680,48 @@ export default function BlogSection({
       if (url.startsWith('/blog/')) {
         const targetSlug = url.replace('/blog/', '');
         elements.push(
-          <button
+          <a
             key={match.index}
+            href={url}
             onClick={(e) => {
               e.preventDefault();
               handleSelectArticle(targetSlug);
             }}
-            className="text-secondary font-bold hover:underline inline-flex items-center gap-0.5 cursor-pointer text-left"
+            className="text-[#9D3B5E] font-semibold underline decoration-[#D64572]/40 underline-offset-4 hover:text-[#D64572] inline-flex items-center gap-0.5 cursor-pointer text-left"
           >
             <span>{label}</span>
             <ChevronRight size={14} className="inline-block shrink-0" />
-          </button>
+          </a>
+        );
+      } else if (url.startsWith('/')) {
+        elements.push(
+          <a
+            key={match.index}
+            href={url}
+            onClick={(e) => {
+              if (onNavigatePath) {
+                e.preventDefault();
+                onNavigatePath(url);
+              }
+            }}
+            className="text-[#9D3B5E] font-semibold underline decoration-[#D64572]/40 underline-offset-4 hover:text-[#D64572]"
+          >
+            {label}
+          </a>
         );
       } else if (url.startsWith('#')) {
         elements.push(
           <button
             key={match.index}
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               const el = document.getElementById(url.substring(1));
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="text-secondary font-bold hover:underline inline-flex items-center gap-0.5 cursor-pointer"
+            className="text-[#9D3B5E] font-semibold underline decoration-[#D64572]/40 underline-offset-4 hover:text-[#D64572] cursor-pointer"
           >
-            <span>{label}</span>
+            {label}
           </button>
         );
       } else {
@@ -525,7 +731,7 @@ export default function BlogSection({
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-secondary font-bold hover:underline"
+            className="text-[#9D3B5E] font-semibold underline decoration-[#D64572]/40 underline-offset-4 hover:text-[#D64572]"
           >
             {label}
           </a>
@@ -541,620 +747,835 @@ export default function BlogSection({
     return elements;
   };
 
-  // Helper for generating eye-catch gradient colors based on category
-  const getCategoryGradient = (category: string) => {
-    switch (category) {
-      case 'job': return 'from-emerald-400 to-teal-600';
-      case 'salary': return 'from-amber-400 to-orange-500';
-      case 'beginner': return 'from-pink-400 to-rose-500';
-      case 'experienced': return 'from-purple-400 to-indigo-600';
-      case 'interview': return 'from-rose-400 to-pink-600';
-      case 'workstyle': return 'from-blue-400 to-indigo-600';
-      case 'shops': return 'from-indigo-400 to-violet-600';
-      case 'dorm': return 'from-sky-400 to-blue-600';
-      case 'safety': return 'from-cyan-400 to-blue-600';
-      case 'beauty': return 'from-fuchsia-400 to-pink-500';
-      case 'faq': return 'from-orange-400 to-amber-500';
-      // Legacy fallback
-      case 'streets': return 'from-purple-400 to-indigo-600';
-      case 'rules': return 'from-rose-400 to-red-600';
-      case 'hospitality': return 'from-pink-300 to-rose-400';
-      case 'lifestyle': return 'from-fuchsia-400 to-pink-500';
-      case 'security': return 'from-indigo-400 to-blue-600';
-      case 'onboarding': return 'from-cyan-400 to-teal-500';
-      default: return 'from-pink-400 to-rose-500';
-    }
-  };
-
-  const formatEyeCatchUrl = (url: string) => {
-    if (!url) return '/images/col_beginner_guide_art_1787803245812.jpg';
-    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) return url;
-    let clean = url.trim();
-    if (clean.startsWith('/src/assets/images/')) {
-      clean = clean.replace('/src/assets/images/', '/images/');
-    } else if (clean.startsWith('src/assets/images/')) {
-      clean = '/' + clean.replace('src/assets/images/', 'images/');
-    } else if (clean.startsWith('/assets/images/')) {
-      clean = clean.replace('/assets/images/', '/images/');
-    } else if (clean.startsWith('assets/images/')) {
-      clean = '/' + clean.replace('assets/images/', 'images/');
-    } else if (!clean.startsWith('/')) {
-      clean = '/images/' + clean;
-    }
-    return clean;
-  };
+  const showRecommendedSection =
+    selectedCategory === 'all' && searchQuery.trim() === '' && safeCurrentPage === 1 && recommendedArticles.length > 0;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-      <AnimatePresence mode="wait">
-        {!selectedSlug ? (
-          /* ==========================================
-             1. ARTICLE LIST VIEW
-             ========================================== */
-          <motion.div
-            key="list-view"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.3 }}
-            id="blog-list"
-          >
-            {/* Breadcrumb Navigation */}
-            <nav aria-label="パンくずリスト" className="mb-6 flex flex-wrap items-center gap-2 text-xs text-on-surface-variant">
-              <a
-                href="/"
-                onClick={(e) => {
-                  if (onNavigateHome) {
-                    e.preventDefault();
-                    onNavigateHome();
-                  }
-                }}
-                className="hover:text-secondary underline transition-colors"
+    <div className="bg-white min-h-screen">
+      {!selectedSlug ? (
+        /* ==========================================
+           1. ARTICLE LIST VIEW (/blog)
+           ========================================== */
+        <div id="blog-list" className="pb-20">
+          {/* Compact First View Hero */}
+          <section className="bg-[#FFF9FA] border-b border-[#EFE0E5]">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 sm:pt-8 sm:pb-10">
+              {/* Breadcrumb */}
+              <nav
+                aria-label="パンくずリスト"
+                className="mb-5 flex flex-wrap items-center gap-2 text-xs text-[#5E4D53]"
               >
-                飛田新地求人トップ（飛田ガールズ）
-              </a>
-              <span>/</span>
-              <span className="text-[#2c1a1e] font-bold">お仕事コラム一覧</span>
-            </nav>
+                <a
+                  href="/"
+                  onClick={(e) => {
+                    if (onNavigateHome) {
+                      e.preventDefault();
+                      onNavigateHome();
+                    }
+                  }}
+                  className="hover:text-[#D64572] underline decoration-[#EFE0E5] underline-offset-2 transition-colors"
+                >
+                  飛田ガールズ トップ
+                </a>
+                <span aria-hidden="true">/</span>
+                <span className="text-[#2B2326] font-semibold">飛田新地のお仕事コラム</span>
+              </nav>
 
-            {/* Header / Intro */}
-            <div className="text-center max-w-3xl mx-auto mb-10">
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-rose-100 text-secondary mb-3">
-                <BookOpen size={13} />
-                お仕事コラム & ブログ
-              </span>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold tracking-tight leading-snug text-[#2c1a1e] text-balance max-w-xl sm:max-w-2xl mx-auto">
-                安心してお仕事を始めるための<br />
-                <span className="text-secondary relative inline-block">
-                  完全解説ガイド
-                  <span className="absolute left-0 bottom-1 w-full h-2 bg-pink-100 -z-10 rounded-full" />
-                </span>
-              </h1>
-              <p className="mt-4 text-base text-on-surface-variant leading-relaxed">
-                飛田新地での働き方、リアルな給与システム、身バレ防止の対策、寮や滞在条件、働き方の選択肢など、気になるすべての情報を当店女性サポートスタッフが丁寧にお答えします。
-              </p>
-            </div>
-
-
-
-            {/* Controls (Search & Category Filters) */}
-            <div className="bg-surface-container rounded-3xl p-6 mb-10 shadow-sm border border-outline-variant">
-              <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
-                {/* Search Field */}
-                <div className="relative w-full md:w-80">
-                  <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-on-surface-variant">
-                    <Search size={18} />
-                  </span>
-                  <input
-                    type="text"
-                    placeholder="キーワード、タグで検索..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="block w-full pl-10 pr-4 py-2.5 bg-white border border-outline-variant rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm text-on-surface transition-all placeholder:text-[#5e474c]/50"
-                  />
-                </div>
-
-                {/* Sort & Info summary */}
-                <div className="flex items-center gap-2 flex-wrap">
-                  <div className="flex items-center bg-white p-1 rounded-2xl border border-outline-variant text-xs">
-                    <button
-                      onClick={() => setSortOrder('newest')}
-                      className={`px-3 py-1.5 rounded-xl font-medium transition-all ${
-                        sortOrder === 'newest'
-                          ? 'bg-secondary text-white shadow-xs'
-                          : 'text-on-surface-variant hover:text-on-surface'
-                      }`}
-                    >
-                      ✨ 最新順
-                    </button>
-                    <button
-                      onClick={() => setSortOrder('id')}
-                      className={`px-3 py-1.5 rounded-xl font-medium transition-all ${
-                        sortOrder === 'id'
-                          ? 'bg-secondary text-white shadow-xs'
-                          : 'text-on-surface-variant hover:text-on-surface'
-                      }`}
-                    >
-                      📖 古い順
-                    </button>
-                  </div>
-                  <div className="text-xs font-sans text-on-surface-variant bg-white px-3 py-2 rounded-2xl border border-outline-variant">
-                    記事数: <span className="font-bold text-secondary font-mono">{filteredArticles.length}</span> / <span className="font-mono">{articles.length}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Category Filter Chips */}
-              <div className="flex flex-wrap gap-2 mt-5">
-                {BLOG_CATEGORIES.map((category) => (
-                  <button
-                    key={category.id}
-                    onClick={() => setSelectedCategory(category.id)}
-                    className={`px-3.5 py-2 rounded-2xl text-xs md:text-sm font-medium transition-all cursor-pointer flex items-center gap-1.5 ${
-                      selectedCategory === category.id
-                        ? 'bg-secondary text-white shadow-sm shadow-secondary/25 scale-102 font-bold'
-                        : 'bg-white hover:bg-rose-50 text-on-surface border border-outline-variant'
-                    }`}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+                <div className="lg:col-span-7">
+                  <h1 className="text-2xl sm:text-3xl lg:text-[2.25rem] font-bold tracking-tight text-[#2B2326] leading-[1.3] text-balance">
+                    飛田新地のお仕事コラム
+                  </h1>
+                  <p className="mt-2.5 text-base sm:text-lg font-semibold text-[#9D3B5E] leading-snug">
+                    働く前に知りたいことも、働き始めてから役立つことも。
+                  </p>
+                  <div
+                    id="blog-hero-lead"
+                    className="mt-4 space-y-2.5 text-sm sm:text-[15px] text-[#5E4D53] leading-[1.75] max-w-2xl"
                   >
-                    {category.emoji && <span>{category.emoji}</span>}
-                    <span>{category.label}</span>
-                  </button>
-                ))}
+                    <p>
+                      飛田新地でのお仕事を考えている女性に向けて、仕事内容・給料・待遇・採用基準・未経験からの始め方・面接や体験入店・寮生活・身バレ対策など、気になる情報を分かりやすくまとめています。
+                    </p>
+                    <p>
+                      初めての方も、経験のある方も、自分に合った記事からご覧ください。
+                    </p>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-5">
+                  <div className="aspect-[16/10] w-full rounded-2xl overflow-hidden border border-[#EFE0E5] bg-[#FFF0F4]">
+                    {heroImgFailed ? (
+                      <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-[#FFF0F4] to-[#FAF4F6]">
+                        <p className="text-sm font-bold text-[#9D3B5E]">飛田ガールズ 公式お仕事コラム</p>
+                        <p className="text-xs text-[#5E4D53] mt-1">
+                          仕事内容・給料・採用基準・サポート体制ガイド
+                        </p>
+                      </div>
+                    ) : (
+                      <img
+                        src={BLOG_HERO_IMAGE}
+                        alt="飛田新地のお仕事コラム｜飛田ガールズ公式ガイドイメージ"
+                        className="w-full h-full object-cover"
+                        loading="eager"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
+                        onError={() => setHeroImgFailed(true)}
+                      />
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
+          </section>
 
-            {/* Articles Grid */}
-            {articles.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-20 text-center">
-                <div className="w-10 h-10 border-4 border-rose-100 border-t-secondary rounded-full animate-spin mb-3" />
-                <p className="text-on-surface-variant text-sm font-sans">コラムを読み込んでいます...</p>
-              </div>
-            ) : filteredArticles.length > 0 ? (
-              <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {paginatedArticles.map((article, idx) => (
-                    <motion.article
-                      key={article.id}
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.25, delay: Math.min(idx * 0.03, 0.3) }}
-                      onClick={() => handleSelectArticle(article.slug)}
-                      className="group flex flex-col bg-white rounded-3xl overflow-hidden border border-outline-variant shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer relative"
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10">
+            {/* Search & 22 Categories Directory */}
+            <section
+              aria-label="記事の検索とカテゴリ絞り込み"
+              className="bg-[#FAF4F6]/80 rounded-2xl border border-[#EFE0E5] p-5 sm:p-7"
+            >
+              {/* Search Box */}
+              <div>
+                <label
+                  htmlFor="blog-keyword-search"
+                  className="block text-sm sm:text-[15px] font-bold text-[#2B2326] mb-2.5"
+                >
+                  知りたいキーワードから記事を探す
+                </label>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="relative flex-1">
+                    <span
+                      className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-[#5E4D53] pointer-events-none"
+                      aria-hidden="true"
                     >
-                      {/* Eyecatch Image */}
-                      <div className="relative h-48 bg-rose-50/50 flex items-center justify-center overflow-hidden">
-                        <ArticleCardImage
-                          src={getValidArticleEyeCatch(article)}
-                          alt={article.title}
-                          category={article.category}
-                          categoryLabel={article.categoryLabel}
-                          className="w-full h-full"
-                        />
-                        <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-xs px-3 py-1 rounded-full text-xs font-semibold text-secondary shadow-xs z-10">
-                          {article.categoryLabel}
+                      <Search size={18} />
+                    </span>
+                    <input
+                      id="blog-keyword-search"
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="「未経験」「給料」「面接」「採用基準」「住民票」「身バレ」「寮」「仲居さん」など"
+                      className="block w-full pl-10 pr-10 py-3 bg-white border border-[#EFE0E5] rounded-xl text-sm sm:text-[15px] text-[#2B2326] placeholder:text-[#5E4D53]/65 focus:outline-none focus:border-[#D64572] focus:ring-2 focus:ring-[#D64572]/15 transition-colors"
+                    />
+                    {searchQuery && (
+                      <button
+                        type="button"
+                        onClick={() => setSearchQuery('')}
+                        aria-label="検索キーワードをクリア"
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#5E4D53] hover:text-[#2B2326] cursor-pointer"
+                      >
+                        <X size={16} />
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Sort Switcher */}
+                  <div
+                    className="inline-flex items-center bg-white p-1 rounded-xl border border-[#EFE0E5] shrink-0 self-start sm:self-stretch"
+                    role="group"
+                    aria-label="並び替え"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setSortOrder('newest')}
+                      className={`px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap cursor-pointer ${
+                        sortOrder === 'newest'
+                          ? 'bg-[#D64572] text-white'
+                          : 'text-[#5E4D53] hover:text-[#2B2326]'
+                      }`}
+                    >
+                      新しい順
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSortOrder('oldest')}
+                      className={`px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap cursor-pointer ${
+                        sortOrder === 'oldest'
+                          ? 'bg-[#D64572] text-white'
+                          : 'text-[#5E4D53] hover:text-[#2B2326]'
+                      }`}
+                    >
+                      古い順
+                    </button>
+                  </div>
+                </div>
+
+                {/* Quick keyword hints */}
+                <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-[#5E4D53]">
+                  <span className="font-medium shrink-0">よく検索される語句：</span>
+                  {SEARCH_SUGGESTIONS.map((kw) => {
+                    const isActive = searchQuery.trim() === kw;
+                    return (
+                      <button
+                        key={kw}
+                        type="button"
+                        onClick={() => setSearchQuery(isActive ? '' : kw)}
+                        className={`underline-offset-4 transition-colors cursor-pointer whitespace-nowrap py-1 ${
+                          isActive
+                            ? 'text-[#D64572] font-bold underline'
+                            : 'text-[#5E4D53] hover:text-[#D64572] hover:underline'
+                        }`}
+                      >
+                        {kw}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div className="my-6 border-t border-[#EFE0E5]" />
+
+              {/* 22 Categories Filter */}
+              <div>
+                <div className="flex flex-wrap items-baseline justify-between gap-2 mb-3.5">
+                  <h2 className="text-sm sm:text-[15px] font-bold text-[#2B2326]">
+                    カテゴリから探す
+                  </h2>
+                  <p className="text-xs text-[#5E4D53] tabular-nums">
+                    公開中 全{publicArticles.length}記事
+                  </p>
+                </div>
+
+                <div
+                  className="flex flex-wrap gap-2"
+                  role="tablist"
+                  aria-label="お仕事コラム カテゴリ一覧"
+                >
+                  {activeCategories.map((category) => {
+                    const count = categoryCounts[category.id] || 0;
+                    const isSelected = selectedCategory === category.id;
+                    return (
+                      <button
+                        key={category.id}
+                        type="button"
+                        role="tab"
+                        aria-selected={isSelected}
+                        onClick={() => handleSelectCategory(category.id)}
+                        className={`min-h-[40px] px-3.5 py-2 rounded-xl text-[13px] sm:text-sm font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer flex items-center gap-1.5 border ${
+                          isSelected
+                            ? 'bg-[#D64572] text-white border-[#D64572] font-semibold'
+                            : 'bg-white text-[#2B2326] border-[#EFE0E5] hover:border-[#D64572]/50 hover:bg-[#FFF0F4]/60'
+                        }`}
+                      >
+                        <span>{category.label}</span>
+                        <span
+                          className={`text-xs tabular-nums ${
+                            isSelected ? 'text-white/90' : 'text-[#5E4D53]'
+                          }`}
+                        >
+                          ({count})
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </section>
+
+            {/* Recommended Articles (Shown cleanly on All / Page 1 without active search) */}
+            {showRecommendedSection && (
+              <section
+                id="blog-recommended"
+                aria-labelledby="recommended-heading"
+                className="mt-10 sm:mt-12"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-5">
+                  <div>
+                    <h2
+                      id="recommended-heading"
+                      className="text-xl sm:text-2xl font-bold text-[#2B2326] tracking-tight"
+                    >
+                      おすすめ記事
+                    </h2>
+                    <p className="mt-1 text-sm text-[#5E4D53]">
+                      応募前に知っておきたい基本情報・ガイドをピックアップしています。
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+                  {recommendedArticles.map(({ article, shortLabel }) => (
+                    <article
+                      key={article.slug}
+                      className="group bg-white rounded-2xl border border-[#EFE0E5] hover:border-[#D64572]/45 hover:shadow-sm transition-all duration-200 overflow-hidden flex flex-col"
+                    >
+                      <a
+                        href={`/blog/${article.slug}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleSelectArticle(article.slug);
+                        }}
+                        className="flex flex-col h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D64572] rounded-2xl"
+                      >
+                        <div className="aspect-[16/10] w-full bg-[#FAF4F6] overflow-hidden shrink-0">
+                          <ArticleCardImage
+                            src={getValidArticleEyeCatch(article)}
+                            alt={article.title}
+                            category={article.category}
+                            categoryLabel={article.categoryLabel}
+                            className="w-full h-full"
+                          />
                         </div>
-                        {parseInt(article.id, 10) >= 98 && (
-                          <div className="absolute top-4 right-4 bg-rose-600 text-white px-2.5 py-0.5 rounded-full text-[11px] font-bold shadow-md tracking-wider flex items-center gap-1 animate-pulse z-10">
-                            <Sparkles size={11} /> NEW
+                        <div className="p-4 flex flex-col flex-grow">
+                          <div className="text-xs font-semibold text-[#9D3B5E]">
+                            {article.categoryLabel}
                           </div>
-                        )}
-                      </div>
-
-                      {/* Meta & Title */}
-                      <div className="flex-grow p-6 flex flex-col">
-                        <div className="flex items-center gap-4 text-xs text-on-surface-variant font-sans mb-3">
-                          <span className="flex items-center gap-1">
-                            <Calendar size={13} />
-                            <span className="font-mono">{(article.publishedAt || '').replace(/-/g, '.')}</span>
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Clock size={13} />
-                            読了<span className="font-mono">{article.readTime}</span>
-                          </span>
+                          <h3 className="mt-1.5 text-sm font-bold text-[#2B2326] leading-snug group-hover:text-[#D64572] transition-colors line-clamp-2">
+                            {shortLabel}
+                          </h3>
+                          <p className="mt-1.5 text-xs text-[#5E4D53] leading-relaxed line-clamp-2 flex-grow">
+                            {article.summary}
+                          </p>
                         </div>
-
-                        <h2 className="text-lg font-bold text-[#2c1a1e] leading-snug group-hover:text-secondary transition-colors line-clamp-2">
-                          {article.title}
-                        </h2>
-
-                        <p className="mt-3 text-sm text-on-surface-variant line-clamp-3 leading-relaxed">
-                          {article.summary}
-                        </p>
-
-                        {/* Tags */}
-                        <div className="mt-4 flex flex-wrap gap-1.5">
-                          {article.tags?.map((tag) => (
-                            <span key={tag} className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md text-[10px] font-medium bg-rose-50 text-secondary border border-rose-100">
-                              #{tag}
-                            </span>
-                          )) || null}
-                        </div>
-
-                        {/* Author */}
-                        <div className="mt-6 pt-4 border-t border-rose-50 flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <AvatarDisplay
-                              avatar={article.author?.avatar}
-                              name={article.author?.name}
-                              className="w-7 h-7 rounded-full shrink-0"
-                              textClassName="text-sm"
-                            />
-                            <div>
-                              <p className="text-xs font-semibold text-on-surface leading-none">{article.author?.name || 'スタッフ'}</p>
-                              <p className="text-[10px] text-on-surface-variant mt-0.5 leading-none">{article.author?.role || 'サポートスタッフ'}</p>
-                            </div>
-                          </div>
-                          <span className="text-secondary group-hover:translate-x-1 transition-transform">
-                            <ChevronRight size={16} />
-                          </span>
-                        </div>
-                      </div>
-                    </motion.article>
+                      </a>
+                    </article>
                   ))}
                 </div>
-
-                {/* Pagination Controls */}
-                {totalPages > 1 && (
-                  <div className="mt-12 flex flex-wrap items-center justify-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-                      disabled={currentPage === 1}
-                      className="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium border border-outline-variant bg-white text-on-surface hover:bg-rose-50 disabled:opacity-40 disabled:pointer-events-none transition-colors flex items-center gap-1 cursor-pointer"
-                    >
-                      <ChevronLeft size={16} />
-                      <span>前へ</span>
-                    </button>
-
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-                      // Show first, last, current, and surrounding pages
-                      if (
-                        page === 1 ||
-                        page === totalPages ||
-                        (page >= currentPage - 1 && page <= currentPage + 1)
-                      ) {
-                        return (
-                          <button
-                            key={page}
-                            type="button"
-                            onClick={() => handlePageChange(page)}
-                            className={`min-w-10 h-10 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center justify-center ${
-                              currentPage === page
-                                ? 'bg-secondary text-white shadow-sm shadow-secondary/30 scale-105'
-                                : 'bg-white border border-outline-variant text-on-surface hover:bg-rose-50'
-                            }`}
-                          >
-                            {page}
-                          </button>
-                        );
-                      } else if (
-                        page === currentPage - 2 ||
-                        page === currentPage + 2
-                      ) {
-                        return (
-                          <span key={page} className="px-1 text-on-surface-variant font-bold">
-                            ...
-                          </span>
-                        );
-                      }
-                      return null;
-                    })}
-
-                    <button
-                      type="button"
-                      onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
-                      disabled={currentPage === totalPages}
-                      className="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium border border-outline-variant bg-white text-on-surface hover:bg-rose-50 disabled:opacity-40 disabled:pointer-events-none transition-colors flex items-center gap-1 cursor-pointer"
-                    >
-                      <span>次へ</span>
-                      <ChevronRight size={16} />
-                    </button>
-                  </div>
-                )}
-              </>
-            ) : (
-              /* Empty state */
-              <div className="text-center py-16 bg-white rounded-3xl border border-dashed border-outline-variant">
-                <Search size={40} className="mx-auto text-[#5e474c]/30 mb-3" />
-                <h3 className="text-lg font-semibold text-on-surface">該当するコラムが見つかりませんでした</h3>
-                <p className="text-sm text-on-surface-variant mt-1">別のキーワードやカテゴリーでお試しください。</p>
-                <button
-                  onClick={() => { setSelectedCategory('all'); setSearchQuery(''); }}
-                  className="mt-4 inline-flex items-center gap-1.5 px-4 py-2 bg-secondary text-white rounded-2xl text-sm font-semibold cursor-pointer shadow-xs hover:bg-opacity-90"
-                >
-                  フィルターをクリア
-                </button>
-              </div>
+              </section>
             )}
-          </motion.div>
-        ) : isLoading ? (
-          /* ==========================================
-             LOADING STATE
-             ========================================== */
-          <motion.div
-            key="loading-view"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="flex flex-col items-center justify-center py-24 text-center"
-          >
-            <div className="w-12 h-12 border-4 border-rose-100 border-t-secondary rounded-full animate-spin mb-4" />
-            <p className="text-on-surface-variant text-sm font-sans">コラムを読み込んでいます...</p>
-          </motion.div>
-        ) : !currentArticle ? (
-          /* ==========================================
-             NOT FOUND STATE
-             ========================================== */
-          <motion.div
-            key="not-found-view"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.3 }}
-            className="max-w-md mx-auto text-center py-16 px-6 bg-white border border-rose-100 rounded-3xl shadow-xl my-12"
-          >
-            <div className="w-16 h-16 bg-rose-50 text-secondary rounded-full flex items-center justify-center mx-auto mb-6">
-              <Search size={32} />
-            </div>
-            <h2 className="text-xl md:text-2xl font-bold text-[#2c1a1e] leading-snug mb-3 text-balance max-w-md mx-auto">コラムが見つかりませんでした</h2>
-            <p className="text-on-surface-variant text-sm mb-8 leading-relaxed">
-              お探しの記事は削除されたか、URLが変更された可能性があります。
+
+            {/* Main Articles Grid */}
+            <section
+              id="blog-articles-grid"
+              aria-labelledby="articles-list-heading"
+              className="mt-12 sm:mt-14 scroll-mt-24"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-4 mb-6 border-b border-[#EFE0E5]">
+                <div>
+                  <h2
+                    id="articles-list-heading"
+                    className="text-xl sm:text-2xl font-bold text-[#2B2326] tracking-tight"
+                  >
+                    {selectedCategory === 'all'
+                      ? searchQuery.trim()
+                        ? `「${searchQuery.trim()}」の検索結果`
+                        : '記事一覧'
+                      : currentCategoryInfo.label}
+                  </h2>
+                  {selectedCategory !== 'all' && currentCategoryInfo.description && (
+                    <p className="mt-1 text-sm text-[#5E4D53]">
+                      {currentCategoryInfo.description}
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-3 text-sm text-[#5E4D53] tabular-nums shrink-0">
+                  <span>
+                    <strong className="text-[#2B2326] font-bold">{filteredArticles.length}</strong>件の記事
+                    {totalPages > 1 && `（${safeCurrentPage} / ${totalPages}ページ）`}
+                  </span>
+                  {(selectedCategory !== 'all' || searchQuery.trim() !== '') && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedCategory('all');
+                        setSearchQuery('');
+                      }}
+                      className="text-xs font-semibold text-[#9D3B5E] hover:text-[#D64572] underline underline-offset-4 cursor-pointer"
+                    >
+                      条件をリセット
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {articles.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-20 text-center">
+                  <div className="w-9 h-9 border-3 border-[#EFE0E5] border-t-[#D64572] rounded-full animate-spin mb-3" />
+                  <p className="text-sm text-[#5E4D53]">記事を読み込んでいます...</p>
+                </div>
+              ) : filteredArticles.length > 0 ? (
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
+                    {paginatedArticles.map((article) => (
+                      <article
+                        key={article.id}
+                        className="group bg-white rounded-2xl border border-[#EFE0E5] hover:border-[#D64572]/45 hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col h-full"
+                      >
+                        <a
+                          href={`/blog/${article.slug}`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleSelectArticle(article.slug);
+                          }}
+                          className="flex flex-col h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D64572] rounded-2xl"
+                        >
+                          {/* Uniform 4:3 Thumbnail */}
+                          <div className="aspect-[4/3] w-full bg-[#FAF4F6] overflow-hidden shrink-0">
+                            <ArticleCardImage
+                              src={getValidArticleEyeCatch(article)}
+                              alt={article.title}
+                              category={article.category}
+                              categoryLabel={article.categoryLabel}
+                              className="w-full h-full"
+                            />
+                          </div>
+
+                          {/* Card Body */}
+                          <div className="p-5 sm:p-6 flex flex-col flex-grow">
+                            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[#5E4D53] mb-2.5">
+                              <span className="font-semibold text-[#9D3B5E]">
+                                {article.categoryLabel}
+                              </span>
+                              <span aria-hidden="true">·</span>
+                              <time
+                                dateTime={(article.publishedAt || '').replace(/\./g, '-')}
+                                className="tabular-nums"
+                              >
+                                {formatDateDisplay(article.publishedAt)}
+                              </time>
+                            </div>
+
+                            <h3 className="text-[16px] sm:text-[17px] font-bold text-[#2B2326] leading-[1.45] group-hover:text-[#D64572] transition-colors line-clamp-2">
+                              {article.title}
+                            </h3>
+
+                            <p className="mt-2.5 text-sm text-[#5E4D53] leading-[1.7] line-clamp-3 flex-grow">
+                              {article.summary}
+                            </p>
+
+                            <div className="mt-4 pt-3.5 border-t border-[#FAF4F6] flex items-center justify-between text-xs font-semibold text-[#9D3B5E] group-hover:text-[#D64572] transition-colors">
+                              <span>記事を読む</span>
+                              <ChevronRight
+                                size={15}
+                                className="transition-transform duration-200 group-hover:translate-x-0.5"
+                              />
+                            </div>
+                          </div>
+                        </a>
+                      </article>
+                    ))}
+                  </div>
+
+                  {/* Pagination */}
+                  {totalPages > 1 && (
+                    <nav
+                      aria-label="ページネーション"
+                      className="mt-12 flex flex-wrap items-center justify-center gap-2"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => handlePageChange(safeCurrentPage - 1)}
+                        disabled={safeCurrentPage === 1}
+                        className="min-h-[42px] px-4 py-2 rounded-xl text-sm font-medium border border-[#EFE0E5] bg-white text-[#2B2326] hover:bg-[#FFF0F4] disabled:opacity-40 disabled:pointer-events-none transition-colors inline-flex items-center gap-1 cursor-pointer"
+                      >
+                        <ChevronLeft size={16} />
+                        <span>前のページ</span>
+                      </button>
+
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                        if (
+                          page === 1 ||
+                          page === totalPages ||
+                          (page >= safeCurrentPage - 1 && page <= safeCurrentPage + 1)
+                        ) {
+                          return (
+                            <button
+                              key={page}
+                              type="button"
+                              onClick={() => handlePageChange(page)}
+                              aria-current={safeCurrentPage === page ? 'page' : undefined}
+                              className={`min-w-[42px] h-[42px] px-3 rounded-xl text-sm font-semibold tabular-nums transition-colors cursor-pointer flex items-center justify-center ${
+                                safeCurrentPage === page
+                                  ? 'bg-[#D64572] text-white border border-[#D64572]'
+                                  : 'bg-white border border-[#EFE0E5] text-[#2B2326] hover:bg-[#FFF0F4]'
+                              }`}
+                            >
+                              {page}
+                            </button>
+                          );
+                        }
+                        if (page === safeCurrentPage - 2 || page === safeCurrentPage + 2) {
+                          return (
+                            <span
+                              key={page}
+                              className="px-1.5 text-sm text-[#5E4D53] select-none"
+                              aria-hidden="true"
+                            >
+                              …
+                            </span>
+                          );
+                        }
+                        return null;
+                      })}
+
+                      <button
+                        type="button"
+                        onClick={() => handlePageChange(safeCurrentPage + 1)}
+                        disabled={safeCurrentPage === totalPages}
+                        className="min-h-[42px] px-4 py-2 rounded-xl text-sm font-medium border border-[#EFE0E5] bg-white text-[#2B2326] hover:bg-[#FFF0F4] disabled:opacity-40 disabled:pointer-events-none transition-colors inline-flex items-center gap-1 cursor-pointer"
+                      >
+                        <span>次のページ</span>
+                        <ChevronRight size={16} />
+                      </button>
+                    </nav>
+                  )}
+                </>
+              ) : (
+                /* Empty search/filter state */
+                <div className="text-center py-14 px-6 bg-[#FAF4F6]/60 rounded-2xl border border-[#EFE0E5]">
+                  <Search size={32} className="mx-auto text-[#9D3B5E]/40 mb-3" />
+                  <h3 className="text-base sm:text-lg font-bold text-[#2B2326]">
+                    条件に一致する記事が見つかりませんでした
+                  </h3>
+                  <p className="text-sm text-[#5E4D53] mt-2 max-w-md mx-auto leading-relaxed">
+                    別のキーワードで検索するか、カテゴリを「すべての記事」に戻してお試しください。
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedCategory('all');
+                      setSearchQuery('');
+                    }}
+                    className="mt-5 inline-flex items-center justify-center px-5 py-2.5 bg-[#D64572] hover:bg-[#9D3B5E] text-white rounded-xl text-sm font-semibold transition-colors cursor-pointer"
+                  >
+                    すべての記事を表示する
+                  </button>
+                </div>
+              )}
+            </section>
+
+            {/* Bottom Recruit CTA Section (Section 10 Exact Copy) */}
+            <section
+              aria-labelledby="blog-recruit-cta-heading"
+              className="mt-16 sm:mt-20 bg-[#FFF9FA] rounded-2xl border border-[#EFE0E5] p-6 sm:p-10"
+            >
+              <div className="max-w-3xl mx-auto text-center">
+                <h2
+                  id="blog-recruit-cta-heading"
+                  className="text-xl sm:text-2xl font-bold text-[#2B2326] tracking-tight"
+                >
+                  飛田新地でのお仕事を検討している方へ
+                </h2>
+                <p className="mt-3.5 text-sm sm:text-[15px] text-[#5E4D53] leading-[1.8]">
+                  仕事内容や給料、待遇、採用基準、面接の流れなどを確認したい方は、飛田ガールズの募集要項もあわせてご覧ください。
+                  <br className="hidden sm:inline" />
+                  初めての方も、気になることがあれば応募前にお問い合わせいただけます。
+                </p>
+
+                <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5">
+                  <a
+                    href="/requirements"
+                    onClick={handleGoToRequirements}
+                    className="min-h-[48px] px-7 py-3.5 rounded-xl bg-[#D64572] hover:bg-[#9D3B5E] text-white font-bold text-sm sm:text-[15px] transition-colors inline-flex items-center justify-center gap-2 whitespace-nowrap"
+                  >
+                    <FileText size={17} />
+                    <span>募集要項を見る</span>
+                    <ArrowRight size={16} />
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={onCtaclick}
+                    className="min-h-[48px] px-7 py-3.5 rounded-xl bg-white hover:bg-[#FFF0F4] text-[#2B2326] border border-[#D64572]/40 font-bold text-sm sm:text-[15px] transition-colors inline-flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
+                  >
+                    <MessageCircle size={17} className="text-[#06C755]" />
+                    <span>LINEで相談・お問い合わせ</span>
+                  </button>
+                </div>
+
+                <p className="mt-4 text-xs text-[#5E4D53]">
+                  LINEメッセージ受付：24時間 ／ 女性スタッフ返信時間：10:00〜24:00（満20歳以上の女性対象・相談や見学のみも歓迎）
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+      ) : isLoading ? (
+        /* ==========================================
+           LOADING STATE
+           ========================================== */
+        <div className="max-w-3xl mx-auto px-4 py-24 text-center">
+          <div className="w-10 h-10 border-3 border-[#EFE0E5] border-t-[#D64572] rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-sm text-[#5E4D53]">記事を読み込んでいます...</p>
+        </div>
+      ) : !currentArticle ? (
+        /* ==========================================
+           NOT FOUND STATE
+           ========================================== */
+        <div className="max-w-md mx-auto px-4 py-20 text-center">
+          <div className="bg-[#FFF9FA] border border-[#EFE0E5] rounded-2xl p-8">
+            <h1 className="text-xl font-bold text-[#2B2326] mb-3">
+              お探しの記事が見つかりませんでした
+            </h1>
+            <p className="text-sm text-[#5E4D53] leading-relaxed mb-6">
+              指定された記事は移動したか、URLが変更された可能性があります。お仕事コラム一覧からお探しください。
             </p>
             <button
+              type="button"
               onClick={handleBackToList}
-              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-secondary hover:bg-secondary/90 text-white font-bold rounded-2xl shadow-md transition-all cursor-pointer"
+              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#D64572] hover:bg-[#9D3B5E] text-white font-semibold rounded-xl transition-colors cursor-pointer"
             >
               <ArrowLeft size={16} />
-              コラム一覧に戻る
+              お仕事コラム一覧に戻る
             </button>
-          </motion.div>
-        ) : (
-          /* ==========================================
-             2. ARTICLE DETAIL VIEW
-             ========================================== */
-          <motion.div
-            key="detail-view"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.3 }}
-            className="max-w-3xl mx-auto"
+          </div>
+        </div>
+      ) : (
+        /* ==========================================
+           2. ARTICLE DETAIL VIEW (/blog/:slug)
+           ========================================== */
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-20 sm:pt-10">
+          {/* Breadcrumb */}
+          <nav
+            aria-label="パンくずリスト"
+            className="mb-5 flex flex-wrap items-center gap-2 text-xs text-[#5E4D53]"
           >
-            {/* Breadcrumb & Back Navigation */}
-            <nav aria-label="パンくずリスト" className="mb-4 flex flex-wrap items-center gap-2 text-xs text-on-surface-variant">
-              <a
-                href="/"
-                onClick={(e) => {
-                  if (onNavigateHome) {
-                    e.preventDefault();
-                    onNavigateHome();
-                  }
-                }}
-                className="hover:text-secondary underline transition-colors"
-              >
-                飛田新地求人トップ（飛田ガールズ）
-              </a>
-              <span>/</span>
-              <a
-                href="/blog"
-                onClick={(e) => {
+            <a
+              href="/"
+              onClick={(e) => {
+                if (onNavigateHome) {
                   e.preventDefault();
-                  handleBackToList();
-                }}
-                className="hover:text-secondary underline transition-colors"
-              >
-                お仕事コラム一覧
-              </a>
-              <span>/</span>
-              <span className="text-[#2c1a1e] font-bold line-clamp-1">{currentArticle!.title}</span>
-            </nav>
-
-            <button
-              onClick={handleBackToList}
-              className="group mb-8 inline-flex items-center gap-2 text-sm font-medium text-on-surface hover:text-secondary transition-colors cursor-pointer py-2"
+                  onNavigateHome();
+                }
+              }}
+              className="hover:text-[#D64572] underline decoration-[#EFE0E5] underline-offset-2 transition-colors"
             >
-              <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-              コラム一覧へ戻る
-            </button>
+              飛田ガールズ トップ
+            </a>
+            <span aria-hidden="true">/</span>
+            <a
+              href="/blog"
+              onClick={(e) => {
+                e.preventDefault();
+                handleBackToList();
+              }}
+              className="hover:text-[#D64572] underline decoration-[#EFE0E5] underline-offset-2 transition-colors"
+            >
+              飛田新地のお仕事コラム
+            </a>
+            <span aria-hidden="true">/</span>
+            <span className="text-[#2B2326] font-medium line-clamp-1">{currentArticle.title}</span>
+          </nav>
 
-            {/* Eyecatch hero */}
-            <div className="h-56 md:h-72 rounded-4xl bg-rose-50/50 flex flex-col items-center justify-center relative overflow-hidden shadow-xs border border-outline-variant">
+          <button
+            type="button"
+            onClick={handleBackToList}
+            className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-[#5E4D53] hover:text-[#D64572] transition-colors cursor-pointer"
+          >
+            <ArrowLeft size={16} />
+            <span>お仕事コラム一覧へ戻る</span>
+          </button>
+
+          <article>
+            {/* Article Header */}
+            <header className="pb-6 border-b border-[#EFE0E5]">
+              <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs sm:text-sm text-[#5E4D53] mb-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedCategory(currentArticle.category);
+                    handleBackToList();
+                  }}
+                  className="font-semibold text-[#9D3B5E] hover:text-[#D64572] hover:underline underline-offset-4 cursor-pointer"
+                >
+                  {currentArticle.categoryLabel}
+                </button>
+                <span aria-hidden="true">·</span>
+                <span className="tabular-nums">
+                  公開 {formatDateDisplay(currentArticle.publishedAt)}
+                </span>
+                <span aria-hidden="true">·</span>
+                <span className="tabular-nums">
+                  更新 {getEffectiveUpdatedDate(currentArticle)}
+                </span>
+                {currentArticle.readTime && (
+                  <>
+                    <span aria-hidden="true">·</span>
+                    <span className="tabular-nums">読了目安 {currentArticle.readTime}</span>
+                  </>
+                )}
+              </div>
+
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#2B2326] leading-[1.4] tracking-tight text-balance">
+                {currentArticle.title}
+              </h1>
+            </header>
+
+            {/* Eyecatch */}
+            <div className="mt-6 aspect-[16/10] sm:aspect-[16/9] w-full rounded-2xl overflow-hidden border border-[#EFE0E5] bg-[#FAF4F6]">
               <ArticleCardImage
-                src={getValidArticleEyeCatch(currentArticle!)}
-                alt={currentArticle!.title}
-                category={currentArticle!.category}
-                categoryLabel={currentArticle!.categoryLabel}
+                src={getValidArticleEyeCatch(currentArticle)}
+                alt={currentArticle.title}
+                category={currentArticle.category}
+                categoryLabel={currentArticle.categoryLabel}
                 className="w-full h-full"
                 isDetailHero={true}
               />
-              <div className="absolute top-6 left-6 bg-white/95 backdrop-blur-xs px-3.5 py-1.5 rounded-full text-xs font-bold text-secondary shadow-xs z-10">
-                {currentArticle!.categoryLabel}
-              </div>
             </div>
 
-            {/* Article Header info */}
-            <div className="mt-8 border-b border-rose-100 pb-6">
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-sans text-on-surface-variant mb-4">
-                <span className="flex items-center gap-1 bg-surface-container px-2.5 py-1 rounded-lg">
-                  <Calendar size={13} />
-                  <span>公開：<span className="font-mono">{(currentArticle!.publishedAt || '').replace(/-/g, '.')}</span></span>
-                </span>
-                <span className="flex items-center gap-1 bg-rose-50 border border-rose-200 text-rose-800 px-2.5 py-1 rounded-lg font-semibold">
-                  <RefreshCw size={12} className="text-secondary" />
-                  <span>最終更新：<span className="font-mono">2026/09/05</span></span>
-                </span>
-                <span className="flex items-center gap-1 bg-surface-container px-2.5 py-1 rounded-lg">
-                  <Clock size={13} />
-                  読了<span className="font-mono">{currentArticle!.readTime}</span>
-                </span>
-              </div>
-
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold leading-snug text-[#2c1a1e] tracking-tight text-balance max-w-2xl">
-                {currentArticle!.title}
-              </h1>
-            </div>
-
-            {/* Article Fast Summary Box */}
-            {(currentArticle?.summary || (currentArticle as any)?.description) && (
-              <div className="mt-6 bg-gradient-to-r from-rose-50/90 via-pink-50/70 to-amber-50/60 p-4 sm:p-5 rounded-2xl border border-rose-200/90 shadow-xs">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-secondary text-white text-xs shadow-2xs">
-                    💡
-                  </span>
-                  <span className="text-xs sm:text-sm font-bold text-secondary tracking-wider font-display">
-                    この記事のポイント（30秒でわかる要点）
-                  </span>
-                </div>
-                <p className="ai-direct-summary summary text-xs sm:text-sm text-zinc-800 leading-relaxed font-sans font-medium pl-1">
-                  {currentArticle?.summary || (currentArticle as any)?.description}
+            {/* Lead Summary Box (AI Search Direct Answer) */}
+            {currentArticle.summary && (
+              <div className="mt-7 bg-[#FFF9FA] p-5 sm:p-6 rounded-2xl border border-[#EFE0E5]">
+                <p className="text-xs font-bold text-[#9D3B5E] tracking-wide mb-2">
+                  この記事の要点
                 </p>
-                {currentArticle.tags && currentArticle.tags.length > 0 && (
-                  <div className="mt-3 pt-2.5 border-t border-rose-200/60 flex flex-wrap gap-1.5 items-center pl-1">
-                    <span className="text-[10px] text-zinc-400 font-bold">関連テーマ:</span>
-                    {currentArticle.tags.slice(0, 4).map((tag, tIdx) => (
-                      <span key={tIdx} className="text-[10px] text-zinc-600 bg-white/90 px-2 py-0.5 rounded-md border border-rose-100 shadow-2xs">
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
+                <p className="ai-direct-summary summary text-sm sm:text-[15px] text-[#2B2326] leading-[1.8]">
+                  {currentArticle.summary}
+                </p>
               </div>
             )}
 
-            {/* Article Content Render */}
-            <div className="mt-8 space-y-6 text-[#2c1a1e] text-base md:text-lg leading-relaxed font-sans break-words">
-              {(currentArticle!.content || []).map((block, idx) => {
+            {/* Article Body */}
+            <div className="mt-8 space-y-5 text-[#2B2326] text-[15px] sm:text-base leading-[1.85] break-words">
+              {(currentArticle.content || []).map((block, idx) => {
                 switch (block.type) {
                   case 'p':
                     return (
-                      <p key={idx} className="whitespace-pre-line text-on-surface leading-relaxed py-1">
+                      <p key={idx} className="whitespace-pre-line text-[#2B2326]">
                         {renderFormattedText(block.text || '')}
                       </p>
                     );
                   case 'h2':
                     return (
-                      <h2 key={idx} className="text-xl md:text-2xl font-bold text-[#2c1a1e] leading-snug mt-10 mb-4 pt-4 pb-2 border-b-2 border-secondary/20 flex items-center gap-2 text-balance">
-                        <span className="inline-block w-1.5 h-6 bg-secondary rounded-full shrink-0" />
-                        <span>{block.text}</span>
+                      <h2
+                        key={idx}
+                        className="text-xl sm:text-[22px] font-bold text-[#2B2326] leading-[1.45] pt-6 pb-2.5 border-b border-[#EFE0E5] text-balance"
+                      >
+                        {block.text}
                       </h2>
                     );
                   case 'h3':
                     return (
-                      <h3 key={idx} className="text-lg md:text-xl font-bold text-[#2c1a1e] mt-8 mb-3 bg-rose-50 px-4 py-2 rounded-xl border-l-4 border-secondary">
+                      <h3
+                        key={idx}
+                        className="text-lg font-bold text-[#2B2326] leading-[1.5] pt-4 pb-1"
+                      >
                         {block.text}
                       </h3>
                     );
                   case 'list':
                     return (
-                      <ul key={idx} className="space-y-3 bg-surface-container-low p-6 rounded-3xl border border-outline-variant my-6">
+                      <ul
+                        key={idx}
+                        className="space-y-3 bg-[#FAF4F6]/80 p-5 sm:p-6 rounded-2xl border border-[#EFE0E5] my-6"
+                      >
                         {block.items?.map((item, itemIdx) => (
-                          <li key={itemIdx} className="flex items-start gap-2.5 text-sm md:text-base">
-                            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pink-100 text-secondary text-xs font-bold mt-0.5 shrink-0">
-                              {itemIdx + 1}
+                          <li
+                            key={itemIdx}
+                            className="flex items-start gap-3 text-sm sm:text-[15px] leading-[1.75]"
+                          >
+                            <span className="text-xs font-bold text-[#9D3B5E] tabular-nums pt-1 shrink-0">
+                              {String(itemIdx + 1).padStart(2, '0')}.
                             </span>
-                            <span className="text-on-surface-variant leading-relaxed">{renderFormattedText(item)}</span>
+                            <span className="text-[#2B2326]">{renderFormattedText(item)}</span>
                           </li>
                         ))}
                       </ul>
                     );
                   case 'qna':
                     return (
-                      <div key={idx} className="bg-white rounded-3xl border-2 border-secondary/20 overflow-hidden my-8 shadow-xs">
-                        <div className="bg-gradient-to-r from-secondary to-pink-500 text-white px-5 py-3 font-bold flex items-center gap-2">
-                          <ShieldCheck size={18} />
+                      <div
+                        key={idx}
+                        className="bg-white rounded-2xl border border-[#EFE0E5] overflow-hidden my-6"
+                      >
+                        <div className="bg-[#FFF9FA] px-5 py-3.5 border-b border-[#EFE0E5] font-bold text-sm sm:text-[15px] text-[#2B2326]">
                           {block.question}
                         </div>
-                        <div className="p-5 text-sm md:text-base text-on-surface-variant leading-relaxed bg-surface-container-low whitespace-pre-line">
+                        <div className="p-5 text-sm sm:text-[15px] text-[#5E4D53] leading-[1.8] whitespace-pre-line">
                           {renderFormattedText(block.answer || block.text || '')}
                         </div>
                       </div>
                     );
                   case 'cta':
-                    return null;
                   default:
                     return null;
                 }
               })}
             </div>
 
-            {/* Article Author Profile & E-E-A-T Editorial Board Footer */}
-            <div className="mt-10 p-6 bg-surface-container-low rounded-3xl border border-outline-variant">
+            {/* Author Box */}
+            <aside className="mt-12 p-6 bg-[#FAF4F6]/70 rounded-2xl border border-[#EFE0E5]">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <AvatarDisplay
                   avatar={currentAuthorProfile?.avatar}
                   name={currentAuthorProfile?.name}
-                  className="w-14 h-14 rounded-2xl shadow-xs shrink-0"
-                  textClassName="text-3xl"
+                  className="w-14 h-14 rounded-full shrink-0"
                 />
                 <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-bold text-secondary bg-rose-50 px-2 py-0.5 rounded-full border border-rose-100">
-                      この記事を書いた人 / 監修
-                    </span>
-                    <span className="text-xs text-on-surface-variant font-medium">
-                      {currentAuthorProfile?.role || '料亭直営 女性サポートスタッフ（歴8年）'}
-                    </span>
-                  </div>
-                  <h4 className="text-base font-bold text-[#2c1a1e]">
+                  <p className="text-xs text-[#9D3B5E] font-semibold">
+                    執筆・案内担当 · {currentAuthorProfile?.role || '料亭直営 女性サポートスタッフ'}
+                  </p>
+                  <p className="text-base font-bold text-[#2B2326] mt-0.5">
                     {currentAuthorProfile?.name || 'さくら'}
-                  </h4>
-                  <p className="text-xs text-on-surface-variant leading-relaxed mt-1.5">
-                    {currentAuthorProfile?.bio || '飛田新地での女性サポート歴8年。未経験者から出稼ぎ希望者まで、のべ1,000名以上の相談・面接案内を担当。給与システム、身バレ防止、衛生管理、生活支援に関する現場の最新情報を発信しています。'}
+                  </p>
+                  <p className="text-xs sm:text-sm text-[#5E4D53] leading-relaxed mt-1.5">
+                    {currentAuthorProfile?.bio}
                   </p>
                 </div>
               </div>
-            </div>
+            </aside>
 
-            {/* Article Footer & Navigator */}
-            <div className="mt-8 pt-6 border-t border-rose-100 flex flex-col md:flex-row justify-between gap-6 items-center">
-              <div className="flex flex-wrap gap-2">
-                {currentArticle!.tags.map((tag) => (
-                  <span key={tag} className="inline-flex items-center gap-1 px-3 py-1 bg-surface-container rounded-full text-xs text-secondary font-medium border border-outline-variant">
-                    <Tag size={12} />
-                    {tag}
-                  </span>
+            {/* Tags & Back Link */}
+            <div className="mt-8 pt-6 border-t border-[#EFE0E5] flex flex-col sm:flex-row justify-between gap-4 items-start sm:items-center">
+              <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-xs text-[#5E4D53]">
+                {(currentArticle.tags || []).map((tag) => (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={() => {
+                      setSelectedCategory('all');
+                      setSearchQuery(tag);
+                      handleBackToList();
+                    }}
+                    className="hover:text-[#D64572] hover:underline underline-offset-4 cursor-pointer"
+                  >
+                    #{tag}
+                  </button>
                 ))}
               </div>
 
               <button
+                type="button"
                 onClick={handleBackToList}
-                className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white border border-outline-variant rounded-2xl text-sm font-bold text-on-surface hover:bg-rose-50 transition-all cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-white border border-[#EFE0E5] rounded-xl text-sm font-semibold text-[#2B2326] hover:bg-[#FFF0F4] transition-colors cursor-pointer shrink-0"
               >
                 <ArrowLeft size={15} />
-                コラム一覧に戻る
+                <span>一覧に戻る</span>
               </button>
             </div>
+          </article>
 
-            {/* Related Articles Section (Internal Links & SEO enhancement) */}
-            {relatedArticles.length > 0 && (
-              <div className="mt-16 pt-10 border-t border-rose-100">
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-secondary tracking-wider uppercase mb-1">
-                      <Sparkles size={14} />
-                      あわせて読みたい関連コラム
-                    </div>
-                    <h3 className="text-xl md:text-2xl font-display font-bold text-[#2c1a1e]">
-                      おすすめの関連記事
-                    </h3>
-                  </div>
-                  <button
-                    onClick={handleBackToList}
-                    className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold text-secondary hover:underline cursor-pointer"
+          {/* Related Articles (2–3 relevant articles) */}
+          {relatedArticles.length > 0 && (
+            <section
+              aria-labelledby="related-articles-heading"
+              className="mt-14 pt-10 border-t border-[#EFE0E5]"
+            >
+              <div className="flex items-end justify-between gap-4 mb-6">
+                <h2
+                  id="related-articles-heading"
+                  className="text-xl font-bold text-[#2B2326]"
+                >
+                  あわせて読みたい関連記事
+                </h2>
+                <button
+                  type="button"
+                  onClick={handleBackToList}
+                  className="text-xs sm:text-sm font-semibold text-[#9D3B5E] hover:text-[#D64572] inline-flex items-center gap-0.5 cursor-pointer shrink-0"
+                >
+                  <span>一覧を見る</span>
+                  <ChevronRight size={15} />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                {relatedArticles.map((relArticle) => (
+                  <article
+                    key={relArticle.id}
+                    className="group bg-white rounded-2xl border border-[#EFE0E5] hover:border-[#D64572]/45 hover:shadow-sm transition-all duration-200 overflow-hidden flex flex-col"
                   >
-                    コラム一覧を見る
-                    <ChevronRight size={14} />
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {relatedArticles.map((relArticle) => (
-                    <article
-                      key={relArticle.id}
-                      onClick={() => handleSelectArticle(relArticle.slug)}
-                      className="group flex flex-col bg-surface-container-low rounded-3xl overflow-hidden border border-outline-variant hover:border-secondary/30 hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer"
+                    <a
+                      href={`/blog/${relArticle.slug}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleSelectArticle(relArticle.slug);
+                      }}
+                      className="flex flex-col h-full"
                     >
-                      <div className="relative h-36 bg-rose-50/50 flex items-center justify-center overflow-hidden">
+                      <div className="aspect-[4/3] w-full bg-[#FAF4F6] overflow-hidden shrink-0">
                         <ArticleCardImage
                           src={getValidArticleEyeCatch(relArticle)}
                           alt={relArticle.title}
@@ -1162,109 +1583,95 @@ export default function BlogSection({
                           categoryLabel={relArticle.categoryLabel}
                           className="w-full h-full"
                         />
-                        <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-xs px-2.5 py-0.5 rounded-full text-[10px] font-bold text-secondary shadow-xs">
+                      </div>
+                      <div className="p-4 flex flex-col flex-grow">
+                        <div className="text-xs font-semibold text-[#9D3B5E] mb-1.5">
                           {relArticle.categoryLabel}
                         </div>
-                        {parseInt(relArticle.id, 10) >= 98 && (
-                          <div className="absolute top-3 right-3 bg-rose-600 text-white px-2 py-0.5 rounded-full text-[10px] font-bold shadow-xs flex items-center gap-0.5">
-                            <Sparkles size={10} /> NEW
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="p-4 flex flex-col flex-grow">
-                        <div className="flex items-center gap-3 text-[11px] text-on-surface-variant font-sans mb-2">
-                          <span className="flex items-center gap-1">
-                            <Calendar size={11} />
-                            <span className="font-mono">{(relArticle.publishedAt || '').replace(/-/g, '.')}</span>
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Clock size={11} />
-                            読了<span className="font-mono">{relArticle.readTime}</span>
-                          </span>
-                        </div>
-
-                        <h4 className="text-sm font-bold text-[#2c1a1e] leading-snug group-hover:text-secondary transition-colors line-clamp-2 mb-2">
+                        <h3 className="text-sm font-bold text-[#2B2326] leading-snug group-hover:text-[#D64572] transition-colors line-clamp-2 flex-grow">
                           {relArticle.title}
-                        </h4>
-
-                        <p className="text-xs text-on-surface-variant line-clamp-2 leading-relaxed flex-grow">
-                          {relArticle.summary}
+                        </h3>
+                        <p className="mt-2 text-xs text-[#5E4D53] tabular-nums">
+                          {formatDateDisplay(relArticle.publishedAt)}
                         </p>
-
-                        <div className="mt-4 pt-3 border-t border-rose-50/80 flex items-center justify-between text-xs font-semibold text-secondary">
-                          <span>記事を読む</span>
-                          <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                        </div>
                       </div>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Theme Navigation (テーマ別案内 - 各テーマで探す) */}
-            <div className="mt-12 p-6 sm:p-7 bg-surface-container rounded-3xl border border-outline-variant shadow-xs">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-secondary flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-lg border border-outline-variant shadow-2xs">
-                    <BookOpen size={14} className="text-secondary" />
-                    <span>テーマ別案内</span>
-                  </span>
-                  <span className="text-xs sm:text-sm font-bold text-[#2c1a1e]">各テーマからコラムを探す</span>
-                </div>
-                <button
-                  onClick={handleBackToList}
-                  className="text-xs font-bold text-secondary hover:underline flex items-center gap-1 cursor-pointer self-start sm:self-auto"
-                >
-                  <span>コラム一覧へ戻る</span>
-                  <ChevronRight size={13} />
-                </button>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {BLOG_CATEGORIES.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => {
-                      setSelectedCategory(cat.id);
-                      handleBackToList();
-                    }}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs ${
-                      currentArticle?.category === cat.id
-                        ? 'bg-secondary text-white font-extrabold shadow-xs ring-2 ring-rose-200'
-                        : 'bg-white text-on-surface hover:text-secondary border border-outline-variant hover:bg-rose-50'
-                    }`}
-                  >
-                    {cat.emoji && <span>{cat.emoji}</span>}
-                    <span>{cat.label}</span>
-                  </button>
+                    </a>
+                  </article>
                 ))}
               </div>
-            </div>
+            </section>
+          )}
 
-            {/* Banner block */}
-            <div className="mt-16 bg-[#2c1a1e] text-white rounded-4xl p-8 text-center relative overflow-hidden shadow-lg">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-secondary opacity-20 blur-3xl rounded-full" />
-              <div className="absolute bottom-0 left-0 w-32 h-32 bg-pink-500 opacity-25 blur-3xl rounded-full" />
-              <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-2">
-                最短本日スタート！1日体験入店随時受付中
-              </h3>
-              <p className="text-xs md:text-sm text-pink-200/90 max-w-lg mx-auto leading-relaxed mb-6">
-                体験入店は「面接＋見学＋1日お仕事＋その日にお給料全額手渡し」がすべて1日で完了する安心コースです。合わないと感じたらその場でやめても全然OK！
-              </p>
-              <div className="flex justify-center items-center">
+          {/* Category Quick Navigation */}
+          <section
+            aria-label="カテゴリから他の記事を探す"
+            className="mt-12 p-6 bg-[#FAF4F6]/80 rounded-2xl border border-[#EFE0E5]"
+          >
+            <h2 className="text-sm font-bold text-[#2B2326] mb-3.5">
+              他のカテゴリから探す
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {activeCategories.map((cat) => (
                 <button
-                  onClick={() => handleCtaInArticle(currentArticle!.title)}
-                  className="w-full sm:w-auto max-w-md bg-[#06c755] hover:bg-[#05b04b] text-white px-12 py-4 rounded-2xl font-bold text-base shadow-lg shadow-[#06c755]/20 transition-all cursor-pointer flex items-center justify-center gap-2"
+                  key={cat.id}
+                  type="button"
+                  onClick={() => {
+                    setSelectedCategory(cat.id);
+                    handleBackToList();
+                  }}
+                  className={`min-h-[38px] px-3 py-1.5 rounded-xl text-xs font-medium transition-colors whitespace-nowrap cursor-pointer border ${
+                    currentArticle.category === cat.id
+                      ? 'bg-[#D64572] text-white border-[#D64572] font-semibold'
+                      : 'bg-white text-[#2B2326] border-[#EFE0E5] hover:border-[#D64572]/50 hover:bg-[#FFF0F4]'
+                  }`}
                 >
-                  <MessageCircle size={18} />
-                  LINEでお問い合わせ
+                  {cat.label}
                 </button>
-              </div>
+              ))}
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </section>
+
+          {/* Bottom Recruit CTA */}
+          <section className="mt-12 bg-[#FFF9FA] rounded-2xl border border-[#EFE0E5] p-6 sm:p-8 text-center">
+            <h2 className="text-lg sm:text-xl font-bold text-[#2B2326]">
+              飛田新地でのお仕事を検討している方へ
+            </h2>
+            <p className="mt-2.5 text-sm text-[#5E4D53] leading-relaxed max-w-xl mx-auto">
+              仕事内容や給料、待遇、採用基準、面接の流れなどを確認したい方は、飛田ガールズの募集要項もあわせてご覧ください。応募前のご質問や見学のご相談も受け付けています。
+            </p>
+            <div className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
+              <a
+                href="/requirements"
+                onClick={handleGoToRequirements}
+                className="min-h-[46px] px-6 py-3 rounded-xl bg-[#D64572] hover:bg-[#9D3B5E] text-white font-bold text-sm transition-colors inline-flex items-center justify-center gap-2 whitespace-nowrap"
+              >
+                <FileText size={16} />
+                <span>募集要項を見る</span>
+              </a>
+              <button
+                type="button"
+                onClick={() => handleCtaInArticle(currentArticle.title)}
+                className="min-h-[46px] px-6 py-3 rounded-xl bg-white hover:bg-[#FFF0F4] text-[#2B2326] border border-[#D64572]/40 font-bold text-sm transition-colors inline-flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
+              >
+                <MessageCircle size={16} className="text-[#06C755]" />
+                <span>LINEで相談・お問い合わせ</span>
+              </button>
+            </div>
+            <p className="mt-3 text-xs text-[#5E4D53]">
+              LINEメッセージ受付：24時間 ／ スタッフ返信：10:00〜24:00（
+              <a
+                href={OFFICIAL_LINE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-[#D64572]"
+              >
+                公式LINE窓口
+              </a>
+              ）
+            </p>
+          </section>
+        </div>
+      )}
     </div>
   );
 }

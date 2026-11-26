@@ -60,15 +60,16 @@ export const ArticleCardImage: FC<ArticleCardImageProps> = memo(({
   }
 
   return (
-    <div className={`relative w-full h-full overflow-hidden bg-rose-50 flex items-center justify-center ${className}`}>
+    <div className={`relative w-full h-full overflow-hidden bg-[#FAF4F6] flex items-center justify-center ${className}`}>
       <img
         src={imgSrc}
         alt={alt}
         loading="lazy"
         decoding="async"
+        referrerPolicy="no-referrer"
         onError={handleError}
-        className={`w-full h-full object-cover transition-transform duration-500 ${
-          !isDetailHero ? 'group-hover:scale-105' : ''
+        className={`w-full h-full object-cover transition-transform duration-300 ${
+          !isDetailHero ? 'group-hover:scale-[1.02]' : ''
         }`}
       />
     </div>

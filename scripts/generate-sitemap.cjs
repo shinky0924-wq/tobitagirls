@@ -70,7 +70,7 @@ const staticRoutes = [
   { path: '/faq/access', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: 'アクセス・場所・送迎・交通費に関するFAQ' },
   { path: '/faq/sidejob', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '副業・Wワーク・掛け持ちに関するFAQ' },
   { path: '/faq/support', priority: '0.75', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '不安・トラブル・退店・相談に関するFAQ' },
-  { path: '/blog', priority: '0.85', freq: 'weekly', lastmod: STABLE_UPDATED_LASTMOD, img: '/images/col_beginner_guide_art_1787803245812.jpg', title: '飛田新地お仕事コラム一覧' },
+  { path: '/blog', priority: '0.85', freq: 'weekly', lastmod: '2026-11-25', img: '/images/blog_hero_editorial_guide_1795658839229.jpg', title: '飛田新地のお仕事コラム｜給料・仕事内容・採用基準・未経験ガイド｜飛田ガールズ' },
   { path: '/job', priority: '0.85', freq: 'weekly', lastmod: STABLE_UPDATED_LASTMOD, img: '/images/tobita_job_guide_tea_1788153000519.jpg', title: '飛田新地の仕事内容・1日の流れ' },
   { path: '/salary', priority: '0.85', freq: 'weekly', lastmod: DEFAULT_STATIC_LASTMOD, img: '/images/tobita_salary_calculator_1788153012478.jpg', title: '飛田新地の給料・報酬システムと即日日払い' },
   { path: '/beginner', priority: '0.85', freq: 'weekly', lastmod: STABLE_UPDATED_LASTMOD, img: '/images/tobita_beginner_support_1788153037569.jpg', title: '未経験スタート完全マニュアル' },

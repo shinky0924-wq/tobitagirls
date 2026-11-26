@@ -351,8 +351,8 @@ export default function App() {
       canonicalUrl = 'https://tobitashinchi-recruit.com/about';
     } else if (currentTab === 'blog') {
       if (!selectedSlug) {
-        pageTitle = '飛田新地お仕事コラム一覧｜給与・面接・体験談ガイド｜飛田ガールズ';
-        pageDesc = '飛田新地のお仕事、給料システム、面接・体入の流れ、寮生活、安全対策など、現場の女性スタッフによる役立つ最新コラム一覧。';
+        pageTitle = '飛田新地のお仕事コラム｜給料・仕事内容・採用基準・未経験ガイド｜飛田ガールズ';
+        pageDesc = '飛田新地で働くことを考えている女性向けのお仕事コラム。仕事内容、給料・報酬、未経験からの始め方、採用基準、面接・体験入店、待遇、サポート体制、寮、身バレ対策など、応募前に知っておきたい情報を分かりやすく紹介します。';
         canonicalUrl = 'https://tobitashinchi-recruit.com/blog';
       }
     } else if (currentTab === 'faq') {
@@ -745,6 +745,10 @@ export default function App() {
                   onSimulatorClick={handleScrollToSimulator}
                   onNavigateAbout={() => setCurrentTab('about')}
                   onNavigateHome={() => setCurrentTab('recruit')}
+                  onNavigatePath={(targetPath) => {
+                    navigate(targetPath);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
                 />
               </Suspense>
             </motion.div>

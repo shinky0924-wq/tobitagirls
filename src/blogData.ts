@@ -1,17 +1,27 @@
 import blogArticlesJson from '../data/blogArticles.json';
 
 export type BlogCategoryType =
-  | 'job'
-  | 'salary'
+  | 'voice'
   | 'beginner'
   | 'experienced'
-  | 'interview'
+  | 'job'
+  | 'salary'
+  | 'benefits'
   | 'workstyle'
-  | 'shops'
-  | 'dorm'
+  | 'criteria'
+  | 'interview'
+  | 'access'
+  | 'privacy'
   | 'safety'
+  | 'shops'
+  | 'support'
+  | 'dorm'
+  | 'technique'
+  | 'repeat'
   | 'beauty'
-  | 'faq';
+  | 'quit'
+  | 'faq'
+  | 'relationships';
 
 export interface BlogArticle {
   id: string;
@@ -163,19 +173,48 @@ export function getAuthorProfile(author?: { name?: string; role?: string; avatar
   };
 }
 
-export const BLOG_CATEGORIES: { id: string; label: string; emoji?: string }[] = [
-  { id: 'all', label: 'すべて', emoji: '✨' },
-  { id: 'job', label: '仕事内容', emoji: '🍵' },
-  { id: 'salary', label: '給料・待遇', emoji: '💰' },
-  { id: 'beginner', label: '未経験', emoji: '🔰' },
-  { id: 'experienced', label: '経験者', emoji: '👑' },
-  { id: 'interview', label: '応募・面接', emoji: '🌸' },
-  { id: 'workstyle', label: '働き方', emoji: '⏰' },
-  { id: 'shops', label: 'お店選び', emoji: '🏮' },
-  { id: 'dorm', label: '寮・出稼ぎ', emoji: '🏠' },
-  { id: 'safety', label: '身バレ・安全', emoji: '🤫' },
-  { id: 'beauty', label: 'その他', emoji: '💄' },
-  { id: 'faq', label: 'FAQ', emoji: '💡' }
+export interface BlogCategoryItem {
+  id: string;
+  label: string;
+  description: string;
+}
+
+export const BLOG_HERO_IMAGE = '/images/blog_hero_editorial_guide_1795658839229.jpg';
+
+export const RECOMMENDED_BLOG_SLUGS: { slug: string; shortLabel: string }[] = [
+  { slug: 'tobitashinchi-beginner-guide', shortLabel: '飛田新地のお仕事とは？初めての方向けガイド' },
+  { slug: 'tobita-job-guide', shortLabel: '飛田新地の仕事内容と1日の流れ' },
+  { slug: 'tobitashinchi-salary-system', shortLabel: '飛田新地の給料システムと報酬の計算方法' },
+  { slug: 'tobitashinchi-interview-rejection-criteria-truth', shortLabel: '飛田新地の採用基準について' },
+  { slug: 'tobitashinchi-one-day-trial-honest-guide', shortLabel: '面接・見学・体験入店の流れ' },
+  { slug: 'tobitashinchi-nakai-obachan-role-and-tips', shortLabel: '仲居さんのサポートについて' },
+  { slug: 'tobitashinchi-access-stations-interview-guide', shortLabel: '飛田新地へのアクセス方法' },
+  { slug: 'tobitashinchi-privacy-guide', shortLabel: '身バレが心配な女性が確認したいこと' },
+];
+
+export const BLOG_CATEGORIES: BlogCategoryItem[] = [
+  { id: 'all', label: 'すべての記事', description: '公開中のお仕事コラムをすべて表示します。' },
+  { id: 'voice', label: '女性体験談', description: '実際に働いた女性の声や取材記録・働き始めてからの感想。' },
+  { id: 'beginner', label: '未経験・初めて', description: '飛田新地が初めての方向けの基本ガイドと疑問解消。' },
+  { id: 'experienced', label: '経験者・移籍', description: '他店・他業種からの移籍やブランク復帰の確認ポイント。' },
+  { id: 'job', label: '仕事内容・1日の流れ', description: '料亭での仕事内容、コースの流れ、出勤から退勤までの過ごし方。' },
+  { id: 'salary', label: '給料・報酬', description: '売上50%バックの計算方法、即日日払い、お金管理の基礎知識。' },
+  { id: 'benefits', label: '待遇・設備', description: '無料貸出衣装、控室・お部屋の設備、各種待遇やキャンペーン。' },
+  { id: 'workstyle', label: '勤務時間・シフト', description: '自由シフト、週1日・短時間・昼シフト、Wワークや体調時の休み方。' },
+  { id: 'criteria', label: '採用基準', description: '応募資格、年齢・体型・容姿のリアル、採用時に確認されるポイント。' },
+  { id: 'interview', label: '応募・面接・体験入店', description: 'LINE相談、面接の服装・持ち物、住民票・パスポート、見学や1日体験の流れ。' },
+  { id: 'access', label: '通勤・アクセス', description: '動物園前駅・新今宮駅・天王寺駅からの行き方や関西圏からの通勤事情。' },
+  { id: 'privacy', label: '身バレ・プライバシー', description: '家族・友人・職場に知られにくい工夫、SNS設定、源氏名や税金の基礎。' },
+  { id: 'safety', label: '安全・トラブル対策', description: '衛生管理、定期検査、NG客対応ルール、安全な応募先の見分け方。' },
+  { id: 'shops', label: 'お店選び', description: 'メイン通り・青春通りの違いや他業種比較、自分に合うお店選びのコツ。' },
+  { id: 'support', label: 'サポート体制', description: '仲居さんや女性スタッフのフォロー、初日サポート、メンタルケア。' },
+  { id: 'dorm', label: '寮・出稼ぎ', description: '寮や滞在先の確認ポイント、遠方からの短期出稼ぎ・上阪準備。' },
+  { id: 'technique', label: 'テクニック', description: '第一印象、自然な会話、人見知りでも実践しやすい接客のコツ。' },
+  { id: 'repeat', label: 'リピート・指名率UP', description: '無理のない誠実な接客で信頼関係を築き、また会いたいと思ってもらう工夫。' },
+  { id: 'beauty', label: '美容・身だしなみ', description: 'メイク・髪色・ネイル・カラコン・香水・清潔感の整え方。' },
+  { id: 'quit', label: '退店・辞め方', description: '退店の伝え方、報酬精算、ペナルティの有無、卒業後のキャリア。' },
+  { id: 'faq', label: 'よくある質問', description: '応募前・勤務前によく寄せられる疑問やネットの噂への正直な回答。' },
+  { id: 'relationships', label: '人間関係・職場環境', description: '女性同士の距離感、スタッフとの関わり、職場の雰囲気の確認ポイント。' },
 ];
 
 export const BLOG_ARTICLES: BlogArticle[] = blogArticlesJson as BlogArticle[];
@@ -294,7 +333,7 @@ export function mergeWithDefaultArticles(incomingArticles: BlogArticle[]): { mer
   return { merged: sortArticlesByDate(merged, 'newest'), hasChanges };
 }
 
-const BLOG_DATA_VERSION = '20261125_wave8_five_seo_articles_v28';
+const BLOG_DATA_VERSION = '20261125_blog_clean_thumbnails_v30';
 
 export function getStoredArticles(): BlogArticle[] {
   if (typeof window === 'undefined') return sortArticlesByDate(BLOG_ARTICLES, 'newest');
